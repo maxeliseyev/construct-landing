@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [ "PK2473XF3P.maximeliseyev.constructmessenger" ],
+        "components": [
+          {
+            "/": "/path/*",
+            "?": { "param": "value" }
+          }
+        ]
+      }
+    ]
+  }
+}

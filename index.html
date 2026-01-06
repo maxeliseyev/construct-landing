@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Construct Messenger</title>
+  <meta name="description" content="Federated, post-quantum ready, minimalist messenger with end-to-end encryption." />
+
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --fg: #e6e8eb;
+      --muted: #9aa1aa;
+      --accent: #5eead4;
+      --border: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 960px;
+      padding: 0 24px;
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 96px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0 0 16px;
+      letter-spacing: -0.03em;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .badges {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 0 0 24px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      max-width: 720px;
+    }
+
+    ul {
+      padding-left: 20px;
+      max-width: 720px;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    footer {
+      padding: 48px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>Konstruct Messenger</h1>
+      <p>
+        Federated, post-quantum ready, minimalist messenger with end-to-end encryption.
+        Messages wait for you, not the other way around.
+      </p>
+
+      <div class="badges">
+        <span class="badge">Federated</span>
+        <span class="badge">E2EE by Default</span>
+        <span class="badge">Post-Quantum Ready</span>
+        <span class="badge">Minimalist</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2>About</h2>
+      <p>
+        Konstruct is a modern messenger built on openness, security, and calm communication.
+        It combines Signal-grade cryptography, email-like federation
+        (<code>you@your-server.com</code>), and a Zen-inspired UI without notifications,
+        read receipts, or typing indicators.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>End-to-end encryption by default</strong> — servers see only encrypted blobs.</li>
+        <li><strong>Forward secrecy</strong> — past messages stay secure even if keys leak.</li>
+        <li><strong>Post-quantum readiness</strong> — hybrid X25519 + Kyber, Ed25519 + Dilithium.</li>
+        <li><strong>Federation</strong> — run your own server or use a trusted provider.</li>
+        <li><strong>Lightweight server</strong> — Rust, ~100 MB RAM, Raspberry Pi friendly.</li>
+        <li><strong>Zen UI</strong> — no notification spam, no social noise.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Why Konstruct?</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Messenger</th>
+            <th>Federated</th>
+            <th>E2EE Default</th>
+            <th>Post-Quantum</th>
+            <th>Minimalist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Signal</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Experimental</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Matrix</td>
+            <td>Yes</td>
+            <td>Optional</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Telegram</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td><strong>Konstruct</strong></td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Planned</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Roadmap</h2>
+      <ul>
+        <li><strong>Done:</strong> Double Ratchet, X3DH, iOS client, Rust server</li>
+        <li><strong>In progress:</strong> Session persistence, profiles</li>
+        <li><strong>Planned:</strong> Federation MVP, group chats (MLS), Android client</li>
+        <li><strong>Q2 2026:</strong> Full post-quantum cryptography</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>
+        Built with Rust, Swift, and privacy in mind.<br />
+        Open-source · MIT License
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
