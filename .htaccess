@@ -1,0 +1,15 @@
+# Apache конфигурация для обработки контактных ссылок
+# Разместите этот файл в корне сайта
+
+# Включить mod_rewrite
+RewriteEngine On
+
+# Обработка контактных ссылок /c/{userId}
+RewriteRule ^c/([^/]+)$ /contact.html?userId=$1 [QSA,L]
+
+# Обслуживание apple-app-site-association
+<FilesMatch "apple-app-site-association">
+    Header set Content-Type "application/json"
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+

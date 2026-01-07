@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Добавить контакт в Konstruct Messenger">
+    <title>Konstruct - Добавить контакт</title>
+    <style>
+        :root {
+            --bg: #0b0d10;
+            --fg: #e6e8eb;
+            --muted: #9aa1aa;
+            --accent: #5eead4;
+            --border: #1f2937;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            color: var(--fg);
+            margin-bottom: 12px;
+            font-size: 2rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .username {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 24px 0;
+        }
+        
+        .message {
+            color: var(--muted);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .button {
+            display: inline-block;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.2s;
+            margin: 8px;
+            cursor: pointer;
+        }
+        
+        .button:hover {
+            background: var(--accent);
+            color: var(--bg);
+            text-decoration: none;
+        }
+        
+        .button.secondary {
+            border-color: var(--border);
+            color: var(--fg);
+        }
+        
+        .button.secondary:hover {
+            background: var(--border);
+            color: var(--fg);
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 24px;
+        }
+        
+        .spinner {
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: #ef4444;
+            margin-top: 24px;
+            display: none;
+            padding: 12px;
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 24px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔐</div>
+        <h1>Добавить контакт</h1>
+        <div class="username" id="username">@username</div>
+        <p class="message" id="message">
+            Нажмите кнопку ниже, чтобы открыть этот контакт в приложении Konstruct Messenger.
+        </p>
+        
+        <a href="#" class="button" id="openAppButton" onclick="openInApp(event)">
+            Открыть в приложении
+        </a>
+        <a href="#" class="button secondary" id="openWebButton" onclick="openInWeb(event)">
+            Открыть в веб-версии
+        </a>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 12px; color: var(--muted);">Попытка открыть приложение...</p>
+        </div>
+        
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        // Parse URL parameters
+        // Try to get userId from path first: /c/{userId}
+        let userId = null;
+        const pathParts = window.location.pathname.split('/').filter(part => part.length > 0);
+        if (pathParts.length >= 2 && pathParts[0] === 'c') {
+            userId = pathParts[1];
+        }
+        
+        // Fallback to query parameter if not in path
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!userId) {
+            userId = urlParams.get('userId');
+        }
+        const username = urlParams.get('username');
+        
+        // Update UI
+        if (username) {
+            document.getElementById('username').textContent = '@' + username;
+        } else {
+            document.getElementById('username').style.display = 'none';
+        }
+        
+        // Validate userId
+        if (!userId) {
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').textContent = 'Ошибка: не указан ID пользователя';
+            document.getElementById('openAppButton').style.display = 'none';
+            document.getElementById('openWebButton').style.display = 'none';
+        }
+        
+        // Universal link for iOS
+        const universalLink = window.location.href;
+        
+        // Custom URL scheme fallback (if needed in future)
+        const appScheme = 'konstruct://contact?userId=' + encodeURIComponent(userId || '') + '&username=' + encodeURIComponent(username || '');
+        
+        function openInApp(event) {
+            event.preventDefault();
+            
+            const openAppBtn = document.getElementById('openAppButton');
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            
+            openAppBtn.style.display = 'none';
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            
+            // Try universal link first (for iOS)
+            // This will be handled by iOS if the app is installed
+            window.location.href = universalLink;
+            
+            // Fallback: try custom URL scheme
+            setTimeout(() => {
+                window.location.href = appScheme;
+            }, 500);
+            
+            // If still not opened after 2 seconds, show error
+            setTimeout(() => {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = 'Приложение не установлено. Пожалуйста, установите Konstruct Messenger из App Store.';
+                openAppButton.style.display = 'inline-block';
+            }, 2000);
+        }
+        
+        function openInWeb(event) {
+            event.preventDefault();
+            if (userId) {
+                const pwaUrl = 'https://web.konstruct.cc/contact?userId=' + encodeURIComponent(userId) + '&username=' + encodeURIComponent(username || '');
+                window.location.href = pwaUrl;
+            } else {
+                window.location.href = 'https://web.konstruct.cc';
+            }
+        }
+        
+        // Auto-redirect for PWA (optional - uncomment if needed)
+        // if (window.location.hostname === 'web.konstruct.cc') {
+        //     // If on web version, redirect to PWA with contact info
+        //     const pwaUrl = 'https://web.konstruct.cc/contact?userId=' + encodeURIComponent(userId) + '&username=' + encodeURIComponent(username || '');
+        //     window.location.href = pwaUrl;
+        // }
+    </script>
+</body>
+</html>
+
