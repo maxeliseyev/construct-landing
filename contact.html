@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Добавить контакт в Konstruct Messenger">
-    <title>Konstruct - Добавить контакт</title>
+    <meta name="description" content="Add contact to Konstruct Messenger">
+    <title>Konstruct - Add Contact</title>
     
     <!-- Preload critical CSS -->
     <link rel="preload" href="/styles.css" as="style" />
@@ -15,25 +15,24 @@
 <body>
     <main class="contact-page">
         <div class="contact-container" role="main">
-            <div class="logo" aria-hidden="true">🔐</div>
-            <h1>Добавить контакт</h1>
+            <h1>Add Contact</h1>
             <div class="username" id="username" aria-live="polite">@username</div>
             <p class="message" id="message">
-                Нажмите кнопку ниже, чтобы открыть этот контакт в приложении Konstruct Messenger.
+                Click the button below to open this contact in Konstruct Messenger app.
             </p>
             
-            <nav aria-label="Действия с контактом">
-                <a href="#" class="button" id="openAppButton" onclick="openInApp(event)" aria-label="Открыть контакт в приложении Konstruct Messenger">
-                    Открыть в приложении
+            <nav aria-label="Contact actions">
+                <a href="#" class="button" id="openAppButton" onclick="openInApp(event)" aria-label="Open contact in Konstruct Messenger app">
+                    Open in app
                 </a>
-                <a href="#" class="button secondary" id="openWebButton" onclick="openInWeb(event)" aria-label="Открыть контакт в веб-версии">
-                    Открыть в веб-версии
+                <a href="#" class="button secondary" id="openWebButton" onclick="openInWeb(event)" aria-label="Open contact in web version">
+                    Open in web version
                 </a>
             </nav>
             
             <div class="loading" id="loading" aria-live="polite" aria-busy="true" hidden>
-                <div class="spinner" aria-label="Загрузка"></div>
-                <p style="margin-top: 12px; color: var(--muted);">Попытка открыть приложение...</p>
+                <div class="spinner" aria-label="Loading"></div>
+                <p style="margin-top: 12px; color: var(--muted);">Attempting to open app...</p>
             </div>
             
             <div class="error" id="error" role="alert" aria-live="assertive" hidden></div>
@@ -67,7 +66,7 @@
         if (!userId) {
             const errorEl = document.getElementById('error');
             errorEl.hidden = false;
-            errorEl.textContent = 'Ошибка: не указан ID пользователя';
+            errorEl.textContent = 'Error: User ID not specified';
             document.getElementById('openAppButton').style.display = 'none';
             document.getElementById('openWebButton').style.display = 'none';
         }
@@ -102,7 +101,7 @@
             setTimeout(() => {
                 loading.hidden = true;
                 error.hidden = false;
-                error.textContent = 'Приложение не установлено. Пожалуйста, установите Konstruct Messenger из App Store.';
+                error.textContent = 'App is not installed. Please install Konstruct Messenger from the App Store.';
                 openAppButton.style.display = 'inline-block';
             }, 2000);
         }
