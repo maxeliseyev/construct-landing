@@ -9,5 +9,10 @@
         ]
       }
     ]
+  },
+  "webcredentials": {
+    "apps": [
+      "PK2473XF3P.maximeliseyev.constructmessenger"
+    ]
   }
 }
