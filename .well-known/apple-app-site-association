@@ -5,7 +5,8 @@
       {
         "appID": "PK2473XF3P.maximeliseyev.constructmessenger",
         "paths": [
-          "/c/*"
+          "/c/*",
+          "/add"
         ]
       }
     ]
