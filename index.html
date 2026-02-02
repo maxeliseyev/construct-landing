@@ -1,191 +1,384 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Konstruct Messenger - Federated, Post-Quantum Ready, E2EE Messenger</title>
-  <meta name="description" content="Federated, post-quantum ready, minimalist messenger with end-to-end encryption. Messages wait for you, not the other way around." />
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://konstruct.cc/" />
-  <meta property="og:title" content="Konstruct Messenger - Federated, Post-Quantum Ready, E2EE Messenger" />
-  <meta property="og:description" content="Federated, post-quantum ready, minimalist messenger with end-to-end encryption. Messages wait for you, not the other way around." />
-  <meta property="og:image" content="https://konstruct.cc/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Konstruct Messenger - Federated, Post-Quantum Ready, E2EE Messenger" />
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://konstruct.cc/" />
-  <meta property="twitter:title" content="Konstruct Messenger - Federated, Post-Quantum Ready, E2EE Messenger" />
-  <meta property="twitter:description" content="Federated, post-quantum ready, minimalist messenger with end-to-end encryption." />
-  <meta property="twitter:image" content="https://konstruct.cc/og-image.png" />
-  <meta property="twitter:image:alt" content="Konstruct Messenger - Federated, Post-Quantum Ready, E2EE Messenger" />
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://konstruct.cc/" />
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  
-  <!-- Additional favicon sizes (optional, but recommended) -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
-  
-  <!-- Preload critical CSS -->
-  <link rel="preload" href="/styles.css" as="style" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+            Konstruct Messenger - Federated, Post-Quantum Ready, Hybrid E2EE
+            Messenger & Email
+        </title>
+        <meta
+            name="description"
+            content="Federated, post-quantum ready, minimalist hybrid messenger and email with end-to-end encryption. Seamless chats to email threads, with messages waiting for you."
+        />
+        <meta
+            name="keywords"
+            content="post-quantum messenger, hybrid email chat, E2EE, Rust messenger, privacy-focused communication, crypto agility, federated messaging"
+        />
 
-<body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <header>
-    <div class="container">
-      <h1>Konstruct Messenger</h1>
-      <p>
-        Federated, post-quantum ready, minimalist messenger with end-to-end encryption.
-        Messages wait for you, not the other way around.
-      </p>
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://konstruct.cc/" />
+        <meta
+            property="og:title"
+            content="Konstruct Messenger - Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+        />
+        <meta
+            property="og:description"
+            content="Federated, post-quantum ready, minimalist hybrid messenger and email with end-to-end encryption. Seamless chats to email threads, with messages waiting for you."
+        />
+        <meta property="og:image" content="https://konstruct.cc/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta
+            property="og:image:alt"
+            content="Konstruct Messenger - Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+        />
 
-      <div class="badges">
-        <span class="badge">Federated</span>
-        <span class="badge">E2EE by Default</span>
-        <span class="badge">Post-Quantum Ready</span>
-        <span class="badge">Minimalist</span>
-      </div>
-    </div>
-  </header>
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://konstruct.cc/" />
+        <meta
+            property="twitter:title"
+            content="Konstruct Messenger - Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+        />
+        <meta
+            property="twitter:description"
+            content="Federated, post-quantum ready, minimalist hybrid messenger and email with end-to-end encryption."
+        />
+        <meta
+            property="twitter:image"
+            content="https://konstruct.cc/og-image.png"
+        />
+        <meta
+            property="twitter:image:alt"
+            content="Konstruct Messenger - Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+        />
 
-  <main id="main-content">
-  <section aria-labelledby="about-heading">
-    <div class="container">
-      <h2 id="about-heading">About</h2>
-      <p>
-        Konstruct is a modern messenger built on openness, security, and calm communication.
-        It combines Signal-grade cryptography, email-like federation
-        (<code>you@your-server.com</code>), and a Zen-inspired UI without notifications,
-        read receipts, or typing indicators.
-      </p>
-    </div>
-  </section>
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://konstruct.cc/" />
 
-  <section aria-labelledby="features-heading">
-    <div class="container">
-      <h2 id="features-heading">Key Features</h2>
-      <ul>
-        <li><strong>End-to-end encryption by default</strong> — servers see only encrypted blobs.</li>
-        <li><strong>Forward secrecy</strong> — past messages stay secure even if keys leak.</li>
-        <li><strong>Post-quantum readiness</strong> — hybrid X25519 + Kyber, Ed25519 + Dilithium.</li>
-        <li><strong>Federation</strong> — run your own server or use a trusted provider.</li>
-        <li><strong>Lightweight server</strong> — Rust, ~100 MB RAM, Raspberry Pi friendly.</li>
-        <li><strong>Zen UI</strong> — no notification spam, no social noise.</li>
-      </ul>
-    </div>
-  </section>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
 
-  <section aria-labelledby="comparison-heading">
-    <div class="container">
-      <h2 id="comparison-heading">Why Konstruct?</h2>
+        <!-- Additional favicon sizes (optional, but recommended) -->
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
 
-      <div role="region" aria-labelledby="comparison-heading">
-        <table role="table" aria-label="Messenger comparison">
-          <thead>
-            <tr>
-              <th scope="col">Messenger</th>
-              <th scope="col">Federated</th>
-              <th scope="col">E2EE Default</th>
-              <th scope="col">Post-Quantum</th>
-              <th scope="col">Minimalist</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Signal</th>
-              <td>No</td>
-              <td>Yes</td>
-              <td>Experimental</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Matrix</th>
-              <td>Yes</td>
-              <td>Optional</td>
-              <td>No</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <th scope="row">Telegram</th>
-              <td>No</td>
-              <td>No</td>
-              <td>No</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <th scope="row"><strong>Konstruct</strong></th>
-              <td>Yes</td>
-              <td>Yes</td>
-              <td>Planned</td>
-              <td>Yes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+        <!-- Preload critical CSS -->
+        <link rel="preload" href="/styles.css" as="style" />
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
 
-  <section aria-labelledby="roadmap-heading">
-    <div class="container">
-      <h2 id="roadmap-heading">Roadmap</h2>
-      <ul>
-        <li><strong>Done:</strong> Double Ratchet, X3DH, iOS client, Rust server</li>
-        <li><strong>In progress:</strong> Session persistence, profiles</li>
-        <li><strong>Planned:</strong> Federation MVP, group chats (MLS), Android client</li>
-        <li><strong>Q2 2026:</strong> Full post-quantum cryptography</li>
-      </ul>
-    </div>
-  </section>
-  </main>
+    <body>
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        <header>
+            <div class="container">
+                <h1>Konstruct Messenger</h1>
+                <p>
+                    Federated, post-quantum ready, minimalist hybrid messenger
+                    and email with end-to-end encryption. Seamless transition
+                    from real-time chats to asynchronous email threads. Messages
+                    wait for you, not the other way around — no intrusive
+                    notifications, just calm communication.
+                </p>
 
-  <footer role="contentinfo">
-    <div class="container">
-      <p>
-        Built with Rust, Swift, and privacy in mind.<br />
-        Open-source · MIT License
-      </p>
-    </div>
-  </footer>
+                <div class="badges">
+                    <span class="badge">Federated</span>
+                    <span class="badge">E2EE by Default</span>
+                    <span class="badge">Post-Quantum Ready</span>
+                    <span class="badge">Crypto Agility</span>
+                    <span class="badge">Hybrid Chat & Email</span>
+                    <span class="badge">Minimalist</span>
+                </div>
+            </div>
+        </header>
 
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Konstruct Messenger",
-    "applicationCategory": "CommunicationApplication",
-    "operatingSystem": "iOS",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "Federated, post-quantum ready, minimalist messenger with end-to-end encryption.",
-    "featureList": [
-      "End-to-end encryption by default",
-      "Forward secrecy",
-      "Post-quantum readiness",
-      "Federation support",
-      "Lightweight server",
-      "Zen UI without notifications"
-    ],
-    "author": {
-      "@type": "Organization",
-      "name": "Konstruct"
-    }
-  }
-  </script>
-</body>
+        <main id="main-content">
+            <section aria-labelledby="about-heading">
+                <div class="container">
+                    <h2 id="about-heading">About</h2>
+                    <p>
+                        Konstruct is a modern communication platform built on
+                        openness, ultimate security, and serene user experience.
+                        It combines the instant nature of messengers with the
+                        reliability of email, using Signal-grade end-to-end
+                        encryption (Double Ratchet for forward secrecy),
+                        email-like federation
+                        (<code>you@your-server.com</code>), and a Zen-inspired
+                        UI without notifications, read receipts, or typing
+                        indicators.
+                    </p>
+                    <p>
+                        The server is ultra-minimalist: it stores only user ID,
+                        username, and password hash — no metadata, no message
+                        content. Notifications are "blind" (just "new message
+                        arrived"), ensuring privacy even from the server.
+                        Powered by Rust for safety and performance, with a
+                        shared crypto core across platforms for consistency.
+                    </p>
+                </div>
+            </section>
+
+            <section aria-labelledby="how-it-works-heading">
+                <div class="container">
+                    <h2 id="how-it-works-heading">How It Works</h2>
+                    <p>
+                        Konstruct bridges messaging and email: send instant
+                        chats that can evolve into threaded email conversations
+                        for long-term storage. Delivery is hybrid — WebSocket
+                        for real-time when online, REST fallback with long
+                        polling, and APNs/FCM for background wake-ups on mobile.
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Crypto Agility:</strong> Easily switch
+                            algorithms (e.g., from ECC to PQC hybrids) without
+                            rebuilding the app.
+                        </li>
+                        <li>
+                            <strong>Self-Host Friendly:</strong> Lightweight
+                            Rust server (~100 MB RAM) runs on VPS or Raspberry
+                            Pi.
+                        </li>
+                        <li>
+                            <strong>Privacy-First:</strong> Blind notifications,
+                            zero-knowledge proofs for auth, and minimal data
+                            storage.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section aria-labelledby="features-heading">
+                <div class="container">
+                    <h2 id="features-heading">Key Features</h2>
+                    <ul>
+                        <li>
+                            <strong>End-to-end encryption by default</strong> —
+                            servers see only encrypted blobs.
+                        </li>
+                        <li>
+                            <strong>Forward secrecy</strong> — past messages
+                            stay secure even if keys leak.
+                        </li>
+                        <li>
+                            <strong>Post-quantum readiness</strong> — hybrid
+                            X25519 + Kyber for key exchange, Ed25519 + Dilithium
+                            for signatures.
+                        </li>
+                        <li>
+                            <strong>Federation</strong> — run your own server or
+                            use a trusted provider, with email-like addressing.
+                        </li>
+                        <li>
+                            <strong>Lightweight server</strong> — Rust-based,
+                            minimal resource use, easy self-hosting.
+                        </li>
+                        <li>
+                            <strong>Zen UI</strong> — no notification spam, no
+                            social noise, focus on calm interaction.
+                        </li>
+                        <li>
+                            <strong>Hybrid Delivery</strong> — Real-time via
+                            WebSocket, fallback to REST/polling, background
+                            pushes.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section aria-labelledby="comparison-heading">
+                <div class="container">
+                    <h2 id="comparison-heading">Why Konstruct?</h2>
+
+                    <div role="region" aria-labelledby="comparison-heading">
+                        <table role="table" aria-label="Messenger comparison">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Messenger</th>
+                                    <th scope="col">Federated</th>
+                                    <th scope="col">E2EE Default</th>
+                                    <th scope="col">Post-Quantum</th>
+                                    <th scope="col">Hybrid Email</th>
+                                    <th scope="col">Minimalist</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Signal</th>
+                                    <td>No</td>
+                                    <td>Yes</td>
+                                    <td>Experimental</td>
+                                    <td>No</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Session</th>
+                                    <td>Decentralized</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Matrix</th>
+                                    <td>Yes</td>
+                                    <td>Optional</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Telegram</th>
+                                    <td>No</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <strong>Konstruct</strong>
+                                    </th>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                    <td>Planned (Q2 2026)</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="roadmap-heading">
+                <div class="container">
+                    <h2 id="roadmap-heading">Roadmap</h2>
+                    <p>
+                        Current Security Rating: 8.5/10 (Targeting 10/10 by Q2
+                        2026 — see
+                        <a href="/security-roadmap.md">full security plan</a>).
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Done:</strong> Double Ratchet, X3DH, iOS
+                            client, Rust server, core extraction foundation.
+                        </li>
+                        <li>
+                            <strong>In Progress:</strong> Core unification
+                            (separate Rust repo), session persistence, profiles,
+                            critical bug fixes.
+                        </li>
+                        <li>
+                            <strong>Q1 2026:</strong> Android client, push
+                            notifications, file attachments, testing &
+                            hardening.
+                        </li>
+                        <li>
+                            <strong>Q2-Q3 2026:</strong> Full post-quantum
+                            cryptography (ML-KEM/ML-DSA hybrids), performance
+                            optimization.
+                        </li>
+                        <li>
+                            <strong>Q3-Q4 2026:</strong> Web/PWA & desktop
+                            clients (macOS/Windows/Linux).
+                        </li>
+                        <li>
+                            <strong>Q4 2026 - Q1 2027:</strong> Basic controlled
+                            federation (closed servers), group chats (MLS).
+                        </li>
+                        <li>
+                            <strong>Q2 2027+:</strong> Voice/video calls,
+                            enhanced privacy (sealed sender, disappearing
+                            messages), backups & sync.
+                        </li>
+                    </ul>
+                    <p>
+                        See
+                        <a href="/development-roadmap.md"
+                            >detailed development roadmap</a
+                        >
+                        for more.
+                    </p>
+                </div>
+            </section>
+
+            <section aria-labelledby="get-involved-heading">
+                <div class="container">
+                    <h2 id="get-involved-heading">Get Involved</h2>
+                    <p>
+                        Open-source under MIT License. Contribute to privacy
+                        tech — no experience required for good first issues!
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="https://github.com/maxeliseyev/konstruct"
+                                >GitHub Repo</a
+                            >
+                            — Star, fork, submit PRs (Rust, Swift, or docs).
+                        </li>
+                        <li>
+                            <a
+                                href="/contact.html?userId=example&username=maxeliseyev"
+                                >Add as Contact</a
+                            >
+                            — Test the beta.
+                        </li>
+                        <li>
+                            Join discussions on X:
+                            <a href="https://x.com/maxeliseyev">@maxeliseyev</a>
+                            or Reddit r/privacy.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer role="contentinfo">
+            <div class="container">
+                <p>
+                    Built with Rust, Swift, and privacy in mind.<br />
+                    Open-source · MIT License
+                </p>
+            </div>
+        </footer>
+
+        <!-- Structured Data (JSON-LD) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "Konstruct Messenger",
+                "applicationCategory": "CommunicationApplication",
+                "operatingSystem": "iOS, Android, Web",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "description": "Federated, post-quantum ready, minimalist hybrid messenger and email with end-to-end encryption.",
+                "featureList": [
+                    "End-to-end encryption by default",
+                    "Forward secrecy",
+                    "Post-quantum readiness",
+                    "Federation support",
+                    "Hybrid chat & email",
+                    "Lightweight Rust server",
+                    "Zen UI without notifications"
+                ],
+                "author": {
+                    "@type": "Person",
+                    "name": "Max Eliseyev",
+                    "url": "https://x.com/maxeliseyev"
+                }
+            }
+        </script>
+    </body>
 </html>
