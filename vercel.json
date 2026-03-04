@@ -3,6 +3,10 @@
     {
       "source": "/c/:userId",
       "destination": "/contact.html?userId=:userId"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
     }
   ],
   "headers": [
