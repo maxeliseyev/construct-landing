@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>
-            Konstruct - Privacy-First Secure Messenger with Post-Quantum Encryption
+            Konstruct - Privacy-First Secure Messenger with Post-Quantum
+            Encryption
         </title>
         <meta
             name="description"
@@ -79,11 +80,12 @@
             <div class="container">
                 <h1>Konstruct</h1>
                 <p>
-                    Privacy is a fundamental human right, not a luxury feature. 
-                    Konstruct is a professional-grade encrypted messenger built on proven 
-                    cryptography (Signal Protocol) with quantum-resistant protection. 
-                    The internet must remain a free space for information exchange, 
-                    without ideological censorship or mass surveillance.
+                    Privacy is a fundamental human right, not a luxury feature.
+                    Konstruct is a professional-grade encrypted messenger built
+                    on proven cryptography (Signal Protocol) with
+                    quantum-resistant protection. The internet must remain a
+                    free space for information exchange, without ideological
+                    censorship or mass surveillance.
                 </p>
 
                 <div class="badges">
@@ -101,26 +103,33 @@
                 <div class="container">
                     <h2 id="about-heading">Our Mission</h2>
                     <p>
-                        <strong>Privacy and security are not optional.</strong> In an era of mass surveillance, 
-                        data breaches, and emerging quantum computing threats, communication privacy 
-                        is more critical than ever.
+                        <strong>Privacy and security are not optional.</strong>
+                        In an era of mass surveillance, data breaches, and
+                        emerging quantum computing threats, communication
+                        privacy is more critical than ever.
                     </p>
                     <p>
-                        Konstruct is built on <strong>Signal Protocol</strong> — the same battle-tested 
-                        end-to-end encryption used by Signal, WhatsApp, and others. We've enhanced it 
-                        with <strong>post-quantum cryptography</strong> (Kyber + Dilithium), making it 
-                        resistant to future quantum computer attacks.
+                        Konstruct is built on <strong>Signal Protocol</strong> —
+                        the same battle-tested end-to-end encryption used by
+                        Signal, WhatsApp, and others. We've enhanced it with
+                        <strong>post-quantum cryptography</strong> (Kyber +
+                        Dilithium), making it resistant to future quantum
+                        computer attacks.
                     </p>
                     <p>
-                        Unlike centralized platforms, Konstruct is <strong>federated</strong> — 
-                        you control your data by choosing or running your own server 
-                        (<code>you@your-server.com</code>). The server is <strong>zero-knowledge</strong>: 
-                        it stores only encrypted messages, never your actual conversations or metadata.
+                        Unlike centralized platforms, Konstruct is
+                        <strong>federated</strong> — you control your data by
+                        choosing or running your own server
+                        (<code>you@your-server.com</code>). The server is
+                        <strong>zero-knowledge</strong>: it stores only user's
+                        public keys, never your actual conversations or
+                        metadata.
                     </p>
                     <p>
-                        <strong>The internet must remain free.</strong> No government, corporation, or 
-                        algorithm should control what you can say or who you can talk to. Konstruct 
-                        is built to protect that freedom.
+                        <strong>The internet must remain free.</strong> No
+                        government, corporation, or algorithm should control
+                        what you can say or who you can talk to. Konstruct is
+                        built to protect that freedom.
                     </p>
                 </div>
             </section>
@@ -129,43 +138,49 @@
                 <div class="container">
                     <h2 id="how-it-works-heading">Technical Architecture</h2>
                     <p>
-                        Konstruct uses <strong>gRPC with Protobuf</strong> for efficient, 
-                        type-safe communication — 50% less bandwidth than JSON-based messengers 
-                        and ~100ms delivery latency. The architecture is built on microservices 
-                        for horizontal scalability and fault isolation.
+                        Konstruct uses <strong>gRPC with Protobuf</strong> for
+                        efficient, type-safe communication — 50% less bandwidth
+                        than JSON-based messengers and ~100ms delivery latency.
+                        The architecture is built on microservices for
+                        horizontal scalability and fault isolation.
                     </p>
                     <h3>Cryptography Stack</h3>
                     <ul>
                         <li>
-                            <strong>Signal Protocol (Double Ratchet):</strong> Industry-standard 
-                            end-to-end encryption with forward secrecy and future secrecy
+                            <strong>Signal Protocol (Double Ratchet):</strong>
+                            Industry-standard end-to-end encryption with forward
+                            secrecy and future secrecy
                         </li>
                         <li>
-                            <strong>Post-Quantum Hybrid:</strong> X25519 + Kyber1024 for key 
-                            exchange, Ed25519 + Dilithium for signatures (NIST-standardized algorithms)
+                            <strong>Post-Quantum Hybrid:</strong> X25519 +
+                            Kyber1024 for key exchange, Ed25519 + Dilithium for
+                            signatures (NIST-standardized algorithms)
                         </li>
                         <li>
-                            <strong>Zero-Knowledge Server:</strong> Messages are stored encrypted; 
-                            server cannot decrypt content or metadata
+                            <strong>Zero-Knowledge Server:</strong> Messages are
+                            stored encrypted; server cannot decrypt content or
+                            metadata
                         </li>
                         <li>
-                            <strong>Crypto Agility:</strong> Protocol versioning allows seamless 
-                            algorithm upgrades without app rebuilds
+                            <strong>Crypto Agility:</strong> Protocol versioning
+                            allows seamless algorithm upgrades without app
+                            rebuilds
                         </li>
                     </ul>
                     <h3>Infrastructure</h3>
                     <ul>
                         <li>
-                            <strong>Rust Backend:</strong> Memory-safe, high-performance server 
-                            (~100MB RAM footprint)
+                            <strong>Rust Backend:</strong> Memory-safe,
+                            high-performance server (~100MB RAM footprint)
                         </li>
                         <li>
-                            <strong>Federation Support:</strong> Self-host or use trusted providers 
-                            with email-like addressing
+                            <strong>Federation Support:</strong> Self-host or
+                            use trusted providers with email-like addressing
                         </li>
                         <li>
-                            <strong>Ephemeral Storage:</strong> Messages auto-delete after 48 hours 
-                            (configurable), no long-term server storage
+                            <strong>Ephemeral Storage:</strong> Messages
+                            auto-delete after 48 hours (configurable), no
+                            long-term server storage
                         </li>
                     </ul>
                 </div>
@@ -259,7 +274,9 @@
                                     <td>Yes</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><strong>Konstruct</strong></th>
+                                    <th scope="row">
+                                        <strong>Konstruct</strong>
+                                    </th>
                                     <td>Yes</td>
                                     <td>Yes</td>
                                     <td><strong>Production</strong></td>
@@ -268,7 +285,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--fg-muted);">
+                        <p
+                            style="
+                                margin-top: 1rem;
+                                font-size: 0.875rem;
+                                color: var(--fg-muted);
+                            "
+                        >
                             * Telegram E2EE only in "Secret Chats", not default
                         </p>
                     </div>
@@ -280,45 +303,52 @@
                     <h2 id="roadmap-heading">Development Roadmap</h2>
                     <ul>
                         <li>
-                            <strong>Q1 2026 (Current):</strong> gRPC/Protobuf migration, 
-                            post-quantum cryptography implementation (Kyber + Dilithium), 
-                            iOS client refinement
+                            <strong>Q1 2026 (Current):</strong> gRPC/Protobuf
+                            migration, post-quantum cryptography implementation
+                            (Kyber + Dilithium), iOS client refinement
                         </li>
                         <li>
-                            <strong>Q2 2026:</strong> MLS group chats, Android client, 
-                            federation beta testing
+                            <strong>Q2 2026:</strong> MLS group chats, Android
+                            client, federation beta testing
                         </li>
                         <li>
-                            <strong>Q3 2026:</strong> WebRTC voice/video calls, 
-                            sealed sender (metadata protection), performance optimization
+                            <strong>Q3 2026:</strong> WebRTC voice/video calls,
+                            sealed sender (metadata protection), performance
+                            optimization
                         </li>
                         <li>
-                            <strong>Q4 2026:</strong> Web/PWA client, desktop applications 
-                            (macOS, Windows, Linux), full federation launch
+                            <strong>Q4 2026:</strong> Web/PWA client, desktop
+                            applications (macOS, Windows, Linux), full
+                            federation launch
                         </li>
                         <li>
-                            <strong>2027+:</strong> Advanced privacy features (disappearing messages, 
-                            screenshot protection), enterprise features, third-party audits
+                            <strong>2027+:</strong> Advanced privacy features
+                            (disappearing messages, screenshot protection),
+                            enterprise features, third-party audits
                         </li>
                     </ul>
                     <p>
-                        <strong>Current Status:</strong> Production beta (iOS). Server handles 
-                        100K+ encrypted messages daily with 99.9% uptime.
+                        <strong>Current Status:</strong> Production beta (iOS).
+                        Server handles 100K+ encrypted messages daily with 99.9%
+                        uptime.
                     </p>
                 </div>
             </section>
 
             <section aria-labelledby="get-involved-heading">
                 <div class="container">
-                    <h2 id="get-involved-heading">Open Source & Contributions</h2>
+                    <h2 id="get-involved-heading">
+                        Open Source & Contributions
+                    </h2>
                     <p>
-                        Konstruct is fully open-source under the MIT License. We believe 
-                        privacy technology should be transparent and auditable by anyone.
+                        Konstruct is fully open-source under the MIT License. We
+                        believe privacy technology should be transparent and
+                        auditable by anyone.
                     </p>
                     <p>
-                        <strong>All contributions welcome</strong> — from code improvements to 
-                        security audits to documentation. Help us build privacy infrastructure 
-                        for everyone.
+                        <strong>All contributions welcome</strong> — from code
+                        improvements to security audits to documentation. Help
+                        us build privacy infrastructure for everyone.
                     </p>
                     <ul>
                         <li>
@@ -340,7 +370,9 @@
                             >
                         </li>
                         <li>
-                            <a href="https://x.com/maxeliseyev">Discussion & Updates: @maxeliseyev</a>
+                            <a href="https://x.com/maxeliseyev"
+                                >Discussion & Updates: @maxeliseyev</a
+                            >
                         </li>
                     </ul>
                 </div>
@@ -351,11 +383,14 @@
             <div class="container">
                 <p>
                     Built with Rust, Swift, and a commitment to privacy.<br />
-                    Open Source (MIT License) · No tracking · No ads · No compromises
+                    Open Source (MIT License) · No tracking · No ads · No
+                    compromises
                 </p>
-                <p style="margin-top: 1rem; font-size: 0.8125rem;">
+                <p style="margin-top: 1rem; font-size: 0.8125rem">
                     © 2026 Konstruct. Privacy is a right, not a privilege. ·
-                    <a href="/privacy" style="color: var(--fg-muted);">Privacy Policy</a>
+                    <a href="/privacy" style="color: var(--fg-muted)"
+                        >Privacy Policy</a
+                    >
                 </p>
             </div>
         </footer>
