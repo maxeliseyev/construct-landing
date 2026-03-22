@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/faq",
+      "destination": "/faq.html"
+    },
+    {
+      "source": "/crypto",
+      "destination": "/crypto.html"
+    },
+    {
       "source": "/c/:userId",
       "destination": "/contact.html?userId=:userId"
     },

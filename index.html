@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -78,22 +78,34 @@
     <body>
         <header>
             <div class="container">
+                <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem">
+                    <div class="lang-switcher" id="langSwitcher">
+                        <button onclick="setLang('en')" data-lang-btn="en">EN</button>
+                        <span class="lang-sep">|</span>
+                        <button onclick="setLang('ru')" data-lang-btn="ru">RU</button>
+                    </div>
+                </div>
                 <h1>Konstruct</h1>
                 <p>
-                    Privacy is a fundamental human right, not a luxury feature.
+                    <span class="en">Privacy is a fundamental human right, not a luxury feature.
                     Konstruct is a professional-grade encrypted messenger built
                     on proven cryptography (Signal Protocol) with
                     quantum-resistant protection. The internet must remain a
                     free space for information exchange, without ideological
-                    censorship or mass surveillance.
+                    censorship or mass surveillance.</span>
+                    <span class="ru">Приватность — фундаментальное право человека, а не платная функция.
+                    Construct — профессиональный зашифрованный мессенджер, построенный на проверенной
+                    криптографии (Signal Protocol) с постквантовой защитой. Интернет должен оставаться
+                    свободным пространством для обмена информацией — без идеологической цензуры и
+                    массовой слежки.</span>
                 </p>
 
                 <div class="badges">
-                    <span class="badge">End-to-End Encrypted</span>
-                    <span class="badge">Post-Quantum Ready</span>
-                    <span class="badge">Federated Architecture</span>
+                    <span class="badge"><span class="en">End-to-End Encrypted</span><span class="ru">Сквозное шифрование</span></span>
+                    <span class="badge"><span class="en">Post-Quantum Ready</span><span class="ru">Постквантовая защита</span></span>
+                    <span class="badge"><span class="en">Federated Architecture</span><span class="ru">Федеративная архитектура</span></span>
                     <span class="badge">Zero-Knowledge</span>
-                    <span class="badge">Open Source</span>
+                    <span class="badge"><span class="en">Open Source</span><span class="ru">Открытый исходный код</span></span>
                 </div>
             </div>
         </header>
@@ -101,86 +113,122 @@
         <main id="main-content">
             <section aria-labelledby="about-heading">
                 <div class="container">
-                    <h2 id="about-heading">Our Mission</h2>
+                    <h2 id="about-heading"><span class="en">Our Mission</span><span class="ru">Наша миссия</span></h2>
                     <p>
-                        <strong>Privacy and security are not optional.</strong>
+                        <span class="en"><strong>Privacy and security are not optional.</strong>
                         In an era of mass surveillance, data breaches, and
                         emerging quantum computing threats, communication
-                        privacy is more critical than ever.
+                        privacy is more critical than ever.</span>
+                        <span class="ru"><strong>Приватность и безопасность — не опции.</strong>
+                        В эпоху массовой слежки, утечек данных и угроз квантовых вычислений
+                        конфиденциальность коммуникаций важнее чем когда-либо.</span>
                     </p>
                     <p>
-                        Konstruct is built on <strong>Signal Protocol</strong> —
+                        <span class="en">Konstruct is built on <strong>Signal Protocol</strong> —
                         the same battle-tested end-to-end encryption used by
                         Signal, WhatsApp, and others. We've enhanced it with
                         <strong>post-quantum cryptography</strong> (Kyber +
                         Dilithium), making it resistant to future quantum
-                        computer attacks.
+                        computer attacks.</span>
+                        <span class="ru">Construct построен на <strong>Signal Protocol</strong> —
+                        той же проверенной в боевых условиях технологии, что используют Signal, WhatsApp
+                        и другие. Мы расширили её <strong>постквантовой криптографией</strong>
+                        (Kyber + Dilithium), делая систему устойчивой к будущим атакам квантовых
+                        компьютеров.</span>
                     </p>
                     <p>
-                        Unlike centralized platforms, Konstruct is
+                        <span class="en">Unlike centralized platforms, Konstruct is
                         <strong>federated</strong> — you control your data by
                         choosing or running your own server
                         (<code>you@your-server.com</code>). The server is
                         <strong>zero-knowledge</strong>: it stores only user's
                         public keys, never your actual conversations or
-                        metadata.
+                        metadata.</span>
+                        <span class="ru">В отличие от централизованных платформ, Construct
+                        <strong>федеративный</strong> — вы контролируете свои данные, выбирая или
+                        запуская собственный сервер (<code>you@your-server.com</code>). Сервер
+                        работает по принципу <strong>zero-knowledge</strong>: хранит только публичные
+                        ключи пользователей, но никогда не видит самих разговоров или метаданных.</span>
                     </p>
                     <p>
-                        <strong>The internet must remain free.</strong> No
+                        <span class="en"><strong>The internet must remain free.</strong> No
                         government, corporation, or algorithm should control
                         what you can say or who you can talk to. Konstruct is
-                        built to protect that freedom.
+                        built to protect that freedom.</span>
+                        <span class="ru"><strong>Интернет должен оставаться свободным.</strong>
+                        Ни правительство, ни корпорация, ни алгоритм не должны контролировать что ты
+                        говоришь и с кем общаешься. Construct создан чтобы защитить эту свободу.</span>
                     </p>
                 </div>
             </section>
 
             <section aria-labelledby="how-it-works-heading">
                 <div class="container">
-                    <h2 id="how-it-works-heading">Technical Architecture</h2>
+                    <h2 id="how-it-works-heading"><span class="en">Technical Architecture</span><span class="ru">Техническая архитектура</span></h2>
                     <p>
-                        Konstruct uses <strong>gRPC with Protobuf</strong> for
+                        <span class="en">Konstruct uses <strong>gRPC with Protobuf</strong> for
                         efficient, type-safe communication — 50% less bandwidth
                         than JSON-based messengers and ~100ms delivery latency.
                         The architecture is built on microservices for
-                        horizontal scalability and fault isolation.
+                        horizontal scalability and fault isolation.</span>
+                        <span class="ru">Construct использует <strong>gRPC с Protobuf</strong> для
+                        эффективной типобезопасной передачи данных — на 50% меньше трафика по сравнению
+                        с JSON-мессенджерами и задержка доставки ~100ms. Архитектура построена на
+                        микросервисах для горизонтального масштабирования и изоляции отказов.</span>
                     </p>
-                    <h3>Cryptography Stack</h3>
+                    <h3><span class="en">Cryptography Stack</span><span class="ru">Стек криптографии</span></h3>
                     <ul>
                         <li>
-                            <strong>Signal Protocol (Double Ratchet):</strong>
+                            <span class="en"><strong>Signal Protocol (Double Ratchet):</strong>
                             Industry-standard end-to-end encryption with forward
-                            secrecy and future secrecy
+                            secrecy and future secrecy</span>
+                            <span class="ru"><strong>Signal Protocol (Double Ratchet):</strong>
+                            отраслевой стандарт сквозного шифрования с прямой и обратной секретностью</span>
                         </li>
                         <li>
-                            <strong>Post-Quantum Hybrid:</strong> X25519 +
+                            <span class="en"><strong>Post-Quantum Hybrid:</strong> X25519 +
                             Kyber1024 for key exchange, Ed25519 + Dilithium for
-                            signatures (NIST-standardized algorithms)
+                            signatures (NIST-standardized algorithms)</span>
+                            <span class="ru"><strong>Постквантовый гибрид:</strong> X25519 +
+                            Kyber1024 для обмена ключами, Ed25519 + Dilithium для подписей
+                            (стандарты NIST)</span>
                         </li>
                         <li>
-                            <strong>Zero-Knowledge Server:</strong> Messages are
+                            <span class="en"><strong>Zero-Knowledge Server:</strong> Messages are
                             stored encrypted; server cannot decrypt content or
-                            metadata
+                            metadata</span>
+                            <span class="ru"><strong>Zero-Knowledge сервер:</strong> сообщения
+                            зашифрованы; сервер не может расшифровать ни содержимое, ни метаданные</span>
                         </li>
                         <li>
-                            <strong>Crypto Agility:</strong> Protocol versioning
+                            <span class="en"><strong>Crypto Agility:</strong> Protocol versioning
                             allows seamless algorithm upgrades without app
-                            rebuilds
+                            rebuilds</span>
+                            <span class="ru"><strong>Крипто-эластичность:</strong> версионирование
+                            протокола позволяет обновлять алгоритмы без пересборки приложения</span>
                         </li>
                     </ul>
-                    <h3>Infrastructure</h3>
+                    <h3><span class="en">Infrastructure</span><span class="ru">Инфраструктура</span></h3>
                     <ul>
                         <li>
-                            <strong>Rust Backend:</strong> Memory-safe,
-                            high-performance server (~100MB RAM footprint)
+                            <span class="en"><strong>Rust Backend:</strong> Memory-safe,
+                            high-performance server (~100MB RAM footprint)</span>
+                            <span class="ru"><strong>Бэкенд на Rust:</strong> безопасный по памяти
+                            высокопроизводительный сервер (~100MB RAM)</span>
                         </li>
                         <li>
-                            <strong>Federation Support:</strong> Self-host or
-                            use trusted providers with email-like addressing
+                            <span class="en"><strong>Federation Support:</strong> Self-host or
+                            use trusted providers with email-like addressing</span>
+                            <span class="ru"><strong>Поддержка федерации:</strong> собственный хостинг
+                            или доверенные провайдеры с email-адресацией</span>
                         </li>
                         <li>
-                            <strong>Ephemeral Storage:</strong> Messages
+                            <span class="en"><strong>Ephemeral Storage:</strong> Messages
                             auto-delete after 48 hours (configurable), no
-                            long-term server storage
+                            long-term server storage</span>
+                            <span class="ru"><strong>Эфемерное хранение:</strong> сообщения
+                            автоматически удаляются через 48 часов (настраивается), долгосрочного
+                            хранения на сервере нет</span>
                         </li>
                     </ul>
                 </div>
@@ -188,37 +236,51 @@
 
             <section aria-labelledby="features-heading">
                 <div class="container">
-                    <h2 id="features-heading">Key Features</h2>
+                    <h2 id="features-heading"><span class="en">Key Features</span><span class="ru">Ключевые возможности</span></h2>
                     <ul>
                         <li>
-                            <strong>End-to-end encryption by default</strong> —
-                            servers see only encrypted blobs.
+                            <span class="en"><strong>End-to-end encryption by default</strong> —
+                            servers see only encrypted blobs.</span>
+                            <span class="ru"><strong>Сквозное шифрование по умолчанию</strong> —
+                            серверы видят только зашифрованные данные.</span>
                         </li>
                         <li>
-                            <strong>Forward secrecy</strong> — past messages
-                            stay secure even if keys leak.
+                            <span class="en"><strong>Forward secrecy</strong> — past messages
+                            stay secure even if keys leak.</span>
+                            <span class="ru"><strong>Прямая секретность</strong> — прошлые сообщения
+                            остаются защищёнными даже при компрометации ключей.</span>
                         </li>
                         <li>
-                            <strong>Post-quantum readiness</strong> — hybrid
+                            <span class="en"><strong>Post-quantum readiness</strong> — hybrid
                             X25519 + Kyber for key exchange, Ed25519 + Dilithium
-                            for signatures.
+                            for signatures.</span>
+                            <span class="ru"><strong>Постквантовая готовность</strong> — гибридные
+                            X25519 + Kyber для обмена ключами, Ed25519 + Dilithium для подписей.</span>
                         </li>
                         <li>
-                            <strong>Federation</strong> — run your own server or
-                            use a trusted provider, with email-like addressing.
+                            <span class="en"><strong>Federation</strong> — run your own server or
+                            use a trusted provider, with email-like addressing.</span>
+                            <span class="ru"><strong>Федерация</strong> — собственный сервер или
+                            доверенный провайдер с email-подобной адресацией.</span>
                         </li>
                         <li>
-                            <strong>Lightweight server</strong> — Rust-based,
-                            minimal resource use, easy self-hosting.
+                            <span class="en"><strong>Lightweight server</strong> — Rust-based,
+                            minimal resource use, easy self-hosting.</span>
+                            <span class="ru"><strong>Лёгкий сервер</strong> — на Rust, минимальное
+                            потребление ресурсов, простой самостоятельный хостинг.</span>
                         </li>
                         <li>
-                            <strong>Zen UI</strong> — no notification spam, no
-                            social noise, focus on calm interaction.
+                            <span class="en"><strong>Zen UI</strong> — no notification spam, no
+                            social noise, focus on calm interaction.</span>
+                            <span class="ru"><strong>Дзен-интерфейс</strong> — никакого спама
+                            уведомлений, никакого социального шума, только спокойное общение.</span>
                         </li>
                         <li>
-                            <strong>Hybrid Delivery</strong> — Real-time via
+                            <span class="en"><strong>Hybrid Delivery</strong> — Real-time via
                             WebSocket, fallback to REST/polling, background
-                            pushes.
+                            pushes.</span>
+                            <span class="ru"><strong>Гибридная доставка</strong> — реальное время
+                            через WebSocket, резервный REST/polling, фоновые пуши.</span>
                         </li>
                     </ul>
                 </div>
@@ -226,18 +288,18 @@
 
             <section aria-labelledby="comparison-heading">
                 <div class="container">
-                    <h2 id="comparison-heading">Industry Comparison</h2>
+                    <h2 id="comparison-heading"><span class="en">Industry Comparison</span><span class="ru">Сравнение с другими</span></h2>
 
                     <div role="region" aria-labelledby="comparison-heading">
                         <table role="table" aria-label="Messenger comparison">
                             <thead>
                                 <tr>
-                                    <th scope="col">Platform</th>
-                                    <th scope="col">Federated</th>
-                                    <th scope="col">E2EE Default</th>
-                                    <th scope="col">Post-Quantum</th>
-                                    <th scope="col">Protocol</th>
-                                    <th scope="col">Open Source</th>
+                                    <th scope="col"><span class="en">Platform</span><span class="ru">Платформа</span></th>
+                                    <th scope="col"><span class="en">Federated</span><span class="ru">Федеративный</span></th>
+                                    <th scope="col"><span class="en">E2EE Default</span><span class="ru">E2EE по умолч.</span></th>
+                                    <th scope="col"><span class="en">Post-Quantum</span><span class="ru">Постквантовый</span></th>
+                                    <th scope="col"><span class="en">Protocol</span><span class="ru">Протокол</span></th>
+                                    <th scope="col"><span class="en">Open Source</span><span class="ru">Открытый код</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -292,7 +354,8 @@
                                 color: var(--fg-muted);
                             "
                         >
-                            * Telegram E2EE only in "Secret Chats", not default
+                            <span class="en">* Telegram E2EE only in "Secret Chats", not default</span>
+                            <span class="ru">* E2EE в Telegram только в «Секретных чатах», не по умолчанию</span>
                         </p>
                     </div>
                 </div>
@@ -300,37 +363,51 @@
 
             <section aria-labelledby="roadmap-heading">
                 <div class="container">
-                    <h2 id="roadmap-heading">Development Roadmap</h2>
+                    <h2 id="roadmap-heading"><span class="en">Development Roadmap</span><span class="ru">Дорожная карта</span></h2>
                     <ul>
                         <li>
-                            <strong>Q1 2026 (Current):</strong> gRPC/Protobuf
+                            <span class="en"><strong>Q1 2026 (Current):</strong> gRPC/Protobuf
                             migration, post-quantum cryptography implementation
-                            (Kyber + Dilithium), iOS client refinement
+                            (Kyber + Dilithium), iOS client refinement</span>
+                            <span class="ru"><strong>Q1 2026 (текущий):</strong> миграция на
+                            gRPC/Protobuf, внедрение постквантовой криптографии (Kyber + Dilithium),
+                            доработка iOS-клиента</span>
                         </li>
                         <li>
-                            <strong>Q2 2026:</strong> MLS group chats, Android
-                            client, federation beta testing
+                            <span class="en"><strong>Q2 2026:</strong> MLS group chats, Android
+                            client, federation beta testing</span>
+                            <span class="ru"><strong>Q2 2026:</strong> MLS групповые чаты,
+                            Android-клиент, бета-тестирование федерации</span>
                         </li>
                         <li>
-                            <strong>Q3 2026:</strong> WebRTC voice/video calls,
+                            <span class="en"><strong>Q3 2026:</strong> WebRTC voice/video calls,
                             sealed sender (metadata protection), performance
-                            optimization
+                            optimization</span>
+                            <span class="ru"><strong>Q3 2026:</strong> WebRTC голосовые/видеозвонки,
+                            sealed sender (защита метаданных), оптимизация производительности</span>
                         </li>
                         <li>
-                            <strong>Q4 2026:</strong> Web/PWA client, desktop
+                            <span class="en"><strong>Q4 2026:</strong> Web/PWA client, desktop
                             applications (macOS, Windows, Linux), full
-                            federation launch
+                            federation launch</span>
+                            <span class="ru"><strong>Q4 2026:</strong> Web/PWA клиент,
+                            десктоп-приложения (macOS, Windows, Linux), полный запуск федерации</span>
                         </li>
                         <li>
-                            <strong>2027+:</strong> Advanced privacy features
+                            <span class="en"><strong>2027+:</strong> Advanced privacy features
                             (disappearing messages, screenshot protection),
-                            enterprise features, third-party audits
+                            enterprise features, third-party audits</span>
+                            <span class="ru"><strong>2027+:</strong> Расширенные функции приватности
+                            (исчезающие сообщения, защита от скриншотов), корпоративные функции,
+                            сторонние аудиты</span>
                         </li>
                     </ul>
                     <p>
-                        <strong>Current Status:</strong> Production beta (iOS).
+                        <span class="en"><strong>Current Status:</strong> Production beta (iOS).
                         Server handles 100K+ encrypted messages daily with 99.9%
-                        uptime.
+                        uptime.</span>
+                        <span class="ru"><strong>Текущий статус:</strong> Production beta (iOS).
+                        Сервер обрабатывает 100K+ зашифрованных сообщений в день при uptime 99,9%.</span>
                     </p>
                 </div>
             </section>
@@ -338,40 +415,47 @@
             <section aria-labelledby="get-involved-heading">
                 <div class="container">
                     <h2 id="get-involved-heading">
-                        Open Source & Contributions
+                        <span class="en">Open Source &amp; Contributions</span>
+                        <span class="ru">Открытый исходный код и участие</span>
                     </h2>
                     <p>
-                        Konstruct is fully open-source under the MIT License. We
+                        <span class="en">Konstruct is fully open-source under the MIT License. We
                         believe privacy technology should be transparent and
-                        auditable by anyone.
+                        auditable by anyone.</span>
+                        <span class="ru">Construct полностью открытый под лицензией MIT. Мы убеждены,
+                        что технологии приватности должны быть прозрачными и доступными для аудита
+                        любым желающим.</span>
                     </p>
                     <p>
-                        <strong>All contributions welcome</strong> — from code
+                        <span class="en"><strong>All contributions welcome</strong> — from code
                         improvements to security audits to documentation. Help
-                        us build privacy infrastructure for everyone.
+                        us build privacy infrastructure for everyone.</span>
+                        <span class="ru"><strong>Любые вклады приветствуются</strong> — от улучшений
+                        кода до аудита безопасности и документации. Помогите нам строить
+                        инфраструктуру приватности для всех.</span>
                     </p>
                     <ul>
                         <li>
                             <a
                                 href="https://github.com/maximeliseyev/construct-server"
-                                >Server (Rust)</a
+                                ><span class="en">Server (Rust)</span><span class="ru">Сервер (Rust)</span></a
                             >
                         </li>
                         <li>
                             <a
                                 href="https://github.com/maximeliseyev/construct-core"
-                                >Cryptography Core (Rust)</a
+                                ><span class="en">Cryptography Core (Rust)</span><span class="ru">Ядро криптографии (Rust)</span></a
                             >
                         </li>
                         <li>
                             <a
                                 href="https://github.com/maximeliseyev/construct-messenger"
-                                >iOS Client (Swift)</a
+                                ><span class="en">iOS Client (Swift)</span><span class="ru">iOS-клиент (Swift)</span></a
                             >
                         </li>
                         <li>
                             <a href="https://x.com/maxeliseyev"
-                                >Discussion & Updates: @maxeliseyev</a
+                                >Discussion &amp; Updates: @maxeliseyev</a
                             >
                         </li>
                     </ul>
@@ -382,14 +466,18 @@
         <footer role="contentinfo">
             <div class="container">
                 <p>
-                    Built with Rust, Swift, and a commitment to privacy.<br />
+                    <span class="en">Built with Rust, Swift, and a commitment to privacy.<br />
                     Open Source (MIT License) · No tracking · No ads · No
-                    compromises
+                    compromises</span>
+                    <span class="ru">Создан на Rust, Swift и принципах приватности.<br />
+                    Открытый исходный код (MIT) · Без слежки · Без рекламы · Без компромиссов</span>
                 </p>
                 <p style="margin-top: 1rem; font-size: 0.8125rem">
-                    © 2026 Konstruct. Privacy is a right, not a privilege. ·
+                    <span class="en">© 2026 Konstruct. Privacy is a right, not a privilege.</span>
+                    <span class="ru">© 2026 Konstruct. Приватность — это право, а не привилегия.</span>
+                    ·
                     <a href="/privacy" style="color: var(--fg-muted)"
-                        >Privacy Policy</a
+                        ><span class="en">Privacy Policy</span><span class="ru">Политика конфиденциальности</span></a
                     >
                 </p>
             </div>
@@ -424,6 +512,25 @@
                     "url": "https://x.com/maxeliseyev"
                 }
             }
+        </script>
+
+        <script>
+        function setLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            document.documentElement.setAttribute('lang', lang);
+            localStorage.setItem('construct-lang', lang);
+            document.querySelectorAll('[data-lang-btn]').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.langBtn === lang);
+            });
+            document.title = lang === 'ru'
+                ? 'Konstruct — Мессенджер с постквантовым шифрованием'
+                : 'Konstruct - Privacy-First Secure Messenger with Post-Quantum Encryption';
+        }
+        (function() {
+            var saved = localStorage.getItem('construct-lang');
+            var lang = saved || (navigator.language && navigator.language.toLowerCase().startsWith('ru') ? 'ru' : 'en');
+            setLang(lang);
+        })();
         </script>
     </body>
 </html>
