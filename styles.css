@@ -410,3 +410,9 @@ section[aria-labelledby="features-heading"] ul li::before {
   letter-spacing: -0.01em;
 }
 .nav-logo:hover { color: var(--accent); }
+
+/* Language visibility — hides inactive language content */
+html[data-lang="en"] .ru,
+html[data-lang="ru"] .en {
+  display: none !important;
+}
