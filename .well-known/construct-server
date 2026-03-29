@@ -18,6 +18,13 @@
     "primary": "ice.ams.konstruct.cc:443",
     "relays": [
       "ice.msk.konstruct.cc:9443"
+    ],
+    "relay_regions": [
+      {
+        "tz_offset_min": 3,
+        "tz_offset_max": 3,
+        "preferred_relays": ["ice.msk.konstruct.cc:9443"]
+      }
     ]
   },
   "capabilities": {
