@@ -1,11 +1,39 @@
 {
-  "version": "1.0",
+  "capabilities": {
+    "max_file_size_bytes": 104857600,
+    "max_message_size_bytes": 65536,
+    "supports_grpc_web": true,
+    "supports_pq_crypto": true,
+    "supports_streaming": true
+  },
+  "grpc_endpoint": "ams.konstruct.cc:443",
+  "ice": {
+    "primary": "ice.ams.konstruct.cc:443",
+    "relays": [
+      {
+        "addr": "158.160.140.67",
+        "domain": "ice.msk.konstruct.cc",
+        "id": "msk",
+        "port": 443,
+        "region": {
+          "tz_offset_max": 3,
+          "tz_offset_min": 3
+        },
+        "sni": "storage.yandexcloud.net",
+        "spki_sha256": "13b9accc06c95ecf9600173dcd574b3b41227de496702b6e8f388e540bff2a19"
+      }
+    ]
+  },
+  "limits": {
+    "max_media_size_bytes": 104857600,
+    "max_message_size_bytes": 65536,
+    "rate_limit_messages_per_hour": 1000
+  },
   "protocol": "grpc",
   "server": {
     "domain": "ams.konstruct.cc",
     "version": "0.9.12"
   },
-  "grpc_endpoint": "ams.konstruct.cc:443",
   "services": [
     "auth.AuthService",
     "user.UserService",
@@ -14,29 +42,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "ice": {
-    "primary": "ice.ams.konstruct.cc:443",
-    "relays": [
-      "ice.msk.konstruct.cc:9443"
-    ],
-    "relay_regions": [
-      {
-        "tz_offset_min": 3,
-        "tz_offset_max": 3,
-        "preferred_relays": ["ice.msk.konstruct.cc:9443"]
-      }
-    ]
-  },
-  "capabilities": {
-    "max_message_size_bytes": 65536,
-    "max_file_size_bytes": 104857600,
-    "supports_streaming": true,
-    "supports_grpc_web": true,
-    "supports_pq_crypto": true
-  },
-  "limits": {
-    "max_message_size_bytes": 65536,
-    "max_media_size_bytes": 104857600,
-    "rate_limit_messages_per_hour": 1000
-  }
+  "signature": "ed25519:6uWJeAS4DhPfbYiowzGFcjWajOvNQBZOko2HLDTwwhnRH-0DGF3gaGtQ5Fr2A3-kgMWWgsbszMpEJWYWah1XBA",
+  "signed_at": "2026-04-08T17:20:56Z",
+  "version": "1.1"
 }
