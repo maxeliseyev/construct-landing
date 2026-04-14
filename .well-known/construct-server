@@ -20,7 +20,7 @@
           "tz_offset_min": 3
         },
         "sni": "storage.yandexcloud.net",
-        "spki_sha256": "13b9accc06c95ecf9600173dcd574b3b41227de496702b6e8f388e540bff2a19"
+        "spki_sha256": "ce2bbfcac1fffab1f4f41ee540aee2dea92c523f7768264aeb87184bf8bfa723"
       }
     ]
   },
@@ -42,7 +42,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "signature": "ed25519:6uWJeAS4DhPfbYiowzGFcjWajOvNQBZOko2HLDTwwhnRH-0DGF3gaGtQ5Fr2A3-kgMWWgsbszMpEJWYWah1XBA",
-  "signed_at": "2026-04-08T17:20:56Z",
+  "signature": "ed25519:2d7axNw_e_r8iQ3EBqXWMbBtDtJioJZ0LXUBgR_Q0o5NuGyhPhiETNZcNxypSmV-J2I9BCnw67M0X6Hzd0v4CQ",
+  "signed_at": "2026-04-14T15:05:24Z",
   "version": "1.1"
 }
