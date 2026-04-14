@@ -1,0 +1,125 @@
+name: Update relay SPKI
+
+# Triggers:
+#   1. Automatic: daily at 03:00 UTC (catches cert rotations even without a relay push)
+#   2. Manual: workflow_dispatch from GitHub UI
+#   3. Webhook: repository_dispatch from construct-relay after a new deploy
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [relay_cert_rotated]
+
+jobs:
+  update-spki:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch live SPKI — MSK relay (158.160.140.67)
+        id: spki_msk
+        run: |
+          SPKI=$(echo | openssl s_client \
+            -connect 158.160.140.67:443 \
+            -servername storage.yandexcloud.net \
+            -timeout 10 2>/dev/null \
+            | openssl x509 -pubkey -noout \
+            | openssl pkey -pubin -outform DER \
+            | openssl dgst -sha256 \
+            | awk '{print $2}')
+          if [[ -z "$SPKI" ]]; then
+            echo "❌ Failed to fetch SPKI from MSK relay — server unreachable?"
+            exit 1
+          fi
+          echo "spki=$SPKI" >> "$GITHUB_OUTPUT"
+          echo "MSK relay SPKI: $SPKI"
+
+      - name: Patch SPKI in config
+        run: |
+          python3 - '${{ steps.spki_msk.outputs.spki }}' <<'PYEOF'
+          import json, sys
+          spki_msk = sys.argv[1]
+          path = '.well-known/construct-server'
+          with open(path) as f:
+              data = json.load(f)
+          for relay in data.get('ice', {}).get('relays', []):
+              if relay.get('id') == 'msk':
+                  relay['spki_sha256'] = spki_msk
+          with open(path, 'w') as f:
+              json.dump(data, f, indent=2, sort_keys=True)
+              f.write('\n')
+          print(f"Patched MSK spki_sha256 → {spki_msk}")
+          PYEOF
+
+      - name: Re-sign config
+        env:
+          RELAY_SIGNING_KEY_PEM: ${{ secrets.RELAY_SIGNING_KEY_PEM }}
+        run: |
+          # Write key to ephemeral temp file — deleted in the same step
+          KEYFILE=$(mktemp)
+          chmod 600 "$KEYFILE"
+          printf '%s' "$RELAY_SIGNING_KEY_PEM" > "$KEYFILE"
+
+          CONFIG=".well-known/construct-server"
+
+          # Canonical JSON: remove "signature", update signed_at, sort keys, compact
+          CANONICAL=$(python3 - "$CONFIG" <<'PYEOF'
+          import json, sys
+          from datetime import datetime, timezone
+          with open(sys.argv[1]) as f:
+              data = json.load(f)
+          data.pop("signature", None)
+          data["signed_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          print(json.dumps(data, sort_keys=True, separators=(',', ':')), end='')
+          PYEOF
+          )
+
+          TMPFILE=$(mktemp)
+          printf '%s' "$CANONICAL" > "$TMPFILE"
+
+          SIG=$(openssl pkeyutl -sign -inkey "$KEYFILE" -in "$TMPFILE" \
+            | base64 | tr '+/' '-_' | tr -d '=\n')
+
+          # Write final file with signature
+          python3 - "$CONFIG" "$CANONICAL" "$SIG" <<'PYEOF'
+          import json, sys
+          config_path, canonical_str, sig = sys.argv[1], sys.argv[2], sys.argv[3]
+          data = json.loads(canonical_str)
+          data["signature"] = "ed25519:" + sig
+          with open(config_path, 'w') as f:
+              json.dump(data, f, indent=2, sort_keys=True)
+              f.write('\n')
+          PYEOF
+
+          # Cleanup — key never persists
+          rm -f "$KEYFILE" "$TMPFILE"
+          echo "✅ Config re-signed"
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet .well-known/construct-server; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "ℹ️ SPKI unchanged — no commit needed"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff .well-known/construct-server
+          fi
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .well-known/construct-server
+          git commit -m "chore(ice): auto-update relay SPKI
+
+          MSK: ${{ steps.spki_msk.outputs.spki }}
+
+          Live SPKI fetched and config re-signed by GitHub Actions.
+          Trigger: ${{ github.event_name }}"
+          git push
