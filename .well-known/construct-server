@@ -22,7 +22,7 @@
           "tz_offset_min": 3
         },
         "sni": "storage.yandexcloud.net",
-        "spki_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "spki_sha256": "ce2bbfcac1fffab1f4f41ee540aee2dea92c523f7768264aeb87184bf8bfa723"
       }
     ]
   },
@@ -45,6 +45,6 @@
     "media.MediaService"
   ],
   "signature": "ed25519:",
-  "signed_at": "2026-04-15T10:09:38Z",
+  "signed_at": "2026-04-15T10:17:51Z",
   "version": "1.1"
 }
