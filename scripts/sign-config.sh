@@ -42,7 +42,7 @@ PYEOF
 TMPFILE=$(mktemp)
 trap 'rm -f "$TMPFILE"' EXIT
 echo -n "$CANONICAL" > "$TMPFILE"
-SIG=$(openssl pkeyutl -sign -inkey "$PRIV" -in "$TMPFILE" \
+SIG=$(openssl pkeyutl -sign -inkey "$PRIV" -in "$TMPFILE" -rawin \
   | base64 | tr '+/' '-_' | tr -d '=\n')
 
 # Step 3: Write back with signature inserted

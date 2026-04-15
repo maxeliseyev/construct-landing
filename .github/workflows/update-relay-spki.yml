@@ -98,7 +98,7 @@ jobs:
           TMPFILE=$(mktemp)
           printf '%s' "$CANONICAL" > "$TMPFILE"
 
-          SIG=$(openssl pkeyutl -sign -inkey "$KEYFILE" -in "$TMPFILE" \
+          SIG=$(openssl pkeyutl -sign -inkey "$KEYFILE" -in "$TMPFILE" -rawin \
             | base64 | tr '+/' '-_' | tr -d '=\n')
 
           if [[ -z "$SIG" ]]; then
