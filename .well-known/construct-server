@@ -22,7 +22,9 @@
           "tz_offset_min": 3
         },
         "sni": "storage.yandexcloud.net",
-        "spki_sha256": "ce2bbfcac1fffab1f4f41ee540aee2dea92c523f7768264aeb87184bf8bfa723"
+        "spki_sha256": "ce2bbfcac1fffab1f4f41ee540aee2dea92c523f7768264aeb87184bf8bfa723",
+        "wt_host_header": "ice.msk.konstruct.cc",
+        "wt_path": "/construct-ice"
       }
     ]
   },
@@ -44,7 +46,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "signature": "ed25519:TLpbK7KDmdJz6qU2TSwEqaAmYcLr3VDaXqX-Yc2I0m42KI0Cefa_Wa8uQVSDif5rCFUt5jqcmYJwoBpYMcZsAw",
-  "signed_at": "2026-04-15T13:57:54Z",
+  "signature": "ed25519:jSMRdaljR7zQQMH0aoGiiwqeU9LDEOBaPkcFiBBmsdNhKiraT3-JCgfjXtr9PFu8EsYHOBWL5PJThyC2oJapBA",
+  "signed_at": "2026-04-15T14:00:40Z",
   "version": "1.1"
 }
