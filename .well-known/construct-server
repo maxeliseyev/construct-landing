@@ -1,4 +1,6 @@
 {
+  "bundle_signing_algorithm": "Ed25519",
+  "bundle_signing_key": "Hyr4916nXOQPAx7aoSWdDkO9UEsmAsiI7vSDlV0OY9k=",
   "capabilities": {
     "max_file_size_bytes": 104857600,
     "max_message_size_bytes": 65536,
@@ -42,7 +44,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "signature": "ed25519:",
-  "signed_at": "2026-04-15T04:03:01Z",
+  "signature": "ed25519:VkrH-ZoBSOVaj_m59PIL2k2_Fn1FZVbwQozNEk14IbujCmzgJWVngxhWgzaxpXrC7PTWzVCYdI3vS06E2el5Cg",
+  "signed_at": "2026-04-15T07:08:54Z",
   "version": "1.1"
 }
