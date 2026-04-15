@@ -71,9 +71,15 @@ jobs:
           RELAY_SIGNING_KEY_PEM: ${{ secrets.RELAY_SIGNING_KEY_PEM }}
         run: |
           # Write key to ephemeral temp file — deleted in the same step
+          if [[ -z "$RELAY_SIGNING_KEY_PEM" ]]; then
+            echo "❌ RELAY_SIGNING_KEY_PEM secret is not set"
+            exit 1
+          fi
+
           KEYFILE=$(mktemp)
           chmod 600 "$KEYFILE"
-          printf '%s' "$RELAY_SIGNING_KEY_PEM" > "$KEYFILE"
+          # Use echo to preserve newlines — printf '%s' strips them on some runners
+          echo "$RELAY_SIGNING_KEY_PEM" > "$KEYFILE"
 
           CONFIG=".well-known/construct-server"
 
@@ -94,6 +100,12 @@ jobs:
 
           SIG=$(openssl pkeyutl -sign -inkey "$KEYFILE" -in "$TMPFILE" \
             | base64 | tr '+/' '-_' | tr -d '=\n')
+
+          if [[ -z "$SIG" ]]; then
+            echo "❌ Signing failed — SIG is empty. Check RELAY_SIGNING_KEY_PEM format."
+            rm -f "$KEYFILE" "$TMPFILE"
+            exit 1
+          fi
 
           # Write final file with signature
           python3 - "$CONFIG" "$CANONICAL" "$SIG" <<'PYEOF'
