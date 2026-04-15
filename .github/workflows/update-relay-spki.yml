@@ -20,17 +20,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install cryptography
+        run: pip install cryptography --quiet
+
       - name: Fetch live SPKI — MSK relay (158.160.140.67)
         id: spki_msk
         run: |
-          SPKI=$(echo | openssl s_client \
-            -connect 158.160.140.67:443 \
-            -servername storage.yandexcloud.net \
-            -timeout 10 2>/dev/null \
-            | openssl x509 -pubkey -noout \
-            | openssl pkey -pubin -outform DER \
-            | openssl dgst -sha256 \
-            | awk '{print $2}')
+          SPKI=$(python3 - <<'PYEOF'
+          import ssl, socket, hashlib
+          from cryptography import x509
+          from cryptography.hazmat.primitives import serialization
+          ctx = ssl.create_default_context()
+          ctx.check_hostname = False
+          ctx.verify_mode = ssl.CERT_NONE
+          with socket.create_connection(("158.160.140.67", 443), timeout=10) as sock:
+              with ctx.wrap_socket(sock, server_hostname="storage.yandexcloud.net") as s:
+                  cert = x509.load_der_x509_certificate(s.getpeercert(binary_form=True))
+                  pub_der = cert.public_key().public_bytes(
+                      serialization.Encoding.DER,
+                      serialization.PublicFormat.SubjectPublicKeyInfo)
+                  print(hashlib.sha256(pub_der).hexdigest(), end='')
+          PYEOF
+          )
           if [[ -z "$SPKI" ]]; then
             echo "❌ Failed to fetch SPKI from MSK relay — server unreachable?"
             exit 1
