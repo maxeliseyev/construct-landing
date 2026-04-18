@@ -46,7 +46,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "signature": "ed25519:Rw8uMbrG1M_qAquY363-nyZql9ccm5yOwc34fEs4z-Ps8aIDb1bnq9ujgUXfWdgbsEBEBX8mjO97ZfAZVS7FAA",
-  "signed_at": "2026-04-17T04:04:20Z",
+  "signature": "ed25519:CsJEYTo4Ah0UB-s5ZWHQUS-PSqG75UT3jS_wJ16RYkJHzkoxpYmipbnJE1hEEsZmgnf_RiZ4CeHgytbNYIJ2BQ",
+  "signed_at": "2026-04-18T03:58:13Z",
   "version": "1.1"
 }
