@@ -32,7 +32,7 @@
         "bridge_cert": "vkHsS7HOg1e8D9UPfLCQ4G8oLFfy6t/6oBXdAU4oUvPTMWTWZo0kiw6dq28cssjE24OUOw",
         "domain": "spb-mt-1.relay.konstruct.cc",
         "id": "spb-mt-1",
-        "port": 9894,
+        "port": 52143,
         "region": {
           "tz_offset_max": 3,
           "tz_offset_min": 3
@@ -62,7 +62,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "signature": "ed25519:FfmwRlLZ8zu1RM24vB9kMHubzveL6eM08cDFhaQoxbwEKmoND8jgqKvlGNIJsez2C5SgN-gINvfVlkvJfhADBA",
-  "signed_at": "2026-04-25T09:07:19Z",
+  "signature": "ed25519:aJ1KIwCckVO1CLSVkAc_trTRNB4WhnZ9e5u0n9rk8zbZmRIAdqskkI9KL2D43-0QN-rQJaZTZfycKGEXAve-Bw",
+  "signed_at": "2026-04-27T18:54:04Z",
   "version": "1.1"
 }
