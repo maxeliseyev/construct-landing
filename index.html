@@ -9,11 +9,11 @@
         </title>
         <meta
             name="description"
-            content="Professional-grade encrypted messenger built on Signal Protocol with post-quantum cryptography. Privacy is a fundamental right, not a feature. Open-source, federated, and built for security."
+            content="Professional-grade encrypted messenger built on Signal Protocol with post-quantum cryptography. Privacy is a fundamental right, not a feature. Open-source, three-tier resilient network, and built for security."
         />
         <meta
             name="keywords"
-            content="post-quantum messenger, hybrid email chat, E2EE, Rust messenger, privacy-focused communication, crypto agility, federated messaging"
+            content="post-quantum messenger, E2EE, Rust messenger, privacy-focused communication, crypto agility, federated messaging, P2P messenger, QUIC messenger"
         />
 
         <!-- Open Graph / Facebook -->
@@ -107,7 +107,8 @@
                 <div class="badges">
                     <span class="badge"><span class="en">End-to-End Encrypted</span><span class="ru">Сквозное шифрование</span></span>
                     <span class="badge"><span class="en">Post-Quantum Ready</span><span class="ru">Постквантовая защита</span></span>
-                    <span class="badge"><span class="en">Federated Architecture</span><span class="ru">Федеративная архитектура</span></span>
+                    <span class="badge"><span class="en">Federated (Planned)</span><span class="ru">Федерация (план)</span></span>
+                    <span class="badge"><span class="en">P2P Capable</span><span class="ru">P2P-режим</span></span>
                     <span class="badge">Zero-Knowledge</span>
                     <span class="badge"><span class="en">Open Source</span><span class="ru">Открытый исходный код</span></span>
                 </div>
@@ -141,18 +142,22 @@
                         компьютеров.</span>
                     </p>
                     <p>
-                        <span class="en">Unlike centralized platforms, Konstruct is
-                        <strong>federated</strong> — you control your data by
+                        <span class="en"><strong>Unlike centralized platforms, Konstruct is designed for
+                        <strong>federation</strong> — you control your data by
                         choosing or running your own server
                         (<code>you@your-server.com</code>). The server is
                         <strong>zero-knowledge</strong>: it stores only user's
                         public keys, never your actual conversations or
-                        metadata.</span>
+                        metadata. And when both parties are online simultaneously,
+                        Construct can establish a <strong>direct peer-to-peer connection</strong>
+                        — the server steps out of the relay path entirely.</span>
                         <span class="ru">В отличие от централизованных платформ, Construct
-                        <strong>федеративный</strong> — вы контролируете свои данные, выбирая или
+                        спроектирован для <strong>федерации</strong> — вы контролируете свои данные, выбирая или
                         запуская собственный сервер (<code>you@your-server.com</code>). Сервер
                         работает по принципу <strong>zero-knowledge</strong>: хранит только публичные
-                        ключи пользователей, но никогда не видит самих разговоров или метаданных.</span>
+                        ключи пользователей, но никогда не видит самих разговоров или метаданных.
+                        А когда оба собеседника онлайн одновременно, Construct устанавливает
+                        <strong>прямое P2P-соединение</strong> — сервер полностью выходит из цепочки ретрансляции.</span>
                     </p>
                     <p>
                         <span class="en"><strong>The internet must remain free.</strong> No
@@ -212,27 +217,25 @@
                             протокола позволяет обновлять алгоритмы без пересборки приложения</span>
                         </li>
                     </ul>
-                    <h3><span class="en">Infrastructure</span><span class="ru">Инфраструктура</span></h3>
+                    <h3><span class="en">Transport Layer</span><span class="ru">Транспортный уровень</span></h3>
                     <ul>
                         <li>
-                            <span class="en"><strong>Rust Backend:</strong> Memory-safe,
-                            high-performance server (~100MB RAM footprint)</span>
-                            <span class="ru"><strong>Бэкенд на Rust:</strong> безопасный по памяти
-                            высокопроизводительный сервер (~100MB RAM)</span>
+                            <span class="en"><strong>gRPC / HTTP2 bidirectional stream:</strong>
+                            Primary message delivery — persistent connection, server-push, ~100ms latency</span>
+                            <span class="ru"><strong>gRPC / HTTP2 двунаправленный поток:</strong>
+                            основная доставка сообщений — постоянное соединение, server-push, задержка ~100ms</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Federation Support:</strong> Self-host or
-                            use trusted providers with email-like addressing</span>
-                            <span class="ru"><strong>Поддержка федерации:</strong> собственный хостинг
-                            или доверенные провайдеры с email-адресацией</span>
+                            <span class="en"><strong>QUIC engine (ConstructEngine):</strong>
+                            Secondary transport — 0-RTT reconnect, multiplexed streams, better on lossy networks</span>
+                            <span class="ru"><strong>QUIC движок (ConstructEngine):</strong>
+                            вторичный транспорт — переподключение 0-RTT, мультиплексирование, лучше на нестабильных сетях</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Ephemeral Storage:</strong> Messages
-                            auto-delete after 48 hours (configurable), no
-                            long-term server storage</span>
-                            <span class="ru"><strong>Эфемерное хранение:</strong> сообщения
-                            автоматически удаляются через 48 часов (настраивается), долгосрочного
-                            хранения на сервере нет</span>
+                            <span class="en"><strong>ICE relay:</strong>
+                            Traffic obfuscation + relay routing when direct connection is blocked or unavailable</span>
+                            <span class="ru"><strong>ICE relay:</strong>
+                            обфускация трафика + ретрансляция когда прямое соединение заблокировано или недоступно</span>
                         </li>
                     </ul>
                 </div>
@@ -280,11 +283,10 @@
                             уведомлений, никакого социального шума, только спокойное общение.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Hybrid Delivery</strong> — Real-time via
-                            WebSocket, fallback to REST/polling, background
-                            pushes.</span>
-                            <span class="ru"><strong>Гибридная доставка</strong> — реальное время
-                            через WebSocket, резервный REST/polling, фоновые пуши.</span>
+                            <span class="en"><strong>Resilient delivery</strong> — gRPC/HTTP2 primary,
+                            QUIC engine secondary, ICE relay fallback, direct P2P when both are online.</span>
+                            <span class="ru"><strong>Устойчивая доставка</strong> — gRPC/HTTP2 основной путь,
+                            QUIC движок резервный, ICE relay запасной, прямой P2P когда оба онлайн.</span>
                         </li>
                     </ul>
                 </div>
@@ -302,6 +304,7 @@
                                     <th scope="col"><span class="en">Federated</span><span class="ru">Федеративный</span></th>
                                     <th scope="col"><span class="en">E2EE Default</span><span class="ru">E2EE по умолч.</span></th>
                                     <th scope="col"><span class="en">Post-Quantum</span><span class="ru">Постквантовый</span></th>
+                                    <th scope="col"><span class="en">P2P Mode</span><span class="ru">P2P-режим</span></th>
                                     <th scope="col"><span class="en">Protocol</span><span class="ru">Протокол</span></th>
                                     <th scope="col"><span class="en">Open Source</span><span class="ru">Открытый код</span></th>
                                 </tr>
@@ -312,6 +315,7 @@
                                     <td>No</td>
                                     <td>Yes</td>
                                     <td>Research</td>
+                                    <td>No</td>
                                     <td>REST/JSON</td>
                                     <td>Yes</td>
                                 </tr>
@@ -319,6 +323,7 @@
                                     <th scope="row">WhatsApp</th>
                                     <td>No</td>
                                     <td>Yes</td>
+                                    <td>No</td>
                                     <td>No</td>
                                     <td>Proprietary</td>
                                     <td>No</td>
@@ -328,6 +333,7 @@
                                     <td>No</td>
                                     <td>No*</td>
                                     <td>No</td>
+                                    <td>No</td>
                                     <td>MTProto</td>
                                     <td>Partial</td>
                                 </tr>
@@ -336,17 +342,28 @@
                                     <td>Yes</td>
                                     <td>Optional</td>
                                     <td>Planned</td>
+                                    <td>No</td>
                                     <td>HTTP/JSON</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Session†</th>
+                                    <td>Decentralised</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                    <td>Onion</td>
+                                    <td>Proprietary</td>
                                     <td>Yes</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
                                         <strong>Konstruct</strong>
                                     </th>
-                                    <td>Yes</td>
+                                    <td><strong>Planned</strong></td>
                                     <td>Yes</td>
                                     <td><strong>Production</strong></td>
-                                    <td><strong>gRPC/Protobuf</strong></td>
+                                    <td><strong>Planned</strong></td>
+                                    <td><strong>gRPC+QUIC</strong></td>
                                     <td>Yes</td>
                                 </tr>
                             </tbody>
@@ -358,10 +375,40 @@
                                 color: var(--fg-muted);
                             "
                         >
-                            <span class="en">* Telegram E2EE only in "Secret Chats", not default</span>
-                            <span class="ru">* E2EE в Telegram только в «Секретных чатах», не по умолчанию</span>
+                            <span class="en">* Telegram E2EE only in "Secret Chats", not default<br>
+                            † Session messenger announced shutdown (July 2026) due to funding exhaustion despite 1.7M monthly active users — a cautionary tale for centralised privacy projects</span>
+                            <span class="ru">* E2EE в Telegram только в «Секретных чатах», не по умолчанию<br>
+                            † Session объявил о закрытии (июль 2026) из-за исчерпания финансирования несмотря на 1,7 млн MAU — поучительный пример для централизованных privacy-проектов</span>
                         </p>
                     </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="resilience-heading">
+                <div class="container">
+                    <h2 id="resilience-heading"><span class="en">Built to Last — Three-Tier Network</span><span class="ru">Создан чтобы работать — трёхуровневая сеть</span></h2>
+                    <p>
+                        <span class="en">The shutdown of Session messenger (July 2026) — 1.7M users, zero revenue — proves that even successful privacy projects can collapse if they depend entirely on centralised infrastructure funded by donations. Construct is designed around the opposite principle: <strong>the network degrades gracefully</strong>, remaining operational even without central servers.</span>
+                        <span class="ru">Закрытие Session (июль 2026) — 1,7 млн пользователей, нулевая выручка — доказывает: даже успешный privacy-проект может рухнуть, если полностью зависит от централизованной инфраструктуры. Construct построен по обратному принципу: <strong>сеть деградирует плавно</strong>, оставаясь работоспособной даже без центральных серверов.</span>
+                    </p>
+                    <ul>
+                        <li>
+                            <span class="en"><strong>Tier 1 — Federated servers:</strong> Anyone can run a Construct server. If the founding team disappears, the network continues through community-operated nodes.</span>
+                            <span class="ru"><strong>Tier 1 — Федеративные серверы:</strong> Любой может запустить Construct-сервер. Если основная команда исчезнет, сеть продолжит работу через ноды сообщества.</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Tier 2 — Community relay nodes:</strong> Lightweight relay nodes (runs on a Raspberry Pi) provide message routing without a full server — no user database, no key storage.</span>
+                            <span class="ru"><strong>Tier 2 — Ноды-ретрансляторы:</strong> Лёгкие relay-ноды (работают на Raspberry Pi) обеспечивают маршрутизацию сообщений без полноценного сервера — без базы пользователей, без хранения ключей.</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Tier 3 — Full P2P:</strong> When both users are online simultaneously, messages flow directly between devices over QUIC/ICE — the server is not involved at all. Two users can communicate as long as they have internet access, regardless of any infrastructure.</span>
+                            <span class="ru"><strong>Tier 3 — Полный P2P:</strong> Когда оба пользователя онлайн одновременно, сообщения идут напрямую между устройствами по QUIC/ICE — сервер вообще не участвует. Два пользователя могут общаться, пока есть интернет — независимо от какой-либо инфраструктуры.</span>
+                        </li>
+                    </ul>
+                    <p>
+                        <span class="en">The Signal Protocol (Double Ratchet + PQXDH) is transport-agnostic — it works identically at all three tiers. The cryptographic guarantees don't change whether messages travel through a server, a relay node, or directly between devices.</span>
+                        <span class="ru">Signal Protocol (Double Ratchet + PQXDH) не зависит от транспорта — он работает одинаково на всех трёх уровнях. Криптографические гарантии не меняются независимо от того, идут ли сообщения через сервер, relay-ноду или напрямую между устройствами.</span>
+                    </p>
                 </div>
             </section>
 
@@ -370,48 +417,25 @@
                     <h2 id="roadmap-heading"><span class="en">Development Roadmap</span><span class="ru">Дорожная карта</span></h2>
                     <ul>
                         <li>
-                            <span class="en"><strong>Q1 2026 (Current):</strong> gRPC/Protobuf
-                            migration, post-quantum cryptography implementation
-                            (Kyber + Dilithium), iOS client refinement</span>
-                            <span class="ru"><strong>Q1 2026 (текущий):</strong> миграция на
-                            gRPC/Protobuf, внедрение постквантовой криптографии (Kyber + Dilithium),
-                            доработка iOS-клиента</span>
+                            <span class="en"><strong>✅ Q1 2026 (Completed):</strong> gRPC/Protobuf transport, post-quantum cryptography (PQXDH: X3DH + Kyber-768), session healing, iOS TestFlight beta, QUIC secondary transport (ConstructEngine), ICE relay transport</span>
+                            <span class="ru"><strong>✅ Q1 2026 (Завершено):</strong> транспорт gRPC/Protobuf, постквантовая криптография (PQXDH: X3DH + Kyber-768), session healing, iOS TestFlight бета, QUIC вторичный транспорт (ConstructEngine), ICE relay транспорт</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Q2 2026:</strong> MLS group chats, Android
-                            client, federation beta testing</span>
-                            <span class="ru"><strong>Q2 2026:</strong> MLS групповые чаты,
-                            Android-клиент, бета-тестирование федерации</span>
+                            <span class="en"><strong>Q2–Q3 2026:</strong> MLS group chats, WebRTC voice/video calls, sealed sender (metadata protection), relay node protocol, Android client alpha</span>
+                            <span class="ru"><strong>Q2–Q3 2026:</strong> MLS групповые чаты, WebRTC голосовые/видеозвонки, sealed sender (защита метаданных), протокол relay-нод, альфа Android-клиента</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Q3 2026:</strong> WebRTC voice/video calls,
-                            sealed sender (metadata protection), performance
-                            optimization</span>
-                            <span class="ru"><strong>Q3 2026:</strong> WebRTC голосовые/видеозвонки,
-                            sealed sender (защита метаданных), оптимизация производительности</span>
+                            <span class="en"><strong>Q4 2026:</strong> Server-assisted P2P handoff (desktop clients), desktop applications (macOS, Windows, Linux), federation beta</span>
+                            <span class="ru"><strong>Q4 2026:</strong> P2P handoff через сервер (десктоп-клиенты), десктоп-приложения (macOS, Windows, Linux), бета-тестирование федерации</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Q4 2026:</strong> Web/PWA client, desktop
-                            applications (macOS, Windows, Linux), full
-                            federation launch</span>
-                            <span class="ru"><strong>Q4 2026:</strong> Web/PWA клиент,
-                            десктоп-приложения (macOS, Windows, Linux), полный запуск федерации</span>
-                        </li>
-                        <li>
-                            <span class="en"><strong>2027+:</strong> Advanced privacy features
-                            (disappearing messages, screenshot protection),
-                            enterprise features, third-party audits</span>
-                            <span class="ru"><strong>2027+:</strong> Расширенные функции приватности
-                            (исчезающие сообщения, защита от скриншотов), корпоративные функции,
-                            сторонние аудиты</span>
+                            <span class="en"><strong>2027:</strong> Full federation launch, community relay node network, QR-based pure P2P (no server needed for initial key exchange), formal security audit</span>
+                            <span class="ru"><strong>2027:</strong> Полный запуск федерации, сеть community relay-нод, чистый P2P по QR-коду (без сервера для начального обмена ключами), формальный аудит безопасности</span>
                         </li>
                     </ul>
                     <p>
-                        <span class="en"><strong>Current Status:</strong> Production beta (iOS).
-                        Server handles 100K+ encrypted messages daily with 99.9%
-                        uptime.</span>
-                        <span class="ru"><strong>Текущий статус:</strong> Production beta (iOS).
-                        Сервер обрабатывает 100K+ зашифрованных сообщений в день при uptime 99,9%.</span>
+                        <span class="en"><strong>Current Status:</strong> iOS TestFlight beta. Post-quantum E2EE (PQXDH + Double Ratchet) is production-ready. Session healing and QUIC transport are live.</span>
+                        <span class="ru"><strong>Текущий статус:</strong> iOS TestFlight бета. Постквантовое E2EE (PQXDH + Double Ratchet) готово к продакшену. Session healing и QUIC транспорт работают в продакшене.</span>
                     </p>
                 </div>
             </section>
@@ -500,15 +524,18 @@
                     "price": "0",
                     "priceCurrency": "USD"
                 },
-                "description": "Federated, post-quantum ready, minimalist hybrid messenger and email with end-to-end encryption.",
+                "description": "Privacy-first E2EE messenger with post-quantum cryptography, three-tier resilient network (federated servers → relay nodes → direct P2P), and zero-knowledge server design.",
                 "featureList": [
                     "End-to-end encryption by default",
                     "Forward secrecy",
-                    "Post-quantum readiness",
-                    "Federation support",
-                    "Hybrid chat & email",
-                    "Lightweight Rust server",
-                    "Zen UI without notifications"
+                    "Post-quantum cryptography (PQXDH + Kyber-768)",
+                    "Three-tier network resilience",
+                    "Direct P2P messaging (planned)",
+                    "Federation support (planned)",
+                    "QUIC + gRPC transport",
+                    "ICE relay transport obfuscation",
+                    "Session healing",
+                    "Lightweight Rust server"
                 ],
                 "author": {
                     "@type": "Person",

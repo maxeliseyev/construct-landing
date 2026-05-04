@@ -552,8 +552,8 @@
                             <span class="faq-chevron" aria-hidden="true">▸</span>
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">The name comes from the game Cyberpunk 2077 — where ICE (Intrusion Countermeasure Electronics) was the term for network security. In Construct, ICE is a transport layer that disguises messenger traffic as ordinary background noise. This is needed when a provider or DPI system tries to block or fingerprint traffic. Even if packets are intercepted, they look like random data, not messenger traffic.</p>
-                            <p class="ru">Название взял из Киберпанка — там ICE (Intrusion Countermeasure Electronics) это сетевая защита. В Construct ICE — это транспортный слой, который маскирует трафик мессенджера под обычный информационный шум. Нужен в ситуациях, когда провайдер или DPI-система пытаются заблокировать или идентифицировать трафик — например, при блокировках РКН. Даже если кто-то перехватит пакеты, они выглядят как случайные данные, а не трафик мессенджера.</p>
+                            <p class="en">The name comes from the game Cyberpunk 2077 — where ICE (Intrusion Countermeasure Electronics) was the term for network security. In Construct, ICE serves two roles: (1) a transport layer that disguises messenger traffic as ordinary background noise, defeating DPI systems and censorship firewalls; (2) a relay tier — when a direct connection to the main server is unavailable, ICE relay nodes can route traffic. Even if packets are intercepted, they look like random data, not messenger traffic.</p>
+                            <p class="ru">Название взял из Киберпанка — там ICE (Intrusion Countermeasure Electronics) это сетевая защита. В Construct ICE выполняет две роли: (1) транспортный слой, который маскирует трафик мессенджера под обычный информационный шум, обходя DPI и цензурные фаерволы; (2) уровень ретрансляции — когда прямое соединение с основным сервером недоступно, ICE relay-ноды могут маршрутизировать трафик. Даже если кто-то перехватит пакеты, они выглядят как случайные данные, а не трафик мессенджера.</p>
                         </div>
                     </details>
 
@@ -570,7 +570,51 @@
                     </details>
                 </section>
 
-                <!-- ── Section 7: Security & Protection ──────────────────── -->
+                <!-- ── Section 7: Network Resilience ─────────────────────── -->
+                <section class="faq-section" aria-labelledby="section-resilience">
+                    <h2 id="section-resilience">
+                        <span class="en">Network Resilience &amp; Sustainability</span>
+                        <span class="ru">Устойчивость сети и жизнеспособность</span>
+                    </h2>
+
+                    <details class="faq-item">
+                        <summary>
+                            <span class="en">What happens if Construct's servers go offline?</span>
+                            <span class="ru">Что будет если серверы Construct отключатся?</span>
+                            <span class="faq-chevron" aria-hidden="true">▸</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p class="en">Construct is designed to degrade gracefully through three tiers: <strong>Federated servers</strong> (anyone can run one, so even if the founding team's server goes down, community servers continue); <strong>ICE relay nodes</strong> (lightweight relay nodes that route messages without storing anything — can run on a Raspberry Pi); <strong>Direct P2P</strong> (when both users are online simultaneously, messages travel directly between devices over QUIC/ICE with no server involved at all). Two users can communicate as long as they have internet access, regardless of any central infrastructure.</p>
+                            <p class="ru">Construct спроектирован с плавной деградацией через три уровня: <strong>Федеративные серверы</strong> (любой может запустить свой — даже если сервер основной команды упадёт, серверы сообщества продолжат работу); <strong>ICE relay-ноды</strong> (лёгкие ретрансляторы без хранения данных — работают на Raspberry Pi); <strong>Прямой P2P</strong> (когда оба пользователя онлайн одновременно, сообщения идут напрямую между устройствами по QUIC/ICE без участия сервера). Два пользователя могут общаться пока есть интернет — независимо от центральной инфраструктуры.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>
+                            <span class="en">Will basic messaging always be free?</span>
+                            <span class="ru">Базовый мессенджинг всегда будет бесплатным?</span>
+                            <span class="faq-chevron" aria-hidden="true">▸</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p class="en">Yes — unconditionally. Sending messages, receiving messages, E2EE, and all security features will never go behind a paywall. The Session messenger shutdown (July 2026) — 1.7M users but no revenue — showed that donation-only models are fragile. Construct plans voluntary donations, optional premium features (larger file transfers, extended history, custom themes — not security features), and B2B hosted instances for organizations. The core will always be free.</p>
+                            <p class="ru">Да — безусловно. Отправка сообщений, получение сообщений, E2EE и все функции безопасности никогда не окажутся за платным барьером. Закрытие Session (июль 2026) — 1,7 млн пользователей без выручки — показало, что модель на донатах хрупка. Construct планирует добровольные пожертвования, опциональные premium-функции (большие файлы, расширенная история, темы — не функции безопасности) и B2B-хостинг для организаций. Ядро всегда будет бесплатным.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>
+                            <span class="en">What is P2P mode and when does it activate?</span>
+                            <span class="ru">Что такое P2P-режим и когда он активируется?</span>
+                            <span class="faq-chevron" aria-hidden="true">▸</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p class="en">When both users are simultaneously online and connected to a Construct server, the server can signal them to upgrade to a direct peer-to-peer QUIC/ICE connection. Once established, the server exits the message relay path — traffic flows directly between devices. If either user goes offline, the server automatically resumes relaying. The encryption (Signal Protocol) is identical in both modes — the server was never able to read message content either way. P2P mode is planned for desktop clients first (always-on connection); mobile clients will support short P2P bursts when both have the app open.</p>
+                            <p class="ru">Когда оба пользователя одновременно онлайн и подключены к Construct-серверу, сервер может подать им сигнал для установки прямого P2P-соединения по QUIC/ICE. После установки сервер выходит из цепочки ретрансляции — трафик идёт напрямую между устройствами. Если кто-то из пользователей уйдёт оффлайн, сервер автоматически возобновит ретрансляцию. Шифрование (Signal Protocol) одинаково в обоих режимах — сервер всё равно никогда не мог прочитать содержимое сообщений. P2P-режим планируется сначала для десктоп-клиентов (постоянное подключение); мобильные клиенты будут поддерживать короткие P2P-сессии когда оба держат приложение открытым.</p>
+                        </div>
+                    </details>
+                </section>
+
+                <!-- ── Section 8: Security & Protection ──────────────────── -->
                 <section class="faq-section" aria-labelledby="section-security">
                     <h2 id="section-security">
                         <span class="en">Security &amp; Protection</span>
