@@ -11,6 +11,16 @@
   "grpc_endpoint": "ams.konstruct.cc:443",
   "ice": {
     "primary": "ice.ams.konstruct.cc:443",
+    "relay_regions": [
+      {
+        "preferred_relays": [
+          "45.135.233.5:52143",
+          "ice.ams.konstruct.cc:443"
+        ],
+        "tz_offset_max": 5,
+        "tz_offset_min": 2
+      }
+    ],
     "relays": [
       {
         "addr": "ice.ams.konstruct.cc",
@@ -62,7 +72,7 @@
     "invite.InviteService",
     "media.MediaService"
   ],
-  "signature": "ed25519:aJ1KIwCckVO1CLSVkAc_trTRNB4WhnZ9e5u0n9rk8zbZmRIAdqskkI9KL2D43-0QN-rQJaZTZfycKGEXAve-Bw",
-  "signed_at": "2026-04-27T18:54:04Z",
+  "signature": "ed25519:bfbDC8P0BPVmPnhmKAe3Ak0lWjs64iZ2AfiLzPVWkClZ1ZJwsOhT4ODOn1-TeheOwK9f89P2n066AgIaPsWXDQ",
+  "signed_at": "2026-05-13T07:47:48Z",
   "version": "1.1"
 }
