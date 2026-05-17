@@ -1,78 +1,36 @@
 {
-  "bundle_signing_algorithm": "Ed25519",
+  "version": 2,
+  "signed_at": 1779004677,
   "bundle_signing_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
-  "capabilities": {
-    "max_file_size_bytes": 104857600,
-    "max_message_size_bytes": 65536,
-    "supports_grpc_web": true,
-    "supports_pq_crypto": true,
-    "supports_streaming": true
-  },
-  "grpc_endpoint": "ams.konstruct.cc:443",
   "ice": {
-    "primary": "ice.ams.konstruct.cc:443",
-    "relay_regions": [
-      {
-        "preferred_relays": [
-          "api.divany-kresla.uk:443",
-          "ice.ams.konstruct.cc:443"
-        ],
-        "tz_offset_max": 5,
-        "tz_offset_min": 2
-      }
-    ],
     "relays": [
       {
-        "addr": "ice.ams.konstruct.cc",
-        "bridge_cert": "voFt3ilLSKx2xYuZsjxOnXtHTktUE4EaExIYRG+Bh89frHzI5QVrBNvT41zdS7Maiu6gPA",
-        "domain": "ams-het-1.relay.konstruct.cc",
         "id": "ams-het-1",
+        "addr": "ice.ams.konstruct.cc",
         "port": 443,
-        "region": {
-          "tz_offset_max": 1,
-          "tz_offset_min": 1
-        },
+        "domain": "ams-het-1.relay.konstruct.cc",
         "sni": "ice.ams.konstruct.cc",
         "spki_sha256": "510d465a5c4736548e3386570ede6ba24600c4c9a2e369d24dde1ad7915eeebd",
-        "wt_host_header": "ice.ams.konstruct.cc",
-        "wt_path": "/construct-ice"
+        "bridge_cert": "voFt3ilLSKx2xYuZsjxOnXtHTktUE4EaExIYRG+Bh89frHzI5QVrBNvT41zdS7Maiu6gPA",
+        "wt_path": "/construct-ice",
+        "region": "NL"
       },
       {
-        "addr": "api.divany-kresla.uk",
-        "bridge_cert": "zdfEJKLpy4nVo09zbd/5q3Yx02FyL7Tlr+5Aurww51IbYacIWIqbcTndB1UL+n2g68XBQw",
-        "domain": "api.divany-kresla.uk",
         "id": "ru-div-1",
+        "addr": "api.divany-kresla.uk",
         "port": 443,
-        "region": {
-          "tz_offset_max": 3,
-          "tz_offset_min": 3
-        },
+        "domain": "api.divany-kresla.uk",
         "sni": "api.divany-kresla.uk",
         "spki_sha256": "bb42af0f12a95779fb45dcbe3039746616b51aacf8c7cc954ba6cbb048055943",
+        "bridge_cert": "zdfEJKLpy4nVo09zbd/5q3Yx02FyL7Tlr+5Aurww51IbYacIWIqbcTndB1UL+n2g68XBQw",
+        "wt_path": "/api/stream",
         "wt_host_header": "api.divany-kresla.uk",
-        "wt_path": "/api/stream"
+        "region": "RU"
       }
+    ],
+    "deprecated_ids": [
+      "spb-mt-1"
     ]
   },
-  "limits": {
-    "max_media_size_bytes": 104857600,
-    "max_message_size_bytes": 65536,
-    "rate_limit_messages_per_hour": 1000
-  },
-  "protocol": "grpc",
-  "server": {
-    "domain": "ams.konstruct.cc",
-    "version": "0.9.12"
-  },
-  "services": [
-    "auth.AuthService",
-    "user.UserService",
-    "messaging.MessagingService",
-    "notification.NotificationService",
-    "invite.InviteService",
-    "media.MediaService"
-  ],
-  "signature": "ed25519:rYaiYsB56M24gxU7jEN1d5t6iFkvy8uI8zQaSWjHPKYYgZn5qmCRy7ttsL1wN5HFtyo-Vf8bXD6m3PTPFofTDA",
-  "signed_at": "2026-05-16T19:59:13Z",
-  "version": "1.2"
+  "signature": "ed25519:6PZmqeQmUrsozYE1hAPwvx9urxh_cY_e1Ou1-3vbmmJfYN2RAZqjAnfho5a_oycc6E59v2UED7_vCpfxlirKDQ"
 }
