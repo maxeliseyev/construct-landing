@@ -1,36 +1,36 @@
 {
-  "version": 2,
-  "signed_at": 1779004677,
   "bundle_signing_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
   "ice": {
-    "relays": [
-      {
-        "id": "ams-het-1",
-        "addr": "ice.ams.konstruct.cc",
-        "port": 443,
-        "domain": "ams-het-1.relay.konstruct.cc",
-        "sni": "ice.ams.konstruct.cc",
-        "spki_sha256": "510d465a5c4736548e3386570ede6ba24600c4c9a2e369d24dde1ad7915eeebd",
-        "bridge_cert": "voFt3ilLSKx2xYuZsjxOnXtHTktUE4EaExIYRG+Bh89frHzI5QVrBNvT41zdS7Maiu6gPA",
-        "wt_path": "/construct-ice",
-        "region": "NL"
-      },
-      {
-        "id": "ru-div-1",
-        "addr": "api.divany-kresla.uk",
-        "port": 443,
-        "domain": "api.divany-kresla.uk",
-        "sni": "api.divany-kresla.uk",
-        "spki_sha256": "bb42af0f12a95779fb45dcbe3039746616b51aacf8c7cc954ba6cbb048055943",
-        "bridge_cert": "zdfEJKLpy4nVo09zbd/5q3Yx02FyL7Tlr+5Aurww51IbYacIWIqbcTndB1UL+n2g68XBQw",
-        "wt_path": "/api/stream",
-        "wt_host_header": "api.divany-kresla.uk",
-        "region": "RU"
-      }
-    ],
     "deprecated_ids": [
       "spb-mt-1"
+    ],
+    "relays": [
+      {
+        "addr": "ice.ams.konstruct.cc",
+        "bridge_cert": "voFt3ilLSKx2xYuZsjxOnXtHTktUE4EaExIYRG+Bh89frHzI5QVrBNvT41zdS7Maiu6gPA",
+        "domain": "ams-het-1.relay.konstruct.cc",
+        "id": "ams-het-1",
+        "port": 443,
+        "region": "NL",
+        "sni": "ice.ams.konstruct.cc",
+        "spki_sha256": "510d465a5c4736548e3386570ede6ba24600c4c9a2e369d24dde1ad7915eeebd",
+        "wt_path": "/construct-ice"
+      },
+      {
+        "addr": "api.divany-kresla.uk",
+        "bridge_cert": "zdfEJKLpy4nVo09zbd/5q3Yx02FyL7Tlr+5Aurww51IbYacIWIqbcTndB1UL+n2g68XBQw",
+        "domain": "api.divany-kresla.uk",
+        "id": "ru-div-1",
+        "port": 443,
+        "region": "RU",
+        "sni": "api.divany-kresla.uk",
+        "spki_sha256": "bb42af0f12a95779fb45dcbe3039746616b51aacf8c7cc954ba6cbb048055943",
+        "wt_host_header": "api.divany-kresla.uk",
+        "wt_path": "/api/stream"
+      }
     ]
   },
-  "signature": "ed25519:6PZmqeQmUrsozYE1hAPwvx9urxh_cY_e1Ou1-3vbmmJfYN2RAZqjAnfho5a_oycc6E59v2UED7_vCpfxlirKDQ"
+  "signature": "ed25519:la_aIZC4YWevJOc3HAyoIwKsVXlCviFkkAMxnsXy515mq4R7dI7wmfW_6KOjweGh9WsCjbrLJx25QVRHIMExDQ",
+  "signed_at": "2026-05-25T04:32:46Z",
+  "version": 2
 }
