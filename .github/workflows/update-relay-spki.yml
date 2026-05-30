@@ -6,7 +6,7 @@ name: Update relay SPKI
 #   3. Webhook: repository_dispatch from construct-relay after a new deploy
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [relay_cert_rotated]
@@ -84,7 +84,7 @@ jobs:
           with open(path) as f:
               data = json.load(f)
           spki_map = {'ams-het-1': spki_ams, 'ru-div-1': spki_ru}
-          for relay in data.get('ice', {}).get('relays', []):
+          for relay in data.get('veil', {}).get('relays', []):
               relay_id = relay.get('id')
               if relay_id in spki_map:
                   relay['spki_sha256'] = spki_map[relay_id]
@@ -167,7 +167,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .well-known/construct-server
-          git commit -m "chore(ice): auto-update relay SPKI
+          git commit -m "chore(veil): auto-update relay SPKI
 
           ams-het-1: ${{ steps.spki_ams.outputs.spki }}
           ru-div-1:  ${{ steps.spki_ru.outputs.spki }}
