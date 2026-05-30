@@ -1,375 +1,502 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cryptography Demo — Konstruct</title>
-    <style>
-        .demo-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            height: 52px;
-            background: rgba(10, 10, 11, 0.95);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: -20px -20px 20px;
-        }
-        .demo-nav a {
-            color: rgba(147, 197, 253, 0.9);
-            text-decoration: none;
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-        }
-        .demo-nav a:hover { color: #93c5fd; }
-        .demo-nav-title {
-            color: rgba(229,231,235,0.5);
-            font-size: 0.8125rem;
-            letter-spacing: 0.02em;
-        }
-        @media (max-width: 480px) {
-            .demo-nav-title { display: none; }
-        }
-    </style>
-    <style>
-        :root {
-            --bg: #0a0a0b;
-            --surface: #424242;
-            --panel: #272234;
-            --panel-2: #222a3e;
-            --text: #e5e7eb;
-            --muted: #9ca3af;
-            --border: rgba(255, 255, 255, 0.10);
-            --shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
-            --accent: #93c5fd;
-            --accent-2: #a5b4fc;
-            --danger: #fca5a5;
-            --ok: #86efac;
-            --warn: #fde68a;
-            --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-        }
-        .container {
-            background: rgba(31, 31, 31, 0.85);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: var(--shadow);
-            color: var(--text);
-            backdrop-filter: blur(10px);
-        }
-        h1 {
-            text-align: center;
-            color: var(--text);
-            margin-top: 0;
-            letter-spacing: -0.02em;
-        }
-        h2 {
-            color: var(--text);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-            margin-top: 26px;
-            letter-spacing: -0.01em;
-        }
-        h3, h4 {
-            color: var(--text);
-            margin-top: 0;
-        }
-        p { margin: 10px 0; }
-        small { color: var(--muted); }
-        code { font-family: var(--mono); }
-        hr { border: 0; border-top: 1px solid var(--border); margin: 14px 0; }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cryptography Demo — Konstruct</title>
+        <style>
+            .demo-nav {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 20px;
+                height: 52px;
+                background: rgba(10, 10, 11, 0.95);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(12px);
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                margin: -20px -20px 20px;
+            }
+            .demo-nav a {
+                color: rgba(147, 197, 253, 0.9);
+                text-decoration: none;
+                font-size: 0.875rem;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                transition: color 0.2s;
+            }
+            .demo-nav a:hover {
+                color: #93c5fd;
+            }
+            .demo-nav-title {
+                color: rgba(229, 231, 235, 0.5);
+                font-size: 0.8125rem;
+                letter-spacing: 0.02em;
+            }
+            @media (max-width: 480px) {
+                .demo-nav-title {
+                    display: none;
+                }
+            }
+        </style>
+        <style>
+            :root {
+                --bg: #0a0a0b;
+                --surface: #424242;
+                --panel: #272234;
+                --panel-2: #222a3e;
+                --text: #e5e7eb;
+                --muted: #9ca3af;
+                --border: rgba(255, 255, 255, 0.1);
+                --shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+                --accent: #93c5fd;
+                --accent-2: #a5b4fc;
+                --danger: #fca5a5;
+                --ok: #86efac;
+                --warn: #fde68a;
+                --mono:
+                    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                    "Liberation Mono", "Courier New", monospace;
+            }
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 20px;
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.5;
+            }
+            .container {
+                background: rgba(31, 31, 31, 0.85);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 28px;
+                box-shadow: var(--shadow);
+                color: var(--text);
+                backdrop-filter: blur(10px);
+            }
+            h1 {
+                text-align: center;
+                color: var(--text);
+                margin-top: 0;
+                letter-spacing: -0.02em;
+            }
+            h2 {
+                color: var(--text);
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 10px;
+                margin-top: 26px;
+                letter-spacing: -0.01em;
+            }
+            h3,
+            h4 {
+                color: var(--text);
+                margin-top: 0;
+            }
+            p {
+                margin: 10px 0;
+            }
+            small {
+                color: var(--muted);
+            }
+            code {
+                font-family: var(--mono);
+            }
+            hr {
+                border: 0;
+                border-top: 1px solid var(--border);
+                margin: 14px 0;
+            }
 
-        .subtitle {
-            text-align: center;
-            color: var(--muted);
-            margin-top: -6px;
-        }
+            .subtitle {
+                text-align: center;
+                color: var(--muted);
+                margin-top: -6px;
+            }
 
-        .section {
-            margin: 22px 0 26px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-        .section:last-of-type { border-bottom: none; }
-        .section__body {
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 18px;
-            align-items: start;
-            margin-top: 14px;
-        }
-        .section__demo { min-width: 0; }
+            .section {
+                margin: 22px 0 26px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--border);
+            }
+            .section:last-of-type {
+                border-bottom: none;
+            }
+            .section__body {
+                display: grid;
+                grid-template-columns: 1.15fr 0.85fr;
+                gap: 18px;
+                align-items: start;
+                margin-top: 14px;
+            }
+            .section__demo {
+                min-width: 0;
+            }
 
-        .prose {
-            min-width: 0;
-            color: var(--text);
-        }
-        .prose p { color: var(--text); }
-        .prose ul, .prose ol { padding-left: 18px; color: var(--text); }
-        .prose li { margin: 6px 0; }
-        .prose pre {
-            margin: 12px 0;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.04);
-            overflow: auto;
-            font-family: var(--mono);
-            font-size: 13px;
-            line-height: 1.45;
-            color: var(--text);
-        }
-        .prose code {
-            font-family: var(--mono);
-            font-size: 0.95em;
-            color: var(--text);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0 6px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .prose pre code {
-            background: transparent;
-            border: 0;
-            padding: 0;
-            font-size: 13px;
-        }
-        .callout {
-            margin: 12px 0;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.03);
-        }
-        .callout--note { border-color: rgba(147, 197, 253, 0.22); }
-        .callout--warn { border-color: rgba(253, 230, 138, 0.22); }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .card {
-            background: linear-gradient(180deg, rgba(36, 36, 36, 0.92) 0%, rgba(37, 37, 37, 0.92) 100%);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            border-left: 4px solid;
-        }
-        .card.alice { border-left-color: var(--accent); }
-        .card.bob { border-left-color: var(--accent-2); }
-        .card.eve { border-left-color: rgba(255, 255, 255, 0.22); }
-        .number {
-            font-size: 24px;
-            font-weight: bold;
-            font-family: var(--mono);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border);
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
-            color: var(--text);
-        }
-        button {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            border: 1px solid var(--border);
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 5px;
-            transition: background 140ms ease, border-color 140ms ease, transform 60ms ease;
-        }
-        button:hover {
-            background: rgba(255, 255, 255, 0.10);
-            border-color: rgba(147, 197, 253, 0.40);
-        }
-        button:active { transform: translateY(1px); }
-        input {
-            padding: 8px;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            font-size: 16px;
-            width: 100px;
-            margin: 5px;
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            outline: none;
-        }
-        input:focus {
-            border-color: rgba(147, 197, 253, 0.50);
-            box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.15);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            overflow: hidden;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-        }
-        th {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-        }
-        td { color: var(--text); }
-        .visualization {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            font-family: var(--mono);
-            color: var(--text);
-        }
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--text);
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .badge.ik { border-color: rgba(147, 197, 253, 0.45); }
-        .badge.spk { border-color: rgba(165, 180, 252, 0.45); }
-        .badge.otpk { border-color: rgba(255, 255, 255, 0.20); }
-        .badge.eph { border-color: rgba(253, 230, 138, 0.55); }
+            .prose {
+                min-width: 0;
+                color: var(--text);
+            }
+            .prose p {
+                color: var(--text);
+            }
+            .prose ul,
+            .prose ol {
+                padding-left: 18px;
+                color: var(--text);
+            }
+            .prose li {
+                margin: 6px 0;
+            }
+            .prose pre {
+                margin: 12px 0;
+                padding: 12px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.04);
+                overflow: auto;
+                font-family: var(--mono);
+                font-size: 13px;
+                line-height: 1.45;
+                color: var(--text);
+            }
+            .prose code {
+                font-family: var(--mono);
+                font-size: 0.95em;
+                color: var(--text);
+                background: rgba(255, 255, 255, 0.05);
+                padding: 0 6px;
+                border-radius: 6px;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .prose pre code {
+                background: transparent;
+                border: 0;
+                padding: 0;
+                font-size: 13px;
+            }
+            .callout {
+                margin: 12px 0;
+                padding: 12px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.03);
+            }
+            .callout--note {
+                border-color: rgba(147, 197, 253, 0.22);
+            }
+            .callout--warn {
+                border-color: rgba(253, 230, 138, 0.22);
+            }
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin: 20px 0;
+            }
+            .card {
+                background: linear-gradient(
+                    180deg,
+                    rgba(36, 36, 36, 0.92) 0%,
+                    rgba(37, 37, 37, 0.92) 100%
+                );
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 20px;
+                border-left: 4px solid;
+            }
+            .card.alice {
+                border-left-color: var(--accent);
+            }
+            .card.bob {
+                border-left-color: var(--accent-2);
+            }
+            .card.eve {
+                border-left-color: rgba(255, 255, 255, 0.22);
+            }
+            .number {
+                font-size: 24px;
+                font-weight: bold;
+                font-family: var(--mono);
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid var(--border);
+                padding: 10px;
+                border-radius: 5px;
+                margin: 10px 0;
+                text-align: center;
+                color: var(--text);
+            }
+            button {
+                background: rgba(255, 255, 255, 0.06);
+                color: var(--text);
+                border: 1px solid var(--border);
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                margin: 5px;
+                transition:
+                    background 140ms ease,
+                    border-color 140ms ease,
+                    transform 60ms ease;
+            }
+            button:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(147, 197, 253, 0.4);
+            }
+            button:active {
+                transform: translateY(1px);
+            }
+            input {
+                padding: 8px;
+                border: 1px solid var(--border);
+                border-radius: 5px;
+                font-size: 16px;
+                width: 100px;
+                margin: 5px;
+                background: rgba(255, 255, 255, 0.06);
+                color: var(--text);
+                outline: none;
+            }
+            input:focus {
+                border-color: rgba(147, 197, 253, 0.5);
+                box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.15);
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+                overflow: hidden;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+            }
+            th,
+            td {
+                padding: 10px;
+                border-bottom: 1px solid var(--border);
+                text-align: left;
+            }
+            th {
+                background: rgba(255, 255, 255, 0.06);
+                color: var(--text);
+            }
+            td {
+                color: var(--text);
+            }
+            .visualization {
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                font-family: var(--mono);
+                color: var(--text);
+            }
+            .badge {
+                display: inline-block;
+                padding: 3px 8px;
+                border-radius: 3px;
+                font-size: 12px;
+                font-weight: bold;
+                color: var(--text);
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.06);
+            }
+            .badge.ik {
+                border-color: rgba(147, 197, 253, 0.45);
+            }
+            .badge.spk {
+                border-color: rgba(165, 180, 252, 0.45);
+            }
+            .badge.otpk {
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            .badge.eph {
+                border-color: rgba(253, 230, 138, 0.55);
+            }
 
-        .panel {
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 12px;
-            border-radius: 10px;
-        }
-        .panel--danger { border-color: rgba(252, 165, 165, 0.35); }
-        .panel--ok { border-color: rgba(134, 239, 172, 0.35); }
+            .panel {
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.04);
+                padding: 12px;
+                border-radius: 10px;
+            }
+            .panel--danger {
+                border-color: rgba(252, 165, 165, 0.35);
+            }
+            .panel--ok {
+                border-color: rgba(134, 239, 172, 0.35);
+            }
 
-        .actions {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-        .receipt {
-            background: rgba(147, 197, 253, 0.08);
-            border: 1px solid rgba(147, 197, 253, 0.22);
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-        }
+            .actions {
+                display: flex;
+                justify-content: space-around;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin: 20px 0;
+            }
+            .receipt {
+                background: rgba(147, 197, 253, 0.08);
+                border: 1px solid rgba(147, 197, 253, 0.22);
+                padding: 15px;
+                border-radius: 10px;
+                display: none;
+            }
 
-        .kpi {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 12px 0 0;
-        }
-        .kpi__item {
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 12px;
-        }
-        .kpi__label { color: var(--muted); font-size: 12px; margin: 0 0 6px; }
-        .kpi__value { font-family: var(--mono); font-size: 14px; margin: 0; color: var(--text); }
+            .kpi {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin: 12px 0 0;
+            }
+            .kpi__item {
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 10px;
+                padding: 12px;
+            }
+            .kpi__label {
+                color: var(--muted);
+                font-size: 12px;
+                margin: 0 0 6px;
+            }
+            .kpi__value {
+                font-family: var(--mono);
+                font-size: 14px;
+                margin: 0;
+                color: var(--text);
+            }
 
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 10px 0 12px;
-        }
-        .control {
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 12px;
-        }
-        .control label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
-        .control select, .control input[type="range"] {
-            width: 100%;
-            accent-color: rgba(147, 197, 253, 0.75);
-        }
-        .control__hint { color: var(--muted); font-size: 12px; margin: 8px 0 0; }
+            .controls {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin: 10px 0 12px;
+            }
+            .control {
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 10px;
+                padding: 12px;
+            }
+            .control label {
+                display: block;
+                color: var(--muted);
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            .control select,
+            .control input[type="range"] {
+                width: 100%;
+                accent-color: rgba(147, 197, 253, 0.75);
+            }
+            .control__hint {
+                color: var(--muted);
+                font-size: 12px;
+                margin: 8px 0 0;
+            }
 
-        .diagram {
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 12px;
-        }
-        .diagram svg { width: 100%; height: auto; display: block; }
-        .diagram .axis { stroke: rgba(255,255,255,0.18); stroke-width: 1; }
-        .diagram .curve { stroke: rgba(147, 197, 253, 0.8); stroke-width: 2; fill: none; }
-        .diagram .point { fill: rgba(165, 180, 252, 0.95); }
-        .diagram text { fill: rgba(229,231,235,0.85); font-family: var(--mono); font-size: 11px; }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: var(--muted);
-            font-size: 14px;
-        }
+            .diagram {
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 12px;
+                padding: 12px;
+            }
+            .diagram svg {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+            .diagram .axis {
+                stroke: rgba(255, 255, 255, 0.18);
+                stroke-width: 1;
+            }
+            .diagram .curve {
+                stroke: rgba(147, 197, 253, 0.8);
+                stroke-width: 2;
+                fill: none;
+            }
+            .diagram .point {
+                fill: rgba(165, 180, 252, 0.95);
+            }
+            .diagram text {
+                fill: rgba(229, 231, 235, 0.85);
+                font-family: var(--mono);
+                font-size: 11px;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 30px;
+                color: var(--muted);
+                font-size: 14px;
+            }
 
-        @media (max-width: 720px) {
-            body { padding: 14px; }
-            .container { padding: 18px; }
-            .grid { grid-template-columns: 1fr; }
-            input { width: 120px; }
-            .section__body { grid-template-columns: 1fr; }
-            .controls { grid-template-columns: 1fr; }
-            .kpi { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-<nav class="demo-nav">
-    <a href="/faq">← FAQ</a>
-    <span class="demo-nav-title">Construct · Cryptography Demo</span>
-    <a href="/">Konstruct</a>
-</nav>
-    <div class="container">
-        <h1>Криптография на пальцах</h1>
-        <p class="subtitle">Интерактивная демонстрация на маленьких числах (p = 71, G = 2)</p>
-        
-        <section class="section" id="post-1">
-            <h2>Приватный и публичный ключ — в чем разница?</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>Представьте, что у нас есть <strong>волшебный калькулятор</strong>, который умеет делать только одну операцию: возводить число в степень и брать остаток от деления на 71 (простое число).</p>
-                    <p><strong>Правила игры:</strong></p>
-                    <ul>
-                        <li>Базовая точка G = 2</li>
-                        <li>Приватный ключ — число, которое знаете только вы</li>
-                        <li>Публичный ключ = G^приватный mod 71</li>
-                    </ul>
-                    <pre><code>Алиса берет приватный ключ 12
+            @media (max-width: 720px) {
+                body {
+                    padding: 14px;
+                }
+                .container {
+                    padding: 18px;
+                }
+                .grid {
+                    grid-template-columns: 1fr;
+                }
+                input {
+                    width: 120px;
+                }
+                .section__body {
+                    grid-template-columns: 1fr;
+                }
+                .controls {
+                    grid-template-columns: 1fr;
+                }
+                .kpi {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="demo-nav">
+            <a href="/faq">← FAQ</a>
+            <span class="demo-nav-title">Construct · Cryptography Demo</span>
+            <a href="/">Konstruct</a>
+        </nav>
+        <div class="container">
+            <h1>Криптография просто</h1>
+            <p class="subtitle">
+                Интерактивная демонстрация на маленьких числах (p = 71, G = 2)
+            </p>
+
+            <section class="section" id="post-1">
+                <h2>Приватный и публичный ключ — в чем разница?</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            Представьте, что у нас есть
+                            <strong>волшебный калькулятор</strong>, который
+                            умеет делать только одну операцию: возводить число в
+                            степень и брать остаток от деления на 71 (простое
+                            число).
+                        </p>
+                        <p><strong>Правила игры:</strong></p>
+                        <ul>
+                            <li>Базовая точка G = 2</li>
+                            <li>
+                                Приватный ключ — число, которое знаете только вы
+                            </li>
+                            <li>Публичный ключ = G^приватный mod 71</li>
+                        </ul>
+                        <pre><code>Алиса берет приватный ключ 12
 → вычисляет 2^12 = 4096
 → 4096 ÷ 71 = 57 целых, остаток 49
 → Публичный ключ Алисы = 49
@@ -377,68 +504,135 @@
 Боб берет приватный ключ 56
 → 2^56 ÷ 71 = остаток 25
 → Публичный ключ Боба = 25</code></pre>
-                    <div class="callout callout--note">
-                        <p><strong>NB:</strong> из 49 невозможно вычислить 12, не перебрав все варианты. Для маленьких чисел это легко, но в реальности числа огромные (2²⁵⁶).</p>
-                    </div>
-                </div>
-                <div class="section__demo">
-                    <div class="grid">
-                        <div class="card alice">
-                            <h3>Алиса</h3>
-                            <label>Приватный ключ (a):</label>
-                            <input type="number" id="alice_priv" value="12" min="1" max="70">
-                            <br>
-                            <div class="number" id="alice_pub">49</div>
-                            <p>Публичный ключ = 2^a mod 71</p>
-                        </div>
-                        <div class="card bob">
-                            <h3>Боб</h3>
-                            <label>Приватный ключ (b):</label>
-                            <input type="number" id="bob_priv" value="56" min="1" max="70">
-                            <br>
-                            <div class="number" id="bob_pub">25</div>
-                            <p>Публичный ключ = 2^b mod 71</p>
+                        <div class="callout callout--note">
+                            <p>
+                                <strong>NB:</strong> из 49 невозможно вычислить
+                                12, не перебрав все варианты. Для маленьких
+                                чисел это легко, но в реальности числа огромные
+                                (2²⁵⁶).
+                            </p>
                         </div>
                     </div>
+                    <div class="section__demo">
+                        <div class="grid">
+                            <div class="card alice">
+                                <h3>Алиса</h3>
+                                <label>Приватный ключ (a):</label>
+                                <input
+                                    type="number"
+                                    id="alice_priv"
+                                    value="12"
+                                    min="1"
+                                    max="70"
+                                />
+                                <br />
+                                <div class="number" id="alice_pub">49</div>
+                                <p>Публичный ключ = 2^a mod 71</p>
+                            </div>
+                            <div class="card bob">
+                                <h3>Боб</h3>
+                                <label>Приватный ключ (b):</label>
+                                <input
+                                    type="number"
+                                    id="bob_priv"
+                                    value="56"
+                                    min="1"
+                                    max="70"
+                                />
+                                <br />
+                                <div class="number" id="bob_pub">25</div>
+                                <p>Публичный ключ = 2^b mod 71</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="post-2">
-            <h2>Как договориться об общем секрете, не встречаясь?</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>Алиса и Боб хотят получить <strong>одинаковое число</strong>, чтобы шифровать им сообщения, но так, чтобы никто другой его не узнал.</p>
-                    <p><strong>Протокол Диффи-Хеллмана (упрощенно):</strong></p>
-                    <pre><code>Шаг 1: Алиса → Боб: публичный ключ Алисы (49)
+            <section class="section" id="post-2">
+                <h2>Как договориться об общем секрете, не встречаясь?</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            Алиса и Боб хотят получить
+                            <strong>одинаковое число</strong>, чтобы шифровать
+                            им сообщения, но так, чтобы никто другой его не
+                            узнал.
+                        </p>
+                        <p>
+                            <strong
+                                >Протокол Диффи-Хеллмана (упрощенно):</strong
+                            >
+                        </p>
+                        <pre><code>Шаг 1: Алиса → Боб: публичный ключ Алисы (49)
 Шаг 2: Боб → Алиса: публичный ключ Боба (25)
 
 Шаг 3: Алиса вычисляет: 25^12 mod 71 = ???
 Шаг 4: Боб вычисляет: 49^56 mod 71 = ???</code></pre>
-                    <p><strong>Магия:</strong> результаты одинаковы!</p>
-                    <div class="callout callout--note">
-                        <p>Общий секрет S = 2^(a×b) mod 71. Злоумышленник видит только 49 и 25 и не знает a и b.</p>
+                        <p><strong>Магия:</strong> результаты одинаковы!</p>
+                        <div class="callout callout--note">
+                            <p>
+                                Общий секрет S = 2^(a×b) mod 71. Злоумышленник
+                                видит только 49 и 25 и не знает a и b.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="section__demo">
+                        <div class="visualization">
+                            <p>
+                                Алиса → Боб:
+                                <strong id="alice_to_bob">49</strong>
+                            </p>
+                            <p>
+                                Боб → Алиса:
+                                <strong id="bob_to_alice">25</strong>
+                            </p>
+                            <hr />
+                            <p>
+                                Алиса вычисляет:
+                                <strong id="alice_compute">25^12 mod 71</strong>
+                                =
+                                <span
+                                    class="number"
+                                    style="display: inline-block; padding: 5px"
+                                    id="alice_secret"
+                                    >60</span
+                                >
+                            </p>
+                            <p>
+                                Боб вычисляет:
+                                <strong id="bob_compute">49^56 mod 71</strong> =
+                                <span
+                                    class="number"
+                                    style="display: inline-block; padding: 5px"
+                                    id="bob_secret"
+                                    >60</span
+                                >
+                            </p>
+                            <p
+                                style="
+                                    font-size: 18px;
+                                    text-align: center;
+                                    margin-top: 14px;
+                                "
+                            >
+                                Общий секрет:
+                                <strong id="shared_secret">60</strong>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="section__demo">
-                    <div class="visualization">
-                        <p>Алиса → Боб: <strong id="alice_to_bob">49</strong></p>
-                        <p>Боб → Алиса: <strong id="bob_to_alice">25</strong></p>
-                        <hr>
-                        <p>Алиса вычисляет: <strong id="alice_compute">25^12 mod 71</strong> = <span class="number" style="display:inline-block; padding:5px;" id="alice_secret">60</span></p>
-                        <p>Боб вычисляет: <strong id="bob_compute">49^56 mod 71</strong> = <span class="number" style="display:inline-block; padding:5px;" id="bob_secret">60</span></p>
-                        <p style="font-size: 18px; text-align: center; margin-top: 14px;">Общий секрет: <strong id="shared_secret">60</strong></p>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="post-3">
-            <h2>А если злоумышленник подменит ключи?</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>Атака “человек посередине” (MITM) выглядит так: злоумышленник перехватывает обмен и подставляет свои ключи.</p>
-                    <pre><code>Алиса → Ева: 49
+            <section class="section" id="post-3">
+                <h2>А если злоумышленник подменит ключи?</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            Атака “человек посередине” (MITM) выглядит так:
+                            злоумышленник перехватывает обмен и подставляет свои
+                            ключи.
+                        </p>
+                        <pre><code>Алиса → Ева: 49
 Ева → Боб: 33 (свой ключ)
 Боб → Ева: 25
 Ева → Алиса: 44 (свой другой ключ)
@@ -446,186 +640,307 @@
 Теперь:
 - Алиса думает, что общается с Бобом, но на самом деле с Евой
 - Боб думает, что общается с Алисой, но на самом деле с Евой</code></pre>
-                    <div class="callout callout--warn">
-                        <p><strong>Решение:</strong> нужна аутентификация. В Signal для этого используется X3DH — тройной обмен ключами с подписями.</p>
+                        <div class="callout callout--warn">
+                            <p>
+                                <strong>Решение:</strong> нужна аутентификация.
+                                В Signal для этого используется X3DH — тройной
+                                обмен ключами с подписями.
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="section__demo">
-                    <div class="card eve">
-                        <h3>Ева (злоумышленница)</h3>
-                        <button onclick="simulateMITM()">Показать MITM атаку</button>
-                        <button onclick="resetDemo()">Сбросить</button>
-                        <div id="mitm_demo" style="margin-top: 20px; display: none;">
-                            <p>Ева перехватывает ключи:</p>
-                            <p>От Алисы → Ева: 49<br>Ева → Боб: <strong id="eve_to_bob">33</strong> (ключ Евы)</p>
-                            <p>От Боба → Ева: 25<br>Ева → Алиса: <strong id="eve_to_alice">44</strong> (другой ключ Евы)</p>
-                            <hr>
-                            <p>Алиса думает, что общается с Бобом, но ключ (44) от Евы</p>
-                            <p>Боб думает, что общается с Алисой, но ключ (33) от Евы</p>
-                            <p>Ева вычисляет секрет с Алисой: <strong id="eve_alice_secret">?</strong></p>
-                            <p>Ева вычисляет секрет с Бобом: <strong id="eve_bob_secret">?</strong></p>
-                            <p>Ева читает все сообщения.</p>
+                    <div class="section__demo">
+                        <div class="card eve">
+                            <h3>Ева (злоумышленница)</h3>
+                            <button onclick="simulateMITM()">
+                                Показать MITM атаку
+                            </button>
+                            <button onclick="resetDemo()">Сбросить</button>
+                            <div
+                                id="mitm_demo"
+                                style="margin-top: 20px; display: none"
+                            >
+                                <p>Ева перехватывает ключи:</p>
+                                <p>
+                                    От Алисы → Ева: 49<br />Ева → Боб:
+                                    <strong id="eve_to_bob">33</strong> (ключ
+                                    Евы)
+                                </p>
+                                <p>
+                                    От Боба → Ева: 25<br />Ева → Алиса:
+                                    <strong id="eve_to_alice">44</strong>
+                                    (другой ключ Евы)
+                                </p>
+                                <hr />
+                                <p>
+                                    Алиса думает, что общается с Бобом, но ключ
+                                    (44) от Евы
+                                </p>
+                                <p>
+                                    Боб думает, что общается с Алисой, но ключ
+                                    (33) от Евы
+                                </p>
+                                <p>
+                                    Ева вычисляет секрет с Алисой:
+                                    <strong id="eve_alice_secret">?</strong>
+                                </p>
+                                <p>
+                                    Ева вычисляет секрет с Бобом:
+                                    <strong id="eve_bob_secret">?</strong>
+                                </p>
+                                <p>Ева читает все сообщения.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="post-4">
-            <h2>X3DH — как доказать, что это ты?</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>У каждого пользователя есть <strong>три типа ключей</strong>:</p>
-                    <ul>
-                        <li><strong>Identity Key (IK)</strong> — долговременный, “паспорт”</li>
-                        <li><strong>Signed PreKey (SPK)</strong> — меняется периодически и подписан IK</li>
-                        <li><strong>One-Time PreKeys (OTPK)</strong> — одноразовые, для анонимности</li>
-                    </ul>
-                    <div class="callout callout--note">
-                        <p>Когда кто-то хочет написать вам, он берёт связку ключей с сервера, проверяет подпись и выполняет несколько DH-обменов — это даёт свойства вроде PFS.</p>
+            <section class="section" id="post-4">
+                <h2>X3DH — как доказать, что это ты?</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            У каждого пользователя есть
+                            <strong>три типа ключей</strong>:
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>Identity Key (IK)</strong> —
+                                долговременный, “паспорт”
+                            </li>
+                            <li>
+                                <strong>Signed PreKey (SPK)</strong> — меняется
+                                периодически и подписан IK
+                            </li>
+                            <li>
+                                <strong>One-Time PreKeys (OTPK)</strong> —
+                                одноразовые, для анонимности
+                            </li>
+                        </ul>
+                        <div class="callout callout--note">
+                            <p>
+                                Когда кто-то хочет написать вам, он берёт связку
+                                ключей с сервера, проверяет подпись и выполняет
+                                несколько DH-обменов — это даёт свойства вроде
+                                PFS.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="section__demo">
+                        <table>
+                            <tr>
+                                <th>Тип ключа</th>
+                                <th>Алиса</th>
+                                <th>Боб</th>
+                                <th>Назначение</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="badge ik"
+                                        >Identity Key (IK)</span
+                                    >
+                                </td>
+                                <td id="ik_alice">49</td>
+                                <td id="ik_bob">25</td>
+                                <td>"Паспорт" пользователя, долговременный</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="badge spk"
+                                        >Signed PreKey (SPK)</span
+                                    >
+                                </td>
+                                <td id="spk_alice">48</td>
+                                <td id="spk_bob">32</td>
+                                <td>Меняется раз в неделю, подписан IK</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="badge otpk"
+                                        >One-Time PreKey (OTPK)</span
+                                    >
+                                </td>
+                                <td id="otpk_alice">[17, 23, 41, 53]</td>
+                                <td id="otpk_bob">[19, 29, 37, 43]</td>
+                                <td>Одноразовые, для анонимности</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="badge eph"
+                                        >Эфемерный ключ</span
+                                    >
+                                </td>
+                                <td id="eph_alice">33</td>
+                                <td id="eph_bob">44</td>
+                                <td>Одноразовый для каждой сессии</td>
+                            </tr>
+                        </table>
+                        <p>
+                            <small
+                                >В реальности ключи огромны (2²⁵⁶). Здесь
+                                показаны для демонстрации.</small
+                            >
+                        </p>
                     </div>
                 </div>
-                <div class="section__demo">
-                    <table>
-                        <tr>
-                            <th>Тип ключа</th>
-                            <th>Алиса</th>
-                            <th>Боб</th>
-                            <th>Назначение</th>
-                        </tr>
-                        <tr>
-                            <td><span class="badge ik">Identity Key (IK)</span></td>
-                            <td id="ik_alice">49</td>
-                            <td id="ik_bob">25</td>
-                            <td>"Паспорт" пользователя, долговременный</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge spk">Signed PreKey (SPK)</span></td>
-                            <td id="spk_alice">48</td>
-                            <td id="spk_bob">32</td>
-                            <td>Меняется раз в неделю, подписан IK</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge otpk">One-Time PreKey (OTPK)</span></td>
-                            <td id="otpk_alice">[17, 23, 41, 53]</td>
-                            <td id="otpk_bob">[19, 29, 37, 43]</td>
-                            <td>Одноразовые, для анонимности</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge eph">Эфемерный ключ</span></td>
-                            <td id="eph_alice">33</td>
-                            <td id="eph_bob">44</td>
-                            <td>Одноразовый для каждой сессии</td>
-                        </tr>
-                    </table>
-                    <p><small>В реальности ключи огромны (2²⁵⁶). Здесь показаны для демонстрации.</small></p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="post-5">
-            <h2>Как шифруются сами сообщения (Double Ratchet)</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>После X3DH у Алисы и Боба есть общий секрет S. Но шифровать им все сообщения нельзя — если ключ украдут, расшифруют всё.</p>
-                    <p><strong>Double Ratchet</strong> — постоянная смена ключей:</p>
-                    <pre><code>Сообщение 1:
+            <section class="section" id="post-5">
+                <h2>Как шифруются сами сообщения (Double Ratchet)</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            После X3DH у Алисы и Боба есть общий секрет S. Но
+                            шифровать им все сообщения нельзя — если ключ
+                            украдут, расшифруют всё.
+                        </p>
+                        <p>
+                            <strong>Double Ratchet</strong> — постоянная смена
+                            ключей:
+                        </p>
+                        <pre><code>Сообщение 1:
 Chain Key₁ → Message Key₁ → шифруем "Привет"
             → новый Chain Key₂
 
 Сообщение 2:
 Chain Key₂ → Message Key₂ → шифруем "Как дела?"
             → новый Chain Key₃</code></pre>
-                    <div class="callout callout--note">
-                        <p>Если злоумышленник украдет Chain Key₅, он не сможет расшифровать сообщения 1–4 (они уже уничтожены).</p>
-                    </div>
-                </div>
-                <div class="section__demo">
-                    <div class="visualization">
-                        <p>Цепочка ключей для сообщений (Алиса → Боб):</p>
-                        <div id="ratchet_demo">
-                            <p>Chain Key₀ = <span class="number" style="font-size: 16px;">60</span> (общий секрет)</p>
-                            <p>→ Message Key₁ = 13 → шифруем "Привет"</p>
-                            <p>→ Chain Key₁ = 42</p>
-                            <p>→ Message Key₂ = 28 → шифруем "Как дела?"</p>
-                            <p>→ Chain Key₂ = 17</p>
-                            <p>→ Message Key₃ = 35 → шифруем "Что нового?"</p>
-                            <p>→ ...</p>
+                        <div class="callout callout--note">
+                            <p>
+                                Если злоумышленник украдет Chain Key₅, он не
+                                сможет расшифровать сообщения 1–4 (они уже
+                                уничтожены).
+                            </p>
                         </div>
-                        <p>Если украдут Chain Key₂ (17), сообщения 1 и 2 уже не расшифровать.</p>
+                    </div>
+                    <div class="section__demo">
+                        <div class="visualization">
+                            <p>Цепочка ключей для сообщений (Алиса → Боб):</p>
+                            <div id="ratchet_demo">
+                                <p>
+                                    Chain Key₀ =
+                                    <span class="number" style="font-size: 16px"
+                                        >60</span
+                                    >
+                                    (общий секрет)
+                                </p>
+                                <p>→ Message Key₁ = 13 → шифруем "Привет"</p>
+                                <p>→ Chain Key₁ = 42</p>
+                                <p>→ Message Key₂ = 28 → шифруем "Как дела?"</p>
+                                <p>→ Chain Key₂ = 17</p>
+                                <p>
+                                    → Message Key₃ = 35 → шифруем "Что нового?"
+                                </p>
+                                <p>→ ...</p>
+                            </div>
+                            <p>
+                                Если украдут Chain Key₂ (17), сообщения 1 и 2
+                                уже не расшифровать.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="post-6">
-            <h2>А если пользователь офлайн? (Sealed Sender)</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>Боб офлайн, Алиса хочет написать. Сервер не должен знать, что это Алиса.</p>
-                    <p><strong>Sealed Sender</strong> — скрытый отправитель:</p>
-                    <pre><code>Вместо:
+            <section class="section" id="post-6">
+                <h2>А если пользователь офлайн? (Sealed Sender)</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            Боб офлайн, Алиса хочет написать. Сервер не должен
+                            знать, что это Алиса.
+                        </p>
+                        <p>
+                            <strong>Sealed Sender</strong> — скрытый
+                            отправитель:
+                        </p>
+                        <pre><code>Вместо:
 { "from": "Алиса", "to": "Боб", "content": "..." }
 
 Алиса отправляет:
 { "to": "Боб", "content": зашифрованный_конверт }</code></pre>
-                    <div class="callout callout--note">
-                        <p>Сервер видит только получателя, но не знает отправителя.</p>
-                    </div>
-                </div>
-                <div class="section__demo">
-                    <div class="grid">
-                        <div>
-                            <h4>Без Sealed Sender:</h4>
-                            <div class="panel panel--danger">
-                                <p>Сервер видит:</p>
-                                <code>{ "from": "Алиса", "to": "Боб", "content": "🔒" }</code>
-                            </div>
-                        </div>
-                        <div>
-                            <h4>С Sealed Sender:</h4>
-                            <div class="panel panel--ok">
-                                <p>Сервер видит:</p>
-                                <code>{ "to": "Боб", "content": "📦" }</code>
-                                <p><small>Внутри 📦: зашифрованный конверт с отправителем</small></p>
-                            </div>
+                        <div class="callout callout--note">
+                            <p>
+                                Сервер видит только получателя, но не знает
+                                отправителя.
+                            </p>
                         </div>
                     </div>
+                    <div class="section__demo">
+                        <div class="grid">
+                            <div>
+                                <h4>Без Sealed Sender:</h4>
+                                <div class="panel panel--danger">
+                                    <p>Сервер видит:</p>
+                                    <code
+                                        >{ "from": "Алиса", "to": "Боб",
+                                        "content": "🔒" }</code
+                                    >
+                                </div>
+                            </div>
+                            <div>
+                                <h4>С Sealed Sender:</h4>
+                                <div class="panel panel--ok">
+                                    <p>Сервер видит:</p>
+                                    <code
+                                        >{ "to": "Боб", "content": "📦" }</code
+                                    >
+                                    <p>
+                                        <small
+                                            >Внутри 📦: зашифрованный конверт с
+                                            отправителем</small
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="post-7">
-            <h2>Как Боб узнает, что ему написали? (Уведомления)</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p><strong>Receipts (подтверждения):</strong></p>
-                    <ol>
-                        <li>Боб получает сообщение → телефон автоматически отправляет <strong>DeliveryReceipt</strong></li>
-                        <li>Боб открывает чат → телефон отправляет <strong>ReadReceipt</strong></li>
-                    </ol>
-                    <div class="callout callout--note">
-                        <p>Даже при Sealed Sender receipts работают: Боб расшифровал сообщение и узнал, что оно от Алисы.</p>
+            <section class="section" id="post-7">
+                <h2>Как Боб узнает, что ему написали? (Уведомления)</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p><strong>Receipts (подтверждения):</strong></p>
+                        <ol>
+                            <li>
+                                Боб получает сообщение → телефон автоматически
+                                отправляет <strong>DeliveryReceipt</strong>
+                            </li>
+                            <li>
+                                Боб открывает чат → телефон отправляет
+                                <strong>ReadReceipt</strong>
+                            </li>
+                        </ol>
+                        <div class="callout callout--note">
+                            <p>
+                                Даже при Sealed Sender receipts работают: Боб
+                                расшифровал сообщение и узнал, что оно от Алисы.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="section__demo">
+                        <div class="actions">
+                            <button onclick="simulateDelivery()">
+                                📲 Боб получил сообщение
+                            </button>
+                            <button onclick="simulateRead()">
+                                👁️ Боб прочитал
+                            </button>
+                        </div>
+                        <div id="receipt_demo" class="receipt">
+                            <p id="receipt_text"></p>
+                        </div>
                     </div>
                 </div>
-                <div class="section__demo">
-                    <div class="actions">
-                        <button onclick="simulateDelivery()">📲 Боб получил сообщение</button>
-                        <button onclick="simulateRead()">👁️ Боб прочитал</button>
-                    </div>
-                    <div id="receipt_demo" class="receipt">
-                        <p id="receipt_text"></p>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="try">
-            <h2>Попробуйте сами (учебные числа)</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>Можете взять Python и проверить:</p>
-                    <pre><code>p = 71  # модуль
+            <section class="section" id="try">
+                <h2>Попробуйте сами (учебные числа)</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>Можете взять Python и проверить:</p>
+                        <pre><code>p = 71  # модуль
 G = 2   # базовая точка
 
 # Приватные ключи
@@ -639,144 +954,270 @@ bob_pub = pow(G, bob_priv, p)      # 25
 # Общий секрет
 secret_alice = pow(bob_pub, alice_priv, p)
 secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
-                </div>
-                <div class="section__demo">
-                    <div class="grid">
-                        <div>
-                            <p>Вычисли 2^<input type="number" id="pow_input" value="12" min="1" max="70"> mod 71</p>
-                            <button onclick="computePow()">Вычислить</button>
-                            <div class="number" id="pow_result">49</div>
-                        </div>
-                        <div>
-                            <p>Вычисли общий секрет с Бобом</p>
-                            <p>(ключ Боба: 25)</p>
-                            <p>25^<input type="number" id="shared_input" value="12" min="1" max="70"> mod 71</p>
-                            <button onclick="computeShared()">Вычислить</button>
-                            <div class="number" id="shared_result">60</div>
+                    </div>
+                    <div class="section__demo">
+                        <div class="grid">
+                            <div>
+                                <p>
+                                    Вычисли 2^<input
+                                        type="number"
+                                        id="pow_input"
+                                        value="12"
+                                        min="1"
+                                        max="70"
+                                    />
+                                    mod 71
+                                </p>
+                                <button onclick="computePow()">
+                                    Вычислить
+                                </button>
+                                <div class="number" id="pow_result">49</div>
+                            </div>
+                            <div>
+                                <p>Вычисли общий секрет с Бобом</p>
+                                <p>(ключ Боба: 25)</p>
+                                <p>
+                                    25^<input
+                                        type="number"
+                                        id="shared_input"
+                                        value="12"
+                                        min="1"
+                                        max="70"
+                                    />
+                                    mod 71
+                                </p>
+                                <button onclick="computeShared()">
+                                    Вычислить
+                                </button>
+                                <div class="number" id="shared_result">60</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="bruteforce">
-            <h2>Сколько займёт перебор у злоумышленника?</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p>В этой демке приватные ключи маленькие (1…70), поэтому перебор мгновенный. В реальности безопасность держится на том, что “подобрать ключ” занимает астрономическое время.</p>
-                    <p>Для задачи дискретного логарифма (и в обычном DH, и в ECC) лучшие общие атаки имеют сложность порядка <code>2^(k/2)</code>, где <code>k</code> — “битовая стойкость” группы.</p>
-                    <div class="callout callout--note">
-                        <p><strong>Важно:</strong> это грубая оценка “в лоб” для понимания масштаба. Реальные атаки зависят от параметров, реализации, побочных каналов и т.д.</p>
-                    </div>
-                </div>
-                <div class="section__demo">
-                    <div class="control">
-                        <label for="bf_model">Модель атаки</label>
-                        <select id="bf_model">
-                            <option value="bruteforce">Наивный перебор: ~ 2^k</option>
-                            <option value="dlog" selected>Дискретный логарифм (общий случай): ~ 2^(k/2)</option>
-                        </select>
-                        <p class="control__hint">Для DH/ECC обычно уместнее оценка <code>2^(k/2)</code>.</p>
-                    </div>
-
-                    <div class="controls">
-                        <div class="control">
-                            <label for="bf_bits">Размер (k), бит: <strong id="bf_bits_label">256</strong></label>
-                            <input id="bf_bits" type="range" min="16" max="256" step="8" value="256">
-                            <p class="control__hint">256 бит для ECC — типичный современный уровень.</p>
+            <section class="section" id="bruteforce">
+                <h2>Сколько займёт перебор у злоумышленника?</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            В этой демке приватные ключи маленькие (1…70),
+                            поэтому перебор мгновенный. В реальности
+                            безопасность держится на том, что “подобрать ключ”
+                            занимает астрономическое время.
+                        </p>
+                        <p>
+                            Для задачи дискретного логарифма (и в обычном DH, и
+                            в ECC) лучшие общие атаки имеют сложность порядка
+                            <code>2^(k/2)</code>, где <code>k</code> — “битовая
+                            стойкость” группы.
+                        </p>
+                        <div class="callout callout--note">
+                            <p>
+                                <strong>Важно:</strong> это грубая оценка “в
+                                лоб” для понимания масштаба. Реальные атаки
+                                зависят от параметров, реализации, побочных
+                                каналов и т.д.
+                            </p>
                         </div>
+                    </div>
+                    <div class="section__demo">
                         <div class="control">
-                            <label for="bf_rate">Скорость атакующего</label>
-                            <select id="bf_rate">
-                                <option value="1e6">10^6 попыток/сек (медленно)</option>
-                                <option value="1e9" selected>10^9 попыток/сек (GPU/кластер условно)</option>
-                                <option value="1e12">10^12 попыток/сек (очень быстро)</option>
-                                <option value="1e15">10^15 попыток/сек (фантастично)</option>
+                            <label for="bf_model">Модель атаки</label>
+                            <select id="bf_model">
+                                <option value="bruteforce">
+                                    Наивный перебор: ~ 2^k
+                                </option>
+                                <option value="dlog" selected>
+                                    Дискретный логарифм (общий случай): ~
+                                    2^(k/2)
+                                </option>
                             </select>
-                            <p class="control__hint">Это абстракция “операций в секунду”.</p>
+                            <p class="control__hint">
+                                Для DH/ECC обычно уместнее оценка
+                                <code>2^(k/2)</code>.
+                            </p>
                         </div>
-                    </div>
 
-                    <div class="kpi">
-                        <div class="kpi__item">
-                            <p class="kpi__label">Оценка числа операций</p>
-                            <p class="kpi__value" id="bf_ops">—</p>
+                        <div class="controls">
+                            <div class="control">
+                                <label for="bf_bits"
+                                    >Размер (k), бит:
+                                    <strong id="bf_bits_label"
+                                        >256</strong
+                                    ></label
+                                >
+                                <input
+                                    id="bf_bits"
+                                    type="range"
+                                    min="16"
+                                    max="256"
+                                    step="8"
+                                    value="256"
+                                />
+                                <p class="control__hint">
+                                    256 бит для ECC — типичный современный
+                                    уровень.
+                                </p>
+                            </div>
+                            <div class="control">
+                                <label for="bf_rate">Скорость атакующего</label>
+                                <select id="bf_rate">
+                                    <option value="1e6">
+                                        10^6 попыток/сек (медленно)
+                                    </option>
+                                    <option value="1e9" selected>
+                                        10^9 попыток/сек (GPU/кластер условно)
+                                    </option>
+                                    <option value="1e12">
+                                        10^12 попыток/сек (очень быстро)
+                                    </option>
+                                    <option value="1e15">
+                                        10^15 попыток/сек (фантастично)
+                                    </option>
+                                </select>
+                                <p class="control__hint">
+                                    Это абстракция “операций в секунду”.
+                                </p>
+                            </div>
                         </div>
-                        <div class="kpi__item">
-                            <p class="kpi__label">Ожидаемое время (в среднем)</p>
-                            <p class="kpi__value" id="bf_time">—</p>
-                        </div>
-                        <div class="kpi__item">
-                            <p class="kpi__label">Худший случай</p>
-                            <p class="kpi__value" id="bf_time_worst">—</p>
-                        </div>
-                        <div class="kpi__item">
-                            <p class="kpi__label">В этой демке (p = 71)</p>
-                            <p class="kpi__value" id="bf_demo_time">—</p>
+
+                        <div class="kpi">
+                            <div class="kpi__item">
+                                <p class="kpi__label">Оценка числа операций</p>
+                                <p class="kpi__value" id="bf_ops">—</p>
+                            </div>
+                            <div class="kpi__item">
+                                <p class="kpi__label">
+                                    Ожидаемое время (в среднем)
+                                </p>
+                                <p class="kpi__value" id="bf_time">—</p>
+                            </div>
+                            <div class="kpi__item">
+                                <p class="kpi__label">Худший случай</p>
+                                <p class="kpi__value" id="bf_time_worst">—</p>
+                            </div>
+                            <div class="kpi__item">
+                                <p class="kpi__label">В этой демке (p = 71)</p>
+                                <p class="kpi__value" id="bf_demo_time">—</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="ecc">
-            <h2>Почему в реальности используют эллиптические кривые?</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <p><strong>Эллиптическая кривая</strong> — это множество точек, которые удовлетворяют уравнению вида:</p>
-                    <pre><code>y² = x³ + ax + b</code></pre>
-                    <p>В криптографии берут не “вещественную” кривую как в школе, а ту же идею, но над конечным полем (всё считается по модулю). Точки образуют группу: есть “сложение точек”, и можно многократно прибавлять одну точку к себе (аналог “умножения”).</p>
-                    <p>Как и в DH, задача для атакующего — восстановить <em>сколько раз прибавляли</em> (дискретный логарифм), и это считается крайне сложным для правильных параметров.</p>
-                    <div class="callout callout--note">
-                        <p><strong>Практический смысл:</strong> ECC даёт высокую стойкость при меньших ключах. Поэтому вместо “очень больших чисел” в обычной группе часто используют точки на кривой.</p>
+            <section class="section" id="ecc">
+                <h2>Почему в реальности используют эллиптические кривые?</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <p>
+                            <strong>Эллиптическая кривая</strong> — это
+                            множество точек, которые удовлетворяют уравнению
+                            вида:
+                        </p>
+                        <pre><code>y² = x³ + ax + b</code></pre>
+                        <p>
+                            В криптографии берут не “вещественную” кривую как в
+                            школе, а ту же идею, но над конечным полем (всё
+                            считается по модулю). Точки образуют группу: есть
+                            “сложение точек”, и можно многократно прибавлять
+                            одну точку к себе (аналог “умножения”).
+                        </p>
+                        <p>
+                            Как и в DH, задача для атакующего — восстановить
+                            <em>сколько раз прибавляли</em> (дискретный
+                            логарифм), и это считается крайне сложным для
+                            правильных параметров.
+                        </p>
+                        <div class="callout callout--note">
+                            <p>
+                                <strong>Практический смысл:</strong> ECC даёт
+                                высокую стойкость при меньших ключах. Поэтому
+                                вместо “очень больших чисел” в обычной группе
+                                часто используют точки на кривой.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="section__demo">
+                        <div class="diagram">
+                            <svg
+                                viewBox="0 0 520 260"
+                                role="img"
+                                aria-label="Схема эллиптической кривой"
+                            >
+                                <line
+                                    class="axis"
+                                    x1="30"
+                                    y1="220"
+                                    x2="500"
+                                    y2="220"
+                                ></line>
+                                <line
+                                    class="axis"
+                                    x1="60"
+                                    y1="20"
+                                    x2="60"
+                                    y2="240"
+                                ></line>
+                                <path
+                                    class="curve"
+                                    d="M 70 210 C 120 140, 160 95, 205 85 C 255 74, 310 95, 360 150 C 400 185, 450 205, 495 210"
+                                ></path>
+                                <circle
+                                    class="point"
+                                    cx="165"
+                                    cy="105"
+                                    r="4"
+                                ></circle>
+                                <circle
+                                    class="point"
+                                    cx="325"
+                                    cy="120"
+                                    r="4"
+                                ></circle>
+                                <text x="146" y="96">P</text>
+                                <text x="332" y="112">Q</text>
+                                <text x="78" y="238">x</text>
+                                <text x="42" y="32">y</text>
+                            </svg>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Уровень стойкости</th>
+                                <th>ECC</th>
+                                <th>RSA/DSA (примерно)</th>
+                            </tr>
+                            <tr>
+                                <td>~128-bit</td>
+                                <td>256-bit ECC</td>
+                                <td>3072-bit RSA</td>
+                            </tr>
+                            <tr>
+                                <td>~192-bit</td>
+                                <td>384-bit ECC</td>
+                                <td>7680-bit RSA</td>
+                            </tr>
+                            <tr>
+                                <td>~256-bit</td>
+                                <td>521-bit ECC</td>
+                                <td>15360-bit RSA</td>
+                            </tr>
+                        </table>
+                        <p>
+                            <small
+                                >Числа эквивалентности — ориентир “по порядку”,
+                                чтобы понять масштаб.</small
+                            >
+                        </p>
                     </div>
                 </div>
-                <div class="section__demo">
-                    <div class="diagram">
-                        <svg viewBox="0 0 520 260" role="img" aria-label="Схема эллиптической кривой">
-                            <line class="axis" x1="30" y1="220" x2="500" y2="220"></line>
-                            <line class="axis" x1="60" y1="20" x2="60" y2="240"></line>
-                            <path class="curve" d="M 70 210 C 120 140, 160 95, 205 85 C 255 74, 310 95, 360 150 C 400 185, 450 205, 495 210"></path>
-                            <circle class="point" cx="165" cy="105" r="4"></circle>
-                            <circle class="point" cx="325" cy="120" r="4"></circle>
-                            <text x="146" y="96">P</text>
-                            <text x="332" y="112">Q</text>
-                            <text x="78" y="238">x</text>
-                            <text x="42" y="32">y</text>
-                        </svg>
-                    </div>
-                    <table>
-                        <tr>
-                            <th>Уровень стойкости</th>
-                            <th>ECC</th>
-                            <th>RSA/DSA (примерно)</th>
-                        </tr>
-                        <tr>
-                            <td>~128-bit</td>
-                            <td>256-bit ECC</td>
-                            <td>3072-bit RSA</td>
-                        </tr>
-                        <tr>
-                            <td>~192-bit</td>
-                            <td>384-bit ECC</td>
-                            <td>7680-bit RSA</td>
-                        </tr>
-                        <tr>
-                            <td>~256-bit</td>
-                            <td>521-bit ECC</td>
-                            <td>15360-bit RSA</td>
-                        </tr>
-                    </table>
-                    <p><small>Числа эквивалентности — ориентир “по порядку”, чтобы понять масштаб.</small></p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="summary">
-            <h2>Итог: полная картина</h2>
-            <div class="section__body">
-                <div class="prose">
-                    <pre><code>┌─────────────────────────────────────────────────────────────┐
+            <section class="section" id="summary">
+                <h2>Итог: полная картина</h2>
+                <div class="section__body">
+                    <div class="prose">
+                        <pre><code>┌─────────────────────────────────────────────────────────────┐
 │                    Ваше сообщение                           │
 │  "Привет, как дела?"                                        │
 ├─────────────────────────────────────────────────────────────┤
@@ -792,255 +1233,331 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
 │  Layer 1: Транспорт (gRPC/WebRTC)                           │
 │  → Доставка бинарных конвертов                              │
 └─────────────────────────────────────────────────────────────┘</code></pre>
-                    <p><strong>Почему это безопасно?</strong></p>
-                    <ol>
-                        <li>Даже если сервер взломают — сообщения зашифрованы</li>
-                        <li>Даже если украдут текущий ключ — прошлые сообщения не расшифровать (PFS)</li>
-                        <li>Даже если следят за сервером — не знают, кто кому пишет (Sealed Sender)</li>
-                        <li>Каждое сообщение шифруется уникальным ключом</li>
-                    </ol>
+                        <p><strong>Почему это безопасно?</strong></p>
+                        <ol>
+                            <li>
+                                Даже если сервер взломают — сообщения
+                                зашифрованы
+                            </li>
+                            <li>
+                                Даже если украдут текущий ключ — прошлые
+                                сообщения не расшифровать (PFS)
+                            </li>
+                            <li>
+                                Даже если следят за сервером — не знают, кто
+                                кому пишет (Sealed Sender)
+                            </li>
+                            <li>
+                                Каждое сообщение шифруется уникальным ключом
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="section__demo">
+                        <table>
+                            <tr>
+                                <th>Кто</th>
+                                <th>Что знает</th>
+                                <th>Что не знает</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Алиса</strong></td>
+                                <td>Свои ключи, ключи Боба</td>
+                                <td>Ключи Евы</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Боб</strong></td>
+                                <td>Свои ключи, ключи Алисы</td>
+                                <td>Ключи Евы</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Сервер</strong></td>
+                                <td>Кому доставляет</td>
+                                <td>
+                                    Что в сообщениях, кто отправитель (с Sealed
+                                    Sender)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ева</strong></td>
+                                <td>Публичные ключи</td>
+                                <td>Приватные ключи, общий секрет</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="section__demo">
-                    <table>
-                        <tr>
-                            <th>Кто</th>
-                            <th>Что знает</th>
-                            <th>Что не знает</th>
-                        </tr>
-                        <tr>
-                            <td><strong>Алиса</strong></td>
-                            <td>Свои ключи, ключи Боба</td>
-                            <td>Ключи Евы</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Боб</strong></td>
-                            <td>Свои ключи, ключи Алисы</td>
-                            <td>Ключи Евы</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Сервер</strong></td>
-                            <td>Кому доставляет</td>
-                            <td>Что в сообщениях, кто отправитель (с Sealed Sender)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ева</strong></td>
-                            <td>Публичные ключи</td>
-                            <td>Приватные ключи, общий секрет</td>
-                        </tr>
-                    </table>
-                </div>
+            </section>
+
+            <div class="footer">
+                <p>
+                    Учебная демонстрация. В реальной криптографии числа огромны
+                    (2²⁵⁶) и используются эллиптические кривые.
+                </p>
             </div>
-        </section>
-        
-        <div class="footer">
-            <p>Учебная демонстрация. В реальной криптографии числа огромны (2²⁵⁶) и используются эллиптические кривые.</p>
         </div>
-    </div>
 
-    <script>
-        const p = 71;
-        const G = 2;
-        
-        // Функция для вычисления mod
-        function modPow(base, exp, mod) {
-            if (exp === 0) return 1;
-            let result = 1;
-            base = base % mod;
-            while (exp > 0) {
-                if (exp % 2 === 1) {
-                    result = (result * base) % mod;
+        <script>
+            const p = 71;
+            const G = 2;
+
+            // Функция для вычисления mod
+            function modPow(base, exp, mod) {
+                if (exp === 0) return 1;
+                let result = 1;
+                base = base % mod;
+                while (exp > 0) {
+                    if (exp % 2 === 1) {
+                        result = (result * base) % mod;
+                    }
+                    base = (base * base) % mod;
+                    exp = Math.floor(exp / 2);
                 }
-                base = (base * base) % mod;
-                exp = Math.floor(exp / 2);
-            }
-            return result;
-        }
-        
-        // Функция для обновления всех значений
-        function updateAll() {
-            const alice_priv = parseInt(document.getElementById('alice_priv').value);
-            const bob_priv = parseInt(document.getElementById('bob_priv').value);
-            
-            // Публичные ключи
-            const alice_pub = modPow(G, alice_priv, p);
-            const bob_pub = modPow(G, bob_priv, p);
-            
-            document.getElementById('alice_pub').textContent = alice_pub;
-            document.getElementById('bob_pub').textContent = bob_pub;
-            
-            // Обмен ключами
-            document.getElementById('alice_to_bob').textContent = alice_pub;
-            document.getElementById('bob_to_alice').textContent = bob_pub;
-            
-            // Общий секрет
-            const alice_secret = modPow(bob_pub, alice_priv, p);
-            const bob_secret = modPow(alice_pub, bob_priv, p);
-            
-            document.getElementById('alice_compute').innerHTML = `${bob_pub}^${alice_priv} mod 71`;
-            document.getElementById('alice_secret').textContent = alice_secret;
-            document.getElementById('bob_compute').innerHTML = `${alice_pub}^${bob_priv} mod 71`;
-            document.getElementById('bob_secret').textContent = bob_secret;
-            document.getElementById('shared_secret').textContent = alice_secret;
-            
-            // X3DH демо
-            document.getElementById('ik_alice').textContent = alice_pub;
-            document.getElementById('ik_bob').textContent = bob_pub;
-            
-            // SPK (подписанные предварительные ключи)
-            const spk_alice = modPow(G, 23, p); // 2^23 mod 71
-            const spk_bob = modPow(G, 32, p);   // 2^32 mod 71
-            document.getElementById('spk_alice').textContent = spk_alice;
-            document.getElementById('spk_bob').textContent = spk_bob;
-            
-            // OTPK (одноразовые)
-            const otpk_alice = [modPow(G, 17, p), modPow(G, 23, p), modPow(G, 41, p), modPow(G, 53, p)];
-            const otpk_bob = [modPow(G, 19, p), modPow(G, 29, p), modPow(G, 37, p), modPow(G, 43, p)];
-            document.getElementById('otpk_alice').textContent = `[${otpk_alice.join(', ')}]`;
-            document.getElementById('otpk_bob').textContent = `[${otpk_bob.join(', ')}]`;
-            
-            // Эфемерные ключи
-            const eph_alice = modPow(G, 33, p);
-            const eph_bob = modPow(G, 44, p);
-            document.getElementById('eph_alice').textContent = eph_alice;
-            document.getElementById('eph_bob').textContent = eph_bob;
-        }
-        
-        // Функция для симуляции MITM
-        function simulateMITM() {
-            const eve_priv1 = 33;
-            const eve_priv2 = 44;
-            
-            const alice_priv = parseInt(document.getElementById('alice_priv').value);
-            const bob_priv = parseInt(document.getElementById('bob_priv').value);
-            
-            const eve_pub1 = modPow(G, eve_priv1, p);
-            const eve_pub2 = modPow(G, eve_priv2, p);
-            
-            document.getElementById('eve_to_bob').textContent = eve_pub1;
-            document.getElementById('eve_to_alice').textContent = eve_pub2;
-            
-            const eve_alice_secret = modPow(eve_pub2, eve_priv1, p);
-            const eve_bob_secret = modPow(eve_pub1, eve_priv2, p);
-            
-            document.getElementById('eve_alice_secret').textContent = eve_alice_secret;
-            document.getElementById('eve_bob_secret').textContent = eve_bob_secret;
-            
-            document.getElementById('mitm_demo').style.display = 'block';
-        }
-        
-        // Функция для сброса
-        function resetDemo() {
-            document.getElementById('mitm_demo').style.display = 'none';
-            document.getElementById('receipt_demo').style.display = 'none';
-        }
-        
-        // Функции для уведомлений
-        function simulateDelivery() {
-            document.getElementById('receipt_demo').style.display = 'block';
-            document.getElementById('receipt_text').innerHTML = '📱 Боб отправил DeliveryReceipt: "Сообщение доставлено на устройство"';
-        }
-        
-        function simulateRead() {
-            document.getElementById('receipt_demo').style.display = 'block';
-            document.getElementById('receipt_text').innerHTML = '👁️ Боб отправил ReadReceipt: "Сообщение прочитано в 15:30"';
-        }
-        
-        // Функции для калькулятора
-        function computePow() {
-            const exp = parseInt(document.getElementById('pow_input').value);
-            const result = modPow(G, exp, p);
-            document.getElementById('pow_result').textContent = result;
-        }
-        
-        function computeShared() {
-            const exp = parseInt(document.getElementById('shared_input').value);
-            const result = modPow(25, exp, p);
-            document.getElementById('shared_result').textContent = result;
-        }
-
-        const LOG10_2 = Math.log10(2);
-        const LOG10_E = Math.log10(Math.E);
-
-        function formatMantissaExp(log10x) {
-            if (!Number.isFinite(log10x)) return '—';
-            const exp = Math.floor(log10x);
-            const mantissa = Math.pow(10, log10x - exp);
-            return `${mantissa.toFixed(2)}e${exp}`;
-        }
-
-        function formatOpsEstimate(model, bits) {
-            const k = Number(bits);
-            const log10Ops = model === 'bruteforce' ? (k * LOG10_2) : ((k / 2) * LOG10_2);
-            const pow2 = model === 'bruteforce' ? `2^${k}` : `2^${k / 2}`;
-            if (log10Ops < 6) {
-                const ops = Math.round(Math.pow(10, log10Ops));
-                return `~ ${pow2} ≈ ${ops.toLocaleString('ru-RU')} операций`;
-            }
-            return `~ ${pow2} ≈ ${formatMantissaExp(log10Ops)} операций`;
-        }
-
-        function humanizeLog10Seconds(log10Seconds) {
-            if (!Number.isFinite(log10Seconds)) return '—';
-            if (log10Seconds < 0) return '< 1 сек';
-
-            const sec = Math.pow(10, Math.min(log10Seconds, 15)); // safe number for small ranges
-            if (log10Seconds <= 5) {
-                if (sec < 60) return `≈ ${Math.round(sec).toLocaleString('ru-RU')} сек`;
-                if (sec < 3600) return `≈ ${(sec / 60).toFixed(1).replace('.', ',')} мин`;
-                if (sec < 86400) return `≈ ${(sec / 3600).toFixed(1).replace('.', ',')} ч`;
-                return `≈ ${(sec / 86400).toFixed(1).replace('.', ',')} дн`;
+                return result;
             }
 
-            const log10Year = Math.log10(365.25 * 24 * 3600);
-            const log10Years = log10Seconds - log10Year;
-            if (log10Years < 6) {
-                const years = Math.pow(10, log10Years);
-                return `≈ ${years.toFixed(0).toLocaleString('ru-RU')} лет`;
+            // Функция для обновления всех значений
+            function updateAll() {
+                const alice_priv = parseInt(
+                    document.getElementById("alice_priv").value,
+                );
+                const bob_priv = parseInt(
+                    document.getElementById("bob_priv").value,
+                );
+
+                // Публичные ключи
+                const alice_pub = modPow(G, alice_priv, p);
+                const bob_pub = modPow(G, bob_priv, p);
+
+                document.getElementById("alice_pub").textContent = alice_pub;
+                document.getElementById("bob_pub").textContent = bob_pub;
+
+                // Обмен ключами
+                document.getElementById("alice_to_bob").textContent = alice_pub;
+                document.getElementById("bob_to_alice").textContent = bob_pub;
+
+                // Общий секрет
+                const alice_secret = modPow(bob_pub, alice_priv, p);
+                const bob_secret = modPow(alice_pub, bob_priv, p);
+
+                document.getElementById("alice_compute").innerHTML =
+                    `${bob_pub}^${alice_priv} mod 71`;
+                document.getElementById("alice_secret").textContent =
+                    alice_secret;
+                document.getElementById("bob_compute").innerHTML =
+                    `${alice_pub}^${bob_priv} mod 71`;
+                document.getElementById("bob_secret").textContent = bob_secret;
+                document.getElementById("shared_secret").textContent =
+                    alice_secret;
+
+                // X3DH демо
+                document.getElementById("ik_alice").textContent = alice_pub;
+                document.getElementById("ik_bob").textContent = bob_pub;
+
+                // SPK (подписанные предварительные ключи)
+                const spk_alice = modPow(G, 23, p); // 2^23 mod 71
+                const spk_bob = modPow(G, 32, p); // 2^32 mod 71
+                document.getElementById("spk_alice").textContent = spk_alice;
+                document.getElementById("spk_bob").textContent = spk_bob;
+
+                // OTPK (одноразовые)
+                const otpk_alice = [
+                    modPow(G, 17, p),
+                    modPow(G, 23, p),
+                    modPow(G, 41, p),
+                    modPow(G, 53, p),
+                ];
+                const otpk_bob = [
+                    modPow(G, 19, p),
+                    modPow(G, 29, p),
+                    modPow(G, 37, p),
+                    modPow(G, 43, p),
+                ];
+                document.getElementById("otpk_alice").textContent =
+                    `[${otpk_alice.join(", ")}]`;
+                document.getElementById("otpk_bob").textContent =
+                    `[${otpk_bob.join(", ")}]`;
+
+                // Эфемерные ключи
+                const eph_alice = modPow(G, 33, p);
+                const eph_bob = modPow(G, 44, p);
+                document.getElementById("eph_alice").textContent = eph_alice;
+                document.getElementById("eph_bob").textContent = eph_bob;
             }
-            return `≈ ${formatMantissaExp(log10Years)} лет`;
-        }
 
-        function updateBruteforce() {
-            const model = document.getElementById('bf_model').value;
-            const bits = parseInt(document.getElementById('bf_bits').value, 10);
-            const rate = parseFloat(document.getElementById('bf_rate').value);
+            // Функция для симуляции MITM
+            function simulateMITM() {
+                const eve_priv1 = 33;
+                const eve_priv2 = 44;
 
-            document.getElementById('bf_bits_label').textContent = String(bits);
+                const alice_priv = parseInt(
+                    document.getElementById("alice_priv").value,
+                );
+                const bob_priv = parseInt(
+                    document.getElementById("bob_priv").value,
+                );
 
-            const log10Ops = model === 'bruteforce' ? (bits * LOG10_2) : ((bits / 2) * LOG10_2);
-            const log10Rate = Math.log10(rate);
+                const eve_pub1 = modPow(G, eve_priv1, p);
+                const eve_pub2 = modPow(G, eve_priv2, p);
 
-            // Средний случай: половина пространства поиска
-            const log10AvgSeconds = (log10Ops - log10Rate) + Math.log10(0.5);
-            const log10WorstSeconds = (log10Ops - log10Rate);
+                document.getElementById("eve_to_bob").textContent = eve_pub1;
+                document.getElementById("eve_to_alice").textContent = eve_pub2;
 
-            document.getElementById('bf_ops').textContent = formatOpsEstimate(model, bits);
-            document.getElementById('bf_time').textContent = humanizeLog10Seconds(log10AvgSeconds);
-            document.getElementById('bf_time_worst').textContent = humanizeLog10Seconds(log10WorstSeconds);
+                const eve_alice_secret = modPow(eve_pub2, eve_priv1, p);
+                const eve_bob_secret = modPow(eve_pub1, eve_priv2, p);
 
-            // В этой демке: приватный ключ в диапазоне 1..70 (примерно 70 вариантов)
-            const demoSpace = 70;
-            const demoAvgSeconds = (demoSpace / 2) / rate;
-            const demoWorstSeconds = demoSpace / rate;
-            const demoText =
-                `≈ ${demoAvgSeconds.toExponential(2)} сек (в среднем), ` +
-                `≈ ${demoWorstSeconds.toExponential(2)} сек (худший случай)`;
-            document.getElementById('bf_demo_time').textContent = demoText.replace('.', ',');
-        }
-        
-        // Обновляем при загрузке
-        window.onload = function() {
-            updateAll();
-            updateBruteforce();
-        };
-        
-        // Обновляем при изменении полей
-        document.getElementById('alice_priv').addEventListener('input', updateAll);
-        document.getElementById('bob_priv').addEventListener('input', updateAll);
+                document.getElementById("eve_alice_secret").textContent =
+                    eve_alice_secret;
+                document.getElementById("eve_bob_secret").textContent =
+                    eve_bob_secret;
 
-        document.getElementById('bf_model').addEventListener('change', updateBruteforce);
-        document.getElementById('bf_bits').addEventListener('input', updateBruteforce);
-        document.getElementById('bf_rate').addEventListener('change', updateBruteforce);
-    </script>
-</body>
+                document.getElementById("mitm_demo").style.display = "block";
+            }
+
+            // Функция для сброса
+            function resetDemo() {
+                document.getElementById("mitm_demo").style.display = "none";
+                document.getElementById("receipt_demo").style.display = "none";
+            }
+
+            // Функции для уведомлений
+            function simulateDelivery() {
+                document.getElementById("receipt_demo").style.display = "block";
+                document.getElementById("receipt_text").innerHTML =
+                    '📱 Боб отправил DeliveryReceipt: "Сообщение доставлено на устройство"';
+            }
+
+            function simulateRead() {
+                document.getElementById("receipt_demo").style.display = "block";
+                document.getElementById("receipt_text").innerHTML =
+                    '👁️ Боб отправил ReadReceipt: "Сообщение прочитано в 15:30"';
+            }
+
+            // Функции для калькулятора
+            function computePow() {
+                const exp = parseInt(
+                    document.getElementById("pow_input").value,
+                );
+                const result = modPow(G, exp, p);
+                document.getElementById("pow_result").textContent = result;
+            }
+
+            function computeShared() {
+                const exp = parseInt(
+                    document.getElementById("shared_input").value,
+                );
+                const result = modPow(25, exp, p);
+                document.getElementById("shared_result").textContent = result;
+            }
+
+            const LOG10_2 = Math.log10(2);
+            const LOG10_E = Math.log10(Math.E);
+
+            function formatMantissaExp(log10x) {
+                if (!Number.isFinite(log10x)) return "—";
+                const exp = Math.floor(log10x);
+                const mantissa = Math.pow(10, log10x - exp);
+                return `${mantissa.toFixed(2)}e${exp}`;
+            }
+
+            function formatOpsEstimate(model, bits) {
+                const k = Number(bits);
+                const log10Ops =
+                    model === "bruteforce" ? k * LOG10_2 : (k / 2) * LOG10_2;
+                const pow2 = model === "bruteforce" ? `2^${k}` : `2^${k / 2}`;
+                if (log10Ops < 6) {
+                    const ops = Math.round(Math.pow(10, log10Ops));
+                    return `~ ${pow2} ≈ ${ops.toLocaleString("ru-RU")} операций`;
+                }
+                return `~ ${pow2} ≈ ${formatMantissaExp(log10Ops)} операций`;
+            }
+
+            function humanizeLog10Seconds(log10Seconds) {
+                if (!Number.isFinite(log10Seconds)) return "—";
+                if (log10Seconds < 0) return "< 1 сек";
+
+                const sec = Math.pow(10, Math.min(log10Seconds, 15)); // safe number for small ranges
+                if (log10Seconds <= 5) {
+                    if (sec < 60)
+                        return `≈ ${Math.round(sec).toLocaleString("ru-RU")} сек`;
+                    if (sec < 3600)
+                        return `≈ ${(sec / 60).toFixed(1).replace(".", ",")} мин`;
+                    if (sec < 86400)
+                        return `≈ ${(sec / 3600).toFixed(1).replace(".", ",")} ч`;
+                    return `≈ ${(sec / 86400).toFixed(1).replace(".", ",")} дн`;
+                }
+
+                const log10Year = Math.log10(365.25 * 24 * 3600);
+                const log10Years = log10Seconds - log10Year;
+                if (log10Years < 6) {
+                    const years = Math.pow(10, log10Years);
+                    return `≈ ${years.toFixed(0).toLocaleString("ru-RU")} лет`;
+                }
+                return `≈ ${formatMantissaExp(log10Years)} лет`;
+            }
+
+            function updateBruteforce() {
+                const model = document.getElementById("bf_model").value;
+                const bits = parseInt(
+                    document.getElementById("bf_bits").value,
+                    10,
+                );
+                const rate = parseFloat(
+                    document.getElementById("bf_rate").value,
+                );
+
+                document.getElementById("bf_bits_label").textContent =
+                    String(bits);
+
+                const log10Ops =
+                    model === "bruteforce"
+                        ? bits * LOG10_2
+                        : (bits / 2) * LOG10_2;
+                const log10Rate = Math.log10(rate);
+
+                // Средний случай: половина пространства поиска
+                const log10AvgSeconds = log10Ops - log10Rate + Math.log10(0.5);
+                const log10WorstSeconds = log10Ops - log10Rate;
+
+                document.getElementById("bf_ops").textContent =
+                    formatOpsEstimate(model, bits);
+                document.getElementById("bf_time").textContent =
+                    humanizeLog10Seconds(log10AvgSeconds);
+                document.getElementById("bf_time_worst").textContent =
+                    humanizeLog10Seconds(log10WorstSeconds);
+
+                // В этой демке: приватный ключ в диапазоне 1..70 (примерно 70 вариантов)
+                const demoSpace = 70;
+                const demoAvgSeconds = demoSpace / 2 / rate;
+                const demoWorstSeconds = demoSpace / rate;
+                const demoText =
+                    `≈ ${demoAvgSeconds.toExponential(2)} сек (в среднем), ` +
+                    `≈ ${demoWorstSeconds.toExponential(2)} сек (худший случай)`;
+                document.getElementById("bf_demo_time").textContent =
+                    demoText.replace(".", ",");
+            }
+
+            // Обновляем при загрузке
+            window.onload = function () {
+                updateAll();
+                updateBruteforce();
+            };
+
+            // Обновляем при изменении полей
+            document
+                .getElementById("alice_priv")
+                .addEventListener("input", updateAll);
+            document
+                .getElementById("bob_priv")
+                .addEventListener("input", updateAll);
+
+            document
+                .getElementById("bf_model")
+                .addEventListener("change", updateBruteforce);
+            document
+                .getElementById("bf_bits")
+                .addEventListener("input", updateBruteforce);
+            document
+                .getElementById("bf_rate")
+                .addEventListener("change", updateBruteforce);
+        </script>
+    </body>
 </html>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ICE relay smoke test — validates the full relay pipeline health:
+VEIL relay smoke test — validates the full relay pipeline health:
 
   1. TCP reachability — MSK relay, AMS relay, main gRPC server
   2. TLS SPKI pins   — fetch live cert from each relay, compare with known pins
@@ -8,22 +8,22 @@ ICE relay smoke test — validates the full relay pipeline health:
   4. Consistency     — SPKI in .well-known matches what the relay server actually serves
 
 Usage:
-  python3 tests/ice_smoke_test.py          # human-readable output
-  python3 tests/ice_smoke_test.py --ci     # exit 1 if any check fails (for CI)
-  python3 tests/ice_smoke_test.py --json   # JSON output for programmatic use
+  python3 tests/veil_smoke_test.py          # human-readable output
+  python3 tests/veil_smoke_test.py --ci     # exit 1 if any check fails (for CI)
+  python3 tests/veil_smoke_test.py --json   # JSON output for programmatic use
 
 Requirements:
   cryptography>=3.0  (for Ed25519 signature verification)
   pip install cryptography
 """
 
-import json
 import hashlib
+import json
 import socket
 import ssl
 import sys
-import urllib.request
 import urllib.error
+import urllib.request
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional
@@ -52,12 +52,15 @@ RELAYS = [
 
 MAIN_SERVER = {"addr": "ams.konstruct.cc", "port": 443}
 
-# Ed25519 public key (hex) — matches ICEConfig.relayConfigSigningKey in Constants.swift
-SIGNING_PUBLIC_KEY_HEX = "8a0ee71cd95f86a9f6877211accefaff6bb97f3051b3b2141f1c71690b9a2dcf"
+# Ed25519 public key (hex) — matches VEILConfig.relayConfigSigningKey in Constants.swift
+SIGNING_PUBLIC_KEY_HEX = (
+    "8a0ee71cd95f86a9f6877211accefaff6bb97f3051b3b2141f1c71690b9a2dcf"
+)
 
 TIMEOUT = 10  # seconds
 
 # ── Result tracking ────────────────────────────────────────────────────────────
+
 
 @dataclass
 class Check:
@@ -72,7 +75,9 @@ class Suite:
     name: str
     checks: list = field(default_factory=list)
 
-    def add(self, name: str, passed: bool, detail: str = "", warning: bool = False) -> bool:
+    def add(
+        self, name: str, passed: bool, detail: str = "", warning: bool = False
+    ) -> bool:
         self.checks.append(Check(name, passed, detail, warning))
         return passed
 
@@ -86,6 +91,7 @@ class Suite:
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
+
 
 def fetch_spki(addr: str, port: int, sni: str) -> Optional[str]:
     """Connect via TLS, extract SHA-256 of SubjectPublicKeyInfo (same as openssl dgst)."""
@@ -102,6 +108,7 @@ def fetch_spki(addr: str, port: int, sni: str) -> Optional[str]:
                 try:
                     from cryptography import x509
                     from cryptography.hazmat.primitives import serialization
+
                     cert = x509.load_der_x509_certificate(der)
                     pub_der = cert.public_key().public_bytes(
                         serialization.Encoding.DER,
@@ -111,18 +118,31 @@ def fetch_spki(addr: str, port: int, sni: str) -> Optional[str]:
                 except ImportError:
                     pass
                 # Fallback: call openssl in subprocess (always available on Linux/macOS)
-                import subprocess, tempfile, os
+                import os
+                import subprocess
+                import tempfile
+
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".der") as f:
                     f.write(der)
                     tmp = f.name
                 try:
                     pub = subprocess.check_output(
-                        ["openssl", "x509", "-pubkey", "-noout", "-inform", "DER", "-in", tmp],
+                        [
+                            "openssl",
+                            "x509",
+                            "-pubkey",
+                            "-noout",
+                            "-inform",
+                            "DER",
+                            "-in",
+                            tmp,
+                        ],
                         stderr=subprocess.DEVNULL,
                     )
                     dgst = subprocess.check_output(
                         ["openssl", "pkey", "-pubin", "-outform", "DER"],
-                        input=pub, stderr=subprocess.DEVNULL,
+                        input=pub,
+                        stderr=subprocess.DEVNULL,
                     )
                     return hashlib.sha256(dgst).hexdigest()
                 finally:
@@ -146,7 +166,9 @@ def tcp_reachable(addr: str, port: int) -> tuple[bool, str]:
 def fetch_well_known() -> tuple[Optional[dict], Optional[str]]:
     """Returns (parsed_json, error_string)."""
     try:
-        req = urllib.request.Request(WELL_KNOWN_URL, headers={"Cache-Control": "no-cache"})
+        req = urllib.request.Request(
+            WELL_KNOWN_URL, headers={"Cache-Control": "no-cache"}
+        )
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             return json.loads(resp.read()), None
     except urllib.error.HTTPError as e:
@@ -158,15 +180,18 @@ def fetch_well_known() -> tuple[Optional[dict], Optional[str]]:
 def verify_ed25519(data: dict, sig_field: str) -> tuple[bool, str]:
     """Verify the Ed25519 signature over canonical JSON (signature field excluded)."""
     try:
-        from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
         from cryptography.exceptions import InvalidSignature
+        from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
     except ImportError:
-        return False, "cryptography library not installed — run: pip install cryptography"
+        return (
+            False,
+            "cryptography library not installed — run: pip install cryptography",
+        )
 
     if not sig_field.startswith("ed25519:"):
         return False, f"unexpected signature format: {sig_field[:20]}"
 
-    b64url = sig_field[len("ed25519:"):]
+    b64url = sig_field[len("ed25519:") :]
     # base64url → base64
     pad = 4 - len(b64url) % 4
     b64 = b64url.replace("-", "+").replace("_", "/") + ("=" * (pad % 4))
@@ -191,6 +216,7 @@ def verify_ed25519(data: dict, sig_field: str) -> tuple[bool, str]:
 
 
 # ── Test suites ────────────────────────────────────────────────────────────────
+
 
 def check_tcp_reachability() -> Suite:
     suite = Suite("TCP reachability")
@@ -222,7 +248,9 @@ def check_spki_pins() -> Suite:
             suite.add(
                 f"{label} — SPKI matches hardcoded pin",
                 match,
-                f"live={live_spki[:16]}… expected={hardcoded[:16]}…" if not match else "match",
+                f"live={live_spki[:16]}… expected={hardcoded[:16]}…"
+                if not match
+                else "match",
             )
     return suite
 
@@ -259,9 +287,9 @@ def check_well_known(live_spkis: dict) -> Suite:
             suite.add("signed_at parse", False, f"invalid format: {signed_at_str}")
 
     # SPKI entries match live relays
-    relays_in_config = config.get("ice", {}).get("relays", [])
+    relays_in_config = config.get("veil", {}).get("relays", [])
     if not relays_in_config:
-        suite.add("relays array present", False, "ice.relays is empty or missing")
+        suite.add("relays array present", False, "veil.relays is empty or missing")
     else:
         suite.add("relays array present", True, f"{len(relays_in_config)} relay(s)")
         for r in relays_in_config:
@@ -273,10 +301,14 @@ def check_well_known(live_spkis: dict) -> Suite:
                 suite.add(
                     f"relay {rid} — config SPKI matches live",
                     match,
-                    f"config={config_spki[:16]}… live={live_spki[:16]}…" if not match else "match",
+                    f"config={config_spki[:16]}… live={live_spki[:16]}…"
+                    if not match
+                    else "match",
                 )
             elif not config_spki:
-                suite.add(f"relay {rid} — spki_sha256 present", False, "missing spki_sha256")
+                suite.add(
+                    f"relay {rid} — spki_sha256 present", False, "missing spki_sha256"
+                )
 
     return suite
 
@@ -287,6 +319,7 @@ PASS = "✅"
 FAIL = "❌"
 WARN = "⚠️ "
 SKIP = "  "
+
 
 def print_suite(suite: Suite):
     status = PASS if suite.passed else FAIL
@@ -302,22 +335,30 @@ def print_suite(suite: Suite):
 def print_json_result(suites: list[Suite]):
     out = {"passed": all(s.passed for s in suites), "suites": []}
     for s in suites:
-        out["suites"].append({
-            "name": s.name,
-            "passed": s.passed,
-            "checks": [{"name": c.name, "passed": c.passed, "detail": c.detail} for c in s.checks],
-        })
+        out["suites"].append(
+            {
+                "name": s.name,
+                "passed": s.passed,
+                "checks": [
+                    {"name": c.name, "passed": c.passed, "detail": c.detail}
+                    for c in s.checks
+                ],
+            }
+        )
     print(json.dumps(out, indent=2))
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────
+
 
 def main():
     ci_mode = "--ci" in sys.argv
     json_mode = "--json" in sys.argv
 
     if not json_mode:
-        print(f"🧊 Construct ICE smoke test — {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
+        print(
+            f"Construct VEIL smoke test — {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}"
+        )
         print(f"   Well-known: {WELL_KNOWN_URL}")
 
     # Collect live SPKIs first (reused across suites)
