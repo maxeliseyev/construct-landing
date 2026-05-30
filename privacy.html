@@ -4,10 +4,17 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Privacy Policy — Konstruct</title>
-        <meta name="description" content="Konstruct Privacy Policy. We collect the absolute minimum data necessary to route encrypted messages." />
+        <meta
+            name="description"
+            content="Konstruct Privacy Policy. We collect the absolute minimum data necessary to route encrypted messages."
+        />
         <link rel="canonical" href="https://konstruct.cc/privacy" />
         <link rel="icon" type="image/png" href="favicon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="apple-touch-icon.png"
+        />
         <link rel="preload" href="styles.css" as="style" />
         <link rel="stylesheet" href="styles.css" />
         <style>
@@ -21,7 +28,11 @@
                 letter-spacing: -0.025em;
                 font-weight: 700;
                 line-height: 1.1;
-                background: linear-gradient(135deg, var(--fg) 0%, var(--fg-secondary) 100%);
+                background: linear-gradient(
+                    135deg,
+                    var(--fg) 0%,
+                    var(--fg-secondary) 100%
+                );
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -75,7 +86,9 @@
                 margin-bottom: var(--space-lg);
                 transition: color 0.2s ease;
             }
-            .back-link:hover { color: var(--accent); }
+            .back-link:hover {
+                color: var(--accent);
+            }
         </style>
     </head>
     <body>
@@ -83,39 +96,63 @@
             <div class="container">
                 <a href="/" class="back-link">← Konstruct</a>
                 <h1>Privacy Policy</h1>
-                <p class="privacy-meta">Last Updated: March 4, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="privacy-meta">
+                    Last Updated: March 4, 2026 &nbsp;·&nbsp; Effective Date:
+                    March 4, 2026
+                </p>
             </div>
         </header>
 
         <main class="privacy-content">
             <div class="container">
-
                 <h2>1. Introduction</h2>
                 <p>
-                    Konstruct is a privacy-first, end-to-end encrypted messenger built on the Signal Protocol.
-                    This policy explains exactly what data we collect, why we collect it, and what we do not collect.
-                    We have designed Konstruct from the ground up to minimize the data we hold about you.
+                    Konstruct is a privacy-first, end-to-end encrypted messenger
+                    built on the Signal Protocol. This policy explains exactly
+                    what data we collect, why we collect it, and what we do not
+                    collect. We have designed Konstruct from the ground up to
+                    minimize the data we hold about you.
                 </p>
                 <p>
-                    <strong>Core Principle:</strong> We collect the absolute minimum data necessary to route encrypted
-                    messages. Your message content is end-to-end encrypted — our servers cannot read it, and we do not attempt to.
+                    <strong>Core Principle:</strong> We collect the absolute
+                    minimum data necessary to route encrypted messages. Your
+                    message content is end-to-end encrypted — our servers cannot
+                    read it, and we do not attempt to.
                 </p>
 
                 <h2>2. Information We Collect</h2>
 
                 <h3>2.1 Account Identifier</h3>
-                <p>Konstruct requires no phone number, email address, password, or real name.</p>
+                <p>
+                    Konstruct requires no phone number, email address, password,
+                    or real name.
+                </p>
                 <ul>
-                    <li><strong>User ID:</strong> A unique opaque identifier derived mathematically from your device's cryptographic Identity Key. It is a random-looking string with no connection to your real identity.</li>
-                    <li><strong>Username</strong> (optional): A display name you may choose to add. This is entirely optional and can be changed or removed at any time.</li>
+                    <li>
+                        <strong>User ID:</strong> A unique opaque identifier
+                        derived mathematically from your device's cryptographic
+                        Identity Key. It is a random-looking string with no
+                        connection to your real identity.
+                    </li>
+                    <li>
+                        <strong>Username</strong> (optional): A display name you
+                        may choose to add. This is entirely optional and can be
+                        changed or removed at any time.
+                    </li>
                 </ul>
-                <p>No personally identifiable information is required to create an account or use Konstruct.</p>
+                <p>
+                    No personally identifiable information is required to create
+                    an account or use Konstruct.
+                </p>
 
                 <h3>2.2 Cryptographic Key Bundle</h3>
                 <p>
-                    To enable the Signal Protocol key exchange, your device generates and uploads the following
-                    <strong>public</strong> keys to the server. Your corresponding <strong>private keys never leave
-                    your device</strong> and are stored in the iOS Keychain.
+                    To enable the Signal Protocol key exchange, your device
+                    generates and uploads the following
+                    <strong>public</strong> keys to the server. Your
+                    corresponding
+                    <strong>private keys never leave your device</strong> and
+                    are stored in the iOS Keychain.
                 </p>
                 <table aria-label="Cryptographic key storage">
                     <thead>
@@ -127,91 +164,176 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Identity Public Key</td><td>X25519 (long-term)</td><td>✅ Yes, permanently</td><td>Authenticates your device; used in X3DH handshake</td></tr>
-                        <tr><td>Signed PreKey</td><td>X25519 (medium-term)</td><td>✅ Yes, rotated periodically</td><td>Used in X3DH key agreement</td></tr>
-                        <tr><td>One-Time PreKeys (OTPKs)</td><td>X25519 (ephemeral)</td><td>✅ Yes, until consumed</td><td>Consumed one-per-session for Perfect Forward Secrecy</td></tr>
-                        <tr><td>Private keys</td><td>—</td><td>❌ Never</td><td>All private keys remain on your device only</td></tr>
+                        <tr>
+                            <td>Identity Public Key</td>
+                            <td>X25519 (long-term)</td>
+                            <td>Yes, permanently</td>
+                            <td>
+                                Authenticates your device; used in X3DH
+                                handshake
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Signed PreKey</td>
+                            <td>X25519 (medium-term)</td>
+                            <td>Yes, rotated periodically</td>
+                            <td>Used in X3DH key agreement</td>
+                        </tr>
+                        <tr>
+                            <td>One-Time PreKeys (OTPKs)</td>
+                            <td>X25519 (ephemeral)</td>
+                            <td>Yes, until consumed</td>
+                            <td>
+                                Consumed one-per-session for Perfect Forward
+                                Secrecy
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Private keys</td>
+                            <td>—</td>
+                            <td>❌ Never</td>
+                            <td>All private keys remain on your device only</td>
+                        </tr>
                     </tbody>
                 </table>
-                <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--fg-muted);">
-                    The server tracks how many One-Time PreKeys remain and requests your device to replenish them when the
-                    supply runs low. Once an OTPK is used to establish a session, it is permanently deleted from the server.
+                <p
+                    style="
+                        margin-top: 1rem;
+                        font-size: 0.875rem;
+                        color: var(--fg-muted);
+                    "
+                >
+                    The server tracks how many One-Time PreKeys remain and
+                    requests your device to replenish them when the supply runs
+                    low. Once an OTPK is used to establish a session, it is
+                    permanently deleted from the server.
                 </p>
 
                 <h3>2.3 Pending Message Queue</h3>
                 <p>
-                    When you send a message, it is encrypted on your device before transmission. The server stores
-                    encrypted messages only until the recipient's device confirms delivery via a cryptographic receipt (ACK).
-                    After confirmed delivery, messages are permanently and irrecoverably deleted from our servers.
+                    When you send a message, it is encrypted on your device
+                    before transmission. The server stores encrypted messages
+                    only until the recipient's device confirms delivery via a
+                    cryptographic receipt (ACK). After confirmed delivery,
+                    messages are permanently and irrecoverably deleted from our
+                    servers.
                 </p>
                 <p>What is stored in the pending queue (until delivery):</p>
                 <ul>
-                    <li>Encrypted message payload (opaque binary blob — we cannot read this)</li>
+                    <li>
+                        Encrypted message payload (opaque binary blob — we
+                        cannot read this)
+                    </li>
                     <li>Sender User ID</li>
                     <li>Recipient User ID</li>
                     <li>Message ID (UUID)</li>
                     <li>Timestamp</li>
-                    <li>Message sequence number (required for the Double Ratchet algorithm)</li>
-                    <li>Ephemeral public key (part of the Signal Protocol ratchet step — not a secret)</li>
+                    <li>
+                        Message sequence number (required for the Double Ratchet
+                        algorithm)
+                    </li>
+                    <li>
+                        Ephemeral public key (part of the Signal Protocol
+                        ratchet step — not a secret)
+                    </li>
                 </ul>
                 <p>
-                    If your device is offline, messages queue on the server until your next connection.
-                    If a message remains undelivered for an extended period, it may be discarded.
+                    If your device is offline, messages queue on the server
+                    until your next connection. If a message remains undelivered
+                    for an extended period, it may be discarded.
                 </p>
 
                 <h3>2.4 Contact Relationships</h3>
                 <p>
-                    When you add a contact (via QR code or invite link), the server stores a record of that relationship
-                    to determine message routing and stream subscription. This allows Konstruct to notify you when a known
-                    contact comes online and to subscribe you to their message stream.
+                    When you add a contact (via QR code or invite link), the
+                    server stores a record of that relationship to determine
+                    message routing and stream subscription. This allows
+                    Konstruct to notify you when a known contact comes online
+                    and to subscribe you to their message stream.
                 </p>
 
                 <h3>2.5 Push Notification Tokens</h3>
-                <p>To deliver real-time message notifications when the app is in the background:</p>
+                <p>
+                    To deliver real-time message notifications when the app is
+                    in the background:
+                </p>
                 <ul>
-                    <li><strong>Apple APNs device token:</strong> Stored on the server and used solely to send a "new message" wake-up signal.</li>
-                    <li><strong>No message content</strong> is ever included in push notifications. The notification contains only a generic signal that causes your device to connect and fetch the encrypted message.</li>
+                    <li>
+                        <strong>Apple APNs device token:</strong> Stored on the
+                        server and used solely to send a "new message" wake-up
+                        signal.
+                    </li>
+                    <li>
+                        <strong>No message content</strong> is ever included in
+                        push notifications. The notification contains only a
+                        generic signal that causes your device to connect and
+                        fetch the encrypted message.
+                    </li>
                 </ul>
 
                 <h3>2.6 Session Authentication</h3>
                 <ul>
-                    <li><strong>Session token:</strong> A short-lived token stored in Redis (in-memory cache) to authenticate your gRPC connection. Expires automatically when you disconnect or the token expires.</li>
+                    <li>
+                        <strong>Session token:</strong> A short-lived token
+                        stored in Redis (in-memory cache) to authenticate your
+                        gRPC connection. Expires automatically when you
+                        disconnect or the token expires.
+                    </li>
                 </ul>
 
                 <h3>2.7 What We Do NOT Collect</h3>
-                <p>The following are explicitly <strong>not</strong> collected or stored:</p>
+                <p>
+                    The following are explicitly <strong>not</strong> collected
+                    or stored:
+                </p>
                 <ul class="not-collected">
                     <li>❌ Phone number</li>
                     <li>❌ Email address</li>
                     <li>❌ Password</li>
                     <li>❌ Real name</li>
-                    <li>❌ Message content (end-to-end encrypted — we cannot access it)</li>
+                    <li>
+                        ❌ Message content (end-to-end encrypted — we cannot
+                        access it)
+                    </li>
                     <li>❌ Message history (deleted after delivery)</li>
                     <li>❌ Location data</li>
                     <li>❌ Device model or OS version</li>
-                    <li>❌ IP address logs (your IP is seen by the connection layer but is not persistently stored)</li>
-                    <li>❌ Typing indicators or read receipts beyond delivery confirmation</li>
+                    <li>
+                        ❌ IP address logs (your IP is seen by the connection
+                        layer but is not persistently stored)
+                    </li>
+                    <li>
+                        ❌ Typing indicators or read receipts beyond delivery
+                        confirmation
+                    </li>
                     <li>❌ Third-party analytics or tracking SDKs</li>
                 </ul>
 
                 <h2>3. Traffic Analysis Protection</h2>
                 <p>
-                    Konstruct implements active <strong>traffic obfuscation</strong> to resist metadata surveillance
-                    even by a network observer. In production builds, the app automatically sends encrypted dummy messages
-                    on a randomised schedule to prevent anyone observing your network traffic from inferring when you are
-                    communicating, with whom, or how frequently.
+                    Konstruct implements active
+                    <strong>traffic obfuscation</strong> to resist metadata
+                    surveillance even by a network observer. In production
+                    builds, the app automatically sends encrypted dummy messages
+                    on a randomised schedule to prevent anyone observing your
+                    network traffic from inferring when you are communicating,
+                    with whom, or how frequently.
                 </p>
                 <p>
-                    This mechanism adapts to your device's battery level to minimise energy impact. It is always active
-                    in production builds and requires no configuration.
+                    This mechanism adapts to your device's battery level to
+                    minimise energy impact. It is always active in production
+                    builds and requires no configuration.
                 </p>
 
                 <h2>4. Anti-Spam: Proof of Work</h2>
                 <p>
-                    To prevent message spam without requiring account registration, Konstruct requires your device to
-                    perform a small <strong>Proof of Work</strong> computation before sending each message. This is a
-                    client-side computation that imposes a negligible cost on legitimate use but makes large-scale spam
-                    computationally expensive. No personal data is involved.
+                    To prevent message spam without requiring account
+                    registration, Konstruct requires your device to perform a
+                    small <strong>Proof of Work</strong> computation before
+                    sending each message. This is a client-side computation that
+                    imposes a negligible cost on legitimate use but makes
+                    large-scale spam computationally expensive. No personal data
+                    is involved.
                 </p>
 
                 <h2>5. How We Use Your Data</h2>
@@ -223,39 +345,81 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>User ID</td><td>Authenticate your device and route messages</td></tr>
-                        <tr><td>Public key bundle</td><td>Enable Signal Protocol E2EE key exchange</td></tr>
-                        <tr><td>Pending message queue</td><td>Hold encrypted messages until delivery</td></tr>
-                        <tr><td>Contact relationships</td><td>Route messages and stream subscriptions</td></tr>
-                        <tr><td>APNs token</td><td>Deliver background push notifications</td></tr>
-                        <tr><td>Session token</td><td>Authenticate gRPC connection</td></tr>
+                        <tr>
+                            <td>User ID</td>
+                            <td>Authenticate your device and route messages</td>
+                        </tr>
+                        <tr>
+                            <td>Public key bundle</td>
+                            <td>Enable Signal Protocol E2EE key exchange</td>
+                        </tr>
+                        <tr>
+                            <td>Pending message queue</td>
+                            <td>Hold encrypted messages until delivery</td>
+                        </tr>
+                        <tr>
+                            <td>Contact relationships</td>
+                            <td>Route messages and stream subscriptions</td>
+                        </tr>
+                        <tr>
+                            <td>APNs token</td>
+                            <td>Deliver background push notifications</td>
+                        </tr>
+                        <tr>
+                            <td>Session token</td>
+                            <td>Authenticate gRPC connection</td>
+                        </tr>
                     </tbody>
                 </table>
-                <p style="margin-top: var(--space-md);">
-                    We do not use any collected data for advertising, profiling, analytics, or any purpose beyond
-                    operating the messaging service.
+                <p style="margin-top: var(--space-md)">
+                    We do not use any collected data for advertising, profiling,
+                    analytics, or any purpose beyond operating the messaging
+                    service.
                 </p>
 
                 <h2>6. Data Storage and Security</h2>
 
                 <h3>6.1 Infrastructure</h3>
                 <ul>
-                    <li><strong>Hosting:</strong> Self-hosted VPS (Amsterdam, Netherlands)</li>
-                    <li><strong>Persistent storage:</strong> PostgreSQL database (account data, key bundles, contact relationships)</li>
-                    <li><strong>Ephemeral storage:</strong> Redis (session tokens, pending message queues)</li>
-                    <li><strong>Jurisdiction:</strong> Netherlands / European Union — GDPR applies</li>
+                    <li>
+                        <strong>Hosting:</strong> Self-hosted VPS (Amsterdam,
+                        Netherlands)
+                    </li>
+                    <li>
+                        <strong>Persistent storage:</strong> PostgreSQL database
+                        (account data, key bundles, contact relationships)
+                    </li>
+                    <li>
+                        <strong>Ephemeral storage:</strong> Redis (session
+                        tokens, pending message queues)
+                    </li>
+                    <li>
+                        <strong>Jurisdiction:</strong> Netherlands / European
+                        Union — GDPR applies
+                    </li>
                 </ul>
 
                 <h3>6.2 Encryption</h3>
                 <ul>
-                    <li><strong>In transit:</strong> All client-server communication uses gRPC over TLS 1.3 via a single Envoy proxy endpoint (port 443)</li>
-                    <li><strong>At rest:</strong> Database encryption enabled</li>
-                    <li><strong>End-to-end:</strong> Signal Protocol — X3DH key agreement (X25519) + Double Ratchet with ChaCha20-Poly1305 AEAD</li>
+                    <li>
+                        <strong>In transit:</strong> All client-server
+                        communication uses gRPC over TLS 1.3 via a single Envoy
+                        proxy endpoint (port 443)
+                    </li>
+                    <li>
+                        <strong>At rest:</strong> Database encryption enabled
+                    </li>
+                    <li>
+                        <strong>End-to-end:</strong> Signal Protocol — X3DH key
+                        agreement (X25519) + Double Ratchet with
+                        ChaCha20-Poly1305 AEAD
+                    </li>
                 </ul>
 
                 <h3>6.3 What Is Stored on Your Device</h3>
                 <p>
-                    Your device stores the complete message history locally in encrypted storage (iOS data protection). This includes:
+                    Your device stores the complete message history locally in
+                    encrypted storage (iOS data protection). This includes:
                 </p>
                 <ul>
                     <li>Full conversation history</li>
@@ -264,7 +428,10 @@
                     <li>Crypto session state (Keychain)</li>
                     <li>Draft messages</li>
                 </ul>
-                <p>This data is under your control. Deleting the app removes all local data permanently.</p>
+                <p>
+                    This data is under your control. Deleting the app removes
+                    all local data permanently.
+                </p>
 
                 <h3>6.4 Data Retention</h3>
                 <table aria-label="Data retention periods">
@@ -275,68 +442,159 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Pending messages</td><td>Deleted immediately upon confirmed delivery (ACK)</td></tr>
-                        <tr><td>One-Time PreKeys</td><td>Deleted from server upon consumption</td></tr>
-                        <tr><td>Session tokens</td><td>Deleted on disconnect / expiry</td></tr>
-                        <tr><td>APNs token</td><td>Retained until account deletion or token update</td></tr>
-                        <tr><td>User ID + username</td><td>Retained until account deletion</td></tr>
-                        <tr><td>Signed PreKey</td><td>Replaced when rotated; old key deleted</td></tr>
-                        <tr><td>Contact relationships</td><td>Retained until contact is removed or account deleted</td></tr>
+                        <tr>
+                            <td>Pending messages</td>
+                            <td>
+                                Deleted immediately upon confirmed delivery
+                                (ACK)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>One-Time PreKeys</td>
+                            <td>Deleted from server upon consumption</td>
+                        </tr>
+                        <tr>
+                            <td>Session tokens</td>
+                            <td>Deleted on disconnect / expiry</td>
+                        </tr>
+                        <tr>
+                            <td>APNs token</td>
+                            <td>
+                                Retained until account deletion or token update
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>User ID + username</td>
+                            <td>Retained until account deletion</td>
+                        </tr>
+                        <tr>
+                            <td>Signed PreKey</td>
+                            <td>Replaced when rotated; old key deleted</td>
+                        </tr>
+                        <tr>
+                            <td>Contact relationships</td>
+                            <td>
+                                Retained until contact is removed or account
+                                deleted
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
                 <h2>7. Data Sharing and Third Parties</h2>
-                <p><strong>We do not sell, rent, or share your data with any third parties for any commercial purpose.</strong></p>
+                <p>
+                    <strong
+                        >We do not sell, rent, or share your data with any third
+                        parties for any commercial purpose.</strong
+                    >
+                </p>
 
                 <h3>7.1 Infrastructure Providers</h3>
                 <ul>
-                    <li><strong>VPS hosting provider</strong> (Netherlands): Provides the physical server. Has no access to application data or encryption keys.</li>
-                    <li><strong>Apple APNs:</strong> Receives only your device push token and a generic notification signal (no message content). Subject to Apple's privacy policy.</li>
+                    <li>
+                        <strong>VPS hosting provider</strong> (Netherlands):
+                        Provides the physical server. Has no access to
+                        application data or encryption keys.
+                    </li>
+                    <li>
+                        <strong>Apple APNs:</strong> Receives only your device
+                        push token and a generic notification signal (no message
+                        content). Subject to Apple's privacy policy.
+                    </li>
                 </ul>
 
                 <h3>7.2 Legal Compliance</h3>
                 <p>
-                    We may be required to disclose data if compelled by a valid legal order from a competent authority. However:
+                    We may be required to disclose data if compelled by a valid
+                    legal order from a competent authority. However:
                 </p>
                 <ul>
-                    <li>We <strong>cannot</strong> decrypt your messages (end-to-end encrypted)</li>
-                    <li>We hold <strong>minimal metadata</strong> (no content, no IP logs, no usage patterns)</li>
-                    <li>We will notify affected users unless legally prohibited from doing so</li>
+                    <li>
+                        We <strong>cannot</strong> decrypt your messages
+                        (end-to-end encrypted)
+                    </li>
+                    <li>
+                        We hold <strong>minimal metadata</strong> (no content,
+                        no IP logs, no usage patterns)
+                    </li>
+                    <li>
+                        We will notify affected users unless legally prohibited
+                        from doing so
+                    </li>
                 </ul>
 
                 <h2>8. Your Rights</h2>
 
                 <h3>8.1 Anonymous Use</h3>
-                <p>You can use Konstruct with no personally identifiable information. Your User ID is a cryptographic hash with no connection to your identity.</p>
+                <p>
+                    You can use Konstruct with no personally identifiable
+                    information. Your User ID is a cryptographic hash with no
+                    connection to your identity.
+                </p>
 
                 <h3>8.2 Access to Your Data</h3>
-                <p>You may request a copy of any metadata associated with your account at any time by contacting us at the address below.</p>
+                <p>
+                    You may request a copy of any metadata associated with your
+                    account at any time by contacting us at the address below.
+                </p>
 
                 <h3>8.3 Account Deletion</h3>
-                <p>You can delete your account from within the app settings. Upon deletion:</p>
+                <p>
+                    You can delete your account from within the app settings.
+                    Upon deletion:
+                </p>
                 <ul>
-                    <li>Your User ID, username, and public key bundle are permanently deleted from the server</li>
+                    <li>
+                        Your User ID, username, and public key bundle are
+                        permanently deleted from the server
+                    </li>
                     <li>Your contact relationships are removed</li>
                     <li>Your APNs token is removed</li>
                     <li>Any pending undelivered messages are discarded</li>
                     <li>Deletion is completed within 24 hours</li>
                 </ul>
-                <p>Messages previously delivered to recipients are stored locally on their devices only and are outside our control after delivery.</p>
+                <p>
+                    Messages previously delivered to recipients are stored
+                    locally on their devices only and are outside our control
+                    after delivery.
+                </p>
 
                 <h3>8.4 Username</h3>
-                <p>You can add, change, or remove your username at any time from account settings.</p>
+                <p>
+                    You can add, change, or remove your username at any time
+                    from account settings.
+                </p>
 
                 <h2>9. Children's Privacy</h2>
-                <p>Konstruct is not intended for users under 13 years of age. We do not knowingly collect data from children.</p>
+                <p>
+                    Konstruct is not intended for users under 13 years of age.
+                    We do not knowingly collect data from children.
+                </p>
 
                 <h2>10. Federation (Planned)</h2>
-                <p>Konstruct is designed with federation in mind. When federation is available:</p>
+                <p>
+                    Konstruct is designed with federation in mind. When
+                    federation is available:
+                </p>
                 <ul>
-                    <li>Your messages may be routed through other independently-operated Konstruct servers</li>
-                    <li>Each server operator is responsible for their own privacy policy</li>
-                    <li>End-to-end encryption remains fully intact across federated servers — federated servers handle only the same encrypted payloads as the origin server</li>
+                    <li>
+                        Your messages may be routed through other
+                        independently-operated Konstruct servers
+                    </li>
+                    <li>
+                        Each server operator is responsible for their own
+                        privacy policy
+                    </li>
+                    <li>
+                        End-to-end encryption remains fully intact across
+                        federated servers — federated servers handle only the
+                        same encrypted payloads as the origin server
+                    </li>
                 </ul>
-                <p>Federation is not currently active. This section will be updated when federation is introduced.</p>
+                <p>
+                    Federation is not currently active. This section will be
+                    updated when federation is introduced.
+                </p>
 
                 <h2>11. Changes to This Policy</h2>
                 <p>We will notify users of material changes through:</p>
@@ -344,26 +602,53 @@
                     <li>An in-app notification</li>
                     <li>An updated "Last Updated" date on this document</li>
                 </ul>
-                <p>Continued use of Konstruct after changes constitutes acceptance of the revised policy.</p>
+                <p>
+                    Continued use of Konstruct after changes constitutes
+                    acceptance of the revised policy.
+                </p>
 
                 <h2>12. Contact</h2>
                 <p>For privacy questions, data access requests, or concerns:</p>
                 <ul>
-                    <li><strong>Email:</strong> <a href="mailto:maxim.elis@icloud.com">maxim.elis@icloud.com</a></li>
-                    <li><strong>Website:</strong> <a href="https://konstruct.cc">konstruct.cc</a></li>
+                    <li>
+                        <strong>Email:</strong>
+                        <a href="mailto:maxim.elis@icloud.com"
+                            >maxim.elis@icloud.com</a
+                        >
+                    </li>
+                    <li>
+                        <strong>Website:</strong>
+                        <a href="https://konstruct.cc">konstruct.cc</a>
+                    </li>
                 </ul>
 
                 <h2>Summary</h2>
                 <table class="summary-table" aria-label="Privacy summary">
                     <tbody>
-                        <tr><td>✅ No phone number or email required</td><td>✅ End-to-end encrypted (Signal Protocol)</td></tr>
-                        <tr><td>✅ Fully anonymous use supported</td><td>✅ Messages deleted after confirmed delivery</td></tr>
-                        <tr><td>✅ No tracking or analytics SDKs</td><td>✅ Traffic obfuscation built in</td></tr>
-                        <tr><td>✅ Private keys never leave your device</td><td>✅ Minimal metadata only</td></tr>
-                        <tr><td>✅ No third-party data sales</td><td>✅ GDPR jurisdiction (EU, Netherlands)</td></tr>
+                        <tr>
+                            <td>✅ No phone number or email required</td>
+                            <td>✅ End-to-end encrypted (Signal Protocol)</td>
+                        </tr>
+                        <tr>
+                            <td>✅ Fully anonymous use supported</td>
+                            <td>
+                                ✅ Messages deleted after confirmed delivery
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>✅ No tracking or analytics SDKs</td>
+                            <td>✅ Traffic obfuscation built in</td>
+                        </tr>
+                        <tr>
+                            <td>✅ Private keys never leave your device</td>
+                            <td>✅ Minimal metadata only</td>
+                        </tr>
+                        <tr>
+                            <td>✅ No third-party data sales</td>
+                            <td>✅ GDPR jurisdiction (EU, Netherlands)</td>
+                        </tr>
                     </tbody>
                 </table>
-
             </div>
         </main>
 
@@ -371,9 +656,10 @@
             <div class="container">
                 <p>
                     Built with Rust, Swift, and a commitment to privacy.<br />
-                    Open Source (MIT License) · No tracking · No ads · No compromises
+                    Open Source (MIT License) · No tracking · No ads · No
+                    compromises
                 </p>
-                <p style="margin-top: 1rem; font-size: 0.8125rem;">
+                <p style="margin-top: 1rem; font-size: 0.8125rem">
                     © 2026 Konstruct. Privacy is a right, not a privilege.
                 </p>
             </div>

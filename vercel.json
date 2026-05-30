@@ -49,7 +49,7 @@
       ]
     },
     {
-      "source": "/.well-known/ice-cert",
+      "source": "/.well-known/veil-cert",
       "headers": [
         {
           "key": "Content-Type",
@@ -137,4 +137,3 @@
     }
   ]
 }
-
