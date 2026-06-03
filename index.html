@@ -92,24 +92,24 @@
                 <h1>Konstruct</h1>
                 <p>
                     <span class="en">Privacy is a fundamental human right, not a luxury feature.
-                    Konstruct is a professional-grade encrypted messenger built
-                    on proven cryptography (Signal Protocol) with
-                    quantum-resistant protection. The internet must remain a
-                    free space for information exchange, without ideological
-                    censorship or mass surveillance.</span>
+                    Konstruct is an open-source encrypted messenger built on the
+                    Signal Protocol design (X3DH + Double Ratchet) with a hybrid
+                    post-quantum key exchange (ML-KEM-768). The internet must
+                    remain a free space for information exchange, without
+                    ideological censorship or mass surveillance.</span>
                     <span class="ru">Приватность — фундаментальное право человека, а не платная функция.
-                    Construct — профессиональный зашифрованный мессенджер, построенный на проверенной
-                    криптографии (Signal Protocol) с постквантовой защитой. Интернет должен оставаться
-                    свободным пространством для обмена информацией — без идеологической цензуры и
-                    массовой слежки.</span>
+                    Конструкт — зашифрованный мессенджер с открытым исходным кодом,
+                    построенный на проверенной криптографии Signal Protocol с постквантовой
+                    защитой. Интернет должен оставаться свободным пространством для обмена
+                    информацией — без идеологической цензуры и массовой слежки.</span>
                 </p>
 
                 <div class="badges">
                     <span class="badge"><span class="en">End-to-End Encrypted</span><span class="ru">Сквозное шифрование</span></span>
-                    <span class="badge"><span class="en">Post-Quantum Ready</span><span class="ru">Постквантовая защита</span></span>
+                    <span class="badge"><span class="en">Post-Quantum KEM</span><span class="ru">Постквантовый KEM</span></span>
                     <span class="badge"><span class="en">Federated (Planned)</span><span class="ru">Федерация (план)</span></span>
-                    <span class="badge"><span class="en">P2P Capable</span><span class="ru">P2P-режим</span></span>
-                    <span class="badge">Zero-Knowledge</span>
+                    <span class="badge"><span class="en">P2P (Planned)</span><span class="ru">P2P (план)</span></span>
+                    <span class="badge"><span class="en">Server-Blind Content</span><span class="ru">Сервер без доступа к контенту</span></span>
                     <span class="badge"><span class="en">Open Source</span><span class="ru">Открытый исходный код</span></span>
                 </div>
             </div>
@@ -129,35 +129,49 @@
                         конфиденциальность коммуникаций важнее чем когда-либо.</span>
                     </p>
                     <p>
-                        <span class="en">Konstruct is built on <strong>Signal Protocol</strong> —
-                        the same battle-tested end-to-end encryption used by
-                        Signal, WhatsApp, and others. We've enhanced it with
-                        <strong>post-quantum cryptography</strong> (Kyber +
-                        Dilithium), making it resistant to future quantum
-                        computer attacks.</span>
-                        <span class="ru">Construct построен на <strong>Signal Protocol</strong> —
-                        той же проверенной в боевых условиях технологии, что используют Signal, WhatsApp
-                        и другие. Мы расширили её <strong>постквантовой криптографией</strong>
-                        (Kyber + Dilithium), делая систему устойчивой к будущим атакам квантовых
-                        компьютеров.</span>
+                        <span class="en">Konstruct uses the <strong>Signal Protocol</strong>
+                        design (X3DH handshake + Double Ratchet) — the same
+                        end-to-end encryption design that powers Signal and
+                        WhatsApp — implemented from scratch in Rust. We extend
+                        it with a <strong>hybrid post-quantum KEM</strong>
+                        (ML-KEM-768, NIST FIPS&nbsp;203) so that traffic
+                        recorded today remains protected once cryptographically
+                        relevant quantum computers exist.</span>
+                        <span class="ru">Конструкт использует <strong>Signal Protocol</strong>
+                        (рукопожатие X3DH + Double Ratchet) — тот же дизайн
+                        сквозного шифрования, что применяют Signal и WhatsApp
+                        — с собственной реализацией на Rust. Расширен
+                        <strong>гибридным постквантовым KEM</strong> (ML-KEM-768,
+                        NIST FIPS&nbsp;203), чтобы трафик, записанный сегодня,
+                        оставался защищённым после появления криптографически
+                        значимых квантовых компьютеров.</span>
                     </p>
                     <p>
-                        <span class="en"><strong>Unlike centralized platforms, Konstruct is designed for
-                        <strong>federation</strong> — you control your data by
-                        choosing or running your own server
-                        (<code>you@your-server.com</code>). The server is
-                        <strong>zero-knowledge</strong>: it stores only user's
-                        public keys, never your actual conversations or
-                        metadata. And when both parties are online simultaneously,
-                        Construct can establish a <strong>direct peer-to-peer connection</strong>
-                        — the server steps out of the relay path entirely.</span>
-                        <span class="ru">В отличие от централизованных платформ, Construct
-                        спроектирован для <strong>федерации</strong> — вы контролируете свои данные, выбирая или
-                        запуская собственный сервер (<code>you@your-server.com</code>). Сервер
-                        работает по принципу <strong>zero-knowledge</strong>: хранит только публичные
-                        ключи пользователей, но никогда не видит самих разговоров или метаданных.
-                        А когда оба собеседника онлайн одновременно, Construct устанавливает
-                        <strong>прямое P2P-соединение</strong> — сервер полностью выходит из цепочки ретрансляции.</span>
+                        <span class="en">Unlike centralized platforms, Konstruct is designed for
+                        <strong>federation</strong> — eventually you will be able
+                        to choose or run your own server
+                        (<code>you@your-server.example</code>). The server is
+                        blind to message <strong>content</strong>: it stores only
+                        public keys and encrypted ciphertext, never plaintext.
+                        Sender-side metadata minimisation (sealed sender) is a
+                        planned addition. A future release will also support
+                        <strong>direct peer-to-peer delivery</strong> when both
+                        parties are online, removing the server from the data
+                        path entirely.
+                        <em>Federation and P2P are part of the 2027 roadmap;
+                        today the network is a single trusted server.</em></span>
+                        <span class="ru">В отличие от централизованных платформ, Конструкт
+                        спроектирован под <strong>федерацию</strong> — в будущем
+                        вы сможете выбрать или запустить собственный сервер
+                        (<code>you@your-server.example</code>). Сервер не видит
+                        <strong>содержимого</strong> сообщений: хранит только
+                        публичные ключи и зашифрованный шифротекст, никогда не
+                        plaintext. Минимизация метаданных со стороны отправителя
+                        (sealed sender) — в планах. Будущий релиз также
+                        поддержит <strong>прямую P2P-доставку</strong>, когда
+                        оба собеседника онлайн, убирая сервер из пути данных.
+                        <em>Федерация и P2P — часть дорожной карты на 2027 год;
+                        сегодня сеть — один доверенный сервер.</em></span>
                     </p>
                     <p>
                         <span class="en"><strong>The internet must remain free.</strong> No
@@ -166,7 +180,7 @@
                         built to protect that freedom.</span>
                         <span class="ru"><strong>Интернет должен оставаться свободным.</strong>
                         Ни правительство, ни корпорация, ни алгоритм не должны контролировать что ты
-                        говоришь и с кем общаешься. Construct создан чтобы защитить эту свободу.</span>
+                        говоришь и с кем общаешься. Конструкт создан чтобы защитить эту свободу.</span>
                     </p>
                 </div>
             </section>
@@ -175,67 +189,122 @@
                 <div class="container">
                     <h2 id="how-it-works-heading"><span class="en">Technical Architecture</span><span class="ru">Техническая архитектура</span></h2>
                     <p>
-                        <span class="en">Konstruct uses <strong>gRPC with Protobuf</strong> for
-                        efficient, type-safe communication — 50% less bandwidth
-                        than JSON-based messengers and ~100ms delivery latency.
-                        The architecture is built on microservices for
-                        horizontal scalability and fault isolation.</span>
-                        <span class="ru">Construct использует <strong>gRPC с Protobuf</strong> для
-                        эффективной типобезопасной передачи данных — на 50% меньше трафика по сравнению
-                        с JSON-мессенджерами и задержка доставки ~100ms. Архитектура построена на
-                        микросервисах для горизонтального масштабирования и изоляции отказов.</span>
+                        <span class="en">Konstruct uses <strong>gRPC with Protocol
+                        Buffers</strong> for efficient binary message framing,
+                        and is split into independent microservices on the
+                        server side (auth, user, messaging, signaling, media)
+                        for fault isolation. Reproducible benchmarks comparing
+                        bandwidth and latency against JSON-based messengers
+                        are part of upcoming work, not yet published.</span>
+                        <span class="ru">Конструкт использует <strong>gRPC с Protocol
+                        Buffers</strong> для эффективного бинарного кадрирования
+                        сообщений и разделён на независимые микросервисы на
+                        серверной стороне (auth, user, messaging, signaling,
+                        media) для изоляции отказов. Воспроизводимые бенчмарки
+                        полосы и задержки по сравнению с JSON-мессенджерами —
+                        часть будущей работы, пока не опубликованы.</span>
                     </p>
                     <h3><span class="en">Cryptography Stack</span><span class="ru">Стек криптографии</span></h3>
                     <ul>
                         <li>
-                            <span class="en"><strong>Signal Protocol (Double Ratchet):</strong>
-                            Industry-standard end-to-end encryption with forward
-                            secrecy and future secrecy</span>
-                            <span class="ru"><strong>Signal Protocol (Double Ratchet):</strong>
-                            отраслевой стандарт сквозного шифрования с прямой и обратной секретностью</span>
+                            <span class="en"><strong>X3DH + Double Ratchet (Signal Protocol design):</strong>
+                            end-to-end encryption with forward secrecy and
+                            post-compromise security (self-healing).</span>
+                            <span class="ru"><strong>X3DH + Double Ratchet (дизайн Signal Protocol):</strong>
+                            сквозное шифрование с прямой секретностью и
+                            post-compromise security (самовосстановление).</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Post-Quantum Hybrid:</strong> X25519 +
-                            Kyber1024 for key exchange, Ed25519 + Dilithium for
-                            signatures (NIST-standardized algorithms)</span>
-                            <span class="ru"><strong>Постквантовый гибрид:</strong> X25519 +
-                            Kyber1024 для обмена ключами, Ed25519 + Dilithium для подписей
-                            (стандарты NIST)</span>
+                            <span class="en"><strong>Hybrid Post-Quantum KEM:</strong> X25519
+                            classical + <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203,
+                            Kyber-768) for key exchange. If either component is
+                            broken, the other still protects.</span>
+                            <span class="ru"><strong>Гибридный постквантовый KEM:</strong>
+                            классический X25519 + <strong>ML-KEM-768</strong>
+                            (NIST FIPS&nbsp;203, Kyber-768) для обмена ключами.
+                            Если одна из компонент скомпрометирована, вторая
+                            продолжает защищать.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Zero-Knowledge Server:</strong> Messages are
-                            stored encrypted; server cannot decrypt content or
-                            metadata</span>
-                            <span class="ru"><strong>Zero-Knowledge сервер:</strong> сообщения
-                            зашифрованы; сервер не может расшифровать ни содержимое, ни метаданные</span>
+                            <span class="en"><strong>Authentication signatures: Ed25519</strong> today.
+                            <strong>ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204)
+                            is planned for hybrid signatures — not yet
+                            implemented.</span>
+                            <span class="ru"><strong>Подписи: Ed25519</strong> сегодня.
+                            <strong>ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204)
+                            запланирован для гибридных подписей — пока не
+                            реализован.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Crypto Agility:</strong> Protocol versioning
-                            allows seamless algorithm upgrades without app
-                            rebuilds</span>
-                            <span class="ru"><strong>Крипто-эластичность:</strong> версионирование
-                            протокола позволяет обновлять алгоритмы без пересборки приложения</span>
+                            <span class="en"><strong>AEAD:</strong> ChaCha20-Poly1305 for
+                            message encryption. <strong>KDF:</strong> HKDF-SHA256
+                            with domain-separation labels per protocol section.
+                            <strong>Anti-spam PoW:</strong> Argon2id.</span>
+                            <span class="ru"><strong>AEAD:</strong> ChaCha20-Poly1305 для
+                            шифрования сообщений. <strong>KDF:</strong> HKDF-SHA256
+                            с метками domain-separation для каждой секции
+                            протокола. <strong>Anti-spam PoW:</strong> Argon2id.</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Server is blind to content:</strong>
+                            messages are stored only as ciphertext; the server
+                            cannot decrypt. Sender-side metadata minimisation
+                            (sealed sender) is on the roadmap, not yet deployed —
+                            today the server still sees routing metadata such
+                            as sender identifier and delivery timestamps.</span>
+                            <span class="ru"><strong>Сервер не видит содержимого:</strong>
+                            сообщения хранятся только в виде шифротекста; сервер
+                            не может расшифровать. Минимизация метаданных со
+                            стороны отправителя (sealed sender) — в планах,
+                            пока не развёрнута: сервер всё ещё видит маршрутные
+                            метаданные (идентификатор отправителя, временные
+                            метки доставки).</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Crypto Agility:</strong> versioned protocol
+                            suites allow algorithm upgrades without rebuilding
+                            client apps.</span>
+                            <span class="ru"><strong>Крипто-эластичность:</strong> версионированные
+                            крипто-suite позволяют обновлять алгоритмы без
+                            пересборки клиентских приложений.</span>
                         </li>
                     </ul>
                     <h3><span class="en">Transport Layer</span><span class="ru">Транспортный уровень</span></h3>
                     <ul>
                         <li>
-                            <span class="en"><strong>gRPC / HTTP2 bidirectional stream:</strong>
-                            Primary message delivery — persistent connection, server-push, ~100ms latency</span>
-                            <span class="ru"><strong>gRPC / HTTP2 двунаправленный поток:</strong>
-                            основная доставка сообщений — постоянное соединение, server-push, задержка ~100ms</span>
+                            <span class="en"><strong>gRPC over HTTP/2:</strong>
+                            primary message transport — persistent bidirectional
+                            stream with server push.</span>
+                            <span class="ru"><strong>gRPC поверх HTTP/2:</strong>
+                            основной транспорт сообщений — постоянный
+                            двунаправленный поток с server push.</span>
                         </li>
                         <li>
                             <span class="en"><strong>QUIC engine (ConstructEngine):</strong>
-                            Secondary transport — 0-RTT reconnect, multiplexed streams, better on lossy networks</span>
-                            <span class="ru"><strong>QUIC движок (ConstructEngine):</strong>
-                            вторичный транспорт — переподключение 0-RTT, мультиплексирование, лучше на нестабильных сетях</span>
+                            secondary transport with 0-RTT resumption and
+                            multiplexed streams for lossy networks. Currently
+                            disabled on iOS pending upstream fixes; enabled on
+                            macOS / desktop.</span>
+                            <span class="ru"><strong>QUIC-движок (ConstructEngine):</strong>
+                            вторичный транспорт с 0-RTT и мультиплексированием
+                            потоков для нестабильных сетей. На iOS сейчас
+                            отключён до апстрим-фиксов; включён на macOS /
+                            десктопе.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>VEIL relay:</strong>
-                            Traffic obfuscation + relay routing when direct connection is blocked or unavailable</span>
-                            <span class="ru"><strong>VEIL relay:</strong>
-                            обфускация трафика + ретрансляция когда прямое соединение заблокировано или недоступно</span>
+                            <span class="en"><strong>VEIL (anti-censorship):</strong>
+                            traffic obfuscation when direct TLS is throttled or
+                            blocked. Today: obfs4 + WebTunnel pluggable transports.
+                            Under active development: <em>veil-front</em>, an
+                            honest-front HTTPS layer that makes tunnelled traffic
+                            indistinguishable from a real public web service.</span>
+                            <span class="ru"><strong>VEIL (защита от цензуры):</strong>
+                            обфускация трафика когда прямой TLS режется или
+                            блокируется. Сегодня: obfs4 + WebTunnel pluggable
+                            transports. В активной разработке: <em>veil-front</em> —
+                            honest-front HTTPS слой, который делает туннельный
+                            трафик неотличимым от настоящего публичного
+                            web-сервиса.</span>
                         </li>
                     </ul>
                 </div>
@@ -258,11 +327,15 @@
                             остаются защищёнными даже при компрометации ключей.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Post-quantum readiness</strong> — hybrid
-                            X25519 + Kyber for key exchange, Ed25519 + Dilithium
-                            for signatures.</span>
-                            <span class="ru"><strong>Постквантовая готовность</strong> — гибридные
-                            X25519 + Kyber для обмена ключами, Ed25519 + Dilithium для подписей.</span>
+                            <span class="en"><strong>Post-quantum key exchange</strong> — hybrid
+                            X25519 + <strong>ML-KEM-768</strong> (Kyber-768).
+                            Signatures are Ed25519 today; <strong>ML-DSA-65</strong>
+                            (Dilithium-3) for hybrid signatures is planned.</span>
+                            <span class="ru"><strong>Постквантовый обмен ключами</strong> —
+                            гибрид X25519 + <strong>ML-KEM-768</strong>
+                            (Kyber-768). Подписи сейчас Ed25519;
+                            <strong>ML-DSA-65</strong> (Dilithium-3) для
+                            гибридных подписей — в планах.</span>
                         </li>
                         <li>
                             <span class="en"><strong>Federation</strong> — run your own server or
@@ -314,7 +387,7 @@
                                     <th scope="row">Signal</th>
                                     <td>No</td>
                                     <td>Yes</td>
-                                    <td>Research</td>
+                                    <td>Yes (PQXDH)</td>
                                     <td>No</td>
                                     <td>REST/JSON</td>
                                     <td>Yes</td>
@@ -361,7 +434,7 @@
                                     </th>
                                     <td><strong>Planned</strong></td>
                                     <td>Yes</td>
-                                    <td><strong>Production</strong></td>
+                                    <td><strong>KEM (opt-in)<sup>‡</sup></strong></td>
                                     <td><strong>Planned</strong></td>
                                     <td><strong>gRPC+QUIC</strong></td>
                                     <td>Yes</td>
@@ -375,10 +448,12 @@
                                 color: var(--fg-muted);
                             "
                         >
-                            <span class="en">* Telegram E2EE only in "Secret Chats", not default<br>
-                            † Session messenger announced shutdown (July 2026) due to funding exhaustion despite 1.7M monthly active users — a cautionary tale for centralised privacy projects</span>
-                            <span class="ru">* E2EE в Telegram только в «Секретных чатах», не по умолчанию<br>
-                            † Session объявил о закрытии (июль 2026) из-за исчерпания финансирования несмотря на 1,7 млн MAU — поучительный пример для централизованных privacy-проектов</span>
+                            <span class="en">* Telegram E2EE only in "Secret Chats", not default.<br>
+                            † Session V1 protocol uses static long-term keys — no forward secrecy or PCS.<br>
+                            ‡ Konstruct's PQ KEM (ML-KEM-768) is opt-in and deployed; PQ signatures (ML-DSA-65) are planned, not yet implemented.</span>
+                            <span class="ru">* E2EE в Telegram только в «Секретных чатах», не по умолчанию.<br>
+                            † Session V1 использует статические долгосрочные ключи — без forward secrecy и PCS.<br>
+                            ‡ Постквантовый KEM Конструкта (ML-KEM-768) — opt-in и развёрнут; постквантовые подписи (ML-DSA-65) запланированы, пока не реализованы.</span>
                         </p>
                     </div>
                 </div>
@@ -386,28 +461,81 @@
 
             <section aria-labelledby="resilience-heading">
                 <div class="container">
-                    <h2 id="resilience-heading"><span class="en">Built to Last — Three-Tier Network</span><span class="ru">Создан чтобы работать — трёхуровневая сеть</span></h2>
+                    <h2 id="resilience-heading"><span class="en">Designed for Graceful Degradation</span><span class="ru">Спроектировано для плавной деградации</span></h2>
                     <p>
-                        <span class="en">The shutdown of Session messenger (July 2026) — 1.7M users, zero revenue — proves that even successful privacy projects can collapse if they depend entirely on centralised infrastructure funded by donations. Construct is designed around the opposite principle: <strong>the network degrades gracefully</strong>, remaining operational even without central servers.</span>
-                        <span class="ru">Закрытие Session (июль 2026) — 1,7 млн пользователей, нулевая выручка — доказывает: даже успешный privacy-проект может рухнуть, если полностью зависит от централизованной инфраструктуры. Construct построен по обратному принципу: <strong>сеть деградирует плавно</strong>, оставаясь работоспособной даже без центральных серверов.</span>
+                        <span class="en">Centralised privacy projects are
+                        fragile: when funding dries up or a single operator is
+                        compelled to shut down, the network goes with them.
+                        Konstruct is designed around the opposite principle —
+                        as components disappear, the rest keeps working. The
+                        target architecture is three tiers, each with the same
+                        end-to-end cryptographic guarantees regardless of
+                        delivery path.
+                        <em>Today only Tier 1 with a single trusted server is
+                        live; Tiers 2 and 3 are on the roadmap.</em></span>
+                        <span class="ru">Централизованные privacy-проекты
+                        хрупки: когда финансирование заканчивается или
+                        единственного оператора заставляют закрыться — сеть
+                        исчезает вместе с ним. Конструкт построен по обратному
+                        принципу: по мере исчезновения компонентов остальные
+                        продолжают работать. Целевая архитектура — три
+                        уровня, на каждом сохраняются одни и те же
+                        E2E-гарантии независимо от пути доставки.
+                        <em>Сегодня работает только Tier 1 с одним доверенным
+                        сервером; Tier 2 и 3 — в дорожной карте.</em></span>
                     </p>
                     <ul>
                         <li>
-                            <span class="en"><strong>Tier 1 — Federated servers:</strong> Anyone can run a Construct server. If the founding team disappears, the network continues through community-operated nodes.</span>
-                            <span class="ru"><strong>Tier 1 — Федеративные серверы:</strong> Любой может запустить Construct-сервер. Если основная команда исчезнет, сеть продолжит работу через ноды сообщества.</span>
+                            <span class="en"><strong>Tier 1 — Federated servers
+                            (planned 2027):</strong> anyone will be able to run
+                            a Konstruct server with an email-style address
+                            (<code>you@your-server.example</code>). If the
+                            founding team disappears, community-operated nodes
+                            can keep the network alive.</span>
+                            <span class="ru"><strong>Tier 1 — Федеративные
+                            серверы (план: 2027):</strong> любой сможет
+                            запустить Конструкт-сервер с адресом email-стиля
+                            (<code>you@your-server.example</code>). Если
+                            основная команда исчезнет, ноды сообщества смогут
+                            поддерживать сеть.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Tier 2 — Community relay nodes:</strong> Lightweight relay nodes (runs on a Raspberry Pi) provide message routing without a full server — no user database, no key storage.</span>
-                            <span class="ru"><strong>Tier 2 — Ноды-ретрансляторы:</strong> Лёгкие relay-ноды (работают на Raspberry Pi) обеспечивают маршрутизацию сообщений без полноценного сервера — без базы пользователей, без хранения ключей.</span>
+                            <span class="en"><strong>Tier 2 — Community relay
+                            nodes (planned 2027):</strong> lightweight relays
+                            (designed to run on hardware as small as a
+                            Raspberry Pi) will provide message routing without
+                            a full server — no user database, no key storage.</span>
+                            <span class="ru"><strong>Tier 2 — Ноды-ретрансляторы
+                            сообщества (план: 2027):</strong> лёгкие ретрансляторы
+                            (рассчитанные на железо уровня Raspberry Pi) будут
+                            обеспечивать маршрутизацию сообщений без полноценного
+                            сервера — без базы пользователей, без хранения
+                            ключей.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Tier 3 — Full P2P:</strong> When both users are online simultaneously, messages flow directly between devices over QUIC/ICE — the server is not involved at all. Two users can communicate as long as they have internet access, regardless of any infrastructure.</span>
-                            <span class="ru"><strong>Tier 3 — Полный P2P:</strong> Когда оба пользователя онлайн одновременно, сообщения идут напрямую между устройствами по QUIC/ICE — сервер вообще не участвует. Два пользователя могут общаться, пока есть интернет — независимо от какой-либо инфраструктуры.</span>
+                            <span class="en"><strong>Tier 3 — Direct P2P
+                            (planned 2027+):</strong> when both users are online,
+                            messages will travel directly between devices over
+                            QUIC/ICE — the server steps out of the data path
+                            entirely.</span>
+                            <span class="ru"><strong>Tier 3 — Прямой P2P
+                            (план: 2027+):</strong> когда оба собеседника
+                            онлайн, сообщения будут идти напрямую между
+                            устройствами по QUIC/ICE — сервер полностью выйдет
+                            из пути данных.</span>
                         </li>
                     </ul>
                     <p>
-                        <span class="en">The Signal Protocol (Double Ratchet + PQXDH) is transport-agnostic — it works identically at all three tiers. The cryptographic guarantees don't change whether messages travel through a server, a relay node, or directly between devices.</span>
-                        <span class="ru">Signal Protocol (Double Ratchet + PQXDH) не зависит от транспорта — он работает одинаково на всех трёх уровнях. Криптографические гарантии не меняются независимо от того, идут ли сообщения через сервер, relay-ноду или напрямую между устройствами.</span>
+                        <span class="en">The Signal Protocol design (X3DH +
+                        Double Ratchet + hybrid PQ KEM) is transport-agnostic:
+                        whether messages travel through a server, a relay node,
+                        or directly between devices, the cryptographic
+                        guarantees stay the same.</span>
+                        <span class="ru">Дизайн Signal Protocol (X3DH + Double
+                        Ratchet + гибридный PQ KEM) не зависит от транспорта:
+                        идут ли сообщения через сервер, ретранслятор или
+                        напрямую между устройствами — криптографические
+                        гарантии остаются теми же.</span>
                     </p>
                 </div>
             </section>
@@ -417,25 +545,21 @@
                     <h2 id="roadmap-heading"><span class="en">Development Roadmap</span><span class="ru">Дорожная карта</span></h2>
                     <ul>
                         <li>
-                            <span class="en"><strong>Q1 2026 (Completed):</strong> gRPC/Protobuf transport, post-quantum cryptography (PQXDH: X3DH + Kyber-768), session healing, iOS TestFlight beta, QUIC secondary transport (ConstructEngine), ICE relay transport</span>
-                            <span class="ru"><strong>Q1 2026 (Завершено):</strong> транспорт gRPC/Protobuf, постквантовая криптография (PQXDH: X3DH + Kyber-768), session healing, iOS TestFlight бета, QUIC вторичный транспорт (ConstructEngine), ICE relay транспорт</span>
+                            <span class="en"><strong>Done (H1 2026):</strong> gRPC/Protobuf transport · X3DH + Double Ratchet · hybrid PQXDH with ML-KEM-768 (opt-in) · session healing · WebRTC voice/video calls with E2EE signaling · iOS TestFlight beta · VEIL anti-censorship (obfs4, WebTunnel) · QUIC secondary transport on macOS/desktop.</span>
+                            <span class="ru"><strong>Сделано (H1 2026):</strong> транспорт gRPC/Protobuf · X3DH + Double Ratchet · гибридный PQXDH с ML-KEM-768 (opt-in) · session healing · WebRTC голос/видео с E2EE-сигналингом · iOS TestFlight бета · VEIL anti-censorship (obfs4, WebTunnel) · QUIC вторичный транспорт на macOS / десктопе.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Q2–Q3 2026:</strong> MLS group chats, WebRTC voice/video calls, sealed sender (metadata protection), relay node protocol, Android client alpha</span>
-                            <span class="ru"><strong>Q2–Q3 2026:</strong> MLS групповые чаты, WebRTC голосовые/видеозвонки, sealed sender (защита метаданных), протокол relay-нод, альфа Android-клиента</span>
+                            <span class="en"><strong>In progress:</strong> veil-front honest-front transport · Android client (currently Phase 0 — Rust core builds, Kotlin wrapper TBD) · BIP39 / SLIP-39 social recovery · MLS group chats (RFC 9420) · first external security audit.</span>
+                            <span class="ru"><strong>В работе:</strong> veil-front honest-front транспорт · Android-клиент (сейчас Phase 0 — Rust core собирается, Kotlin-обёртка в работе) · BIP39 / SLIP-39 социальное восстановление · MLS групповые чаты (RFC 9420) · первый внешний security-аудит.</span>
                         </li>
                         <li>
-                            <span class="en"><strong>Q4 2026:</strong> Server-assisted P2P handoff (desktop clients), desktop applications (macOS, Windows, Linux), federation beta</span>
-                            <span class="ru"><strong>Q4 2026:</strong> P2P handoff через сервер (десктоп-клиенты), десктоп-приложения (macOS, Windows, Linux), бета-тестирование федерации</span>
-                        </li>
-                        <li>
-                            <span class="en"><strong>2027:</strong> Full federation launch, community relay node network, QR-based pure P2P (no server needed for initial key exchange), formal security audit</span>
-                            <span class="ru"><strong>2027:</strong> Полный запуск федерации, сеть community relay-нод, чистый P2P по QR-коду (без сервера для начального обмена ключами), формальный аудит безопасности</span>
+                            <span class="en"><strong>Planned (2026 H2 – 2027):</strong> sealed sender (metadata minimisation) · desktop applications (macOS, Windows, Linux) · federation protocol · community relay nodes · direct P2P delivery · hybrid PQ signatures (ML-DSA-65) · formal verification (Kani).</span>
+                            <span class="ru"><strong>Планы (H2 2026 – 2027):</strong> sealed sender (минимизация метаданных) · десктоп-приложения (macOS, Windows, Linux) · протокол федерации · community relay-ноды · прямая P2P-доставка · гибридные постквантовые подписи (ML-DSA-65) · формальная верификация (Kani).</span>
                         </li>
                     </ul>
                     <p>
-                        <span class="en"><strong>Current Status:</strong> iOS TestFlight beta. Post-quantum E2EE (PQXDH + Double Ratchet) is production-ready. Session healing and QUIC transport are live.</span>
-                        <span class="ru"><strong>Текущий статус:</strong> iOS TestFlight бета. Постквантовое E2EE (PQXDH + Double Ratchet) готово к продакшену. Session healing и QUIC транспорт работают в продакшене.</span>
+                        <span class="en"><strong>Honest current status:</strong> alpha. iOS via TestFlight only (<a href="https://testflight.apple.com/join/NH3WssFh">join the beta</a>); no public App Store release yet. Single trusted server (no federation). VEIL obfs4 transport is deployed but currently throttled by active DPI in some regions — veil-front replacement is the active research effort. Not recommended for adversarial threat models until first external audit completes.</span>
+                        <span class="ru"><strong>Честный текущий статус:</strong> alpha. iOS только через TestFlight (<a href="https://testflight.apple.com/join/NH3WssFh">присоединиться к бете</a>); публичного релиза в App Store пока нет. Один доверенный сервер (без федерации). VEIL obfs4-транспорт развёрнут, но сейчас режется активным DPI в ряде регионов — замена veil-front в активной разработке. Не рекомендуется для adversarial-угроз до завершения первого внешнего аудита.</span>
                     </p>
                 </div>
             </section>
@@ -447,20 +571,25 @@
                         <span class="ru">Открытый исходный код и участие</span>
                     </h2>
                     <p>
-                        <span class="en">Konstruct is fully open-source under the MIT License. We
-                        believe privacy technology should be transparent and
-                        auditable by anyone.</span>
-                        <span class="ru">Construct полностью открытый под лицензией MIT. Мы убеждены,
-                        что технологии приватности должны быть прозрачными и доступными для аудита
-                        любым желающим.</span>
+                        <span class="en">Konstruct is open-source under the MIT
+                        License (code) and CC-BY-4.0 (text / specs). Privacy
+                        technology should be transparent and auditable by anyone
+                        — including the open issues we haven't fixed yet.</span>
+                        <span class="ru">Конструкт открыт под лицензией MIT
+                        (код) и CC-BY-4.0 (тексты / спецификации). Технологии
+                        приватности должны быть прозрачными и доступными для
+                        аудита любым желающим — включая открытые проблемы,
+                        которые мы пока не исправили.</span>
                     </p>
                     <p>
-                        <span class="en"><strong>All contributions welcome</strong> — from code
-                        improvements to security audits to documentation. Help
-                        us build privacy infrastructure for everyone.</span>
-                        <span class="ru"><strong>Любые вклады приветствуются</strong> — от улучшений
-                        кода до аудита безопасности и документации. Помогите нам строить
-                        инфраструктуру приватности для всех.</span>
+                        <span class="en"><strong>Contributions welcome</strong> — from code
+                        improvements to security review to documentation. We
+                        are a tiny team; PRs and issues are read by humans, not
+                        triaged by a queue.</span>
+                        <span class="ru"><strong>Контрибьюторы приветствуются</strong> —
+                        от улучшений кода до review безопасности и документации.
+                        Команда крошечная: PR и issues читают живые люди, а не
+                        фильтрует очередь.</span>
                     </p>
                     <ul>
                         <li>
@@ -472,18 +601,29 @@
                         <li>
                             <a
                                 href="https://github.com/konstruct-msg/construct-core"
-                                ><span class="en">Cryptography Core (Rust)</span><span class="ru">Ядро криптографии (Rust)</span></a
+                                ><span class="en">Cryptography core (Rust)</span><span class="ru">Ядро криптографии (Rust)</span></a
                             >
                         </li>
                         <li>
                             <a
-                                href="https://github.com/konstruct-msg/construct-messenger"
-                                ><span class="en">iOS Client (Swift)</span><span class="ru">iOS-клиент (Swift)</span></a
+                                href="https://github.com/konstruct-msg/construct-veil"
+                                ><span class="en">VEIL anti-censorship transport (Rust)</span><span class="ru">VEIL anti-censorship транспорт (Rust)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https://github.com/konstruct-msg/construct-ios"
+                                ><span class="en">iOS / macOS client (Swift)</span><span class="ru">iOS / macOS клиент (Swift)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://github.com/konstruct-msg/construct-core/security/advisories/new"
+                                ><span class="en">Report a security issue (GitHub private advisory)</span><span class="ru">Сообщить о security-проблеме (приватный advisory на GitHub)</span></a
                             >
                         </li>
                         <li>
                             <a href="https://x.com/maxeliseyev"
-                                >Discussion &amp; Updates: @maxeliseyev</a
+                                ><span class="en">Updates: @maxeliseyev</span><span class="ru">Обновления: @maxeliseyev</span></a
                             >
                         </li>
                     </ul>
@@ -518,23 +658,23 @@
                 "@type": "SoftwareApplication",
                 "name": "Konstruct Messenger",
                 "applicationCategory": "CommunicationApplication",
-                "operatingSystem": "iOS, Android, Web",
+                "operatingSystem": "iOS",
                 "offers": {
                     "@type": "Offer",
                     "price": "0",
                     "priceCurrency": "USD"
                 },
-                "description": "Privacy-first E2EE messenger with post-quantum cryptography, three-tier resilient network (federated servers → relay nodes → direct P2P), and zero-knowledge server design.",
+                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with hybrid post-quantum KEM (ML-KEM-768). Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
                 "featureList": [
-                    "End-to-end encryption by default",
-                    "Forward secrecy",
-                    "Post-quantum cryptography (PQXDH + Kyber-768)",
-                    "Three-tier network resilience",
-                    "Direct P2P messaging (planned)",
-                    "Federation support (planned)",
-                    "QUIC + gRPC transport",
-                    "VEIL relay transport obfuscation",
-                    "Session healing",
+                    "End-to-end encryption (X3DH + Double Ratchet)",
+                    "Forward secrecy and post-compromise security",
+                    "Hybrid post-quantum KEM (ML-KEM-768, opt-in)",
+                    "ChaCha20-Poly1305 AEAD",
+                    "WebRTC voice/video calls with E2EE signaling",
+                    "VEIL anti-censorship transport (obfs4, WebTunnel)",
+                    "gRPC over HTTP/2 with QUIC secondary transport",
+                    "Federation (planned)",
+                    "Direct P2P delivery (planned)",
                     "Lightweight Rust server"
                 ],
                 "author": {

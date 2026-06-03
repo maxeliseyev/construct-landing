@@ -6,7 +6,7 @@
         <title>FAQ — Konstruct Messenger</title>
         <meta
             name="description"
-            content="Frequently asked questions about Construct messenger: encryption, registration, contacts, privacy, and more."
+            content="Frequently asked questions about Konstruct messenger: encryption, registration, contacts, privacy, and more."
         />
         <link rel="canonical" href="https://konstruct.cc/faq" />
         <link rel="icon" type="image/png" href="favicon.png" />
@@ -354,11 +354,11 @@
                 </h1>
                 <p>
                     <span class="en"
-                        >How Construct works, why it works this way, and answers
+                        >How Konstruct works, why it works this way, and answers
                         from users and testers.</span
                     >
                     <span class="ru"
-                        >Как работает Construct, почему именно так, и ответы на
+                        >Как работает Конструкт, почему именно так, и ответы на
                         вопросы от пользователей и тестировщиков.</span
                     >
                 </p>
@@ -397,8 +397,8 @@
                                 bot registrations. At the same time, several
                                 cryptographic key sets are generated on-device:
                                 long-term identity keys, signed prekeys, and
-                                one-time prekeys (including post-quantum Kyber
-                                keys). Only the public parts of these keys and
+                                one-time prekeys (including post-quantum
+                                ML-KEM-768 keys). Only the public parts of these keys and
                                 the PoW result are sent to the server. Private
                                 keys never leave your device. Your identity
                                 <em>is</em> these keys — there's no password to
@@ -413,8 +413,8 @@
                                 устройства и несколько наборов ключей
                                 шифрования: долгосрочные ключи идентичности,
                                 подписанные предварительные ключи и одноразовые
-                                предварительные ключи (в том числе
-                                постквантовые). На сервер уходят только
+                                предварительные ключи (включая постквантовые
+                                ML-KEM-768). На сервер уходят только
                                 публичные части этих ключей и результат
                                 PoW-задачи. Приватные ключи никогда не покидают
                                 устройство. Вместо пароля твоя идентичность —
@@ -623,7 +623,7 @@
                                 decrypted on the recipient's device. The server
                                 sees only an encrypted stream and routes it — it
                                 cannot read content technically, not just by
-                                policy. For key establishment, Construct uses
+                                policy. For key establishment, Konstruct uses
                                 X3DH extended with a post-quantum protocol
                                 (PQXDH) — protecting against "record now,
                                 decrypt with quantum computer later" attacks.
@@ -979,7 +979,7 @@
                         <div class="faq-answer">
                             <p class="en">
                                 VEIL — Variable Encoded Interface Layer. In
-                                Construct, VEIL serves two roles: (1) a
+                                Konstruct, VEIL serves two roles: (1) a
                                 transport layer that disguises messenger traffic
                                 as ordinary background noise, defeating DPI
                                 systems and censorship firewalls; (2) a relay
@@ -991,7 +991,7 @@
                             </p>
                             <p class="ru">
                                 VEIL — Уровень вариативного шифрования,
-                                (Variable Encoded Interface Layer). В Construct
+                                (Variable Encoded Interface Layer). В Конструкте
                                 VEIL выполняет две роли: (1) транспортный
                                 уровень, который маскирует трафик мессенджера
                                 под обычный информационный шум, обходя DPI и
@@ -1052,11 +1052,11 @@
                     <details class="faq-item">
                         <summary>
                             <span class="en"
-                                >What happens if Construct's servers go
+                                >What happens if Konstruct's servers go
                                 offline?</span
                             >
                             <span class="ru"
-                                >Что будет если серверы Construct
+                                >Что будет если серверы Конструкта
                                 отключатся?</span
                             >
                             <span class="faq-chevron" aria-hidden="true"
@@ -1065,35 +1065,44 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                Construct is designed to degrade gracefully
-                                through three tiers:
-                                <strong>Federated servers</strong> (anyone can
-                                run one, so even if the founding team's server
-                                goes down, community servers continue);
-                                <strong>VEIL relay nodes</strong> (lightweight
-                                relay nodes that route messages without storing
-                                anything — can run on a Raspberry Pi);
-                                <strong>Direct P2P</strong> (when both users are
-                                online simultaneously, messages travel directly
-                                between devices over QUIC/VEIL with no server
-                                involved at all). Two users can communicate as
-                                long as they have internet access, regardless of
-                                any central infrastructure.
+                                <em>Today: alpha runs on a single trusted server
+                                — if it goes offline, messaging stops until it
+                                returns.</em> The target architecture is three
+                                tiers of graceful degradation:
+                                <strong>federated servers</strong> (planned
+                                2027 — anyone can run one, so even if the
+                                founding team's server goes down, community
+                                servers continue);
+                                <strong>VEIL relay nodes</strong> (planned —
+                                lightweight relay nodes that route messages
+                                without storing anything, designed to run on
+                                hardware as small as a Raspberry Pi);
+                                <strong>direct P2P</strong> (planned — when
+                                both users are online simultaneously, messages
+                                will travel directly between devices over
+                                QUIC/VEIL with no server involved). Once all
+                                three tiers ship, two users will be able to
+                                communicate as long as they have internet
+                                access, regardless of central infrastructure.
                             </p>
                             <p class="ru">
-                                Construct спроектирован с плавной деградацией
-                                через три уровня:
-                                <strong>Федеративные серверы</strong> (любой
-                                может запустить свой — даже если сервер основной
-                                команды упадёт, серверы сообщества продолжат
-                                работу);
-                                <strong>VEIL relay-ноды</strong> (лёгкие
-                                ретрансляторы без хранения данных — работают на
-                                Raspberry Pi);
-                                <strong>Прямой P2P</strong> (когда оба
-                                пользователя онлайн одновременно, сообщения идут
-                                напрямую между устройствами по QUIC/VEIL без
-                                участия сервера). Два пользователя могут
+                                <em>Сегодня: alpha работает на одном доверенном
+                                сервере — если он уйдёт оффлайн, обмен
+                                сообщениями остановится до его возвращения.</em>
+                                Целевая архитектура — три уровня плавной
+                                деградации:
+                                <strong>федеративные серверы</strong> (план
+                                2027 — любой сможет запустить свой, и даже
+                                если сервер основной команды упадёт, серверы
+                                сообщества продолжат работу);
+                                <strong>VEIL relay-ноды</strong> (план —
+                                лёгкие ретрансляторы без хранения данных,
+                                рассчитанные на железо уровня Raspberry Pi);
+                                <strong>прямой P2P</strong> (план — когда оба
+                                пользователя онлайн одновременно, сообщения
+                                будут идти напрямую между устройствами по
+                                QUIC/VEIL без участия сервера). После релиза
+                                всех трёх уровней два пользователя смогут
                                 общаться пока есть интернет — независимо от
                                 центральной инфраструктуры.
                             </p>
@@ -1117,27 +1126,26 @@
                             <p class="en">
                                 Yes — unconditionally. Sending messages,
                                 receiving messages, E2EE, and all security
-                                features will never go behind a paywall. The
-                                Session messenger shutdown (July 2026) — 1.7M
-                                users but no revenue — showed that donation-only
-                                models are fragile. Construct plans voluntary
-                                donations, optional premium features (larger
-                                file transfers, extended history, custom themes
-                                — not security features), and B2B hosted
-                                instances for organizations. The core will
-                                always be free.
+                                features will never go behind a paywall.
+                                Donation-only models have historically proved
+                                fragile for privacy projects, so Konstruct
+                                plans a mix: voluntary donations, optional
+                                premium features (larger file transfers,
+                                extended history, custom themes — never
+                                security features), and B2B hosted instances
+                                for organizations. The core will always be free.
                             </p>
                             <p class="ru">
                                 Да — безусловно. Отправка сообщений, получение
                                 сообщений, E2EE и все функции безопасности
                                 никогда не окажутся за платным барьером.
-                                Закрытие Session (июль 2026) — 1,7 млн
-                                пользователей без выручки — показало, что модель
-                                на донатах хрупка. Construct планирует
-                                добровольные пожертвования, опциональные
-                                premium-функции (большие файлы, расширенная
-                                история, темы — не функции безопасности) и
-                                B2B-хостинг для организаций. Ядро всегда будет
+                                Модель только на донатах исторически оказалась
+                                хрупкой для privacy-проектов, поэтому Конструкт
+                                планирует комбинацию: добровольные пожертвования,
+                                опциональные premium-функции (большие файлы,
+                                расширенная история, темы — никогда функции
+                                безопасности) и B2B-хостинг для организаций.
+                                Ядро всегда будет
                                 бесплатным.
                             </p>
                         </div>
@@ -1159,37 +1167,41 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                When both users are simultaneously online and
-                                connected to a Construct server, the server can
-                                signal them to upgrade to a direct peer-to-peer
-                                QUIC/VEIL connection. Once established, the
-                                server exits the message relay path — traffic
-                                flows directly between devices. If either user
-                                goes offline, the server automatically resumes
-                                relaying. The encryption (Signal Protocol) is
-                                identical in both modes — the server was never
-                                able to read message content either way. P2P
-                                mode is planned for desktop clients first
-                                (always-on connection); mobile clients will
-                                support short P2P bursts when both have the app
-                                open.
+                                <em>P2P mode is planned, not yet implemented —
+                                all traffic currently goes through the central
+                                server.</em> The target design: when both users
+                                are simultaneously online and connected to a
+                                Konstruct server, the server will signal them
+                                to upgrade to a direct peer-to-peer QUIC/VEIL
+                                connection. Once established, the server exits
+                                the message relay path — traffic flows directly
+                                between devices. If either user goes offline,
+                                the server automatically resumes relaying. The
+                                encryption (Signal Protocol) is identical in
+                                both modes — the server was never able to read
+                                message content either way. P2P is planned for
+                                desktop clients first (always-on connection);
+                                mobile clients will support short P2P bursts
+                                when both have the app open.
                             </p>
                             <p class="ru">
-                                Когда оба пользователя одновременно онлайн и
-                                подключены к Construct-серверу, сервер может
-                                подать им сигнал для установки прямого
-                                P2P-соединения по QUIC/VEIL. После установки
-                                сервер выходит из цепочки ретрансляции — трафик
-                                идёт напрямую между устройствами. Если кто-то из
-                                пользователей уйдёт оффлайн, сервер
-                                автоматически возобновит ретрансляцию.
-                                Шифрование (Signal Protocol) одинаково в обоих
-                                режимах — сервер всё равно никогда не мог
-                                прочитать содержимое сообщений. P2P-режим
-                                планируется сначала для десктоп-клиентов
+                                <em>P2P-режим запланирован, но пока не
+                                реализован — весь трафик сейчас идёт через
+                                центральный сервер.</em> Целевой дизайн: когда
+                                оба пользователя одновременно онлайн и
+                                подключены к Конструкт-серверу, сервер подаст
+                                им сигнал для установки прямого P2P-соединения
+                                по QUIC/VEIL. После установки сервер выходит
+                                из цепочки ретрансляции — трафик идёт напрямую
+                                между устройствами. Если кто-то из пользователей
+                                уйдёт оффлайн, сервер автоматически возобновит
+                                ретрансляцию. Шифрование (Signal Protocol)
+                                одинаково в обоих режимах — сервер всё равно
+                                никогда не мог прочитать содержимое сообщений.
+                                P2P планируется сначала для десктоп-клиентов
                                 (постоянное подключение); мобильные клиенты
-                                будут поддерживать короткие P2P-сессии когда оба
-                                держат приложение открытым.
+                                будут поддерживать короткие P2P-сессии когда
+                                оба держат приложение открытым.
                             </p>
                         </div>
                     </details>
