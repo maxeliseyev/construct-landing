@@ -1,7 +1,7 @@
 {
   "bundle_signing_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
-  "signature": "ed25519:9nmBWDIHCMvg7v5WMFQZbzXyMDuUr4duDiXSUIgxo-DJhWduwoAn2maGmkHIjSJ1Bqy-H7HaGq5uhZv5unnEBg",
-  "signed_at": "2026-06-03T04:33:02Z",
+  "signature": "ed25519:3gxcbK_NJhNZRqazG7BpD2myldjS-bLa5r2_XP7qqZ7sEfl0nz4q9ljA-0k8bUjnMT5lhQlG1rVNGhUfiUSeBg",
+  "signed_at": "2026-06-04T04:32:34Z",
   "veil": {
     "deprecated_ids": [
       "spb-mt-1"
