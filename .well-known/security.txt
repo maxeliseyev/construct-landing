@@ -6,11 +6,12 @@ Contact: https://github.com/konstruct-msg/construct-core/security/advisories/new
 Contact: https://github.com/konstruct-msg/construct-ios/security/advisories/new
 Contact: https://github.com/konstruct-msg/construct-server/security/advisories/new
 Contact: https://github.com/konstruct-msg/construct-veil/security/advisories/new
+Contact: https://github.com/konstruct-msg/construct-engine/security/advisories/new
 Expires: 2027-06-01T00:00:00Z
 Preferred-Languages: en, ru
 Canonical: https://konstruct.cc/.well-known/security.txt
 
 # Scope: any cryptographic, transport, or implementation issue in the
-# four repositories above. Server infrastructure issues (DoS, mis-config)
+# five repositories above. Server infrastructure issues (DoS, mis-config)
 # are out of scope while the project is in single-server alpha — the
 # whole network depends on one trusted operator today.
