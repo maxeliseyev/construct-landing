@@ -1,7 +1,7 @@
 {
   "bundle_signing_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
-  "signature": "ed25519:JKbFFCxmH_GRhxrTiWLlxdfxXi1Sw3-5bTzDG9veqeOLNIMmLKtrx6JZlaqW4ymQCok1f37YpYrK613cdhRbBQ",
-  "signed_at": "2026-06-13T06:56:45Z",
+  "signature": "ed25519:mzMQsifQnbuf9j-fOYhNwaiTAuDH15uLbsOO413hIf_7LcmUDPRE9Mm7cLZkpA0J1YW2L9Q9CcaV3K3j-1CtDQ",
+  "signed_at": "2026-06-15T09:18:46Z",
   "veil": {
     "deprecated_ids": [
       "spb-mt-1"
@@ -26,7 +26,7 @@
         "port": 443,
         "region": "RU",
         "sni": "api.divany-kresla.uk",
-        "spki_sha256": "b2361c0448a33a10e6521300aa4de8d8fe402791dd4fd5b0fe10fbb09457570c",
+        "spki_sha256": "5621e47a745614de08efb054b01388f3bcf32c763ecf5f0aeaeb6b0785ff6861",
         "wt_host_header": "api.divany-kresla.uk",
         "wt_path": "/api/stream"
       }
