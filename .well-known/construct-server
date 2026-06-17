@@ -2,35 +2,5 @@
   "bundle_signing_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
   "signature": "ed25519:siTs2Qe1bvWE8ly2l0naa44Ah_QykzSxtyONsaT3w6_qMlhJYrWl3vxA4S3VsctKdJPX2LnaaFN8ySCD27-WAw",
   "signed_at": "2026-06-17T08:26:14Z",
-  "veil": {
-    "deprecated_ids": [
-      "spb-mt-1"
-    ],
-    "relays": [
-      {
-        "addr": "ice.ams.konstruct.cc",
-        "bridge_cert": "voFt3ilLSKx2xYuZsjxOnXtHTktUE4EaExIYRG+Bh89frHzI5QVrBNvT41zdS7Maiu6gPA",
-        "domain": "ams-het-1.relay.konstruct.cc",
-        "id": "ams-het-1",
-        "port": 443,
-        "region": "NL",
-        "sni": "ice.ams.konstruct.cc",
-        "spki_sha256": "510d465a5c4736548e3386570ede6ba24600c4c9a2e369d24dde1ad7915eeebd",
-        "wt_path": "/construct-ice"
-      },
-      {
-        "addr": "api.divany-kresla.uk",
-        "bridge_cert": "zdfEJKLpy4nVo09zbd/5q3Yx02FyL7Tlr+5Aurww51IbYacIWIqbcTndB1UL+n2g68XBQw",
-        "domain": "api.divany-kresla.uk",
-        "id": "ru-div-1",
-        "port": 443,
-        "region": "RU",
-        "sni": "api.divany-kresla.uk",
-        "spki_sha256": "5621e47a745614de08efb054b01388f3bcf32c763ecf5f0aeaeb6b0785ff6861",
-        "wt_host_header": "api.divany-kresla.uk",
-        "wt_path": "/api/stream"
-      }
-    ]
-  },
   "version": 2
 }
