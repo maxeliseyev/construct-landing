@@ -224,7 +224,7 @@
                         Encrypted message payload (opaque binary blob — we
                         cannot read this)
                     </li>
-                    <li>Sender User ID</li>
+                    <li>Sender User ID (unless Stealth Mode is on — see below)</li>
                     <li>Recipient User ID</li>
                     <li>Message ID (UUID)</li>
                     <li>Timestamp</li>
@@ -241,6 +241,18 @@
                     If your device is offline, messages queue on the server
                     until your next connection. If a message remains undelivered
                     for an extended period, it may be discarded.
+                </p>
+                <p>
+                    <strong>Stealth Mode (sealed sender):</strong> an opt-in
+                    setting under Settings → Security, off by default. When
+                    enabled, your device omits the Sender User ID from the
+                    envelope entirely and instead seals a signed sender
+                    certificate to the recipient's identity key — only the
+                    recipient can recover who sent the message; the server
+                    cannot. An optional Privacy Pass anonymous token can
+                    accompany sealed sends, but the server does not yet
+                    require one. Stealth Mode does not hide message timing,
+                    size, or your IP address from the network layer.
                 </p>
 
                 <h3>2.4 Contact Relationships</h3>

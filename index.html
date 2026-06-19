@@ -215,7 +215,9 @@
                             is blind to message <strong>content</strong>: it
                             stores only public keys and encrypted ciphertext,
                             never plaintext. Sender-side metadata minimisation
-                            (sealed sender) is a planned addition. A future
+                            (sealed sender) already exists as an opt-in
+                            <strong>Stealth Mode</strong> — off by default. A
+                            future
                             release will also support
                             <strong>direct peer-to-peer delivery</strong> when
                             both parties are online, removing the server from
@@ -235,9 +237,11 @@
                             <strong>содержимого</strong> сообщений: хранит
                             только публичные ключи и минимальное количество
                             метаданных, врде username или состава групп в виде
-                            необратимого хэша, никогда не plaintext. В дальйшем
-                            планируется минимизация метаданных со стороны
-                            отправителя (sealed sender). Будущий релиз также
+                            необратимого хэша, никогда не plaintext.
+                            Минимизация метаданных со стороны отправителя
+                            (sealed sender) уже существует как opt-in
+                            <strong>Stealth Mode</strong> — выключен по
+                            умолчанию. Будущий релиз также
                             поддержит <strong>прямую P2P-доставку</strong>,
                             когда оба собеседника онлайн, убирая сервер из пути
                             данных.
@@ -371,21 +375,27 @@
                             <span class="en"
                                 ><strong>Server is blind to content:</strong>
                                 messages are stored only as ciphertext; the
-                                server cannot decrypt. Sender-side metadata
-                                minimisation (sealed sender) is on the roadmap,
-                                not yet deployed — today the server still sees
-                                routing metadata such as sender identifier and
-                                delivery timestamps.</span
+                                server cannot decrypt. By default the server
+                                still sees routing metadata (sender identifier,
+                                delivery timestamps). Sender-side metadata
+                                minimisation (sealed sender) is implemented as
+                                an opt-in <strong>Stealth Mode</strong> —
+                                off by default; the optional Privacy Pass
+                                anti-spam token layer on top of it is not yet
+                                server-enforced.</span
                             >
                             <span class="ru"
                                 ><strong>Сервер не видит содержимого:</strong>
                                 сообщения хранятся только в виде шифротекста;
-                                сервер не может расшифровать. Минимизация
-                                метаданных со стороны отправителя (sealed
-                                sender) — в планах, пока не развёрнута: сервер
-                                всё ещё видит маршрутные метаданные
+                                сервер не может расшифровать. По умолчанию
+                                сервер всё ещё видит маршрутные метаданные
                                 (идентификатор отправителя, временные метки
-                                доставки).</span
+                                доставки). Минимизация метаданных со стороны
+                                отправителя (sealed sender) реализована как
+                                opt-in <strong>Stealth Mode</strong> —
+                                выключен по умолчанию; опциональный слой
+                                анти-спам токенов Privacy Pass над ним пока не
+                                требуется сервером.</span
                             >
                         </li>
                         <li>
@@ -854,14 +864,16 @@
                                 WebRTC voice/video calls with E2EE signaling ·
                                 iOS TestFlight beta · VEIL anti-censorship
                                 (obfs4, WebTunnel) · veil-front implemented and
-                                validated on-device.</span
+                                validated on-device · Stealth Mode (opt-in
+                                sealed sender).</span
                             >
                             <span class="ru"
                                 ><strong>Сделано (H1 2026):</strong> транспорт
                                 gRPC/Protobuf · X3DH + Double Ratchet ·
                                 гибридный PQXDH с ML-KEM-768 (opt-in) · session
                                 healing · WebRTC голос/видео с E2EE-сигналингом
-                                · iOS TestFlight бета · VEIL anti-censorship
+                                · iOS TestFlight бета · Stealth Mode (opt-in
+                                sealed sender) · VEIL anti-censorship
                                 (obfs4, WebTunnel) · veil-front реализован и
                                 провалидирован на устройстве.</span
                             >
@@ -890,15 +902,17 @@
                         <li>
                             <span class="en"
                                 ><strong>Planned (2026 H2 – 2027):</strong>
-                                sealed sender (metadata minimisation) · desktop
+                                Privacy Pass token enforcement (anti-spam for
+                                Stealth Mode) · desktop
                                 applications for Windows, Linux ·
                                 federation protocol · community relay nodes ·
                                 direct P2P delivery · hybrid PQ signatures
                                 (ML-DSA-65) · formal verification (Kani).</span
                             >
                             <span class="ru"
-                                ><strong>Планы (H2 2026 – 2027):</strong> sealed
-                                sender (минимизация метаданных) ·
+                                ><strong>Планы (H2 2026 – 2027):</strong>
+                                enforcement Privacy Pass токенов (анти-спам для
+                                Stealth Mode) ·
                                 десктоп-приложения для Windows, Linux ·
                                 протокол федерации · community relay-ноды ·
                                 прямая P2P-доставка · гибридные постквантовые

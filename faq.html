@@ -693,22 +693,100 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                This is the harder part. The server objectively
-                                knows that device A and device B exchanged
-                                traffic. We don't claim to hide the contact
-                                graph from the server — that would be dishonest.
-                                VEIL partially obscures this at the network
-                                level, but full anonymity at the routing layer
-                                is a problem of a different order of magnitude.
+                                This is the harder part. By default, the
+                                server objectively knows that device A and
+                                device B exchanged traffic. We don't claim to
+                                hide the contact graph from the server by
+                                default — that would be dishonest. VEIL
+                                partially obscures this at the network level.
+                                For the sender side specifically, there's also
+                                an opt-in <strong>Stealth Mode</strong> — see
+                                the next question. Full anonymity at the
+                                routing layer (hiding from the recipient's
+                                side and from network-level IP/timing
+                                correlation too) is a problem of a different
+                                order of magnitude and isn't solved today.
                             </p>
                             <p class="ru">
-                                Это сложнее. Сервер объективно знает, что
-                                устройство A и устройство B обменивались
-                                трафиком. Мы не утверждаем, что скрываем граф
-                                контактов от сервера — это было бы ложью. VEIL
-                                частично скрывает это на сетевом уровне, но
-                                полная анонимность на уровне маршрутизации —
-                                задача другого порядка сложности.
+                                Это сложнее. По умолчанию сервер объективно
+                                знает, что устройство A и устройство B
+                                обменивались трафиком. Мы не утверждаем, что по
+                                умолчанию скрываем граф контактов от сервера —
+                                это было бы ложью. VEIL частично скрывает это
+                                на сетевом уровне. Для стороны отправителя
+                                отдельно есть opt-in <strong>Stealth
+                                Mode</strong> — см. следующий вопрос. Полная
+                                анонимность на уровне маршрутизации (скрытие и
+                                от получателя, и от корреляции IP/timing на
+                                сетевом уровне) — задача другого порядка
+                                сложности и сегодня не решена.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>
+                            <span class="en"
+                                >Can I hide my identity from the server when
+                                sending?</span
+                            >
+                            <span class="ru"
+                                >Можно ли скрыть свою личность от сервера при
+                                отправке?</span
+                            >
+                            <span class="faq-chevron" aria-hidden="true"
+                                >▸</span
+                            >
+                        </summary>
+                        <div class="faq-answer">
+                            <p class="en">
+                                Yes — it's called <strong>Stealth Mode</strong>
+                                (Settings → Security), off by default. When
+                                enabled, your device leaves the sender field
+                                out of the message envelope entirely and
+                                instead seals a signed sender certificate
+                                directly to the recipient's identity key. The
+                                recipient can still decrypt and verify who
+                                sent it; the server cannot. You can choose
+                                Stealth per conversation stream (one token per
+                                day, recommended) or per message (maximum
+                                unlinkability, more overhead).
+                            </p>
+                            <p class="en">
+                                Honest limits: Stealth Mode hides the sender
+                                <em>identity</em> from the server, not message
+                                timing, size, or your IP address — those are
+                                still visible at the network/transport level.
+                                An optional Privacy Pass anonymous token layer
+                                exists on top of it for anti-spam, but the
+                                server doesn't require one yet, so it isn't
+                                providing real protection until that's
+                                enforced.
+                            </p>
+                            <p class="ru">
+                                Да — это <strong>Stealth Mode</strong>
+                                (Настройки → Безопасность), выключен по
+                                умолчанию. Когда включён, устройство полностью
+                                убирает поле отправителя из конверта сообщения
+                                и вместо этого запечатывает подписанный
+                                сертификат отправителя прямо в адрес получателя
+                                его identity-ключом. Получатель всё равно может
+                                расшифровать и проверить, кто отправил; сервер
+                                — нет. Можно выбрать режим на поток (один токен
+                                в день, рекомендуется) или на каждое сообщение
+                                (максимальная анонимность, больше накладных
+                                расходов).
+                            </p>
+                            <p class="ru">
+                                Честные ограничения: Stealth Mode скрывает
+                                <em>личность</em> отправителя от сервера, но не
+                                время отправки, размер сообщения или твой
+                                IP-адрес — это всё ещё видно на
+                                сетевом/транспортном уровне. Опциональный слой
+                                анонимных токенов Privacy Pass существует
+                                поверх него для анти-спама, но сервер пока его
+                                не требует, так что реальной защиты он пока не
+                                даёт до включения enforcement.
                             </p>
                         </div>
                     </details>
