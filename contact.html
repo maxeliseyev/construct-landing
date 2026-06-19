@@ -25,14 +25,11 @@
                 <a href="#" class="button" id="openAppButton" onclick="openInApp(event)" aria-label="Open contact in Konstruct Messenger app">
                     Open in app
                 </a>
-                <a href="#" class="button secondary" id="openWebButton" onclick="openInWeb(event)" aria-label="Open contact in web version">
-                    Open in web version
-                </a>
             </nav>
-            
+
             <div class="loading" id="loading" aria-live="polite" aria-busy="true" hidden>
                 <div class="spinner" aria-label="Loading"></div>
-                <p style="margin-top: 12px; color: var(--muted);">Attempting to open app...</p>
+                <p style="margin-top: 12px; color: var(--fg-muted);">Attempting to open app...</p>
             </div>
             
             <div class="error" id="error" role="alert" aria-live="assertive" hidden></div>
@@ -68,7 +65,6 @@
             errorEl.hidden = false;
             errorEl.textContent = 'Error: User ID not specified';
             document.getElementById('openAppButton').style.display = 'none';
-            document.getElementById('openWebButton').style.display = 'none';
         }
         
         // Universal link for iOS
@@ -79,49 +75,34 @@
         
         function openInApp(event) {
             event.preventDefault();
-            
+
             const openAppBtn = document.getElementById('openAppButton');
             const loading = document.getElementById('loading');
             const error = document.getElementById('error');
-            
+
             openAppBtn.style.display = 'none';
             loading.hidden = false;
             error.hidden = true;
-            
+
             // Try universal link first (for iOS)
             // This will be handled by iOS if the app is installed
             window.location.href = universalLink;
-            
+
             // Fallback: try custom URL scheme
             setTimeout(() => {
                 window.location.href = appScheme;
             }, 500);
-            
-            // If still not opened after 2 seconds, show error
+
+            // If still not opened after 2 seconds, show error.
+            // Konstruct has no public App Store release yet — point to the
+            // TestFlight beta instead.
             setTimeout(() => {
                 loading.hidden = true;
                 error.hidden = false;
-                error.textContent = 'App is not installed. Please install Konstruct Messenger from the App Store.';
-                openAppButton.style.display = 'inline-block';
+                error.innerHTML = 'App not found. Konstruct Messenger is currently in beta — <a href="https://testflight.apple.com/join/NH3WssFh">join the TestFlight beta</a> to install it.';
+                openAppBtn.style.display = 'inline-block';
             }, 2000);
         }
-        
-        function openInWeb(event) {
-            event.preventDefault();
-            if (userId) {
-                const pwaUrl = 'https://web.konstruct.cc/contact?userId=' + encodeURIComponent(userId) + '&username=' + encodeURIComponent(username || '');
-                window.location.href = pwaUrl;
-            } else {
-                window.location.href = 'https://web.konstruct.cc';
-            }
-        }
-        
-        // Auto-redirect for PWA (optional - uncomment if needed)
-        // if (window.location.hostname === 'web.konstruct.cc') {
-        //     // If on web version, redirect to PWA with contact info
-        //     const pwaUrl = 'https://web.konstruct.cc/contact?userId=' + encodeURIComponent(userId) + '&username=' + encodeURIComponent(username || '');
-        //     window.location.href = pwaUrl;
-        // }
     </script>
 </body>
 </html>

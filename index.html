@@ -81,7 +81,7 @@
         </style>
     </head>
 
-    <body>
+    <body class="landing">
         <header>
             <div class="container">
                 <div
@@ -425,14 +425,21 @@
                                 secondary transport with 0-RTT resumption and
                                 multiplexed streams for lossy networks.
                                 Currently disabled on iOS pending upstream
-                                fixes; enabled on macOS / desktop.</span
+                                fixes; macOS/desktop rollout is paused while
+                                the desktop client moves to the same direct
+                                crypto path as iOS — not in the live transport
+                                path on any platform today.</span
                             >
                             <span class="ru"
                                 ><strong>QUIC-движок (ConstructEngine):</strong>
                                 вторичный транспорт с 0-RTT и
                                 мультиплексированием потоков для нестабильных
                                 сетей. На iOS сейчас отключён до апстрим-фиксов;
-                                включён на macOS / десктопе.</span
+                                раскатка на macOS/десктоп приостановлена, пока
+                                десктоп-клиент переходит на тот же
+                                direct-крипто-путь, что и iOS — сегодня не
+                                задействован в боевом транспорте ни на одной
+                                платформе.</span
                             >
                         </li>
                         <li>
@@ -440,19 +447,26 @@
                                 ><strong>VEIL (anti-censorship):</strong>
                                 traffic obfuscation when direct TLS is throttled
                                 or blocked. Today: obfs4 + WebTunnel pluggable
-                                transports. Under active development:
+                                transports, currently throttled by active DPI in
+                                some regions.
                                 <em>veil-front</em>, an honest-front HTTPS layer
                                 that makes tunnelled traffic indistinguishable
-                                from a real public web service.</span
+                                from a real public web service, is implemented
+                                and validated on real devices with provisioned
+                                tickets; public rollout is in progress.</span
                             >
                             <span class="ru"
                                 ><strong>VEIL (защита от цензуры):</strong>
                                 обфускация трафика когда прямой TLS режется или
                                 блокируется. Сегодня: obfs4 + WebTunnel
-                                pluggable transports. В активной разработке:
+                                pluggable transports, сейчас режутся активным DPI
+                                в ряде регионов.
                                 <em>veil-front</em> — honest-front HTTPS слой,
                                 который делает туннельный трафик неотличимым от
-                                настоящего публичного web-сервиса.</span
+                                настоящего публичного web-сервиса — реализован и
+                                провалидирован на реальных устройствах с
+                                выданными тикетами; публичная раскатка в
+                                процессе.</span
                             >
                         </li>
                     </ul>
@@ -839,8 +853,8 @@
                                 with ML-KEM-768 (opt-in) · session healing ·
                                 WebRTC voice/video calls with E2EE signaling ·
                                 iOS TestFlight beta · VEIL anti-censorship
-                                (obfs4, WebTunnel) · QUIC secondary transport on
-                                macOS/desktop.</span
+                                (obfs4, WebTunnel) · veil-front implemented and
+                                validated on-device.</span
                             >
                             <span class="ru"
                                 ><strong>Сделано (H1 2026):</strong> транспорт
@@ -848,33 +862,36 @@
                                 гибридный PQXDH с ML-KEM-768 (opt-in) · session
                                 healing · WebRTC голос/видео с E2EE-сигналингом
                                 · iOS TestFlight бета · VEIL anti-censorship
-                                (obfs4, WebTunnel) · QUIC вторичный транспорт на
-                                macOS / десктопе.</span
+                                (obfs4, WebTunnel) · veil-front реализован и
+                                провалидирован на устройстве.</span
                             >
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>In progress:</strong> veil-front
-                                honest-front transport · Android client
-                                (currently Phase 0 — Rust core builds, Kotlin
-                                wrapper TBD) · BIP39 / SLIP-39 social recovery ·
-                                MLS group chats (RFC 9420) · first external
-                                security audit.</span
+                                ><strong>In progress:</strong> veil-front public
+                                ticket rollout · macOS Desktop client (iOS-direct
+                                crypto path, no public build yet) · Android
+                                client (currently Phase 0 — Rust core builds,
+                                Kotlin wrapper TBD) · BIP39 / SLIP-39 social
+                                recovery · MLS group chats (RFC 9420) · first
+                                external security audit.</span
                             >
                             <span class="ru"
-                                ><strong>В работе:</strong> veil-front
-                                honest-front транспорт · Android-клиент (сейчас
-                                Phase 0 — Rust core собирается, Kotlin-обёртка в
-                                работе) · BIP39 / SLIP-39 социальное
-                                восстановление · MLS групповые чаты (RFC 9420) ·
-                                первый внешний security-аудит.</span
+                                ><strong>В работе:</strong> публичная раскатка
+                                тикетов veil-front · macOS Desktop-клиент
+                                (iOS-direct крипто-путь, публичной сборки пока
+                                нет) · Android-клиент (сейчас Phase 0 — Rust core
+                                собирается, Kotlin-обёртка в работе) · BIP39 /
+                                SLIP-39 социальное восстановление · MLS
+                                групповые чаты (RFC 9420) · первый внешний
+                                security-аудит.</span
                             >
                         </li>
                         <li>
                             <span class="en"
                                 ><strong>Planned (2026 H2 – 2027):</strong>
                                 sealed sender (metadata minimisation) · desktop
-                                applications (macOS, Windows, Linux) ·
+                                applications for Windows, Linux ·
                                 federation protocol · community relay nodes ·
                                 direct P2P delivery · hybrid PQ signatures
                                 (ML-DSA-65) · formal verification (Kani).</span
@@ -882,7 +899,7 @@
                             <span class="ru"
                                 ><strong>Планы (H2 2026 – 2027):</strong> sealed
                                 sender (минимизация метаданных) ·
-                                десктоп-приложения (macOS, Windows, Linux) ·
+                                десктоп-приложения для Windows, Linux ·
                                 протокол федерации · community relay-ноды ·
                                 прямая P2P-доставка · гибридные постквантовые
                                 подписи (ML-DSA-65) · формальная верификация
@@ -896,26 +913,30 @@
                             via TestFlight only (<a
                                 href="https://testflight.apple.com/join/NH3WssFh"
                                 >join the beta</a
-                            >); no public App Store release yet. Single trusted
-                            server (no federation). VEIL obfs4 transport is
-                            deployed but currently throttled by active DPI in
-                            some regions — veil-front replacement is the active
-                            research effort. Not recommended for adversarial
-                            threat models until first external audit
-                            completes.</span
+                            >); no public App Store release yet. macOS Desktop
+                            client is in active development, no build available
+                            yet. Single trusted server (no federation). VEIL
+                            obfs4 transport is deployed but currently throttled
+                            by active DPI in some regions; the veil-front
+                            replacement is implemented and validated on-device,
+                            with public ticket rollout in progress. Not
+                            recommended for adversarial threat models until
+                            first external audit completes.</span
                         >
                         <span class="ru"
                             ><strong>Честный текущий статус:</strong> alpha. iOS
                             только через TestFlight (<a
                                 href="https://testflight.apple.com/join/NH3WssFh"
                                 >присоединиться к бете</a
-                            >); публичного релиза в App Store пока нет. Один
-                            доверенный сервер (без федерации). VEIL
-                            obfs4-транспорт развёрнут, но сейчас режется
-                            активным DPI в ряде регионов — замена veil-front в
-                            активной разработке. Не рекомендуется для
-                            adversarial-угроз до завершения первого внешнего
-                            аудита.</span
+                            >); публичного релиза в App Store пока нет.
+                            macOS Desktop-клиент в активной разработке,
+                            сборки пока нет. Один доверенный сервер (без
+                            федерации). VEIL obfs4-транспорт развёрнут, но
+                            сейчас режется активным DPI в ряде регионов; замена
+                            veil-front реализована и провалидирована на
+                            устройстве, публичная раскатка тикетов в процессе.
+                            Не рекомендуется для adversarial-угроз до
+                            завершения первого внешнего аудита.</span
                         >
                     </p>
                 </div>

@@ -17,12 +17,6 @@
         />
         <link rel="preload" href="styles.css" as="style" />
         <link rel="stylesheet" href="styles.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-        />
 
         <style>
             /* ── Language visibility ─────────────────────────────────────── */
@@ -247,7 +241,7 @@
 
             .demo-card {
                 background: var(--bg-elevated);
-                border: 1px solid rgba(77, 158, 255, 0.3);
+                border: 1px solid rgba(0, 98, 255, 0.3);
                 border-radius: 12px;
                 padding: 2.5rem;
                 text-align: center;
@@ -703,7 +697,7 @@
                                 knows that device A and device B exchanged
                                 traffic. We don't claim to hide the contact
                                 graph from the server — that would be dishonest.
-                                ICE partially obscures this at the network
+                                VEIL partially obscures this at the network
                                 level, but full anonymity at the routing layer
                                 is a problem of a different order of magnitude.
                             </p>
@@ -711,7 +705,7 @@
                                 Это сложнее. Сервер объективно знает, что
                                 устройство A и устройство B обменивались
                                 трафиком. Мы не утверждаем, что скрываем граф
-                                контактов от сервера — это было бы ложью. ICE
+                                контактов от сервера — это было бы ложью. VEIL
                                 частично скрывает это на сетевом уровне, но
                                 полная анонимность на уровне маршрутизации —
                                 задача другого порядка сложности.
@@ -1024,12 +1018,23 @@
                                 can use a direct connection — it's faster. VEIL
                                 activates automatically or manually when a
                                 direct connection is unavailable or undesirable.
+                                Today VEIL's obfs4/WebTunnel transport is
+                                deployed but currently throttled by active DPI
+                                in some regions; a replacement —
+                                <em>veil-front</em> — is implemented and
+                                validated on real devices, with public rollout
+                                in progress.
                             </p>
                             <p class="ru">
                                 Это настраиваемо. В обычных условиях можно
                                 использовать прямое соединение — оно быстрее.
                                 VEIL включается автоматически или вручную когда
                                 прямое соединение недоступно или нежелательно.
+                                Сегодня транспорт VEIL на основе obfs4/WebTunnel
+                                развёрнут, но сейчас режется активным DPI в ряде
+                                регионов; замена — <em>veil-front</em> —
+                                реализована и провалидирована на реальных
+                                устройствах, публичная раскатка в процессе.
                             </p>
                         </div>
                     </details>

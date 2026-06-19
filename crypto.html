@@ -4,6 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Cryptography Demo — Konstruct</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
         <style>
             .demo-nav {
                 position: sticky;
@@ -17,9 +23,8 @@
                 background: rgba(10, 10, 11, 0.95);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08);
                 backdrop-filter: blur(12px);
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    sans-serif;
+                font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas,
+                    monospace;
                 margin: -20px -20px 20px;
             }
             .demo-nav a {
@@ -61,13 +66,13 @@
                 --ok: #86efac;
                 --warn: #fde68a;
                 --mono:
-                    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                    "Liberation Mono", "Courier New", monospace;
+                    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
+                    Monaco, Consolas, "Liberation Mono", "Courier New",
+                    monospace;
             }
             body {
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    sans-serif;
+                font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas,
+                    monospace;
                 max-width: 1100px;
                 margin: 0 auto;
                 padding: 20px;
@@ -864,6 +869,16 @@ Chain Key₂ → Message Key₂ → шифруем "Как дела?"
                                 отправителя.
                             </p>
                         </div>
+                        <div class="callout callout--warn">
+                            <p>
+                                <strong>Текущий статус:</strong> это часть
+                                дизайна Signal Protocol, который использует
+                                Конструкт. В самом Конструкте Sealed Sender
+                                пока в планах и не развёрнут — сегодня сервер
+                                всё ещё видит идентификатор отправителя как
+                                маршрутные метаданные.
+                            </p>
+                        </div>
                     </div>
                     <div class="section__demo">
                         <div class="grid">
@@ -1227,10 +1242,10 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
 │  Layer 3: X3DH (общий секрет для сессии)                    │
 │  → Использует IK, SPK, OTPK                                 │
 ├─────────────────────────────────────────────────────────────┤
-│  Layer 2: Sealed Sender (скрытый отправитель)               │
-│  → Сервер видит только получателя                           │
+│  Layer 2: Sealed Sender (план, пока не развёрнут)           │
+│  → Сервер не будет видеть отправителя                       │
 ├─────────────────────────────────────────────────────────────┤
-│  Layer 1: Транспорт (gRPC/WebRTC)                           │
+│  Layer 1: Транспорт (gRPC/HTTP2, QUIC, VEIL)                │
 │  → Доставка бинарных конвертов                              │
 └─────────────────────────────────────────────────────────────┘</code></pre>
                         <p><strong>Почему это безопасно?</strong></p>
@@ -1244,8 +1259,10 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                                 сообщения не расшифровать (PFS)
                             </li>
                             <li>
-                                Даже если следят за сервером — не знают, кто
-                                кому пишет (Sealed Sender)
+                                В будущем, со включением Sealed Sender — даже
+                                сервер не будет знать, кто кому пишет (пока
+                                сервер видит отправителя как маршрутные
+                                метаданные)
                             </li>
                             <li>
                                 Каждое сообщение шифруется уникальным ключом
@@ -1271,11 +1288,11 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                             </tr>
                             <tr>
                                 <td><strong>Сервер</strong></td>
-                                <td>Кому доставляет</td>
                                 <td>
-                                    Что в сообщениях, кто отправитель (с Sealed
-                                    Sender)
+                                    Кому доставляет, кто отправитель (Sealed
+                                    Sender пока не развёрнут)
                                 </td>
+                                <td>Что в сообщениях</td>
                             </tr>
                             <tr>
                                 <td><strong>Ева</strong></td>

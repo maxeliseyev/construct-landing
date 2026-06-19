@@ -43,7 +43,7 @@
 }
 
 .message {
-  color: var(--muted);
+  color: var(--fg-muted);
   margin-bottom: 32px;
   line-height: 1.6;
 }
