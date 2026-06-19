@@ -26,7 +26,7 @@
     "supports_streaming": true
   },
   "bundle_verification_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
-  "token_encryption_key": "BASE64_OF_DERIVED_X25519_PUB_HERE",
+  "token_encryption_key": "K1/DTucp4ajSTAxyeeC5T3VKpLzCk0GvX1CPKFX6Vlk=",
   "bundle_signing_key": "kDGyaafEFExKTdB7MJXl4xYf0pFnxEg7bZJh7BDP9LI=",
   "signature": "ed25519:siTs2Qe1bvWE8ly2l0naa44Ah_QykzSxtyONsaT3w6_qMlhJYrWl3vxA4S3VsctKdJPX2LnaaFN8ySCD27-WAw",
   "signed_at": "2026-06-17T08:26:14Z"
