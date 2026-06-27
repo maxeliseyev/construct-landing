@@ -207,7 +207,97 @@
                     </p>
                     <p>
                         <span class="en"
-                            >Konstruct uses the
+                            >Konstruct is built on cryptographic principles we
+                            treat as invariant:</span
+                        >
+                        <span class="ru"
+                            >Конструкт построен на криптографических принципах,
+                            которые мы считаем инвариантными:</span
+                        >
+                    </p>
+                    <p>
+                        <span class="en"
+                            ><strong>1. No safe backdoors.</strong>
+                            Any intentional weakening of encryption — regardless
+                            of pretext — creates a vulnerability that will be
+                            exploited by adversaries. E2EE must be absolute and
+                            verifiable.</span
+                        >
+                        <span class="ru"
+                            ><strong>1. Безопасных бэкдоров не существует.</strong>
+                            Любое намеренное ослабление шифрования — независимо
+                            от предлога — создаёт уязвимость, которая будет
+                            использована противником. Сквозное шифрование должно
+                            быть абсолютным и проверяемым.</span
+                        >
+                    </p>
+                    <p>
+                        <span class="en"
+                            ><strong>2. Privacy-by-default.</strong>
+                            The system must protect confidentiality without
+                            requiring user action or justification. Privacy is
+                            a property of the protocol, not a setting.</span
+                        >
+                        <span class="ru"
+                            ><strong>2. Приватность по умолчанию.</strong>
+                            Система обязана защищать конфиденциальность без
+                            действий со стороны пользователя. Приватность —
+                            свойство протокола, а не настройка.</span
+                        >
+                    </p>
+                    <p>
+                        <span class="en"
+                            ><strong>3. Server-blind architecture.</strong>
+                            The server must be technically incapable of reading
+                            content, resolving group membership, or exposing
+                            decryptable metadata. Trusting the operator is not
+                            a substitute for cryptographic guarantees.</span
+                        >
+                        <span class="ru"
+                            ><strong>3. Server-blind архитектура.</strong>
+                            Сервер не должен иметь технической возможности
+                            читать контент, определять состав групп или
+                            раскрывать расшифруемые метаданные. Доверие к
+                            оператору — не замена криптографическим
+                            гарантиям.</span
+                        >
+                    </p>
+                    <p>
+                        <span class="en"
+                            ><strong>4. Decentralisation by design.</strong>
+                            Centralised platforms present a single point of
+                            legal and technical pressure. Federated and P2P
+                            topologies distribute trust and eliminate
+                            censurability at the protocol level.</span
+                        >
+                        <span class="ru"
+                            ><strong>4. Децентрализация в дизайне.</strong>
+                            Централизованные платформы — единая точка
+                            юридического и технического давления. Федеративные
+                            и P2P-топологии распределяют доверие и устраняют
+                            подверженность цензуре на уровне протокола.</span
+                        >
+                    </p>
+                    <p>
+                        <span class="en"
+                            ><strong>5. Post-quantum readiness.</strong>
+                            "Capture now, decrypt later" is an active threat
+                            model. Hybrid post-quantum key exchange must be
+                            integrated today to protect data against future
+                            cryptanalytic breakthroughs.</span
+                        >
+                        <span class="ru"
+                            ><strong>5. Постквантовая готовность.</strong>
+                            «Перехвати сейчас — расшифруй потом» — актуальная
+                            модель угрозы. Гибридный постквантовый обмен
+                            ключами должен быть встроен сегодня для защиты
+                            данных от будущих криптоаналитических
+                            прорывов.</span
+                        >
+                    </p>
+                    <p>
+                        <span class="en"
+                            >Konstruct implements these principles using the
                             <strong>Signal Protocol</strong> design (X3DH
                             handshake + Double Ratchet) — the same end-to-end
                             encryption design that powers Signal and WhatsApp —
@@ -220,7 +310,7 @@
                             exist.</span
                         >
                         <span class="ru"
-                            >Конструкт использует
+                            >Конструкт реализует эти принципы через
                             <strong>Signal Protocol</strong>
                             (X3DH + Double Ratchet) — тот же дизайн сквозного
                             шифрования, что применяют Signal и WhatsApp — с
@@ -262,7 +352,7 @@
                             Сервер не видит
                             <strong>содержимого</strong> сообщений: хранит
                             только публичные ключи и минимальное количество
-                            метаданных, врде username или состава групп в виде
+                            метаданных, вроде username или состава групп в виде
                             необратимого хэша, никогда не plaintext.
                             Минимизация метаданных со стороны отправителя
                             (sealed sender) уже существует как opt-in
