@@ -1,0 +1,376 @@
+/* Cyberpunk / CRT effects — scoped to .landing (index.html) */
+
+:root {
+  --neon-cyan: #00fff9;
+  --neon-magenta: #ff00c1;
+  --neon-green: #39ff14;
+  --crt-scanline: rgba(0, 0, 0, 0.18);
+  --crt-glow: rgba(0, 255, 249, 0.08);
+}
+
+/* ── CRT overlay: scanlines + vignette + noise ── */
+body.landing::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 55%,
+      rgba(0, 0, 0, 0.45) 100%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      var(--crt-scanline) 2px,
+      var(--crt-scanline) 3px
+    );
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+}
+
+body.landing .crt-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: crt-noise-shift 0.35s steps(3) infinite;
+}
+
+@keyframes crt-noise-shift {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-2px, 1px); }
+  66% { transform: translate(1px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ── HUD status bar ── */
+.hud-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  border: 1px solid var(--border);
+  background: rgba(17, 17, 17, 0.85);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+  position: relative;
+}
+
+.hud-bar::before,
+.hud-bar::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: var(--neon-cyan);
+  border-style: solid;
+  opacity: 0.6;
+}
+
+.hud-bar::before {
+  top: 3px;
+  left: 3px;
+  border-width: 1px 0 0 1px;
+}
+
+.hud-bar::after {
+  bottom: 3px;
+  right: 3px;
+  border-width: 0 1px 1px 0;
+}
+
+.hud-bar__left,
+.hud-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hud-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hud-indicator::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-green);
+  box-shadow: 0 0 6px var(--neon-green);
+  animation: hud-pulse 2.4s ease-in-out infinite;
+}
+
+.hud-indicator--warn::before {
+  background: var(--warning);
+  box-shadow: 0 0 6px var(--warning);
+}
+
+.hud-indicator--accent::before {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan);
+}
+
+@keyframes hud-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ── Glitch hero title ── */
+.landing header h1 {
+  position: relative;
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: var(--fg);
+  text-shadow:
+    0 0 20px var(--crt-glow),
+    0 0 40px rgba(0, 98, 255, 0.15);
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--neon-magenta);
+  clip-path: inset(0 0 65% 0);
+  animation: glitch-rgb-a 4.5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: 2px 0 var(--neon-cyan);
+  clip-path: inset(35% 0 0 0);
+  animation: glitch-rgb-b 3.8s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-rgb-a {
+  0%, 92%, 100% {
+    transform: translate(0);
+    opacity: 0.85;
+  }
+  93% {
+    transform: translate(-4px, 1px);
+    opacity: 1;
+  }
+  94% {
+    transform: translate(3px, -1px);
+  }
+  95% {
+    transform: translate(-2px, 0);
+  }
+}
+
+@keyframes glitch-rgb-b {
+  0%, 90%, 100% {
+    transform: translate(0);
+    opacity: 0.85;
+  }
+  91% {
+    transform: translate(4px, -1px);
+    opacity: 1;
+  }
+  92% {
+    transform: translate(-3px, 1px);
+  }
+  93% {
+    transform: translate(2px, 0);
+  }
+}
+
+.glitch-text:hover {
+  animation: glitch-skew 0.35s steps(2) 1;
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  25% { transform: skew(-2deg) translateX(-2px); }
+  50% { transform: skew(1deg) translateX(3px); }
+  75% { transform: skew(-1deg); }
+  100% { transform: skew(0deg); }
+}
+
+/* ── Section headings: subtle terminal flicker ── */
+.landing h2 {
+  text-shadow: 0 0 12px rgba(0, 255, 249, 0.06);
+}
+
+.landing h2.in-view {
+  animation: heading-flicker 0.15s steps(2) 1;
+}
+
+@keyframes heading-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; text-shadow: 0 0 16px rgba(255, 0, 193, 0.12); }
+}
+
+/* ── HUD badges (chamfered corners + neon edge) ── */
+.landing .badge {
+  border-radius: 0;
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+  position: relative;
+  border-color: var(--border);
+  box-shadow: inset 0 0 0 1px rgba(0, 255, 249, 0);
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.landing .badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.landing .badge:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  background: rgba(0, 255, 249, 0.06);
+  box-shadow:
+    0 0 12px rgba(0, 255, 249, 0.15),
+    inset 0 0 20px rgba(0, 255, 249, 0.04);
+}
+
+.landing .badge:hover::before {
+  border-color: var(--neon-magenta);
+}
+
+/* ── Lang switcher HUD treatment ── */
+.landing .lang-switcher button {
+  border-radius: 0;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+
+.landing .lang-switcher button:hover,
+.landing .lang-switcher button.active {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 255, 249, 0.2);
+}
+
+/* ── Table: scanline sweep on Konstruct row ── */
+.landing tbody tr:last-child {
+  position: relative;
+  background: rgba(0, 98, 255, 0.04);
+}
+
+.landing tbody tr:last-child th strong {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 255, 249, 0.35);
+}
+
+.landing tbody tr:hover {
+  background: rgba(0, 255, 249, 0.05);
+}
+
+/* ── Links: neon underline bloom ── */
+.landing main a:not(.badge):hover {
+  text-shadow: 0 0 8px rgba(0, 255, 249, 0.35);
+}
+
+/* ── Mission panel: CRT bezel ── */
+.landing section[aria-labelledby="about-heading"] {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 16px) 0,
+    100% 16px,
+    100% 100%,
+    16px 100%,
+    0 calc(100% - 16px)
+  );
+  box-shadow:
+    inset 0 0 60px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 255, 249, 0.08);
+}
+
+/* ── Corrupted text (JS-driven) ── */
+.corrupt-target {
+  display: inline-block;
+}
+
+.corrupt-target.is-scrambling {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 6px rgba(255, 0, 193, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.landing::after,
+  body.landing .crt-noise {
+    animation: none;
+    opacity: 0.35;
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .glitch-text:hover {
+    animation: none;
+  }
+
+  .hud-indicator::before {
+    animation: none;
+  }
+
+  .landing h2.in-view {
+    animation: none;
+  }
+}
+
+@media print {
+  body.landing::after,
+  body.landing .crt-noise,
+  .hud-bar {
+    display: none !important;
+  }
+}

@@ -73,6 +73,7 @@
         <!-- Preload critical CSS -->
         <link rel="preload" href="styles.css" as="style" />
         <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="effects.css" />
         <style>
             html[data-lang="en"] .ru,
             html[data-lang="ru"] .en {
@@ -82,8 +83,29 @@
     </head>
 
     <body class="landing">
+        <div class="crt-noise" aria-hidden="true"></div>
+
         <header>
             <div class="container">
+                <div class="hud-bar" aria-hidden="true">
+                    <div class="hud-bar__left">
+                        <span class="hud-indicator">
+                            <span class="en">SYS::ONLINE</span
+                            ><span class="ru">SYS::ONLINE</span>
+                        </span>
+                        <span class="hud-indicator hud-indicator--accent">
+                            <span class="en">E2EE::ACTIVE</span
+                            ><span class="ru">E2EE::ACTIVE</span>
+                        </span>
+                    </div>
+                    <div class="hud-bar__right">
+                        <span class="hud-indicator hud-indicator--warn">
+                            <span class="en">ALPHA BUILD</span
+                            ><span class="ru">ALPHA BUILD</span>
+                        </span>
+                        <span>PQ::ML-KEM-768</span>
+                    </div>
+                </div>
                 <div
                     style="
                         display: flex;
@@ -101,7 +123,11 @@
                         </button>
                     </div>
                 </div>
-                <h1>Konstruct</h1>
+                <h1>
+                    <span class="glitch-text" data-text="Konstruct"
+                        >Konstruct</span
+                    >
+                </h1>
                 <p>
                     <span class="en"
                         >Privacy is a fundamental human right, not a luxury
@@ -1142,6 +1168,7 @@
             }
         </script>
 
+        <script src="effects.js" defer></script>
         <script>
             function setLang(lang) {
                 document.documentElement.setAttribute("data-lang", lang);
