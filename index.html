@@ -1015,25 +1015,104 @@
                                 security-аудит.</span
                             >
                         </li>
+                    </ul>
+
+                    <h3>
+                        <span class="en">Decentralization Roadmap</span
+                        ><span class="ru">Дорожная карта децентрализации</span>
+                    </h3>
+                    <ul>
                         <li>
                             <span class="en"
-                                ><strong>Planned (2026 H2 – 2027):</strong>
-                                Privacy Pass token enforcement (anti-spam for
-                                Stealth Mode) · desktop
-                                applications for Windows, Linux ·
-                                federation protocol · community relay nodes ·
-                                direct P2P delivery · hybrid PQ signatures
+                                ><strong>Phase 1 — Core Relay (H2 2026):</strong>
+                                standalone
+                                <code>construct-relay</code> binary deployable on
+                                a \$5 VPS or Raspberry Pi · single Docker
+                                container, no Kafka/Redis/PostgreSQL required ·
+                                preserves all E2EE guarantees · federation
+                                gateway for backward compatibility.</span
+                            >
+                            <span class="ru"
+                                ><strong>Фаза 1 — Core Relay (H2 2026):</strong>
+                                отдельный бинарник
+                                <code>construct-relay</code>, запускаемый на \$5
+                                VPS или Raspberry Pi · один Docker-контейнер без
+                                Kafka/Redis/PostgreSQL · все E2EE-гарантии
+                                сохранены · федеративный шлюз для обратной
+                                совместимости.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="en"
+                                ><strong>Phase 2 — DHT &amp; Discovery
+                                (2027):</strong>
+                                Kademlia DHT overlay for peer discovery and
+                                responsible-node routing · signed user records
+                                in DHT · offline message storage with
+                                replication · bootstrap node network.</span
+                            >
+                            <span class="ru"
+                                ><strong>Фаза 2 — DHT и Discovery
+                                (2027):</strong>
+                                оверлей Kademlia DHT для поиска узлов и
+                                маршрутизации · подписанные записи
+                                пользователей в DHT · хранение оффлайн-сообщений
+                                с репликацией · сеть bootstrap-нод.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="en"
+                                ><strong>Phase 3 — Hybrid Routing &amp; P2P
+                                (2027):</strong>
+                                direct peer-to-peer delivery via libp2p
+                                hole-punching · automatic fallback to relay
+                                routing · online presence in DHT · client
+                                multi-relay support.</span
+                            >
+                            <span class="ru"
+                                ><strong>Фаза 3 — Гибридный роутинг и P2P
+                                (2027):</strong>
+                                прямая P2P-доставка через libp2p hole-punching ·
+                                автоматический fallback на релейный роутинг ·
+                                онлайн-присутствие в DHT · поддержка нескольких
+                                релеев на клиенте.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="en"
+                                ><strong>Phase 4 — Ecosystem (2027–2028):</strong>
+                                public seed nodes · spam resistance (RLN /
+                                proof-of-work) · MLS group chats over
+                                decentralised transport · reputation for relay
+                                operators · external security audit.</span
+                            >
+                            <span class="ru"
+                                ><strong>Фаза 4 — Экосистема (2027–2028):</strong>
+                                публичные seed-ноды · защита от спама (RLN /
+                                proof-of-work) · групповые MLS-чаты поверх
+                                децентрализованного транспорта · репутация
+                                операторов релеев · внешний security-аудит.</span
+                            >
+                        </li>
+                    </ul>
+
+                    <h3>
+                        <span class="en">Other Planned Work</span
+                        ><span class="ru">Прочие планы</span>
+                    </h3>
+                    <ul>
+                        <li>
+                            <span class="en"
+                                >Privacy Pass token enforcement (anti-spam for
+                                Stealth Mode) · desktop applications for
+                                Windows, Linux · hybrid PQ signatures
                                 (ML-DSA-65) · formal verification (Kani).</span
                             >
                             <span class="ru"
-                                ><strong>Планы (H2 2026 – 2027):</strong>
-                                enforcement Privacy Pass токенов (анти-спам для
-                                Stealth Mode) ·
-                                десктоп-приложения для Windows, Linux ·
-                                протокол федерации · community relay-ноды ·
-                                прямая P2P-доставка · гибридные постквантовые
-                                подписи (ML-DSA-65) · формальная верификация
-                                (Kani).</span
+                                >Enforcement Privacy Pass токенов (анти-спам для
+                                Stealth Mode) · десктоп-приложения для Windows,
+                                Linux · гибридные постквантовые подписи
+                                (ML-DSA-65) · формальная верификация (Kani).</span
                             >
                         </li>
                     </ul>
