@@ -104,6 +104,8 @@
                             ><span class="ru">ALPHA BUILD</span>
                         </span>
                         <span>PQ::ML-KEM-768</span>
+                        <span class="hud-readout" id="hudUptime">T+00:00:00</span>
+                        <span class="hud-readout hud-readout--id" id="hudSessionId">0x0000</span>
                     </div>
                 </div>
                 <div
@@ -460,15 +462,20 @@
                                 ><strong
                                     >Authentication signatures: Ed25519</strong
                                 >
-                                today. <strong>ML-DSA-65</strong> (Dilithium-3,
-                                NIST FIPS&nbsp;204) is planned for hybrid
-                                signatures — not yet implemented.</span
+                                today. Hybrid <strong>ML-DSA-65</strong>
+                                (Dilithium-3, NIST FIPS&nbsp;204) signing and
+                                verification are implemented and
+                                cross-verified between client and server;
+                                client-side key rotation orchestration is
+                                still in progress.</span
                             >
                             <span class="ru"
                                 ><strong>Подписи: Ed25519</strong> сегодня.
-                                <strong>ML-DSA-65</strong> (Dilithium-3, NIST
-                                FIPS&nbsp;204) запланирован для гибридных
-                                подписей — пока не реализован.</span
+                                Гибридные <strong>ML-DSA-65</strong>
+                                (Dilithium-3, NIST FIPS&nbsp;204) подпись и
+                                верификация реализованы и кросс-верифицированы
+                                между клиентом и сервером; оркестрация ротации
+                                ключей на клиенте ещё в работе.</span
                             >
                         </li>
                         <li>
@@ -820,8 +827,10 @@
                                 † Session V1 protocol uses static long-term keys
                                 — no forward secrecy or PCS.<br />
                                 ‡ Konstruct's PQ KEM (ML-KEM-768) is opt-in and
-                                deployed; PQ signatures (ML-DSA-65) are planned,
-                                not yet implemented.</span
+                                deployed; PQ signatures (ML-DSA-65) have
+                                working crypto and server-side verification —
+                                client rotation orchestration is still in
+                                progress.</span
                             >
                             <span class="ru"
                                 >* E2EE в Telegram только в «Секретных чатах»,
@@ -830,8 +839,9 @@
                                 ключи — без forward secrecy и PCS.<br />
                                 ‡ Постквантовый KEM Конструкта (ML-KEM-768) —
                                 opt-in и развёрнут; постквантовые подписи
-                                (ML-DSA-65) запланированы, пока не
-                                реализованы.</span
+                                (ML-DSA-65) — криптография и серверная
+                                верификация готовы, оркестрация ротации на
+                                клиенте ещё в работе.</span
                             >
                         </p>
                     </div>
@@ -1003,8 +1013,11 @@
                                 Kotlin wrapper TBD) · BIP39 / SLIP-39 social
                                 recovery · MLS group chats (RFC 9420) · first
                                 external security audit · hybrid PQ signatures
-                                (ML-DSA-65) — crypto core implemented, server
-                                wire-up pending.</span
+                                (ML-DSA-65) — crypto core and server storage
+                                /verification implemented, client-side
+                                orchestration (identity generation, key
+                                rotation) not yet wired into the shared
+                                core.</span
                             >
                             <span class="ru"
                                 ><strong>В работе:</strong> публичная раскатка
@@ -1015,8 +1028,10 @@
                                 SLIP-39 социальное восстановление · MLS
                                 групповые чаты (RFC 9420) · первый внешний
                                 security-аудит · гибридные PQ-подписи
-                                (ML-DSA-65) — crypto core реализован, ожидает
-                                активации на проводе.</span
+                                (ML-DSA-65) — crypto core и серверное
+                                хранение/верификация реализованы, оркестрация
+                                на клиенте (генерация identity, ротация
+                                ключей) в общем ядре ещё не реализована.</span
                             >
                         </li>
                     </ul>

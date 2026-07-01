@@ -67,6 +67,60 @@
   bindCorrupt(".landing .lang-switcher button");
   bindCorrupt(".landing main section:last-of-type a");
 
+  // ── Live uptime readout: real elapsed time since page load ──
+  var uptimeEl = document.getElementById("hudUptime");
+  if (uptimeEl) {
+    var startTime = performance.now();
+    var pad = function (n) {
+      return n < 10 ? "0" + n : "" + n;
+    };
+    window.setInterval(function () {
+      var elapsed = Math.floor((performance.now() - startTime) / 1000);
+      var h = Math.floor(elapsed / 3600);
+      var m = Math.floor((elapsed % 3600) / 60);
+      var s = elapsed % 60;
+      uptimeEl.textContent = "T+" + pad(h) + ":" + pad(m) + ":" + pad(s);
+    }, 1000);
+  }
+
+  // ── Rotating session id: cosmetic hex churn, reads like a live process/ghost id ──
+  var sessionIdEl = document.getElementById("hudSessionId");
+  if (sessionIdEl) {
+    var HEX = "0123456789ABCDEF";
+    var randomHex = function () {
+      var out = "0x";
+      for (var i = 0; i < 4; i++) {
+        out += HEX[(Math.random() * HEX.length) | 0];
+      }
+      return out;
+    };
+    sessionIdEl.textContent = randomHex();
+    window.setInterval(
+      function () {
+        sessionIdEl.textContent = randomHex();
+      },
+      reducedMotion ? 8000 : 4000,
+    );
+  }
+
+  // ── Ambient glitch burst: rare signal hiccup on the hero title, not a constant loop ──
+  var glitchTarget = document.querySelector(".landing header .glitch-text");
+  if (glitchTarget && !reducedMotion) {
+    var scheduleGlitchBurst = function () {
+      window.setTimeout(
+        function () {
+          glitchTarget.classList.add("is-glitching");
+          window.setTimeout(function () {
+            glitchTarget.classList.remove("is-glitching");
+          }, 500);
+          scheduleGlitchBurst();
+        },
+        8000 + Math.random() * 10000,
+      );
+    };
+    scheduleGlitchBurst();
+  }
+
   if (!reducedMotion && "IntersectionObserver" in window) {
     var headings = document.querySelectorAll(".landing main h2");
     var seen = new WeakSet();
