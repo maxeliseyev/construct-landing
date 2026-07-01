@@ -104,8 +104,14 @@
                             ><span class="ru">ALPHA BUILD</span>
                         </span>
                         <span>PQ::ML-KEM-768</span>
-                        <span class="hud-readout" id="hudUptime">T+00:00:00</span>
-                        <span class="hud-readout hud-readout--id" id="hudSessionId">0x0000</span>
+                        <span class="hud-readout" id="hudUptime"
+                            >T+00:00:00</span
+                        >
+                        <span
+                            class="hud-readout hud-readout--id"
+                            id="hudSessionId"
+                            >0x0000</span
+                        >
                     </div>
                 </div>
                 <div
@@ -219,14 +225,16 @@
                     </p>
                     <p>
                         <span class="en"
-                            ><strong>1. No safe backdoors.</strong>
-                            Any intentional weakening of encryption — regardless
-                            of pretext — creates a vulnerability that will be
+                            ><strong>1. No safe backdoors.</strong> Any
+                            intentional weakening of encryption — regardless of
+                            pretext — creates a vulnerability that will be
                             exploited by adversaries. E2EE must be absolute and
                             verifiable.</span
                         >
                         <span class="ru"
-                            ><strong>1. Безопасных бэкдоров не существует.</strong>
+                            ><strong
+                                >1. Безопасных бэкдоров не существует.</strong
+                            >
                             Любое намеренное ослабление шифрования — независимо
                             от предлога — создаёт уязвимость, которая будет
                             использована противником. Сквозное шифрование должно
@@ -235,10 +243,10 @@
                     </p>
                     <p>
                         <span class="en"
-                            ><strong>2. Privacy-by-default.</strong>
-                            The system must protect confidentiality without
-                            requiring user action or justification. Privacy is
-                            a property of the protocol, not a setting.</span
+                            ><strong>2. Privacy-by-default.</strong> The system
+                            must protect confidentiality without requiring user
+                            action or justification. Privacy is a property of
+                            the protocol, not a setting.</span
                         >
                         <span class="ru"
                             ><strong>2. Приватность по умолчанию.</strong>
@@ -249,11 +257,11 @@
                     </p>
                     <p>
                         <span class="en"
-                            ><strong>3. Server-blind architecture.</strong>
-                            The server must be technically incapable of reading
+                            ><strong>3. Server-blind architecture.</strong> The
+                            server must be technically incapable of reading
                             content, resolving group membership, or exposing
-                            decryptable metadata. Trusting the operator is not
-                            a substitute for cryptographic guarantees.</span
+                            decryptable metadata. Trusting the operator is not a
+                            substitute for cryptographic guarantees.</span
                         >
                         <span class="ru"
                             ><strong>3. Server-blind архитектура.</strong>
@@ -275,8 +283,8 @@
                         <span class="ru"
                             ><strong>4. Децентрализация в дизайне.</strong>
                             Централизованные платформы — единая точка
-                            юридического и технического давления. Федеративные
-                            и P2P-топологии распределяют доверие и устраняют
+                            юридического и технического давления. Федеративные и
+                            P2P-топологии распределяют доверие и устраняют
                             подверженность цензуре на уровне протокола.</span
                         >
                     </p>
@@ -291,10 +299,9 @@
                         <span class="ru"
                             ><strong>5. Постквантовая готовность.</strong>
                             «Перехвати сейчас — расшифруй потом» — актуальная
-                            модель угрозы. Гибридный постквантовый обмен
-                            ключами должен быть встроен сегодня для защиты
-                            данных от будущих криптоаналитических
-                            прорывов.</span
+                            модель угрозы. Гибридный постквантовый обмен ключами
+                            должен быть встроен сегодня для защиты данных от
+                            будущих криптоаналитических прорывов.</span
                         >
                     </p>
                     <p>
@@ -335,8 +342,7 @@
                             never plaintext. Sender-side metadata minimisation
                             (sealed sender) already exists as an opt-in
                             <strong>Stealth Mode</strong> — off by default. A
-                            future
-                            release will also support
+                            future release will also support
                             <strong>direct peer-to-peer delivery</strong> when
                             both parties are online, removing the server from
                             the data path entirely.
@@ -355,14 +361,13 @@
                             <strong>содержимого</strong> сообщений: хранит
                             только публичные ключи и минимальное количество
                             метаданных, вроде username или состава групп в виде
-                            необратимого хэша, никогда не plaintext.
-                            Минимизация метаданных со стороны отправителя
-                            (sealed sender) уже существует как opt-in
+                            необратимого хэша, никогда не plaintext. Минимизация
+                            метаданных со стороны отправителя (sealed sender)
+                            уже существует как opt-in
                             <strong>Stealth Mode</strong> — выключен по
-                            умолчанию. Будущий релиз также
-                            поддержит <strong>прямую P2P-доставку</strong>,
-                            когда оба собеседника онлайн, убирая сервер из пути
-                            данных.
+                            умолчанию. Будущий релиз также поддержит
+                            <strong>прямую P2P-доставку</strong>, когда оба
+                            собеседника онлайн, убирая сервер из пути данных.
                             <em
                                 >Федерация и P2P — часть дорожной карты на 2027
                                 год; сегодня сеть — один доверенный сервер.</em
@@ -462,20 +467,21 @@
                                 ><strong
                                     >Authentication signatures: Ed25519</strong
                                 >
-                                today. Hybrid <strong>ML-DSA-65</strong>
-                                (Dilithium-3, NIST FIPS&nbsp;204) signing and
-                                verification are implemented and
-                                cross-verified between client and server;
-                                client-side key rotation orchestration is
-                                still in progress.</span
+                                today. Hybrid
+                                <strong>ML-DSA-65</strong> (Dilithium-3, NIST
+                                FIPS&nbsp;204) signing and verification are
+                                implemented and cross-verified between client
+                                and server; client-side key rotation
+                                orchestration is still in progress.</span
                             >
                             <span class="ru"
                                 ><strong>Подписи: Ed25519</strong> сегодня.
-                                Гибридные <strong>ML-DSA-65</strong>
-                                (Dilithium-3, NIST FIPS&nbsp;204) подпись и
-                                верификация реализованы и кросс-верифицированы
-                                между клиентом и сервером; оркестрация ротации
-                                ключей на клиенте ещё в работе.</span
+                                Гибридные
+                                <strong>ML-DSA-65</strong> (Dilithium-3, NIST
+                                FIPS&nbsp;204) подпись и верификация реализованы
+                                и кросс-верифицированы между клиентом и
+                                сервером; оркестрация ротации ключей на клиенте
+                                ещё в работе.</span
                             >
                         </li>
                         <li>
@@ -502,9 +508,9 @@
                                 still sees routing metadata (sender identifier,
                                 delivery timestamps). Sender-side metadata
                                 minimisation (sealed sender) is implemented as
-                                an opt-in <strong>Stealth Mode</strong> —
-                                off by default; the optional Privacy Pass
-                                anti-spam token layer on top of it is not yet
+                                an opt-in <strong>Stealth Mode</strong> — off by
+                                default; the optional Privacy Pass anti-spam
+                                token layer on top of it is not yet
                                 server-enforced.</span
                             >
                             <span class="ru"
@@ -515,10 +521,10 @@
                                 (идентификатор отправителя, временные метки
                                 доставки). Минимизация метаданных со стороны
                                 отправителя (sealed sender) реализована как
-                                opt-in <strong>Stealth Mode</strong> —
-                                выключен по умолчанию; опциональный слой
-                                анти-спам токенов Privacy Pass над ним пока не
-                                требуется сервером.</span
+                                opt-in <strong>Stealth Mode</strong> — выключен
+                                по умолчанию; опциональный слой анти-спам
+                                токенов Privacy Pass над ним пока не требуется
+                                сервером.</span
                             >
                         </li>
                         <li>
@@ -558,10 +564,10 @@
                                 secondary transport with 0-RTT resumption and
                                 multiplexed streams for lossy networks.
                                 Currently disabled on iOS pending upstream
-                                fixes; macOS/desktop rollout is paused while
-                                the desktop client moves to the same direct
-                                crypto path as iOS — not in the live transport
-                                path on any platform today.</span
+                                fixes; macOS/desktop rollout is paused while the
+                                desktop client moves to the same direct crypto
+                                path as iOS — not in the live transport path on
+                                any platform today.</span
                             >
                             <span class="ru"
                                 ><strong>QUIC-движок (ConstructEngine):</strong>
@@ -592,8 +598,8 @@
                                 ><strong>VEIL (защита от цензуры):</strong>
                                 обфускация трафика когда прямой TLS режется или
                                 блокируется. Сегодня: obfs4 + WebTunnel
-                                pluggable transports, сейчас режутся активным DPI
-                                в ряде регионов.
+                                pluggable transports, сейчас режутся активным
+                                DPI в ряде регионов.
                                 <em>veil-front</em> — honest-front HTTPS слой,
                                 который делает туннельный трафик неотличимым от
                                 настоящего публичного web-сервиса — реализован и
@@ -827,9 +833,9 @@
                                 † Session V1 protocol uses static long-term keys
                                 — no forward secrecy or PCS.<br />
                                 ‡ Konstruct's PQ KEM (ML-KEM-768) is opt-in and
-                                deployed; PQ signatures (ML-DSA-65) have
-                                working crypto and server-side verification —
-                                client rotation orchestration is still in
+                                deployed; PQ signatures (ML-DSA-65) have working
+                                crypto and server-side verification — client
+                                rotation orchestration is still in
                                 progress.</span
                             >
                             <span class="ru"
@@ -999,22 +1005,22 @@
                                 гибридный PQXDH с ML-KEM-768 (opt-in) · session
                                 healing · WebRTC голос/видео с E2EE-сигналингом
                                 · iOS TestFlight бета · Stealth Mode (opt-in
-                                sealed sender) · VEIL anti-censorship
-                                (obfs4, WebTunnel) · veil-front реализован и
+                                sealed sender) · VEIL anti-censorship (obfs4,
+                                WebTunnel) · veil-front реализован и
                                 провалидирован на устройстве.</span
                             >
                         </li>
                         <li>
                             <span class="en"
                                 ><strong>In progress:</strong> veil-front public
-                                ticket rollout · macOS Desktop client (iOS-direct
-                                crypto path, no public build yet) · Android
-                                client (currently Phase 0 — Rust core builds,
-                                Kotlin wrapper TBD) · BIP39 / SLIP-39 social
-                                recovery · MLS group chats (RFC 9420) · first
-                                external security audit · hybrid PQ signatures
-                                (ML-DSA-65) — crypto core and server storage
-                                /verification implemented, client-side
+                                ticket rollout · macOS Desktop client
+                                (iOS-direct crypto path, no public build yet) ·
+                                Android client (currently Phase 0 — Rust core
+                                builds, Kotlin wrapper TBD) · BIP39 / SLIP-39
+                                social recovery · MLS group chats (RFC 9420) ·
+                                first external security audit · hybrid PQ
+                                signatures (ML-DSA-65) — crypto core and server
+                                storage /verification implemented, client-side
                                 orchestration (identity generation, key
                                 rotation) not yet wired into the shared
                                 core.</span
@@ -1023,15 +1029,15 @@
                                 ><strong>В работе:</strong> публичная раскатка
                                 тикетов veil-front · macOS Desktop-клиент
                                 (iOS-direct крипто-путь, публичной сборки пока
-                                нет) · Android-клиент (сейчас Phase 0 — Rust core
-                                собирается, Kotlin-обёртка в работе) · BIP39 /
-                                SLIP-39 социальное восстановление · MLS
+                                нет) · Android-клиент (сейчас Phase 0 — Rust
+                                core собирается, Kotlin-обёртка в работе) ·
+                                BIP39 / SLIP-39 социальное восстановление · MLS
                                 групповые чаты (RFC 9420) · первый внешний
                                 security-аудит · гибридные PQ-подписи
                                 (ML-DSA-65) — crypto core и серверное
-                                хранение/верификация реализованы, оркестрация
-                                на клиенте (генерация identity, ротация
-                                ключей) в общем ядре ещё не реализована.</span
+                                хранение/верификация реализованы, оркестрация на
+                                клиенте (генерация identity, ротация ключей) в
+                                общем ядре ещё не реализована.</span
                             >
                         </li>
                     </ul>
@@ -1043,10 +1049,12 @@
                     <ul>
                         <li>
                             <span class="en"
-                                ><strong>Phase 1 — Core Relay (H2 2026):</strong>
+                                ><strong
+                                    >Phase 1 — Core Relay (H2 2026):</strong
+                                >
                                 standalone
-                                <code>construct-relay</code> binary deployable on
-                                a \$5 VPS or Raspberry Pi · single Docker
+                                <code>construct-relay</code> binary deployable
+                                on a \$5 VPS or Raspberry Pi · single Docker
                                 container, no Kafka/Redis/PostgreSQL required ·
                                 preserves all E2EE guarantees · federation
                                 gateway for backward compatibility.</span
@@ -1063,34 +1071,41 @@
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>Phase 2 — DHT &amp; Discovery
-                                (2027):</strong>
+                                ><strong
+                                    >Phase 2 — DHT &amp; Discovery
+                                    (2027):</strong
+                                >
                                 Kademlia DHT overlay for peer discovery and
                                 responsible-node routing · signed user records
                                 in DHT · offline message storage with
                                 replication · bootstrap node network.</span
                             >
                             <span class="ru"
-                                ><strong>Фаза 2 — DHT и Discovery
-                                (2027):</strong>
+                                ><strong
+                                    >Фаза 2 — DHT и Discovery (2027):</strong
+                                >
                                 оверлей Kademlia DHT для поиска узлов и
-                                маршрутизации · подписанные записи
-                                пользователей в DHT · хранение оффлайн-сообщений
-                                с репликацией · сеть bootstrap-нод.</span
+                                маршрутизации · подписанные записи пользователей
+                                в DHT · хранение оффлайн-сообщений с репликацией
+                                · сеть bootstrap-нод.</span
                             >
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>Phase 3 — Hybrid Routing &amp; P2P
-                                (2027):</strong>
+                                ><strong
+                                    >Phase 3 — Hybrid Routing &amp; P2P
+                                    (2027):</strong
+                                >
                                 direct peer-to-peer delivery via libp2p
                                 hole-punching · automatic fallback to relay
                                 routing · online presence in DHT · client
                                 multi-relay support.</span
                             >
                             <span class="ru"
-                                ><strong>Фаза 3 — Гибридный роутинг и P2P
-                                (2027):</strong>
+                                ><strong
+                                    >Фаза 3 — Гибридный роутинг и P2P
+                                    (2027):</strong
+                                >
                                 прямая P2P-доставка через libp2p hole-punching ·
                                 автоматический fallback на релейный роутинг ·
                                 онлайн-присутствие в DHT · поддержка нескольких
@@ -1099,18 +1114,23 @@
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>Phase 4 — Ecosystem (2027–2028):</strong>
+                                ><strong
+                                    >Phase 4 — Ecosystem (2027–2028):</strong
+                                >
                                 public seed nodes · spam resistance (RLN /
                                 proof-of-work) · MLS group chats over
                                 decentralised transport · reputation for relay
                                 operators · external security audit.</span
                             >
                             <span class="ru"
-                                ><strong>Фаза 4 — Экосистема (2027–2028):</strong>
+                                ><strong
+                                    >Фаза 4 — Экосистема (2027–2028):</strong
+                                >
                                 публичные seed-ноды · защита от спама (RLN /
                                 proof-of-work) · групповые MLS-чаты поверх
                                 децентрализованного транспорта · репутация
-                                операторов релеев · внешний security-аудит.</span
+                                операторов релеев · внешний
+                                security-аудит.</span
                             >
                         </li>
                     </ul>
@@ -1124,7 +1144,8 @@
                             <span class="en"
                                 >Privacy Pass token enforcement (anti-spam for
                                 Stealth Mode) · desktop applications for
-                                Windows, Linux · formal verification (Kani).</span
+                                Windows, Linux · formal verification
+                                (Kani).</span
                             >
                             <span class="ru"
                                 >Enforcement Privacy Pass токенов (анти-спам для
@@ -1154,15 +1175,15 @@
                             только через TestFlight (<a
                                 href="https://testflight.apple.com/join/NH3WssFh"
                                 >присоединиться к бете</a
-                            >); публичного релиза в App Store пока нет.
-                            macOS Desktop-клиент в активной разработке,
-                            сборки пока нет. Один доверенный сервер (без
-                            федерации). VEIL obfs4-транспорт развёрнут, но
-                            сейчас режется активным DPI в ряде регионов; замена
-                            veil-front реализована и провалидирована на
-                            устройстве, публичная раскатка тикетов в процессе.
-                            Не рекомендуется для adversarial-угроз до
-                            завершения первого внешнего аудита.</span
+                            >); публичного релиза в App Store пока нет. macOS
+                            Desktop-клиент в активной разработке, сборки пока
+                            нет. Один доверенный сервер (без федерации). VEIL
+                            obfs4-транспорт развёрнут, но сейчас режется
+                            активным DPI в ряде регионов; замена veil-front
+                            реализована и провалидирована на устройстве,
+                            публичная раскатка тикетов в процессе. Не
+                            рекомендуется для adversarial-угроз до завершения
+                            первого внешнего аудита.</span
                         >
                     </p>
                 </div>
