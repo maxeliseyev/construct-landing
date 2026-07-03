@@ -23,7 +23,7 @@
     "signaling.SignalingService"
   ],
   "signaling_endpoint": "ams.konstruct.cc:443",
-  "signature": "ed25519:D01LYTGlcuEYtanMiROSwbTNzuXp1Oc4kVG4jPY5p-HyuTmSK-IFb4SSlGt1U1gsfO-tfNXwZuhfKXs_jEjRAQ",
+  "signature": "ed25519:R67uFIcknxJV0X5L5VVdwO1eriGwyHqiPYzj3IDcDP3xkSjFfu7nW5spn6QXhC5CnfJGOGUCERh-lkt-JgPgCQ"
   "signed_at": "2026-06-26T06:52:52Z",
   "token_encryption_key": "K1/DTucp4ajSTAxyeeC5T3VKpLzCk0GvX1CPKFX6Vlk=",
   "veil": {
