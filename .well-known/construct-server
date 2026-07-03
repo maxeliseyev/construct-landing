@@ -23,11 +23,11 @@
     "signaling.SignalingService"
   ],
   "signaling_endpoint": "ams.konstruct.cc:443",
-  "signature": "ed25519:R67uFIcknxJV0X5L5VVdwO1eriGwyHqiPYzj3IDcDP3xkSjFfu7nW5spn6QXhC5CnfJGOGUCERh-lkt-JgPgCQ"
   "signed_at": "2026-06-26T06:52:52Z",
   "token_encryption_key": "K1/DTucp4ajSTAxyeeC5T3VKpLzCk0GvX1CPKFX6Vlk=",
   "veil": {
     "primary": "veil.ams.konstruct.cc:443"
   },
-  "version": "1.0"
+  "version": "1.0",
+  "signature": "ed25519:7aWjxEFIg0sc6VeExGTT6SNUOB23MpNZcRriQnMZ2EpCDdHQlRx3oFrJ2lKqVommJ-zi1AV2nOjt7GHxxS3TBg"
 }
