@@ -27,7 +27,7 @@
   "signed_at": "2026-06-26T06:52:52Z",
   "token_encryption_key": "K1/DTucp4ajSTAxyeeC5T3VKpLzCk0GvX1CPKFX6Vlk=",
   "veil": {
-    "primary": "ice.konstruct.cc:443"
+    "primary": "veil.ams.konstruct.cc:443"
   },
   "version": "1.0"
 }
