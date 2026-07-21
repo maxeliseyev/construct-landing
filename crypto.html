@@ -677,17 +677,16 @@ Chain Key₂ → Message Key₂ → шифруем "Как дела?"
                         <div class="callout callout--note">
                             <p>
                                 <strong>Текущий статус:</strong> в Конструкте
-                                это реализовано как
-                                <strong>Stealth Mode</strong> (Настройки →
-                                Безопасность) — опциональный режим, выключенный
-                                по умолчанию. При включении сертификат
-                                отправителя запечатывается прямо identity-ключом
-                                получателя — получатель расшифровывает и
-                                проверяет, кто написал, сервер — нет. Без
-                                включённого Stealth Mode сервер по умолчанию
-                                видит идентификатор отправителя как маршрутные
-                                метаданные. Stealth Mode не скрывает время
-                                отправки, размер сообщения и IP — это всё ещё
+                                это <strong>always-on Stealth (sealed
+                                sender)</strong> для подходящего трафика — в
+                                production нет пользовательского
+                                переключателя. Сертификат отправителя
+                                запечатывается identity-ключом получателя;
+                                получатель расшифровывает и проверяет, кто
+                                написал, сервер — нет. Несколько control-путей
+                                (heartbeat’ы, multi-device, session control) по
+                                дизайну остаются identified. Stealth не скрывает
+                                время отправки, размер сообщения и IP — это
                                 видно на транспортном уровне.
                             </p>
                         </div>
@@ -1082,9 +1081,10 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                                         Layer 2: Sealed Sender
                                     </p>
                                     <p class="stack-layer__body">
-                                        Если включён
-                                        <strong>Stealth Mode</strong>, сервер не
-                                        видит, кто был отправителем.
+                                        С always-on
+                                        <strong>Stealth (sealed sender)</strong>
+                                        сервер не видит, кто был отправителем
+                                        (eligible traffic).
                                     </p>
                                 </div>
                                 <div class="stack-layer stack-layer--transport">
@@ -1115,10 +1115,9 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                                 сообщения не расшифровать (PFS)
                             </li>
                             <li>
-                                Со включённым Stealth Mode (sealed sender,
-                                opt-in) — даже сервер не знает, кто кому пишет
-                                (без него сервер по умолчанию видит отправителя
-                                как маршрутные метаданные)
+                                С always-on Stealth (sealed sender) сервер не
+                                знает, кто написал eligible-сообщение — только
+                                получатель, время и размер
                             </li>
                             <li>
                                 Каждое сообщение шифруется уникальным ключом
@@ -1145,12 +1144,13 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                             <tr>
                                 <td><strong>Сервер</strong></td>
                                 <td>
-                                    Кому доставляет, кто отправитель (если
-                                    Stealth Mode выключен — по умолчанию)
+                                    Кому доставляет; время и размер; кто
+                                    отправитель — только на excluded control
+                                    paths
                                 </td>
                                 <td>
-                                    Что в сообщениях; кто отправитель — если
-                                    Stealth Mode включён
+                                    Что в сообщениях; кто отправитель на
+                                    always-on sealed path
                                 </td>
                             </tr>
                             <tr>

@@ -693,32 +693,29 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                This is the harder part. By default, the
-                                server objectively knows that device A and
-                                device B exchanged traffic. We don't claim to
-                                hide the contact graph from the server by
-                                default — that would be dishonest. VEIL
-                                partially obscures this at the network level.
-                                For the sender side specifically, there's also
-                                an opt-in <strong>Stealth Mode</strong> — see
-                                the next question. Full anonymity at the
-                                routing layer (hiding from the recipient's
-                                side and from network-level IP/timing
-                                correlation too) is a problem of a different
-                                order of magnitude and isn't solved today.
+                                This is the harder part. The server can still
+                                observe that <em>someone</em> delivered
+                                ciphertext to device B (recipient, time, size).
+                                With always-on <strong>Stealth (sealed
+                                sender)</strong>, it does <em>not</em> learn who
+                                sent that ciphertext — see the next question.
+                                VEIL partially obscures the network path. Full
+                                anonymity at the routing layer (hiding from the
+                                recipient's side and from network-level
+                                IP/timing correlation too) is a problem of a
+                                different order of magnitude and isn't solved
+                                today.
                             </p>
                             <p class="ru">
-                                Это сложнее. По умолчанию сервер объективно
-                                знает, что устройство A и устройство B
-                                обменивались трафиком. Мы не утверждаем, что по
-                                умолчанию скрываем граф контактов от сервера —
-                                это было бы ложью. VEIL частично скрывает это
-                                на сетевом уровне. Для стороны отправителя
-                                отдельно есть opt-in <strong>Stealth
-                                Mode</strong> — см. следующий вопрос. Полная
-                                анонимность на уровне маршрутизации (скрытие и
-                                от получателя, и от корреляции IP/timing на
-                                сетевом уровне) — задача другого порядка
+                                Это сложнее. Сервер всё ещё может видеть, что
+                                <em>кто-то</em> доставил ciphertext на устройство
+                                B (получатель, время, размер). С always-on
+                                <strong>Stealth (sealed sender)</strong> он
+                                <em>не</em> узнаёт, кто отправил этот ciphertext
+                                — см. следующий вопрос. VEIL частично скрывает
+                                сетевой путь. Полная анонимность на уровне
+                                маршрутизации (скрытие и от получателя, и от
+                                корреляции IP/timing) — задача другого порядка
                                 сложности и сегодня не решена.
                             </p>
                         </div>
@@ -740,53 +737,49 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                Yes — it's called <strong>Stealth Mode</strong>
-                                (Settings → Security), off by default. When
-                                enabled, your device leaves the sender field
-                                out of the message envelope entirely and
-                                instead seals a signed sender certificate
-                                directly to the recipient's identity key. The
-                                recipient can still decrypt and verify who
-                                sent it; the server cannot. You can choose
-                                Stealth per conversation stream (one token per
-                                day, recommended) or per message (maximum
-                                unlinkability, more overhead).
+                                Yes — and it is <strong>always on</strong> for
+                                eligible traffic (user messages, receipts, call
+                                signaling, profile shares). There is no user
+                                toggle in production: the device leaves the
+                                sender field out of the envelope and seals a
+                                signed sender certificate to the recipient's
+                                identity key. The recipient decrypts and verifies
+                                who sent it; the server cannot. A few control
+                                paths (e.g. E2E heartbeats, multi-device sync,
+                                pure session control) stay identified by design.
                             </p>
                             <p class="en">
-                                Honest limits: Stealth Mode hides the sender
+                                Honest limits: Stealth hides the sender
                                 <em>identity</em> from the server, not message
-                                timing, size, or your IP address — those are
-                                still visible at the network/transport level.
-                                An optional Privacy Pass anonymous token layer
-                                exists on top of it for anti-spam, but the
-                                server doesn't require one yet, so it isn't
-                                providing real protection until that's
-                                enforced.
+                                timing, size, or your IP address — those remain
+                                visible at the network/transport layer. Privacy
+                                Pass tokens can ride along for anti-spam;
+                                server-side enforcement is still rolling out, so
+                                treat token-based rate control as maturing, not
+                                finished.
                             </p>
                             <p class="ru">
-                                Да — это <strong>Stealth Mode</strong>
-                                (Настройки → Безопасность), выключен по
-                                умолчанию. Когда включён, устройство полностью
-                                убирает поле отправителя из конверта сообщения
-                                и вместо этого запечатывает подписанный
-                                сертификат отправителя прямо в адрес получателя
-                                его identity-ключом. Получатель всё равно может
-                                расшифровать и проверить, кто отправил; сервер
-                                — нет. Можно выбрать режим на поток (один токен
-                                в день, рекомендуется) или на каждое сообщение
-                                (максимальная анонимность, больше накладных
-                                расходов).
+                                Да — и это <strong>всегда включено</strong> для
+                                подходящего трафика (сообщения, receipt’ы,
+                                call-сигналинг, profile shares). В production
+                                нет пользовательского переключателя: устройство
+                                убирает поле отправителя из конверта и
+                                запечатывает подписанный сертификат
+                                identity-ключом получателя. Получатель
+                                расшифровывает и проверяет, кто отправил; сервер
+                                — нет. Несколько control-путей (E2E heartbeat’ы,
+                                multi-device sync, чистый session control) по
+                                дизайну остаются identified.
                             </p>
                             <p class="ru">
-                                Честные ограничения: Stealth Mode скрывает
+                                Честные ограничения: Stealth скрывает
                                 <em>личность</em> отправителя от сервера, но не
-                                время отправки, размер сообщения или твой
-                                IP-адрес — это всё ещё видно на
-                                сетевом/транспортном уровне. Опциональный слой
-                                анонимных токенов Privacy Pass существует
-                                поверх него для анти-спама, но сервер пока его
-                                не требует, так что реальной защиты он пока не
-                                даёт до включения enforcement.
+                                время, размер или IP — это видно на
+                                сетевом/транспортном уровне. Токены Privacy Pass
+                                могут идти вместе с sealed-отправкой для
+                                анти-спама; server-side enforcement ещё
+                                раскатывается — rate-control на токенах
+                                считается зреющим, не завершённым.
                             </p>
                         </div>
                     </details>

@@ -224,7 +224,11 @@
                         Encrypted message payload (opaque binary blob — we
                         cannot read this)
                     </li>
-                    <li>Sender User ID (unless Stealth Mode is on — see below)</li>
+                    <li>
+                        Sender User ID is omitted on the sealed-sender path
+                        (always on for eligible traffic — see Stealth below);
+                        only recipient-recoverable sealed cert travels instead
+                    </li>
                     <li>Recipient User ID</li>
                     <li>Message ID (UUID)</li>
                     <li>Timestamp</li>
@@ -243,15 +247,15 @@
                     for an extended period, it may be discarded.
                 </p>
                 <p>
-                    <strong>Stealth Mode (sealed sender):</strong> an opt-in
-                    setting under Settings → Security, off by default. When
-                    enabled, your device omits the Sender User ID from the
-                    envelope entirely and instead seals a signed sender
-                    certificate to the recipient's identity key — only the
-                    recipient can recover who sent the message; the server
-                    cannot. An optional Privacy Pass anonymous token can
-                    accompany sealed sends, but the server does not yet
-                    require one. Stealth Mode does not hide message timing,
+                    <strong>Stealth (sealed sender):</strong> always on for
+                    eligible user traffic (messages, receipts, call signaling,
+                    etc.; a few control paths are excluded by design). Your
+                    device omits the Sender User ID from the envelope and seals
+                    a signed sender certificate to the recipient's identity key
+                    — only the recipient can recover who sent the message; the
+                    server cannot. Privacy Pass anonymous tokens can accompany
+                    sealed sends for anti-spam; server-side token enforcement
+                    is still rolling out. Stealth does not hide message timing,
                     size, or your IP address from the network layer.
                 </p>
 

@@ -344,9 +344,11 @@
                             is blind to message <strong>content</strong>: it
                             stores only public keys and encrypted ciphertext,
                             never plaintext. Sender-side metadata minimisation
-                            (sealed sender) already exists as an opt-in
-                            <strong>Stealth Mode</strong> — off by default. A
-                            future release will also support
+                            uses <strong>always-on sealed sender (Stealth)</strong>
+                            for eligible traffic — the server does not see who
+                            sent a message, only the recipient, arrival time,
+                            and size (honest limits: timing/IP still visible on
+                            the wire). A future release will also support
                             <strong>direct peer-to-peer delivery</strong> when
                             both parties are online, removing the server from
                             the data path entirely.
@@ -366,10 +368,12 @@
                             только публичные ключи и минимальное количество
                             метаданных, вроде username или состава групп в виде
                             необратимого хэша, никогда не plaintext. Минимизация
-                            метаданных со стороны отправителя (sealed sender)
-                            уже существует как opt-in
-                            <strong>Stealth Mode</strong> — выключен по
-                            умолчанию. Будущий релиз также поддержит
+                            метаданных со стороны отправителя — через
+                            <strong>always-on sealed sender (Stealth)</strong>
+                            для подходящего трафика: сервер не видит, кто
+                            отправил, только получателя, время прибытия и
+                            размер (честные пределы: timing/IP на проводе всё
+                            ещё видны). Будущий релиз также поддержит
                             <strong>прямую P2P-доставку</strong>, когда оба
                             собеседника онлайн, убирая сервер из пути данных.
                             <em
@@ -523,26 +527,27 @@
                                 ><strong>Server is blind to content:</strong>
                                 messages are stored only as ciphertext; the
                                 server cannot decrypt. By default the server
-                                still sees routing metadata (sender identifier,
-                                delivery timestamps). Sender-side metadata
-                                minimisation (sealed sender) is implemented as
-                                an opt-in <strong>Stealth Mode</strong> — off by
-                                default; the optional Privacy Pass anti-spam
-                                token layer on top of it is not yet
-                                server-enforced.</span
+                                still sees delivery timestamps and recipient for
+                                routing. Eligible user traffic uses
+                                <strong>always-on sealed sender (Stealth)</strong>
+                                so the envelope omits the sender id — only the
+                                recipient can unseal who wrote. Privacy Pass
+                                anti-spam tokens can accompany sealed sends;
+                                server-side token enforcement is still rolling
+                                out.</span
                             >
                             <span class="ru"
                                 ><strong>Сервер не видит содержимого:</strong>
                                 сообщения хранятся только в виде шифротекста;
-                                сервер не может расшифровать. По умолчанию
-                                сервер всё ещё видит маршрутные метаданные
-                                (идентификатор отправителя, временные метки
-                                доставки). Минимизация метаданных со стороны
-                                отправителя (sealed sender) реализована как
-                                opt-in <strong>Stealth Mode</strong> — выключен
-                                по умолчанию; опциональный слой анти-спам
-                                токенов Privacy Pass над ним пока не требуется
-                                сервером.</span
+                                сервер не может расшифровать. Для маршрутизации
+                                сервер видит время доставки и получателя.
+                                Подходящий пользовательский трафик идёт с
+                                <strong>always-on sealed sender (Stealth)</strong>
+                                — в конверте нет id отправителя, только
+                                получатель может раскрыть, кто написал. Токены
+                                Privacy Pass могут сопровождать sealed-отправки;
+                                server-side enforcement токенов ещё
+                                раскатывается.</span
                             >
                         </li>
                         <li>
@@ -1072,8 +1077,8 @@
                                 · WebRTC voice/video calls with E2EE signaling ·
                                 iOS TestFlight beta · VEIL anti-censorship
                                 (obfs4, WebTunnel) · veil-front implemented and
-                                validated on-device · Stealth Mode (opt-in
-                                sealed sender).</span
+                                validated on-device · always-on Stealth
+                                (sealed sender) for eligible traffic.</span
                             >
                             <span class="ru"
                                 ><strong>Сделано (H1 2026):</strong>
@@ -1085,10 +1090,10 @@
                                 production-валидация) · X3DH + Double Ratchet ·
                                 гибридный PQXDH с ML-KEM-768 (opt-in) · session
                                 healing · WebRTC голос/видео с E2EE-сигналингом
-                                · iOS TestFlight бета · Stealth Mode (opt-in
-                                sealed sender) · VEIL anti-censorship (obfs4,
-                                WebTunnel) · veil-front реализован и
-                                провалидирован на устройстве.</span
+                                · iOS TestFlight бета · always-on Stealth
+                                (sealed sender) для подходящего трафика · VEIL
+                                anti-censorship (obfs4, WebTunnel) · veil-front
+                                реализован и провалидирован на устройстве.</span
                             >
                         </li>
                         <li>
@@ -1223,15 +1228,16 @@
                     <ul>
                         <li>
                             <span class="en"
-                                >Privacy Pass token enforcement (anti-spam for
-                                Stealth Mode) · desktop applications for
-                                Windows, Linux · formal verification
-                                (Kani).</span
+                                >Privacy Pass token enforcement (anti-spam on
+                                the always-on sealed-sender path) · desktop
+                                applications for Windows, Linux · formal
+                                verification (Kani).</span
                             >
                             <span class="ru"
-                                >Enforcement Privacy Pass токенов (анти-спам для
-                                Stealth Mode) · десктоп-приложения для Windows,
-                                Linux · формальная верификация (Kani).</span
+                                >Enforcement Privacy Pass токенов (анти-спам на
+                                always-on sealed-sender пути) ·
+                                десктоп-приложения для Windows, Linux ·
+                                формальная верификация (Kani).</span
                             >
                         </li>
                     </ul>
