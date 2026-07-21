@@ -9,11 +9,11 @@
         </title>
         <meta
             name="description"
-            content="Professional-grade encrypted messenger built on Signal Protocol with post-quantum cryptography. Privacy is a fundamental right, not a feature. Open-source, three-tier resilient network, and built for security."
+            content="Professional-grade encrypted messenger: Signal Protocol design, hybrid post-quantum KEM, and a live gRPC bidirectional stream over QUIC. Privacy is a fundamental right, not a feature."
         />
         <meta
             name="keywords"
-            content="post-quantum messenger, E2EE, Rust messenger, privacy-focused communication, crypto agility, federated messaging, P2P messenger, QUIC messenger"
+            content="post-quantum messenger, E2EE, Rust messenger, gRPC messenger, QUIC messenger, bidirectional stream, privacy-focused communication, crypto agility, federated messaging, P2P messenger"
         />
 
         <!-- Open Graph / Facebook -->
@@ -179,6 +179,10 @@
                         ><span class="ru"
                             >Сервер без доступа к контенту</span
                         ></span
+                    >
+                    <span class="badge"
+                        ><span class="en">gRPC + QUIC stream</span
+                        ><span class="ru">gRPC + QUIC поток</span></span
                     >
                     <span class="badge"
                         ><span class="en">Open Source</span
@@ -404,21 +408,35 @@
                         <span class="en"
                             >Konstruct uses
                             <strong>gRPC with Protocol Buffers</strong> for
-                            efficient binary message framing, and is split into
-                            independent microservices on the server side (auth,
-                            user, messaging, signaling, media) for fault
-                            isolation. Reproducible benchmarks comparing
-                            bandwidth and latency against JSON-based messengers
-                            are part of upcoming work, not yet published.</span
+                            efficient binary framing, and keeps a
+                            <strong
+                                >persistent bidirectional MessageStream</strong
+                            >
+                            open for real-time delivery — not request/response
+                            polling. The backend is split into independent
+                            microservices (auth, user, messaging, signaling,
+                            media) for fault isolation. Most consumer messengers
+                            still ship REST/JSON or proprietary TCP stacks;
+                            Konstruct’s live path is
+                            <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as
+                            automatic fallback.</span
                         >
                         <span class="ru"
                             >Конструкт использует
                             <strong>gRPC с Protocol Buffers</strong> для
-                            эффективной бинарной передачи сообщений, а бэкенд
-                            разделён на независимые микросервисы для изоляции
-                            отказов. Воспроизводимые бенчмарки и задержки по
-                            сравнению с JSON-мессенджерами — часть будущей
-                            работы, пока не опубликованы.</span
+                            эффективной бинарной передачи и держит
+                            <strong
+                                >постоянный двунаправленный
+                                MessageStream</strong
+                            >
+                            для доставки в реальном времени — без polling.
+                            Бэкенд разделён на независимые микросервисы (auth,
+                            user, messaging, signaling, media) для изоляции
+                            отказов. Большинство потребительских мессенджеров
+                            всё ещё сидят на REST/JSON или проприетарном TCP;
+                            боевой путь Конструкта —
+                            <strong>gRPC bidi поверх QUIC</strong>, с
+                            автоматическим fallback на HTTP/2.</span
                         >
                     </p>
                     <h3>
@@ -548,37 +566,81 @@
                     <ul>
                         <li>
                             <span class="en"
-                                ><strong>gRPC over HTTP/2:</strong> primary
-                                message transport — persistent bidirectional
-                                stream with server push.</span
+                                ><strong
+                                    >gRPC bidirectional MessageStream over
+                                    QUIC</strong
+                                >
+                                — live production path on iOS (ConstructEngine /
+                                construct-transport). One long-lived stream
+                                carries heartbeats, inbound messages, and
+                                delivery receipts without opening a new TCP
+                                handshake per event. QUIC brings connection
+                                migration, multiplexed streams, and faster
+                                recovery on lossy or long-haul links (validated
+                                intercontinentally, e.g. Australia → EU
+                                edge).</span
                             >
                             <span class="ru"
-                                ><strong>gRPC поверх HTTP/2:</strong> основной
-                                транспорт сообщений — постоянный двунаправленный
-                                поток с server push.</span
+                                ><strong
+                                    >Двунаправленный gRPC MessageStream поверх
+                                    QUIC</strong
+                                >
+                                — боевой путь на iOS (ConstructEngine /
+                                construct-transport). Один долгоживущий поток
+                                несёт heartbeat’ы, входящие сообщения и
+                                receipt’ы без нового TCP-handshake на каждое
+                                событие. QUIC даёт migration соединения,
+                                мультиплексирование и быстрое восстановление на
+                                нестабильных и дальних линках (проверено на
+                                межконтинентальных связях, напр. Австралия → EU
+                                edge).</span
                             >
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>QUIC engine (ConstructEngine):</strong>
-                                secondary transport with 0-RTT resumption and
-                                multiplexed streams for lossy networks.
-                                Currently disabled on iOS pending upstream
-                                fixes; macOS/desktop rollout is paused while the
-                                desktop client moves to the same direct crypto
-                                path as iOS — not in the live transport path on
-                                any platform today.</span
+                                ><strong
+                                    >gRPC over HTTP/2 (TLS&nbsp;1.3):</strong
+                                >
+                                automatic fallback when QUIC is blocked or
+                                handshakes time out — same protobuf contracts,
+                                same E2EE payload, no user toggle.</span
                             >
                             <span class="ru"
-                                ><strong>QUIC-движок (ConstructEngine):</strong>
-                                вторичный транспорт с 0-RTT и
-                                мультиплексированием потоков для нестабильных
-                                сетей. На iOS сейчас отключён до апстрим-фиксов;
-                                раскатка на macOS/десктоп приостановлена, пока
-                                десктоп-клиент переходит на тот же
-                                direct-крипто-путь, что и iOS — сегодня не
-                                задействован в боевом транспорте ни на одной
-                                платформе.</span
+                                ><strong
+                                    >gRPC поверх HTTP/2 (TLS&nbsp;1.3):</strong
+                                >
+                                автоматический fallback, если QUIC режется или
+                                handshake не успевает — те же protobuf-контракты
+                                и E2EE-полезная нагрузка, без пользовательского
+                                переключателя.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="en"
+                                ><strong>Why this is a product edge:</strong>
+                                mainstream privacy messengers still lean on
+                                REST/JSON (Signal-class stacks) or closed
+                                proprietary wire formats (WhatsApp, Telegram
+                                MTProto). Shipping a modern
+                                <em>gRPC bidi + QUIC</em> live path is rare in
+                                consumer messaging — lower framing overhead,
+                                fewer reconnect storms, and a stack that matches
+                                how high-performance services are built today.
+                                E2EE stays on top; transport only moves sealed
+                                ciphertext.</span
+                            >
+                            <span class="ru"
+                                ><strong>Почему это преимущество:</strong>
+                                массовые приватные мессенджеры по-прежнему
+                                опираются на REST/JSON (класс Signal) или
+                                закрытые wire-форматы (WhatsApp, Telegram
+                                MTProto). Боевой путь
+                                <em>gRPC bidi + QUIC</em> в consumer-мессенджере
+                                — редкость: меньше overhead на кадрирование,
+                                меньше reconnect-штормов, стек как у
+                                high-performance сервисов. E2EE остаётся сверху;
+                                транспорт двигает только sealed
+                                ciphertext.</span
                             >
                         </li>
                         <li>
@@ -700,16 +762,18 @@
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>Resilient delivery</strong> —
-                                gRPC/HTTP2 primary, QUIC engine secondary, VEIL
-                                relay fallback, direct P2P when both are
-                                online.</span
+                                ><strong>Modern live transport</strong> — gRPC
+                                bidirectional MessageStream over
+                                <strong>QUIC</strong> (HTTP/2 fallback), VEIL
+                                when the path is censored, direct P2P planned
+                                when both peers are online.</span
                             >
                             <span class="ru"
-                                ><strong>Устойчивая доставка</strong> —
-                                gRPC/HTTP2 основной путь, QUIC движок резервный,
-                                VEIL relay запасной, прямой P2P когда оба
-                                онлайн.</span
+                                ><strong>Современный live-транспорт</strong> —
+                                двунаправленный gRPC MessageStream поверх
+                                <strong>QUIC</strong> (fallback HTTP/2), VEIL
+                                при цензуре, прямой P2P — в плане, когда оба
+                                peer’а онлайн.</span
                             >
                         </li>
                     </ul>
@@ -815,7 +879,9 @@
                                         >
                                     </td>
                                     <td><strong>Planned</strong></td>
-                                    <td><strong>gRPC+QUIC</strong></td>
+                                    <td>
+                                        <strong>gRPC bidi + QUIC</strong>
+                                    </td>
                                     <td>Yes</td>
                                 </tr>
                             </tbody>
@@ -835,8 +901,10 @@
                                 ‡ Konstruct's PQ KEM (ML-KEM-768) is opt-in and
                                 deployed; PQ signatures (ML-DSA-65) have working
                                 crypto and server-side verification — client
-                                rotation orchestration is still in
-                                progress.</span
+                                rotation orchestration is still in progress.<br />
+                                Live messaging uses a gRPC bidirectional stream
+                                on QUIC (HTTP/2 fallback) — not REST/JSON
+                                polling.</span
                             >
                             <span class="ru"
                                 >* E2EE в Telegram только в «Секретных чатах»,
@@ -847,7 +915,10 @@
                                 opt-in и развёрнут; постквантовые подписи
                                 (ML-DSA-65) — криптография и серверная
                                 верификация готовы, оркестрация ротации на
-                                клиенте ещё в работе.</span
+                                клиенте ещё в работе.<br />
+                                Live-сообщения идут по двунаправленному gRPC
+                                stream поверх QUIC (fallback HTTP/2) — не
+                                REST/JSON polling.</span
                             >
                         </p>
                     </div>
@@ -991,17 +1062,27 @@
                         <li>
                             <span class="en"
                                 ><strong>Done (H1 2026):</strong> gRPC/Protobuf
-                                transport · X3DH + Double Ratchet · hybrid PQXDH
-                                with ML-KEM-768 (opt-in) · session healing ·
-                                WebRTC voice/video calls with E2EE signaling ·
+                                · live
+                                <strong
+                                    >gRPC bidi MessageStream over QUIC</strong
+                                >
+                                (HTTP/2 fallback; intercontinental production
+                                validation) · X3DH + Double Ratchet · hybrid
+                                PQXDH with ML-KEM-768 (opt-in) · session healing
+                                · WebRTC voice/video calls with E2EE signaling ·
                                 iOS TestFlight beta · VEIL anti-censorship
                                 (obfs4, WebTunnel) · veil-front implemented and
                                 validated on-device · Stealth Mode (opt-in
                                 sealed sender).</span
                             >
                             <span class="ru"
-                                ><strong>Сделано (H1 2026):</strong> транспорт
-                                gRPC/Protobuf · X3DH + Double Ratchet ·
+                                ><strong>Сделано (H1 2026):</strong>
+                                gRPC/Protobuf · боевой
+                                <strong
+                                    >gRPC bidi MessageStream поверх QUIC</strong
+                                >
+                                (fallback HTTP/2; межконтинентальная
+                                production-валидация) · X3DH + Double Ratchet ·
                                 гибридный PQXDH с ML-KEM-768 (opt-in) · session
                                 healing · WebRTC голос/видео с E2EE-сигналингом
                                 · iOS TestFlight бета · Stealth Mode (opt-in
@@ -1323,15 +1404,15 @@
                     "price": "0",
                     "priceCurrency": "USD"
                 },
-                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with hybrid post-quantum KEM (ML-KEM-768). Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
+                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with hybrid post-quantum KEM (ML-KEM-768) and a live gRPC bidirectional MessageStream over QUIC. Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
                 "featureList": [
                     "End-to-end encryption (X3DH + Double Ratchet)",
                     "Forward secrecy and post-compromise security",
                     "Hybrid post-quantum KEM (ML-KEM-768, opt-in)",
                     "ChaCha20-Poly1305 AEAD",
+                    "gRPC bidirectional MessageStream over QUIC (HTTP/2 fallback)",
                     "WebRTC voice/video calls with E2EE signaling",
                     "VEIL anti-censorship transport (obfs4, WebTunnel)",
-                    "gRPC over HTTP/2 with QUIC secondary transport",
                     "Federation (planned)",
                     "Direct P2P delivery (planned)",
                     "Lightweight Rust server"

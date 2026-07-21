@@ -1093,8 +1093,13 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                                     </p>
                                     <p class="stack-layer__body">
                                         Дальше по сети летит уже готовый
-                                        бинарный конверт через
-                                        <strong>gRPC/HTTP2, QUIC, VEIL</strong>.
+                                        бинарный конверт по
+                                        <strong
+                                            >живому gRPC bidi MessageStream
+                                            поверх QUIC</strong
+                                        >
+                                        (fallback HTTP/2; при цензуре —
+                                        <strong>VEIL</strong>).
                                     </p>
                                 </div>
                             </div>

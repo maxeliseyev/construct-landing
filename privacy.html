@@ -440,9 +440,11 @@
                 <h3>6.2 Encryption</h3>
                 <ul>
                     <li>
-                        <strong>In transit:</strong> All client-server
-                        communication uses gRPC over TLS 1.3 via a single Envoy
-                        proxy endpoint (port 443)
+                        <strong>In transit:</strong> Client–server messaging uses
+                        a gRPC bidirectional stream over QUIC when available,
+                        with automatic fallback to gRPC over HTTP/2 + TLS 1.3
+                        (Envoy / edge on port 443). Control and auth RPCs use
+                        the same encrypted transport stack
                     </li>
                     <li>
                         <strong>At rest:</strong> Database encryption enabled

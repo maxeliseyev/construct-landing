@@ -1460,6 +1460,62 @@
                             </p>
                         </div>
                     </details>
+
+                    <details class="faq-item">
+                        <summary>
+                            <span class="en"
+                                >What transport does Konstruct use for live
+                                messages?</span
+                            >
+                            <span class="ru"
+                                >Какой транспорт у Конструкта для live-сообщений?</span
+                            >
+                            <span class="faq-chevron" aria-hidden="true"
+                                >▸</span
+                            >
+                        </summary>
+                        <div class="faq-answer">
+                            <p class="en">
+                                Live messaging is a
+                                <strong
+                                    >gRPC bidirectional MessageStream</strong
+                                >
+                                — one long-lived stream for heartbeats, inbound
+                                messages, and delivery receipts — not
+                                request/response polling. On current iOS builds
+                                the production path is
+                                <strong>QUIC</strong> (ConstructEngine); if QUIC
+                                is blocked or the handshake fails, the client
+                                falls back to
+                                <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong>
+                                automatically. End-to-end encryption is
+                                independent of the transport: the wire only
+                                carries sealed ciphertext. That combination
+                                (modern gRPC bidi + QUIC) is uncommon among
+                                consumer privacy messengers, which typically use
+                                REST/JSON or proprietary TCP stacks.
+                            </p>
+                            <p class="ru">
+                                Live-сообщения идут по
+                                <strong
+                                    >двунаправленному gRPC MessageStream</strong
+                                >
+                                — один долгоживущий поток для heartbeat’ов,
+                                входящих сообщений и receipt’ов, без
+                                request/response polling. На актуальных iOS
+                                сборках боевой путь —
+                                <strong>QUIC</strong> (ConstructEngine); если
+                                QUIC режется или handshake не успевает, клиент
+                                автоматически падает на
+                                <strong>gRPC поверх HTTP/2 + TLS&nbsp;1.3</strong
+                                >. Сквозное шифрование не зависит от транспорта:
+                                по проводу едет только sealed ciphertext. Такая
+                                связка (современный gRPC bidi + QUIC) редко
+                                встречается у consumer-приватных мессенджеров —
+                                обычно REST/JSON или закрытый TCP-стек.
+                            </p>
+                        </div>
+                    </details>
                 </section>
 
                 <!-- ── Section 9: For Testers ─────────────────────────────── -->
