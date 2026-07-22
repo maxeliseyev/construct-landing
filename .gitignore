@@ -3,3 +3,6 @@
 scripts/signing_key.pem
 target
 JetBrainsMono-2.304/
+*-SECRET.asc
+*secret*.asc
+private*.asc

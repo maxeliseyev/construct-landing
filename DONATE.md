@@ -26,3 +26,18 @@ bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm
 > donations to it are linkable and the balance is visible on-chain. That is a
 > property of Bitcoin, not a choice we can hide — use Monero if this matters to
 > you.
+
+## Verify this file (PGP)
+
+This file is signed, so you can confirm the addresses are authentic even if the site or repo is
+tampered with:
+
+```bash
+gpg --import KEYS.asc          # the project signing key (also served at konstruct.cc/KEYS.asc)
+gpg --fingerprint              # compare against the fingerprint published in README.md and on the site
+gpg --verify DONATE.md.asc DONATE.md
+```
+
+A "Good signature" means the addresses above are the maintainer's. If it fails, **do not send** —
+the signature covers this exact file, so any change to an address invalidates it.
+
