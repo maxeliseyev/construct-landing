@@ -79,6 +79,45 @@
             html[data-lang="ru"] .en {
                 display: none !important;
             }
+            /* One-line address that can scroll on narrow screens without an
+               ugly scrollbar; on desktop the full-width card fits it outright.
+               Click-to-copy: the whole address is the button. */
+            .addr {
+                display: block;
+                position: relative;
+                white-space: nowrap;
+                overflow-x: auto;
+                scrollbar-width: none;
+                font-size: 0.8rem;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 8px 10px;
+                cursor: pointer;
+                transition: border-color 0.15s ease;
+            }
+            .addr:hover {
+                border-color: var(--accent);
+            }
+            .addr::-webkit-scrollbar {
+                display: none;
+            }
+            .addr.copied {
+                border-color: var(--accent);
+            }
+            .addr.copied::after {
+                content: "✓";
+                position: absolute;
+                right: 6px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: var(--bg-elevated);
+                color: var(--accent);
+                font-size: 0.8rem;
+                padding: 1px 8px;
+                border-radius: 4px;
+                border: 1px solid var(--accent);
+            }
         </style>
     </head>
 
@@ -344,7 +383,8 @@
                             is blind to message <strong>content</strong>: it
                             stores only public keys and encrypted ciphertext,
                             never plaintext. Sender-side metadata minimisation
-                            uses <strong>always-on sealed sender (Stealth)</strong>
+                            uses
+                            <strong>always-on sealed sender (Stealth)</strong>
                             for eligible traffic — the server does not see who
                             sent a message, only the recipient, arrival time,
                             and size (honest limits: timing/IP still visible on
@@ -371,9 +411,9 @@
                             метаданных со стороны отправителя — через
                             <strong>always-on sealed sender (Stealth)</strong>
                             для подходящего трафика: сервер не видит, кто
-                            отправил, только получателя, время прибытия и
-                            размер (честные пределы: timing/IP на проводе всё
-                            ещё видны). Будущий релиз также поддержит
+                            отправил, только получателя, время прибытия и размер
+                            (честные пределы: timing/IP на проводе всё ещё
+                            видны). Будущий релиз также поддержит
                             <strong>прямую P2P-доставку</strong>, когда оба
                             собеседника онлайн, убирая сервер из пути данных.
                             <em
@@ -529,7 +569,9 @@
                                 server cannot decrypt. By default the server
                                 still sees delivery timestamps and recipient for
                                 routing. Eligible user traffic uses
-                                <strong>always-on sealed sender (Stealth)</strong>
+                                <strong
+                                    >always-on sealed sender (Stealth)</strong
+                                >
                                 so the envelope omits the sender id — only the
                                 recipient can unseal who wrote. Privacy Pass
                                 anti-spam tokens can accompany sealed sends;
@@ -542,7 +584,9 @@
                                 сервер не может расшифровать. Для маршрутизации
                                 сервер видит время доставки и получателя.
                                 Подходящий пользовательский трафик идёт с
-                                <strong>always-on sealed sender (Stealth)</strong>
+                                <strong
+                                    >always-on sealed sender (Stealth)</strong
+                                >
                                 — в конверте нет id отправителя, только
                                 получатель может раскрыть, кто написал. Токены
                                 Privacy Pass могут сопровождать sealed-отправки;
@@ -788,26 +832,35 @@
             <section aria-labelledby="telemetry-heading">
                 <div class="container">
                     <h2 id="telemetry-heading">
-                        <span class="en">No Telemetry. Not Anonymised — Absent.</span
-                        ><span class="ru">Никакой телеметрии. Не «обезличенной» — её просто нет.</span>
+                        <span class="en"
+                            >No Telemetry. Not Anonymised — Absent.</span
+                        ><span class="ru"
+                            >Никакой телеметрии. Не «обезличенной» — её просто
+                            нет.</span
+                        >
                     </h2>
                     <p>
                         <span class="en"
-                            >Konstruct collects <strong>no analytics, no usage
-                            metrics, no behavioural events, no crash
-                            phone-home</strong> and no advertising identifiers.
-                            Not "collected and anonymised" — <em>not
-                            collected</em>. This is possible because we are not
-                            funded by advertising or data resale, so there is no
-                            reason to watch you, and the app is built so we
-                            can't.</span
+                            >Konstruct collects
+                            <strong
+                                >no analytics, no usage metrics, no behavioural
+                                events, no crash phone-home</strong
+                            >
+                            and no advertising identifiers. Not "collected and
+                            anonymised" — <em>not collected</em>. This is
+                            possible because we are not funded by advertising or
+                            data resale, so there is no reason to watch you, and
+                            the app is built so we can't.</span
                         >
                         <span class="ru"
-                            >Konstruct не собирает <strong>никакой аналитики,
-                            метрик использования, поведенческих событий, отправки
-                            крашей</strong> и рекламных идентификаторов. Не
-                            «собрано и обезличено» — <em>не собрано вовсе</em>.
-                            Это возможно потому, что мы не живём на рекламе или
+                            >Konstruct не собирает
+                            <strong
+                                >никакой аналитики, метрик использования,
+                                поведенческих событий, отправки крашей</strong
+                            >
+                            и рекламных идентификаторов. Не «собрано и
+                            обезличено» — <em>не собрано вовсе</em>. Это
+                            возможно потому, что мы не живём на рекламе или
                             перепродаже данных — а значит, нет причин за тобой
                             следить, и приложение построено так, что мы не
                             можем.</span
@@ -817,11 +870,11 @@
                         <li>
                             <span class="en"
                                 ><strong>No third-party SDKs.</strong> No
-                                Firebase, Crashlytics, Sentry, Amplitude, Segment
-                                — no tracker of any kind. The app's only external
-                                dependencies are transport and media
-                                infrastructure (gRPC, WebRTC) and an on-device ML
-                                library. No ATT prompt, no SKAdNetwork.</span
+                                Firebase, Crashlytics, Sentry, Amplitude,
+                                Segment — no tracker of any kind. The app's only
+                                external dependencies are transport and media
+                                infrastructure (gRPC, WebRTC) and an on-device
+                                ML library. No ATT prompt, no SKAdNetwork.</span
                             >
                             <span class="ru"
                                 ><strong>Никаких сторонних SDK.</strong> Ни
@@ -843,20 +896,24 @@
                             >
                             <span class="ru"
                                 ><strong>В проде нет логов.</strong> Релизные
-                                сборки не пишут диагностических логов на диск и не
-                                дают доступа к дебагу или экспорту логов. Когда
-                                нам нужны логи для починки бага, их отправляешь
-                                <em>ты</em> кнопкой «поделиться» в бета-сборке —
-                                никакой тихой фоновой отправки.</span
+                                сборки не пишут диагностических логов на диск и
+                                не дают доступа к дебагу или экспорту логов.
+                                Когда нам нужны логи для починки бага, их
+                                отправляешь <em>ты</em> кнопкой «поделиться» в
+                                бета-сборке — никакой тихой фоновой
+                                отправки.</span
                             >
                         </li>
                         <li>
                             <span class="en"
-                                ><strong>Honest about what the server must
-                                see.</strong> To route ciphertext the server
-                                necessarily holds a small, fixed set of metadata
-                                (recipient, timing, size, your public keys, push
-                                token) — always-on sealed sender removes even
+                                ><strong
+                                    >Honest about what the server must
+                                    see.</strong
+                                >
+                                To route ciphertext the server necessarily holds
+                                a small, fixed set of metadata (recipient,
+                                timing, size, your public keys, push token) —
+                                always-on sealed sender removes even
                                 <em>who sent</em> a message from the stored
                                 envelope. What we don't yet fully solve
                                 (timing/IP correlation) lives in our
@@ -864,16 +921,19 @@
                                 marketing promise.</span
                             >
                             <span class="ru"
-                                ><strong>Честно о том, что видит
-                                сервер.</strong> Чтобы маршрутизировать
-                                шифротекст, сервер вынужденно хранит небольшой
-                                фиксированный набор метаданных (получатель, время,
-                                размер, твои публичные ключи, push-токен) —
-                                always-on sealed sender убирает из хранимого
-                                конверта даже то, <em>кто отправил</em>
+                                ><strong
+                                    >Честно о том, что видит сервер.</strong
+                                >
+                                Чтобы маршрутизировать шифротекст, сервер
+                                вынужденно хранит небольшой фиксированный набор
+                                метаданных (получатель, время, размер, твои
+                                публичные ключи, push-токен) — always-on sealed
+                                sender убирает из хранимого конверта даже то,
+                                <em>кто отправил</em>
                                 сообщение. Что мы пока не решаем полностью
                                 (корреляция timing/IP) — описано в
-                                <a href="/privacy">Политике конфиденциальности</a
+                                <a href="/privacy"
+                                    >Политике конфиденциальности</a
                                 >, а не в маркетинге.</span
                             >
                         </li>
@@ -1173,8 +1233,8 @@
                                 · WebRTC voice/video calls with E2EE signaling ·
                                 iOS TestFlight beta · VEIL anti-censorship
                                 (obfs4, WebTunnel) · veil-front implemented and
-                                validated on-device · always-on Stealth
-                                (sealed sender) for eligible traffic.</span
+                                validated on-device · always-on Stealth (sealed
+                                sender) for eligible traffic.</span
                             >
                             <span class="ru"
                                 ><strong>Сделано (H1 2026):</strong>
@@ -1391,8 +1451,8 @@
                         <span class="ru"
                             >Конструкт открыт под weak-copyleft лицензиями:
                             MPL-2.0 для клиентских приложений и VEIL, AGPL-3.0
-                            для сервера и релея, Apache-2.0 для общих библиотек и
-                            CC-BY-4.0 для текстов / спецификаций. Технологии
+                            для сервера и релея, Apache-2.0 для общих библиотек
+                            и CC-BY-4.0 для текстов / спецификаций. Технологии
                             приватности должны быть прозрачными и доступными для
                             аудита любым желающим — включая открытые проблемы,
                             которые мы пока не исправили.</span
@@ -1463,6 +1523,134 @@
                     </ul>
                 </div>
             </section>
+
+            <section aria-labelledby="support-heading">
+                <div class="container">
+                    <h2 id="support-heading">
+                        <span class="en">Support the Project</span
+                        ><span class="ru">Поддержать проект</span>
+                    </h2>
+                    <p>
+                        <span class="en"
+                            >No ads, no data resale, no telemetry — Konstruct
+                            runs on voluntary donations. If you want the
+                            messaging core to stay free and independent, a
+                            donation directly funds development and the server.
+                            Prefer <strong>Monero</strong> if you value privacy:
+                            unlike Bitcoin, its chain is not public, so your
+                            donation isn't linkable and the balance isn't
+                            visible.</span
+                        >
+                        <span class="ru"
+                            >Без рекламы, без перепродажи данных, без телеметрии
+                            — Konstruct живёт на добровольных донатах. Если
+                            хочешь, чтобы ядро мессенджера оставалось бесплатным
+                            и независимым, донат напрямую идёт на разработку и
+                            сервер. Если ценишь приватность — предпочти
+                            <strong>Monero</strong>: в отличие от биткоина его
+                            цепочка не публична, донат нельзя связать, а баланс
+                            не виден.</span
+                        >
+                    </p>
+                    <div
+                        style="
+                            display: flex;
+                            flex-direction: column;
+                            gap: 16px;
+                            margin-top: 8px;
+                        "
+                    >
+                        <div
+                            style="
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 16px;
+                                align-items: center;
+                                background: var(--bg-elevated);
+                                border: 1px solid var(--border);
+                                border-radius: 12px;
+                                padding: 16px;
+                            "
+                        >
+                            <img
+                                src="qr-xmr.svg"
+                                alt="Monero (XMR) donation address QR code"
+                                width="116"
+                                height="116"
+                                style="
+                                    flex: 0 0 auto;
+                                    background: #fff;
+                                    padding: 7px;
+                                    border-radius: 8px;
+                                "
+                            />
+                            <div style="min-width: 0; flex: 1 1 320px">
+                                <div style="margin-bottom: 8px">
+                                    <strong>Monero (XMR)</strong> —
+                                    <span class="en">recommended, private</span
+                                    ><span class="ru"
+                                        >рекомендуется, приватно</span
+                                    >
+                                </div>
+                                <code
+                                    class="addr"
+                                    onclick="copyAddr(this)"
+                                    >496i5qvPzRtJPQjiPXnLvEGutjHFth4pWDQaJwbbMreyaTYg4qfbo48MXrTnYH32MHiAn5GcSEN1c48EYBvVkrx9Pi5BWvn</code
+                                >
+                            </div>
+                        </div>
+                        <div
+                            style="
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 16px;
+                                align-items: center;
+                                background: var(--bg-elevated);
+                                border: 1px solid var(--border);
+                                border-radius: 12px;
+                                padding: 16px;
+                            "
+                        >
+                            <img
+                                src="qr-btc.svg"
+                                alt="Bitcoin (BTC) donation address QR code"
+                                width="116"
+                                height="116"
+                                style="
+                                    flex: 0 0 auto;
+                                    background: #fff;
+                                    padding: 7px;
+                                    border-radius: 8px;
+                                "
+                            />
+                            <div style="min-width: 0; flex: 1 1 320px">
+                                <div style="margin-bottom: 8px">
+                                    <strong>Bitcoin (BTC)</strong>
+                                </div>
+                                <code
+                                    class="addr"
+                                    onclick="copyAddr(this)"
+                                    >bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm</code
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--fg-muted)">
+                        <span class="en"
+                            >Security tip: these addresses are also published in
+                            the project repository — cross-check them there
+                            before sending, in case this page is ever tampered
+                            with.</span
+                        >
+                        <span class="ru"
+                            >Совет по безопасности: эти адреса также
+                            опубликованы в репозитории проекта — сверь их там
+                            перед отправкой на случай, если эту страницу
+                            подменят.</span
+                        >
+                    </p>
+                </div>
+            </section>
         </main>
 
         <footer role="contentinfo">
@@ -1475,8 +1663,8 @@
                     >
                     <span class="ru"
                         >Создан на Rust, Swift и принципах приватности.<br />
-                        Открытый код (MPL-2.0 приложения · AGPL-3.0 сервер) · Без
-                        телеметрии · Без рекламы · Без компромиссов</span
+                        Открытый код (MPL-2.0 приложения · AGPL-3.0 сервер) ·
+                        Без телеметрии · Без рекламы · Без компромиссов</span
                     >
                 </p>
                 <p style="margin-top: 1rem; font-size: 0.8125rem">
@@ -1533,6 +1721,17 @@
 
         <script src="effects.js" defer></script>
         <script>
+            function copyAddr(el) {
+                if (!navigator.clipboard) return;
+                navigator.clipboard
+                    .writeText(el.textContent.trim())
+                    .then(function () {
+                        el.classList.add("copied");
+                        setTimeout(function () {
+                            el.classList.remove("copied");
+                        }, 1200);
+                    });
+            }
             function setLang(lang) {
                 document.documentElement.setAttribute("data-lang", lang);
                 document.documentElement.setAttribute("lang", lang);
