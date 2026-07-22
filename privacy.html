@@ -343,12 +343,17 @@
                     configuration.
                 </p>
                 <p>
-                    A further mitigation — scheduled encrypted dummy/cover
-                    traffic, sent even when you are not actively messaging — is
-                    implemented in the client but
-                    <strong>not yet enabled in production builds</strong>
-                    pending a battery-impact design decision. This section will
-                    be updated when it ships.
+                    We deliberately do <strong>not</strong> send scheduled
+                    dummy/cover traffic. Constant cover traffic needs an
+                    always-on connection and timed sends, which drains battery
+                    and data on a phone that is mostly asleep — a mobile client
+                    cannot sustain it, and forcing it would trade real usability
+                    for marginal metadata hardening. Padding and send-jitter
+                    (above) are our mobile answer; constant cover traffic could
+                    only ever run on an always-online desktop client and remains
+                    a possible desktop-only option, never a mobile promise. We
+                    would rather ship no cover traffic than claim one that isn't
+                    running.
                 </p>
                 <p>
                     Separately, <strong>VEIL</strong> is Konstruct's
@@ -706,8 +711,8 @@
             <div class="container">
                 <p>
                     Built with Rust, Swift, and a commitment to privacy.<br />
-                    Open Source (MIT License) · No tracking · No ads · No
-                    compromises
+                    Open source (MPL-2.0 apps · AGPL-3.0 server) · No telemetry ·
+                    No ads · No compromises
                 </p>
                 <p style="margin-top: 1rem; font-size: 0.8125rem">
                     © 2026 Konstruct. Privacy is a right, not a privilege.

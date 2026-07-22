@@ -785,6 +785,102 @@
                 </div>
             </section>
 
+            <section aria-labelledby="telemetry-heading">
+                <div class="container">
+                    <h2 id="telemetry-heading">
+                        <span class="en">No Telemetry. Not Anonymised — Absent.</span
+                        ><span class="ru">Никакой телеметрии. Не «обезличенной» — её просто нет.</span>
+                    </h2>
+                    <p>
+                        <span class="en"
+                            >Konstruct collects <strong>no analytics, no usage
+                            metrics, no behavioural events, no crash
+                            phone-home</strong> and no advertising identifiers.
+                            Not "collected and anonymised" — <em>not
+                            collected</em>. This is possible because we are not
+                            funded by advertising or data resale, so there is no
+                            reason to watch you, and the app is built so we
+                            can't.</span
+                        >
+                        <span class="ru"
+                            >Konstruct не собирает <strong>никакой аналитики,
+                            метрик использования, поведенческих событий, отправки
+                            крашей</strong> и рекламных идентификаторов. Не
+                            «собрано и обезличено» — <em>не собрано вовсе</em>.
+                            Это возможно потому, что мы не живём на рекламе или
+                            перепродаже данных — а значит, нет причин за тобой
+                            следить, и приложение построено так, что мы не
+                            можем.</span
+                        >
+                    </p>
+                    <ul>
+                        <li>
+                            <span class="en"
+                                ><strong>No third-party SDKs.</strong> No
+                                Firebase, Crashlytics, Sentry, Amplitude, Segment
+                                — no tracker of any kind. The app's only external
+                                dependencies are transport and media
+                                infrastructure (gRPC, WebRTC) and an on-device ML
+                                library. No ATT prompt, no SKAdNetwork.</span
+                            >
+                            <span class="ru"
+                                ><strong>Никаких сторонних SDK.</strong> Ни
+                                Firebase, ни Crashlytics, ни Sentry, ни
+                                Amplitude, ни Segment — вообще никаких трекеров.
+                                Единственные внешние зависимости — транспорт и
+                                медиа (gRPC, WebRTC) и on-device ML-библиотека.
+                                Без ATT-запроса, без SKAdNetwork.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="en"
+                                ><strong>Production keeps no logs.</strong>
+                                Release builds write no diagnostic log to disk
+                                and expose no debug or log-export surface. When
+                                we need logs to fix a bug, it is
+                                <em>you</em> who taps "share" in a beta build —
+                                never a silent background upload.</span
+                            >
+                            <span class="ru"
+                                ><strong>В проде нет логов.</strong> Релизные
+                                сборки не пишут диагностических логов на диск и не
+                                дают доступа к дебагу или экспорту логов. Когда
+                                нам нужны логи для починки бага, их отправляешь
+                                <em>ты</em> кнопкой «поделиться» в бета-сборке —
+                                никакой тихой фоновой отправки.</span
+                            >
+                        </li>
+                        <li>
+                            <span class="en"
+                                ><strong>Honest about what the server must
+                                see.</strong> To route ciphertext the server
+                                necessarily holds a small, fixed set of metadata
+                                (recipient, timing, size, your public keys, push
+                                token) — always-on sealed sender removes even
+                                <em>who sent</em> a message from the stored
+                                envelope. What we don't yet fully solve
+                                (timing/IP correlation) lives in our
+                                <a href="/privacy">Privacy Policy</a>, not in a
+                                marketing promise.</span
+                            >
+                            <span class="ru"
+                                ><strong>Честно о том, что видит
+                                сервер.</strong> Чтобы маршрутизировать
+                                шифротекст, сервер вынужденно хранит небольшой
+                                фиксированный набор метаданных (получатель, время,
+                                размер, твои публичные ключи, push-токен) —
+                                always-on sealed sender убирает из хранимого
+                                конверта даже то, <em>кто отправил</em>
+                                сообщение. Что мы пока не решаем полностью
+                                (корреляция timing/IP) — описано в
+                                <a href="/privacy">Политике конфиденциальности</a
+                                >, а не в маркетинге.</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
             <section aria-labelledby="comparison-heading">
                 <div class="container">
                     <h2 id="comparison-heading">
@@ -1284,15 +1380,19 @@
                     </h2>
                     <p>
                         <span class="en"
-                            >Konstruct is open-source under the MIT License
-                            (code) and CC-BY-4.0 (text / specs). Privacy
-                            technology should be transparent and auditable by
-                            anyone — including the open issues we haven't fixed
-                            yet.</span
+                            >Konstruct is open source under weak-copyleft
+                            licenses: MPL-2.0 for the client apps and VEIL,
+                            AGPL-3.0 for the server and relay, Apache-2.0 for
+                            shared libraries, and CC-BY-4.0 for text / specs.
+                            Privacy technology should be transparent and
+                            auditable by anyone — including the open issues we
+                            haven't fixed yet.</span
                         >
                         <span class="ru"
-                            >Конструкт открыт под лицензией MIT (код) и
-                            CC-BY-4.0 (тексты / спецификации). Технологии
+                            >Конструкт открыт под weak-copyleft лицензиями:
+                            MPL-2.0 для клиентских приложений и VEIL, AGPL-3.0
+                            для сервера и релея, Apache-2.0 для общих библиотек и
+                            CC-BY-4.0 для текстов / спецификаций. Технологии
                             приватности должны быть прозрачными и доступными для
                             аудита любым желающим — включая открытые проблемы,
                             которые мы пока не исправили.</span
@@ -1370,13 +1470,13 @@
                 <p>
                     <span class="en"
                         >Built with Rust, Swift, and a commitment to privacy.<br />
-                        Open Source (MIT License) · No tracking · No ads · No
-                        compromises</span
+                        Open source (MPL-2.0 apps · AGPL-3.0 server) · No
+                        telemetry · No ads · No compromises</span
                     >
                     <span class="ru"
                         >Создан на Rust, Swift и принципах приватности.<br />
-                        Открытый исходный код (MIT) · Без слежки · Без рекламы ·
-                        Без компромиссов</span
+                        Открытый код (MPL-2.0 приложения · AGPL-3.0 сервер) · Без
+                        телеметрии · Без рекламы · Без компромиссов</span
                     >
                 </p>
                 <p style="margin-top: 1rem; font-size: 0.8125rem">

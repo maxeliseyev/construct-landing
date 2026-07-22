@@ -392,9 +392,10 @@
                                 cryptographic key sets are generated on-device:
                                 long-term identity keys, signed prekeys, and
                                 one-time prekeys (including post-quantum
-                                ML-KEM-768 keys). Only the public parts of these keys and
-                                the PoW result are sent to the server. Private
-                                keys never leave your device. Your identity
+                                ML-KEM-768 keys). Only the public parts of these
+                                keys and the PoW result are sent to the server.
+                                Private keys never leave your device. Your
+                                identity
                                 <em>is</em> these keys — there's no password to
                                 steal or recover.
                             </p>
@@ -408,11 +409,11 @@
                                 шифрования: долгосрочные ключи идентичности,
                                 подписанные предварительные ключи и одноразовые
                                 предварительные ключи (включая постквантовые
-                                ML-KEM-768). На сервер уходят только
-                                публичные части этих ключей и результат
-                                PoW-задачи. Приватные ключи никогда не покидают
-                                устройство. Вместо пароля твоя идентичность —
-                                это и есть эти ключи.
+                                ML-KEM-768). На сервер уходят только публичные
+                                части этих ключей и результат PoW-задачи.
+                                Приватные ключи никогда не покидают устройство.
+                                Вместо пароля твоя идентичность — это и есть эти
+                                ключи.
                             </p>
                         </div>
                     </details>
@@ -696,20 +697,21 @@
                                 This is the harder part. The server can still
                                 observe that <em>someone</em> delivered
                                 ciphertext to device B (recipient, time, size).
-                                With always-on <strong>Stealth (sealed
-                                sender)</strong>, it does <em>not</em> learn who
-                                sent that ciphertext — see the next question.
-                                VEIL partially obscures the network path. Full
-                                anonymity at the routing layer (hiding from the
-                                recipient's side and from network-level
-                                IP/timing correlation too) is a problem of a
-                                different order of magnitude and isn't solved
-                                today.
+                                With always-on
+                                <strong>Stealth (sealed sender)</strong>, it
+                                does <em>not</em> learn who sent that ciphertext
+                                — see the next question. VEIL partially obscures
+                                the network path. Full anonymity at the routing
+                                layer (hiding from the recipient's side and from
+                                network-level IP/timing correlation too) is a
+                                problem of a different order of magnitude and
+                                isn't solved today.
                             </p>
                             <p class="ru">
                                 Это сложнее. Сервер всё ещё может видеть, что
-                                <em>кто-то</em> доставил ciphertext на устройство
-                                B (получатель, время, размер). С always-on
+                                <em>кто-то</em> доставил ciphertext на
+                                устройство B (получатель, время, размер). С
+                                always-on
                                 <strong>Stealth (sealed sender)</strong> он
                                 <em>не</em> узнаёт, кто отправил этот ciphertext
                                 — см. следующий вопрос. VEIL частично скрывает
@@ -743,10 +745,11 @@
                                 toggle in production: the device leaves the
                                 sender field out of the envelope and seals a
                                 signed sender certificate to the recipient's
-                                identity key. The recipient decrypts and verifies
-                                who sent it; the server cannot. A few control
-                                paths (e.g. E2E heartbeats, multi-device sync,
-                                pure session control) stay identified by design.
+                                identity key. The recipient decrypts and
+                                verifies who sent it; the server cannot. A few
+                                control paths (e.g. E2E heartbeats, multi-device
+                                sync, pure session control) stay identified by
+                                design.
                             </p>
                             <p class="en">
                                 Honest limits: Stealth hides the sender
@@ -780,6 +783,55 @@
                                 анти-спама; server-side enforcement ещё
                                 раскатывается — rate-control на токенах
                                 считается зреющим, не завершённым.
+                            </p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>
+                            <span class="en"
+                                >Do you collect analytics or telemetry?</span
+                            >
+                            <span class="ru"
+                                >Вы собираете аналитику или телеметрию?</span
+                            >
+                            <span class="faq-chevron" aria-hidden="true"
+                                >▸</span
+                            >
+                        </summary>
+                        <div class="faq-answer">
+                            <p class="en">
+                                No — none. No analytics, no usage metrics, no
+                                behavioural events, no crash phone-home, no
+                                advertising identifiers. Not "collected and
+                                anonymised" — <em>not collected</em>. The app
+                                has no third-party trackers (no Firebase,
+                                Crashlytics, Sentry, Amplitude, Segment); its
+                                only external dependencies are transport/media
+                                infrastructure and an on-device ML library.
+                                Production builds also write
+                                <strong>no diagnostic logs to disk</strong> and
+                                expose no debug or log-export screen. When we
+                                need logs to fix a bug, it is you who taps
+                                "share" in a beta build — never a silent upload.
+                            </p>
+                            <p class="ru">
+                                Нет — вообще. Никакой аналитики, метрик
+                                использования, поведенческих событий, отправки
+                                крашей, рекламных идентификаторов. Не «собрано и
+                                обезличено» — <em>не собрано вовсе</em>. В
+                                приложении нет сторонних трекеров (ни Firebase,
+                                ни Crashlytics, ни Sentry, ни Amplitude, ни
+                                Segment); единственные внешние зависимости —
+                                транспорт/медиа и on-device ML-библиотека.
+                                Релизные сборки к тому же
+                                <strong
+                                    >не пишут диагностических логов на
+                                    диск</strong
+                                >
+                                и не дают экрана дебага или экспорта логов.
+                                Когда нам нужны логи для починки бага, их
+                                отправляешь ты кнопкой «поделиться» в
+                                бета-сборке — никакой тихой отправки.
                             </p>
                         </div>
                     </details>
@@ -1141,39 +1193,45 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                <em>Today: alpha runs on a single trusted server
-                                — if it goes offline, messaging stops until it
-                                returns.</em> The target architecture is three
-                                tiers of graceful degradation:
-                                <strong>federated servers</strong> (planned
-                                2027 — anyone can run one, so even if the
-                                founding team's server goes down, community
-                                servers continue);
+                                <em
+                                    >Today: alpha runs on a single trusted
+                                    server — if it goes offline, messaging stops
+                                    until it returns.</em
+                                >
+                                The target architecture is three tiers of
+                                graceful degradation:
+                                <strong>federated servers</strong> (planned 2027
+                                — anyone can run one, so even if the founding
+                                team's server goes down, community servers
+                                continue);
                                 <strong>VEIL relay nodes</strong> (planned —
                                 lightweight relay nodes that route messages
                                 without storing anything, designed to run on
                                 hardware as small as a Raspberry Pi);
-                                <strong>direct P2P</strong> (planned — when
-                                both users are online simultaneously, messages
-                                will travel directly between devices over
-                                QUIC/VEIL with no server involved). Once all
-                                three tiers ship, two users will be able to
-                                communicate as long as they have internet
-                                access, regardless of central infrastructure.
+                                <strong>direct P2P</strong> (planned — when both
+                                users are online simultaneously, messages will
+                                travel directly between devices over QUIC/VEIL
+                                with no server involved). Once all three tiers
+                                ship, two users will be able to communicate as
+                                long as they have internet access, regardless of
+                                central infrastructure.
                             </p>
                             <p class="ru">
-                                <em>Сегодня: alpha работает на одном доверенном
-                                сервере — если он уйдёт оффлайн, обмен
-                                сообщениями остановится до его возвращения.</em>
+                                <em
+                                    >Сегодня: alpha работает на одном доверенном
+                                    сервере — если он уйдёт оффлайн, обмен
+                                    сообщениями остановится до его
+                                    возвращения.</em
+                                >
                                 Целевая архитектура — три уровня плавной
                                 деградации:
-                                <strong>федеративные серверы</strong> (план
-                                2027 — любой сможет запустить свой, и даже
-                                если сервер основной команды упадёт, серверы
+                                <strong>федеративные серверы</strong> (план 2027
+                                — любой сможет запустить свой, и даже если
+                                сервер основной команды упадёт, серверы
                                 сообщества продолжат работу);
-                                <strong>VEIL relay-ноды</strong> (план —
-                                лёгкие ретрансляторы без хранения данных,
-                                рассчитанные на железо уровня Raspberry Pi);
+                                <strong>VEIL relay-ноды</strong> (план — лёгкие
+                                ретрансляторы без хранения данных, рассчитанные
+                                на железо уровня Raspberry Pi);
                                 <strong>прямой P2P</strong> (план — когда оба
                                 пользователя онлайн одновременно, сообщения
                                 будут идти напрямую между устройствами по
@@ -1204,25 +1262,24 @@
                                 receiving messages, E2EE, and all security
                                 features will never go behind a paywall.
                                 Donation-only models have historically proved
-                                fragile for privacy projects, so Konstruct
-                                plans a mix: voluntary donations, optional
-                                premium features (larger file transfers,
-                                extended history, custom themes — never
-                                security features), and B2B hosted instances
-                                for organizations. The core will always be free.
+                                fragile for privacy projects, so Konstruct plans
+                                a mix: voluntary donations, optional premium
+                                features (larger file transfers, extended
+                                history, custom themes — never security
+                                features), and B2B hosted instances for
+                                organizations. The core will always be free.
                             </p>
                             <p class="ru">
                                 Да — безусловно. Отправка сообщений, получение
                                 сообщений, E2EE и все функции безопасности
-                                никогда не окажутся за платным барьером.
-                                Модель только на донатах исторически оказалась
-                                хрупкой для privacy-проектов, поэтому Конструкт
-                                планирует комбинацию: добровольные пожертвования,
-                                опциональные premium-функции (большие файлы,
-                                расширенная история, темы — никогда функции
-                                безопасности) и B2B-хостинг для организаций.
-                                Ядро всегда будет
-                                бесплатным.
+                                никогда не окажутся за платным барьером. Модель
+                                только на донатах исторически оказалась хрупкой
+                                для privacy-проектов, поэтому Конструкт
+                                планирует комбинацию: добровольные
+                                пожертвования, опциональные premium-функции
+                                (большие файлы, расширенная история, темы —
+                                никогда функции безопасности) и B2B-хостинг для
+                                организаций. Ядро всегда будет бесплатным.
                             </p>
                         </div>
                     </details>
@@ -1243,12 +1300,15 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                <em>P2P mode is planned, not yet implemented —
-                                all traffic currently goes through the central
-                                server.</em> The target design: when both users
-                                are simultaneously online and connected to a
-                                Konstruct server, the server will signal them
-                                to upgrade to a direct peer-to-peer QUIC/VEIL
+                                <em
+                                    >P2P mode is planned, not yet implemented —
+                                    all traffic currently goes through the
+                                    central server.</em
+                                >
+                                The target design: when both users are
+                                simultaneously online and connected to a
+                                Konstruct server, the server will signal them to
+                                upgrade to a direct peer-to-peer QUIC/VEIL
                                 connection. Once established, the server exits
                                 the message relay path — traffic flows directly
                                 between devices. If either user goes offline,
@@ -1261,23 +1321,26 @@
                                 when both have the app open.
                             </p>
                             <p class="ru">
-                                <em>P2P-режим запланирован, но пока не
-                                реализован — весь трафик сейчас идёт через
-                                центральный сервер.</em> Целевой дизайн: когда
-                                оба пользователя одновременно онлайн и
-                                подключены к Конструкт-серверу, сервер подаст
-                                им сигнал для установки прямого P2P-соединения
-                                по QUIC/VEIL. После установки сервер выходит
-                                из цепочки ретрансляции — трафик идёт напрямую
-                                между устройствами. Если кто-то из пользователей
-                                уйдёт оффлайн, сервер автоматически возобновит
+                                <em
+                                    >P2P-режим запланирован, но пока не
+                                    реализован — весь трафик сейчас идёт через
+                                    центральный сервер.</em
+                                >
+                                Целевой дизайн: когда оба пользователя
+                                одновременно онлайн и подключены к
+                                Конструкт-серверу, сервер подаст им сигнал для
+                                установки прямого P2P-соединения по QUIC/VEIL.
+                                После установки сервер выходит из цепочки
+                                ретрансляции — трафик идёт напрямую между
+                                устройствами. Если кто-то из пользователей уйдёт
+                                оффлайн, сервер автоматически возобновит
                                 ретрансляцию. Шифрование (Signal Protocol)
                                 одинаково в обоих режимах — сервер всё равно
                                 никогда не мог прочитать содержимое сообщений.
                                 P2P планируется сначала для десктоп-клиентов
                                 (постоянное подключение); мобильные клиенты
-                                будут поддерживать короткие P2P-сессии когда
-                                оба держат приложение открытым.
+                                будут поддерживать короткие P2P-сессии когда оба
+                                держат приложение открытым.
                             </p>
                         </div>
                     </details>
@@ -1461,7 +1524,8 @@
                                 messages?</span
                             >
                             <span class="ru"
-                                >Какой транспорт у Конструкта для live-сообщений?</span
+                                >Какой транспорт у Конструкта для
+                                live-сообщений?</span
                             >
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
@@ -1500,7 +1564,8 @@
                                 <strong>QUIC</strong> (ConstructEngine); если
                                 QUIC режется или handshake не успевает, клиент
                                 автоматически падает на
-                                <strong>gRPC поверх HTTP/2 + TLS&nbsp;1.3</strong
+                                <strong
+                                    >gRPC поверх HTTP/2 + TLS&nbsp;1.3</strong
                                 >. Сквозное шифрование не зависит от транспорта:
                                 по проводу едет только sealed ciphertext. Такая
                                 связка (современный gRPC bidi + QUIC) редко
@@ -1598,19 +1663,29 @@
                         </summary>
                         <div class="faq-answer">
                             <p class="en">
-                                Attach logs — they're in Settings under "Debug"
-                                → "Export Logs". The more precise the scenario
-                                description (what you did, what you expected,
-                                what happened), the faster we can investigate.
-                                If it's a session issue — include logs from both
-                                devices.
+                                In diagnostic (internal) builds you can attach
+                                logs from Settings → "Debug" → "Export Logs".
+                                Note that public/production builds keep
+                                <strong>no logs</strong> and have no debug
+                                screen by design — if your build doesn't show
+                                the option, just describe the scenario and we'll
+                                get a diagnostic build to you. The more precise
+                                the description (what you did, what you
+                                expected, what happened), the faster we can
+                                investigate. For a session issue, include logs
+                                from both devices.
                             </p>
                             <p class="ru">
-                                Прикладывай логи — они в настройках в разделе
-                                «Отладка» → «Экспорт логов». Чем точнее описан
-                                сценарий (что делал, что ожидал, что произошло),
-                                тем быстрее разберёмся. Если что-то произошло с
-                                сессией — логи с обоих устройств.
+                                В диагностических (внутренних) сборках логи
+                                можно приложить из Настройки → «Отладка» →
+                                «Экспорт логов». Учти: публичные/релизные сборки
+                                <strong>логов не хранят</strong> и не имеют
+                                экрана отладки — это специально; если в твоей
+                                сборке опции нет, просто опиши сценарий, и мы
+                                дадим тебе диагностическую сборку. Чем точнее
+                                описание (что делал, что ожидал, что произошло),
+                                тем быстрее разберёмся. Если проблема с сессией
+                                — логи с обоих устройств.
                             </p>
                         </div>
                     </details>
