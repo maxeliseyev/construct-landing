@@ -321,7 +321,7 @@
                     <button
                         class="lang-btn active"
                         id="btn-en"
-                        onclick="setLang('en')"
+                        data-lang-btn="en"
                         aria-label="Switch to English"
                     >
                         EN
@@ -330,7 +330,7 @@
                     <button
                         class="lang-btn"
                         id="btn-ru"
-                        onclick="setLang('ru')"
+                        data-lang-btn="ru"
                         aria-label="Переключить на русский"
                     >
                         RU
@@ -1321,6 +1321,17 @@
                                         >bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm</code
                                     >
                                 </li>
+                                <li>
+                                    <strong>Ko-fi</strong> (card / PayPal) —
+                                    convenient but not private, the processor
+                                    knows your identity:<br />
+                                    <a
+                                        href="https://ko-fi.com/construct_msg"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                        >ko-fi.com/construct_msg</a
+                                    >
+                                </li>
                             </ul>
                             <p class="ru">
                                 Без рекламы, без перепродажи данных, без
@@ -1344,6 +1355,17 @@
                                     <strong>Bitcoin (BTC)</strong>:<br />
                                     <code style="word-break: break-all"
                                         >bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm</code
+                                    >
+                                </li>
+                                <li>
+                                    <strong>Ko-fi</strong> (карта / PayPal) —
+                                    удобно, но не приватно: платёжный сервис
+                                    знает, кто ты:<br />
+                                    <a
+                                        href="https://ko-fi.com/construct_msg"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                        >ko-fi.com/construct_msg</a
                                     >
                                 </li>
                             </ul>
@@ -1841,32 +1863,6 @@
             </div>
         </footer>
 
-        <script>
-            function setLang(lang) {
-                document.documentElement.dataset.lang = lang;
-                localStorage.setItem("construct-lang", lang);
-                document
-                    .getElementById("btn-en")
-                    .classList.toggle("active", lang === "en");
-                document
-                    .getElementById("btn-ru")
-                    .classList.toggle("active", lang === "ru");
-            }
-
-            (function () {
-                var stored = localStorage.getItem("construct-lang");
-                var lang;
-                if (stored === "en" || stored === "ru") {
-                    lang = stored;
-                } else {
-                    lang = (navigator.language || "")
-                        .toLowerCase()
-                        .startsWith("ru")
-                        ? "ru"
-                        : "en";
-                }
-                setLang(lang);
-            })();
-        </script>
+        <script src="/site.js" defer></script>
     </body>
 </html>

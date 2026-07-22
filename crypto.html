@@ -233,9 +233,7 @@
                                         <div class="chat-actions">
                                             <button
                                                 type="button"
-                                                onclick="
-                                                    sendToyMessage('alice')
-                                                "
+                                                data-action="send-alice"
                                             >
                                                 Отправить Бобу
                                             </button>
@@ -279,13 +277,13 @@
                                         <div class="chat-actions">
                                             <button
                                                 type="button"
-                                                onclick="sendToyMessage('bob')"
+                                                data-action="send-bob"
                                             >
                                                 Отправить Алисе
                                             </button>
                                             <button
                                                 type="button"
-                                                onclick="clearToyChat()"
+                                                data-action="clear-chat"
                                             >
                                                 Очистить чат
                                             </button>
@@ -306,16 +304,14 @@
                                             type="button"
                                             id="view_hex"
                                             class="is-active"
-                                            onclick="setToyDisplayMode('hex')"
+                                            data-action="view-hex"
                                         >
                                             hex
                                         </button>
                                         <button
                                             type="button"
                                             id="view_decimal"
-                                            onclick="
-                                                setToyDisplayMode('decimal')
-                                            "
+                                            data-action="view-decimal"
                                         >
                                             decimal
                                         </button>
@@ -453,7 +449,7 @@
                             <div class="mitm-actions">
                                 <button
                                     id="mitm_toggle_button"
-                                    onclick="toggleMITM()"
+                                    data-action="toggle-mitm"
                                 >
                                     Показать MITM атаку
                                 </button>
@@ -693,7 +689,7 @@ Chain Key₂ → Message Key₂ → шифруем "Как дела?"
                                     <p>Сервер видит:</p>
                                     <code
                                         >{ "from": "Алиса", "to": "Боб",
-                                        "content": "🔒" }</code
+                                        "content": "[encrypted]" }</code
                                     >
                                 </div>
                             </div>
@@ -702,11 +698,11 @@ Chain Key₂ → Message Key₂ → шифруем "Как дела?"
                                 <div class="panel panel--ok">
                                     <p>Сервер видит:</p>
                                     <code
-                                        >{ "to": "Боб", "content": "📦" }</code
+                                        >{ "to": "Боб", "content": "[sealed]" }</code
                                     >
                                     <p>
                                         <small
-                                            >Внутри 📦: зашифрованный конверт с
+                                            >Внутри [sealed]: зашифрованный конверт с
                                             отправителем</small
                                         >
                                     </p>
@@ -741,10 +737,10 @@ Chain Key₂ → Message Key₂ → шифруем "Как дела?"
                     </div>
                     <div class="section__demo">
                         <div class="actions">
-                            <button onclick="simulateDelivery()">
+                            <button data-action="sim-delivery">
                                 Боб получил сообщение
                             </button>
-                            <button onclick="simulateRead()">
+                            <button data-action="sim-read">
                                 Боб прочитал
                             </button>
                         </div>
@@ -779,7 +775,11 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                         <div class="grid">
                             <div class="tool-card">
                                 <p class="tool-card__lead">
-                                    Вычисли 2^<input
+                                    Вычисли открытый ключ
+                                </p>
+                                <p class="tool-card__hint">(база G = 2)</p>
+                                <p class="tool-card__formula">
+                                    2^<input
                                         type="number"
                                         id="pow_input"
                                         value="12"
@@ -788,7 +788,7 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                                     />
                                     mod 71
                                 </p>
-                                <button onclick="computePow()">
+                                <button data-action="compute-pow">
                                     Вычислить
                                 </button>
                                 <div class="number" id="pow_result">49</div>
@@ -808,7 +808,7 @@ secret_bob = pow(alice_pub, bob_priv, p)</code></pre>
                                     />
                                     mod 71
                                 </p>
-                                <button onclick="computeShared()">
+                                <button data-action="compute-shared">
                                     Вычислить
                                 </button>
                                 <div class="number" id="shared_result">57</div>

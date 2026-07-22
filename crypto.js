@@ -529,3 +529,22 @@ document
   .addEventListener("change", updateBruteforce);
 document.getElementById("bf_bits").addEventListener("input", updateBruteforce);
 document.getElementById("bf_rate").addEventListener("change", updateBruteforce);
+
+// Demo action buttons wired via data-action (replaces inline onclick so the CSP
+// can use a strict script-src 'self'). Delegated so it covers all buttons.
+document.addEventListener("click", function (e) {
+  var b = e.target.closest("[data-action]");
+  if (!b) return;
+  switch (b.dataset.action) {
+    case "send-alice": sendToyMessage("alice"); break;
+    case "send-bob": sendToyMessage("bob"); break;
+    case "clear-chat": clearToyChat(); break;
+    case "view-hex": setToyDisplayMode("hex"); break;
+    case "view-decimal": setToyDisplayMode("decimal"); break;
+    case "toggle-mitm": toggleMITM(); break;
+    case "sim-delivery": simulateDelivery(); break;
+    case "sim-read": simulateRead(); break;
+    case "compute-pow": computePow(); break;
+    case "compute-shared": computeShared(); break;
+  }
+});

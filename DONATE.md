@@ -27,6 +27,16 @@ bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm
 > property of Bitcoin, not a choice we can hide — use Monero if this matters to
 > you.
 
+## Ko-fi (card / PayPal) — convenient, not private
+
+For a one-off or recurring donation by card or PayPal:
+
+<https://ko-fi.com/construct_msg>
+
+> Note: fiat payments are **not anonymous** — the payment processor (Ko-fi,
+> Stripe, PayPal) knows your identity. Use Monero if you want a private donation.
+> This option exists only to lower the barrier for people who don't use crypto.
+
 ## Verify this file (PGP)
 
 This file is signed, so you can confirm the addresses are authentic even if the site or repo is
