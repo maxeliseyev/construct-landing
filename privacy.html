@@ -97,7 +97,7 @@
                 <a href="/" class="back-link">← Konstruct</a>
                 <h1>Privacy Policy</h1>
                 <p class="privacy-meta">
-                    Last Updated: June 19, 2026 &nbsp;·&nbsp; Effective Date:
+                    Last Updated: July 27, 2026 &nbsp;·&nbsp; Effective Date:
                     March 4, 2026
                 </p>
             </div>
@@ -254,8 +254,8 @@
                     a signed sender certificate to the recipient's identity key
                     — only the recipient can recover who sent the message; the
                     server cannot. Privacy Pass anonymous tokens can accompany
-                    sealed sends for anti-spam; server-side token enforcement
-                    is still rolling out. Stealth does not hide message timing,
+                    sealed sends for anti-spam; server-side token enforcement is
+                    still rolling out. Stealth does not hide message timing,
                     size, or your IP address from the network layer.
                 </p>
 
@@ -289,8 +289,8 @@
                         <strong>No message content</strong> is ever included in
                         push notifications. The notification contains only a
                         generic signal that causes your device to connect and
-                        fetch the encrypted message, or — for calls — to
-                        present the incoming call.
+                        fetch the encrypted message, or — for calls — to present
+                        the incoming call.
                     </li>
                 </ul>
 
@@ -304,7 +304,58 @@
                     </li>
                 </ul>
 
-                <h3>2.7 What We Do NOT Collect</h3>
+                <h3>2.7 Voice and Video Calls</h3>
+                <p>
+                    Voice and video calls are end-to-end encrypted. Call setup —
+                    the WebRTC session description (SDP) and ICE connectivity
+                    candidates — is exchanged over the
+                    <strong>same end-to-end-encrypted message path</strong> as
+                    your chats, so our servers cannot read it. Call media
+                    (audio/video) uses WebRTC's DTLS-SRTP; because the
+                    media-encryption keys are exchanged and authenticated inside
+                    that end-to-end-encrypted signaling, the media is encrypted
+                    end-to-end between the two devices — neither our servers nor
+                    any relay we use can decrypt it.
+                </p>
+                <p>
+                    To connect a call, the two devices exchange candidate
+                    network addresses (standard WebRTC ICE) to find a direct
+                    path. When a direct connection is not possible, encrypted
+                    media is relayed through a TURN server: the relay forwards
+                    only encrypted media it cannot read, but it does see the
+                    participants' network addresses. This connection metadata is
+                    necessary to route the call and is not linked to message
+                    content. Incoming calls are woken via the PushKit VoIP token
+                    described in 2.5; the push carries no call content.
+                </p>
+
+                <h3>2.8 Media Attachments</h3>
+                <p>
+                    When you send a photo, video, file, or voice message, the
+                    attachment is compressed and encrypted on your device
+                    (AES-256-GCM under a fresh per-file key) before it is
+                    uploaded. The decryption key travels
+                    <strong
+                        >only inside the end-to-end-encrypted message</strong
+                    >
+                    to the recipient — it is never sent to, or held by, the
+                    media server. The server stores only the opaque encrypted
+                    blob, identified by a random media ID, and cannot read its
+                    contents.
+                </p>
+                <p>
+                    Encrypted media objects are
+                    <strong
+                        >automatically deleted after approximately 7
+                        days</strong
+                    >
+                    from upload (independent of whether they were downloaded);
+                    the recipient's device fetches and decrypts them within that
+                    window. We store no plaintext media and no media metadata
+                    beyond the encrypted blob and its ID.
+                </p>
+
+                <h3>2.9 What We Do NOT Collect</h3>
                 <p>
                     The following are explicitly <strong>not</strong> collected
                     or stored:
@@ -320,11 +371,6 @@
                     </li>
                     <li>❌ Message history (deleted after delivery)</li>
                     <li>❌ Location data</li>
-                    <li>❌ Device model or OS version</li>
-                    <li>
-                        ❌ IP address logs (your IP is seen by the connection
-                        layer but is not persistently stored)
-                    </li>
                     <li>
                         ❌ Typing indicators or read receipts beyond delivery
                         confirmation
@@ -332,15 +378,49 @@
                     <li>❌ Third-party analytics or tracking SDKs</li>
                 </ul>
 
+                <h3>2.10 IP Addresses and Connection Metadata</h3>
+                <p>
+                    Connecting to any online service exposes your IP address to
+                    its servers at the network layer — this is unavoidable, and
+                    Konstruct is no exception. However, we do
+                    <strong>not store your raw IP address</strong>. For anti-abuse
+                    we derive a <strong>salted, one-way hash</strong> of the
+                    connecting address and use only that tag — never the raw
+                    address — to enforce per-address rate limits (for example,
+                    limiting device registrations and proof-of-work challenges).
+                    The hashed tag, not your real IP, is what appears in our
+                    rate-limit state and operational logs; the raw address is not
+                    written to our databases, and we keep no raw IP-to-account
+                    mapping.
+                </p>
+                <p>
+                    We do not use your address, or its hashed tag, to build
+                    behavioural profiles, link it to your message content, or
+                    share it for advertising. In the interest of honesty: a salted
+                    hash <em>reduces</em> exposure rather than perfectly
+                    anonymising it — because the IPv4 address space is small, a
+                    party holding the secret salt could still test candidate
+                    addresses. It removes the raw address from everything we
+                    store; it is not a guarantee that your network origin can
+                    never be determined by our infrastructure.
+                </p>
+                <p>
+                    If you want to keep your network address off the path
+                    entirely, route your connection through <strong>VEIL</strong>
+                    (our obfuscation transport), a VPN, or Tor — though the
+                    endpoint that terminates your connection still sees the
+                    apparent source address of that connection.
+                </p>
+
                 <h2>3. Traffic Analysis Protection</h2>
                 <p>
                     Konstruct implements
                     <strong>message padding</strong> (rounding ciphertext to
-                    fixed size buckets) and <strong>randomised send-timing
-                    jitter</strong> to make it harder for a network observer to
-                    infer message size or exact timing from your connection.
-                    These mitigations are active by default and require no
-                    configuration.
+                    fixed size buckets) and
+                    <strong>randomised send-timing jitter</strong> to make it
+                    harder for a network observer to infer message size or exact
+                    timing from your connection. These mitigations are active by
+                    default and require no configuration.
                 </p>
                 <p>
                     We deliberately do <strong>not</strong> send scheduled
@@ -357,8 +437,8 @@
                 </p>
                 <p>
                     Separately, <strong>VEIL</strong> is Konstruct's
-                    network-level transport obfuscation layer (obfs4 /
-                    WebTunnel pluggable transports, with a
+                    network-level transport obfuscation layer (obfs4 / WebTunnel
+                    pluggable transports, with a
                     <em>veil-front</em> honest-front HTTPS layer in rollout). It
                     helps your connection blend in with ordinary HTTPS traffic
                     when direct TLS is throttled or blocked, but it is a
@@ -449,19 +529,23 @@
                 <h3>6.2 Encryption</h3>
                 <ul>
                     <li>
-                        <strong>In transit:</strong> Client–server messaging uses
-                        a gRPC bidirectional stream over QUIC when available,
-                        with automatic fallback to gRPC over HTTP/2 + TLS 1.3
-                        (Envoy / edge on port 443). Control and auth RPCs use
-                        the same encrypted transport stack
+                        <strong>In transit:</strong> Client–server messaging
+                        uses a gRPC bidirectional stream over QUIC when
+                        available, with automatic fallback to gRPC over HTTP/2 +
+                        TLS 1.3 (Envoy / edge on port 443). Control and auth
+                        RPCs use the same encrypted transport stack
                     </li>
                     <li>
                         <strong>At rest:</strong> Database encryption enabled
                     </li>
                     <li>
-                        <strong>End-to-end:</strong> Signal Protocol — X3DH key
-                        agreement (X25519) + Double Ratchet with
-                        ChaCha20-Poly1305 AEAD
+                        <strong>End-to-end:</strong> Signal-Protocol-based —
+                        X3DH / PQXDH key agreement (X25519 combined with the
+                        post-quantum ML-KEM-768) and a Double Ratchet with
+                        ChaCha20-Poly1305 AEAD. Sender authentication uses
+                        hybrid Ed25519 + ML-DSA (post-quantum) signatures. Media
+                        attachments are encrypted with AES-256-GCM under a
+                        per-file key.
                     </li>
                 </ul>
 
@@ -496,6 +580,13 @@
                             <td>
                                 Deleted immediately upon confirmed delivery
                                 (ACK)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Media attachments (encrypted)</td>
+                            <td>
+                                Auto-deleted ~7 days after upload (by object
+                                age, regardless of download)
                             </td>
                         </tr>
                         <tr>
@@ -569,8 +660,10 @@
                         (end-to-end encrypted)
                     </li>
                     <li>
-                        We hold <strong>minimal metadata</strong> (no content,
-                        no IP logs, no usage patterns)
+                        We hold <strong>minimal metadata</strong> — no message
+                        content, no raw IP addresses (only salted hashes for
+                        anti-abuse, see Section 2.10), and no behavioural or
+                        usage profiling
                     </li>
                     <li>
                         We will notify affected users unless legally prohibited
@@ -620,10 +713,18 @@
                     from account settings.
                 </p>
 
-                <h2>9. Children's Privacy</h2>
+                <h2>9. Minimum Age</h2>
                 <p>
-                    Konstruct is not intended for users under 13 years of age.
-                    We do not knowingly collect data from children.
+                    Konstruct is intended for users
+                    <strong>16 years of age and older</strong>, consistent with
+                    the app's 16+ App Store age rating. It is not directed to,
+                    or intended for, anyone under 16, and we do not knowingly
+                    collect data from anyone under 16. Because Konstruct holds
+                    only the minimal routing metadata described above and no
+                    message content, the data associated with any account is
+                    limited by design. If you believe someone under 16 is using
+                    Konstruct, contact us (Section 12) and we will act
+                    accordingly.
                 </p>
 
                 <h2>10. Federation (Planned)</h2>
@@ -681,26 +782,24 @@
                 <table class="summary-table" aria-label="Privacy summary">
                     <tbody>
                         <tr>
-                            <td>✅ No phone number or email required</td>
-                            <td>✅ End-to-end encrypted (Signal Protocol)</td>
+                            <td>No phone number or email required</td>
+                            <td>End-to-end encrypted (Signal Protocol)</td>
                         </tr>
                         <tr>
-                            <td>✅ Fully anonymous use supported</td>
-                            <td>
-                                ✅ Messages deleted after confirmed delivery
-                            </td>
+                            <td>Fully anonymous use supported</td>
+                            <td>Messages deleted after confirmed delivery</td>
                         </tr>
                         <tr>
-                            <td>✅ No tracking or analytics SDKs</td>
-                            <td>✅ Traffic obfuscation built in</td>
+                            <td>No tracking or analytics SDKs</td>
+                            <td>Traffic obfuscation built in</td>
                         </tr>
                         <tr>
                             <td>Private keys never leave your device</td>
                             <td>Minimal metadata only</td>
                         </tr>
                         <tr>
-                            <td>✅ No third-party data sales</td>
-                            <td>✅ GDPR jurisdiction (EU, Netherlands)</td>
+                            <td>No third-party data sales</td>
+                            <td>GDPR jurisdiction (EU, Netherlands)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -711,8 +810,8 @@
             <div class="container">
                 <p>
                     Built with Rust, Swift, and a commitment to privacy.<br />
-                    Open source (MPL-2.0 apps · AGPL-3.0 server) · No telemetry ·
-                    No ads · No compromises
+                    Open source (MPL-2.0 apps · AGPL-3.0 server) · No telemetry
+                    · No ads · No compromises
                 </p>
                 <p style="margin-top: 1rem; font-size: 0.8125rem">
                     © 2026 Konstruct. Privacy is a right, not a privilege.
