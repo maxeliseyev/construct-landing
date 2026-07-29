@@ -2,32 +2,24 @@
 
 These instructions apply to GitHub Copilot, Codex, OpenCode, and similar coding agents working in this repository.
 
-## Shared Construct docs
+## Documentation & session notes
 
-- Use `~/Code/construct-docs` as the shared Construct documentation vault.
-- Treat `~/Code/construct-docs/raw` as the source corpus. Do not rewrite, normalize, or reorganize files there unless the task explicitly targets raw-doc curation.
-- Treat `~/Code/construct-docs/wiki` as the canonical curated knowledge base.
-- Treat `~/Code/construct-docs/wiki/.drafts` as reserved for the `obsidian-llm-wiki-local` draft-review workflow. Do not write there manually unless the task explicitly involves `olw`.
+All docs live in `~/Code/construct-docs` (Obsidian vault, flat domain folders:
+`architecture/ backend/ client/ cryptocore/ security/ decisions/ sessions/ …`).
+**The vault's `AGENTS.md` is authoritative** for structure and writing rules — read it before
+contributing docs. If a path is missing, search the domain folder rather than trusting old links.
 
-## Where to save durable reasoning
+After any session with architectural changes, design decisions, root-cause analysis, or
+non-obvious choices:
 
-- If a task produces durable implementation notes, rationale, architecture conclusions, or cross-repo findings, store them in the wiki vault instead of creating ad-hoc markdown notes in this repository unless repo-local docs are explicitly requested.
-- Use `~/Code/construct-docs/wiki/sessions/YYYY-MM-DD-<topic>.md` for session notes.
-- Use `~/Code/construct-docs/wiki/decisions/` for long-lived decisions that should survive beyond one task.
-- Before creating a new session or decision note, look for an existing relevant note and extend it instead of duplicating content.
+1. Write a session note `sessions/YYYY-MM-DD-<topic>.md` (sections: Context / What Changed /
+   **Why** / Decisions / Open Questions) — `## Why` with rejected alternatives is mandatory.
+2. If it constrains future work, add/update `decisions/<slug>.md`.
+3. Patch the affected spec in its domain folder in the **same** session.
+4. Append one line to `~/Code/construct-docs/log.md`: `[YYYY-MM-DD HH:MM] note | <topic>`.
 
-## Session note template
+Session notes are plain markdown, no YAML frontmatter; `[[wikilinks]]` to other notes are welcome.
+Before creating a note, search for an existing one and extend it rather than duplicating.
 
-When you create or update a session note, prefer these sections:
-
-1. `# Context`
-2. `# What Changed`
-3. `# Why`
-4. `# Intended Outcome`
-5. `# Decisions`
-6. `# Open Questions`
-
-## Operational logging
-
-- Keep `~/Code/construct-docs/wiki/log.md` as a short operational log.
-- Append a concise entry there when work materially updates the knowledge base or when a durable audit trail is useful.
+Prefer the vault over ad-hoc markdown files in this repository unless repo-local docs are
+explicitly requested.
