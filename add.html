@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Open a Konstruct Messenger invite">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Konstruct — Invite</title>
+
+    <link rel="preload" href="/styles.css" as="style" />
+    <link rel="preload" href="/contact.css" as="style" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/contact.css" />
+</head>
+<body>
+    <main class="contact-page">
+        <div class="contact-container" role="main">
+            <h1>Add Contact</h1>
+            <p class="message" id="message">
+                Open this invite in Konstruct Messenger to connect.
+            </p>
+
+            <nav aria-label="Invite actions">
+                <a href="#" class="button" id="openAppButton" aria-label="Open invite in Konstruct Messenger">
+                    Open in app
+                </a>
+            </nav>
+
+            <div class="loading" id="loading" aria-live="polite" aria-busy="true" hidden>
+                <div class="spinner" aria-label="Loading"></div>
+                <p style="margin-top: 12px; color: var(--fg-muted);">Opening Konstruct…</p>
+            </div>
+
+            <div class="error" id="error" role="alert" aria-live="assertive" hidden></div>
+        </div>
+    </main>
+
+    <script src="/add.js" defer></script>
+</body>
+</html>

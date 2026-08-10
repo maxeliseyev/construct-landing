@@ -13,6 +13,10 @@
       "destination": "/contact.html?userId=:userId"
     },
     {
+      "source": "/add",
+      "destination": "/add.html"
+    },
+    {
       "source": "/privacy",
       "destination": "/privacy.html"
     }
