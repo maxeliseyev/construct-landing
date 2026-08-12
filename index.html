@@ -197,7 +197,7 @@
 
         <main id="main-content">
 
-            <!-- ── Why not Signal / architecture ─────────────────────────── -->
+            <!-- ── What is different / architecture ─────────────────────── -->
             <section aria-labelledby="why-heading">
                 <div class="container">
                     <h2 id="why-heading"><span data-i18n="home.why.title">What is different here</span></h2>
@@ -530,121 +530,6 @@
                 </div>
             </section>
 
-            <section aria-labelledby="comparison-heading">
-                <div class="container">
-                    <h2 id="comparison-heading">
-                        <span data-i18n="home.comparison.industry-comparison">Industry Comparison</span></h2>
-
-                    <div role="region" aria-labelledby="comparison-heading">
-                        <table role="table" aria-label="Messenger comparison">
-                            <thead>
-                                <tr>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.platform">Platform</span></th>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.identifier"
-                                            >Identifier Required</span
-                                        ></th
-                                    >
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.federated">Federated</span></th>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.e2ee-default">E2EE Default</span></th>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.post-quantum">Post-Quantum</span></th>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.p2p-mode">P2P Mode</span></th>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.protocol">Protocol</span></th>
-                                    <th scope="col">
-                                        <span data-i18n="home.comparison.open-source">Open Source</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Signal</th>
-                                    <td>Phone</td>
-                                    <td>No</td>
-                                    <td>Yes</td>
-                                    <td>Yes (PQXDH)</td>
-                                    <td>No</td>
-                                    <td>REST/JSON</td>
-                                    <td>Yes</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">WhatsApp</th>
-                                    <td>Phone</td>
-                                    <td>No</td>
-                                    <td>Yes</td>
-                                    <td>No</td>
-                                    <td>No</td>
-                                    <td>Proprietary</td>
-                                    <td>No</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Telegram</th>
-                                    <td>Phone</td>
-                                    <td>No</td>
-                                    <td>No*</td>
-                                    <td>No</td>
-                                    <td>No</td>
-                                    <td>MTProto</td>
-                                    <td>Partial</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Matrix</th>
-                                    <td>Username</td>
-                                    <td>Yes</td>
-                                    <td>Optional</td>
-                                    <td>Planned</td>
-                                    <td>No</td>
-                                    <td>HTTP/JSON</td>
-                                    <td>Yes</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Session†</th>
-                                    <td><strong>None</strong></td>
-                                    <td>Decentralised</td>
-                                    <td>Yes</td>
-                                    <td>No</td>
-                                    <td>Onion</td>
-                                    <td>Proprietary</td>
-                                    <td>Yes</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <strong>Konstruct</strong>
-                                    </th>
-                                    <td><strong>None</strong></td>
-                                    <td><strong>Planned</strong></td>
-                                    <td>Yes</td>
-                                    <td>
-                                        <strong
-                                            >KEM (opt-in)<sup>‡</sup></strong
-                                        >
-                                    </td>
-                                    <td><strong>Planned</strong></td>
-                                    <td>
-                                        <strong>gRPC bidi + QUIC</strong>
-                                    </td>
-                                    <td>Yes</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p
-                            style="
-                                margin-top: 1rem;
-                                font-size: 0.875rem;
-                                color: var(--fg-muted);
-                            "
-                        >
-                            <span data-i18n-html="home.comparison.t9"
-                                >* Telegram E2EE only in "Secret Chats", not default.<br /> † Session also requires no phone number — that is its main pitch. Session V1 still uses static long-term keys with <em>no forward secrecy or post-compromise security</em>.<br /> ‡ Konstruct's post-quantum key agreement (ML-KEM-768, PQXDH) is deployed and applies from the second message of a conversation; sessions that negotiate it additionally run a continuous ML-KEM ratchet. Hybrid PQ signatures (ML-DSA-65) have working crypto and server-side verification — client rotation orchestration is still in progress.<br /> Live messaging uses a gRPC bidirectional stream on QUIC (HTTP/2 fallback).</span
-                            >
-                            </p>
-                    </div>
-                </div>
-            </section>
 
 
             <section aria-labelledby="roadmap-heading">
@@ -907,6 +792,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=f6bd99a7a4" defer></script>
+        <script src="/site.js?v=33d7e5fa91" defer></script>
     </body>
 </html>
