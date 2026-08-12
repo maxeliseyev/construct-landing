@@ -178,12 +178,6 @@
                         ><span data-i18n="home.post-quantum-kem">Post-Quantum KEM</span></span
                     >
                     <span class="badge"
-                        ><span data-i18n="home.federated-planned">Federated (Planned)</span></span
-                    >
-                    <span class="badge"
-                        ><span data-i18n="home.p2p-planned">P2P (Planned)</span></span
-                    >
-                    <span class="badge"
                         ><span data-i18n="home.server-blind-content">Server-Blind Content</span></span
                     >
                     <span class="badge"
@@ -289,27 +283,7 @@
                         <span data-i18n-html="home.about.t9">Konstruct implements these principles using the <strong>Signal Protocol</strong> design (X3DH handshake + Double Ratchet) — the same end-to-end encryption design that powers Signal and WhatsApp — implemented from scratch in Rust. We extend it with post-quantum key agreement (<strong>ML-KEM-768</strong>, NIST FIPS&nbsp;203) at session setup, and a continuous ML-KEM ratchet during the session, so traffic recorded today stays protected once cryptographically relevant quantum computers exist.</span>
                         </p>
                     <p>
-                        <span data-i18n-html="home.about.t10">Unlike centralized platforms, Konstruct is designed
- for <strong>federation</strong> — eventually you
- will be able to choose or run your own server
- (<code>you@your-server.example</code>). The server
- is blind to message <strong>content</strong>: it
- stores only public keys and encrypted ciphertext,
- never plaintext. Sender-side metadata minimisation
- uses
- <strong>always-on sealed sender (Stealth)</strong>
- for eligible traffic — the server does not see who
- sent a message, only the recipient, arrival time,
- and size (honest limits: timing/IP still visible on
- the wire). A future release will also support
- <strong>direct peer-to-peer delivery</strong> when
- both parties are online, removing the server from
- the data path entirely.
- <em
- >Federation and P2P are part of the 2027
- roadmap; today the network is a single trusted
- server.</em
- ></span>
+                        <span data-i18n-html="home.about.t10">The server is blind to message <strong>content</strong>: it stores public keys and encrypted ciphertext, never plaintext. Sender-side metadata minimisation uses <strong>always-on sealed sender</strong> for eligible traffic — the server does not see who sent a message, only the recipient, arrival time and size. Honest limits: timing and IP remain visible on the wire. <em>Today the network is a single trusted server.</em></span>
                         </p>
                     <p>
                         <span data-i18n-html="home.about.t11"
@@ -351,7 +325,7 @@
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.discovery"
-                            ><strong>How people find each other.</strong> Without a phone book there is no cold outreach: a conversation starts with a QR code or an invite link, single-use and valid for about five minutes. Discovery by username exists, is optional, and is off until you turn it on. When federation ships, addresses will look like email and can be read out over the phone <em>(2027)</em>.</span
+                            ><strong>How people find each other.</strong> Without a phone book there is no cold outreach: a conversation starts with a QR code or an invite link, single-use and valid for about five minutes. Discovery by username exists, is optional, and is off until you turn it on.</span
                         >
                     </p>
                     <p>
@@ -791,6 +765,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=bedb60dbea" defer></script>
+        <script src="/site.js?v=dcc86f5c6e" defer></script>
     </body>
 </html>
