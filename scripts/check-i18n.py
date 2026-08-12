@@ -76,6 +76,41 @@ def main() -> int:
         ok = False
         print(f"FAIL empty en values: {empty[:5]}")
 
+    # A `data-i18n` key is written with textContent, so an HTML entity in its value
+    # is printed literally — Safari showed "2026 &nbsp;·&nbsp; Effective". Only
+    # `data-i18n-html` keys go through innerHTML and may carry markup.
+    #
+    # This is the same defect the extractor had: it chose the attribute by looking
+    # for a *tag* (`<[a-z]`), and an entity is not a tag. One carrier, two meanings.
+    attr_of = {}
+    for name in HTML_FILES:
+        text = (ROOT / name).read_text(encoding="utf-8")
+        for m in re.finditer(r'data-i18n(-html)?="([^"]+)"', text):
+            attr_of[m.group(2)] = "html" if m.group(1) else "text"
+
+    entity = re.compile(r"&(?:[a-zA-Z][a-zA-Z0-9]{1,31}|#\d+|#[xX][0-9a-fA-F]+);")
+    literal = [
+        f"{lang}:{k}"
+        for lang, d in dicts.items()
+        for k, v in d.items()
+        if attr_of.get(k) == "text" and isinstance(v, str) and entity.search(v)
+    ]
+    if literal:
+        ok = False
+        print(f"FAIL {len(literal)} textContent value(s) contain HTML entities "
+              f"— they will render literally: {literal[:5]}")
+
+    markup = [
+        f"{lang}:{k}"
+        for lang, d in dicts.items()
+        for k, v in d.items()
+        if attr_of.get(k) == "text" and isinstance(v, str) and re.search(r"<[a-zA-Z/]", v)
+    ]
+    if markup:
+        ok = False
+        print(f"FAIL {len(markup)} textContent value(s) contain tags "
+              f"— use data-i18n-html: {markup[:5]}")
+
     if ok:
         print(f"OK: {len(base)} keys × {len(LANGS)} langs; {len(used)} HTML refs")
         return 0

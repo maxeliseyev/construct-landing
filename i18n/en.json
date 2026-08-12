@@ -185,7 +185,7 @@
   "home.telemetry.t4": "<strong>Production keeps no logs.</strong> Release builds write no diagnostic log to disk and expose no debug or log-export surface. When we need logs to fix a bug, it is <em>you</em> who taps \"share\" in a beta build — never a silent background upload.",
   "home.telemetry.t5": "<strong>Honest about what the server must see.</strong> To route ciphertext the server necessarily holds a small, fixed set of metadata (recipient, timing, size, your public keys, push token) — always-on sealed sender removes even <em>who sent</em> a message from the stored envelope. What we don't yet fully solve (timing/IP correlation) lives in our <a href=\"/privacy\">Privacy Policy</a>, not in a marketing promise.",
   "privacy.privacy-policy.h11": "Privacy Policy",
-  "privacy.privacy-policy.p2": "Last Updated: July 27, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026",
+  "privacy.privacy-policy.p2": "Last Updated: July 27, 2026  ·  Effective Date: March 4, 2026",
   "privacy.s1.h21": "1. Introduction",
   "privacy.s1.p2": "Konstruct is a privacy-first, end-to-end encrypted messenger built on the Signal Protocol. This policy explains exactly what data we collect, why we collect it, and what we do not collect. We have designed Konstruct from the ground up to minimize the data we hold about you.",
   "privacy.s1.p3": "<strong>Core Principle:</strong> We collect the absolute minimum data necessary to route encrypted messages. Your message content is end-to-end encrypted — our servers cannot read it, and we do not attempt to.",
