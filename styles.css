@@ -686,3 +686,19 @@ section[aria-labelledby="features-heading"] ul li::before {
     color: var(--fg-muted);
     font-size: 0.9375rem;
 }
+
+/* Layering: every block opens with a sentence a non-technical reader can finish,
+   and the protocol detail follows. Same words, different order — a reader who
+   stops after the first line still leaves knowing what this is. */
+.hero-anchors {
+    color: var(--fg-muted);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    margin-top: 0.75rem;
+}
+.section-lead {
+    color: var(--fg-muted);
+    border-left: 2px solid var(--border);
+    padding-left: 1rem;
+    margin-bottom: var(--space-lg, 1.5rem);
+}

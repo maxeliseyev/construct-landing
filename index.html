@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=3b40e5de43" as="style" />
-        <link rel="stylesheet" href="styles.css?v=3b40e5de43" />
-        <link rel="stylesheet" href="effects.css?v=3b40e5de43" />
+        <link rel="preload" href="styles.css?v=59c5714a4d" as="style" />
+        <link rel="stylesheet" href="styles.css?v=59c5714a4d" />
+        <link rel="stylesheet" href="effects.css?v=59c5714a4d" />
         
     </head>
 
@@ -160,9 +160,10 @@
                 </h1>
                 <p>
                     <span data-i18n="home.t4"
-                        >No phone number. No email. No name. An account is a keypair your device generates, and the server only learns the public half. Signal Protocol with post-quantum key agreement, a live gRPC stream over QUIC, and the sender stripped out of every envelope.</span
+                        >No phone number. No email. No name. Your account is a keypair your device generates, and the server only ever learns the public half.</span
                     >
                     </p>
+                <p class="hero-anchors" data-i18n="home.t4b">Signal Protocol · post-quantum key agreement (ML-KEM-768) · gRPC stream over QUIC · sealed sender always on</p>
 
                 <div class="badges">
                     <span class="badge"
@@ -371,6 +372,7 @@
                 <div class="container">
                     <h2 id="how-it-works-heading">
                         <span data-i18n="home.how-it-works.technical-architecture">Technical Architecture</span></h2>
+                    <p class="section-lead" data-i18n="home.how-it-works.lead">The short version: messages are encrypted on your device, the server moves them without being able to read them, and it does not learn who sent them. The rest of this section is how, for readers who want it.</p>
                     <p>
                         <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. Konstruct’s live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback.</span>
                         </p>
@@ -443,6 +445,7 @@
                     <h2 id="features-heading">
                         <span data-i18n="home.features.key-features">Key Features</span></h2>
                     <ul>
+                    
                         <li>
                             <span data-i18n-html="home.features.t2"><strong
  >End-to-end encryption by default</strong
@@ -454,17 +457,7 @@
  messages stay secure even if keys leak.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-768</strong> (Kyber-768) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH), and sessions that negotiate it also re-key continuously inside the Double Ratchet. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.features.t5"><strong>Federation</strong> — run your own
- server or use a trusted provider, with
- email-like addressing.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.features.t6"><strong>Lightweight server</strong> —
- Rust-based, minimal resource use, easy
- self-hosting.</span>
+                            <span data-i18n-html="home.features.t5"><strong>Censorship protection</strong> — on by default. Direct while that works, switching only when it demonstrably stops.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.features.t7"><strong>Zen UI</strong> — no notification spam,
@@ -472,9 +465,15 @@
  interaction.</span>
                             </li>
                         <li>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-768</strong> (Kyber-768) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH), and sessions that negotiate it also re-key continuously inside the Double Ratchet. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up.</span>
+                            </li>
+                        <li>
                             <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC bidirectional MessageStream over <strong>QUIC</strong> (HTTP/2 fallback), censorship-resistant routing when the direct path is blocked, direct P2P planned when both peers are online.</span>
                             </li>
-                    </ul>
+                        <li>
+                            <span data-i18n-html="home.features.t6"><strong>Open source</strong> — clients, server and transport, under weak-copyleft licences. Running your own server is on the roadmap; the app cannot yet be pointed at one.</span>
+                            </li>
+                        </ul>
                 </div>
             </section>
 
@@ -792,6 +791,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=33d7e5fa91" defer></script>
+        <script src="/site.js?v=bedb60dbea" defer></script>
     </body>
 </html>
