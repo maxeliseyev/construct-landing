@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LANGS = ("en", "ru", "ja")
-HTML_FILES = ("index.html", "faq.html")
+HTML_FILES = ("index.html", "faq.html", "privacy.html")
 
 
 def load_dict(lang: str) -> dict:
