@@ -261,6 +261,58 @@ check(
     "free effectiveness report for whoever is doing the blocking.",
 )
 
+# ── Donation addresses ───────────────────────────────────────────────────────
+#
+# DONATE.md is PGP-signed and says so: "If an address shown on the website ever
+# differs from what is committed here, trust this file, not the page." Nothing
+# enforced that. The QR images are the sharper risk — most people scan rather
+# than read, and a swapped QR passes every text comparison.
+
+donate = read(SITE / "DONATE.md")
+if donate:
+    want = {}
+    m = re.search(r"^(4[0-9A-Za-z]{94,105})$", donate, re.M)
+    if m:
+        want["xmr"] = m.group(1)
+    m = re.search(r"^(bc1[0-9a-z]{20,60})$", donate, re.M)
+    if m:
+        want["btc"] = m.group(1)
+
+    for kind, addr in want.items():
+        check(
+            f"donate-{kind}-in-copy",
+            addr in COPY,
+            f"The {kind.upper()} address published on the site is not the one in the signed "
+            f"DONATE.md. Verify with `gpg --verify DONATE.md.asc DONATE.md` before changing "
+            f"anything.",
+        )
+        # Any address of that shape on the site must be *the* address.
+        pat = r"4[0-9A-Za-z]{94,105}" if kind == "xmr" else r"bc1[0-9a-z]{20,60}"
+        rogue = {a for a in re.findall(pat, COPY)} - {addr}
+        check(
+            f"donate-{kind}-no-rogue",
+            not rogue,
+            f"The site carries a second {kind.upper()}-shaped address: {sorted(rogue)[:1]}",
+        )
+
+    for kind, addr in want.items():
+        f = SITE / f"qr-{kind}.svg"
+        if not f.exists():
+            continue
+        try:
+            sys.path.insert(0, str(SITE / "scripts"))
+            from qr_modules import check as qr_check
+            verdict = qr_check(str(f), addr)
+        except Exception as e:                      # qrencode missing, parse change
+            check(f"donate-{kind}-qr", None, f"could not verify: {e}")
+            continue
+        check(
+            f"donate-{kind}-qr",
+            verdict.startswith("MATCH"),
+            f"qr-{kind}.svg does not encode the signed {kind.upper()} address ({verdict}). "
+            f"A swapped QR is invisible to every text check on this page.",
+        )
+
 # ── Roadmap honesty ──────────────────────────────────────────────────────────
 
 if copy_says(r"\bfederat"):
