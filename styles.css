@@ -581,3 +581,46 @@ section[aria-labelledby="features-heading"] ul li::before {
 
 /* Locale text is applied via data-i18n / data-i18n-html + /i18n/{lang}.json.
    Legacy class-based .en/.ru/.ja siblings are no longer used on index/faq. */
+
+/* ── Crypto address (shared: index + faq) ──────────────────────────────── */
+/* A crypto address stays on one line and scrolls, never wraps: a 95-character
+   Monero address broken across two lines left "vn" alone on the second and read
+   as a rendering fault. No visible scrollbar. Click-to-copy is wired generically
+   in site.js, so any page that loads it gets the behaviour — this lives in the
+   shared sheet rather than one page's inline <style> for exactly that reason. */
+.addr {
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    font-size: 0.8rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+}
+.addr:hover {
+    border-color: var(--accent);
+}
+.addr::-webkit-scrollbar {
+    display: none;
+}
+.addr.copied {
+    border-color: var(--accent);
+}
+.addr.copied::after {
+    content: "✓";
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-elevated);
+    color: var(--accent);
+    font-size: 0.8rem;
+    padding: 1px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+}

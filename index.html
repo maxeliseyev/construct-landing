@@ -81,48 +81,7 @@
         <link rel="preload" href="styles.css?v=20260812-lang" as="style" />
         <link rel="stylesheet" href="styles.css?v=20260812-lang" />
         <link rel="stylesheet" href="effects.css?v=20260812-lang" />
-        <style>
-            
-            /* One-line address that can scroll on narrow screens without an
-               ugly scrollbar; on desktop the full-width card fits it outright.
-               Click-to-copy: the whole address is the button. */
-            .addr {
-                display: block;
-                position: relative;
-                white-space: nowrap;
-                overflow-x: auto;
-                scrollbar-width: none;
-                font-size: 0.8rem;
-                background: var(--bg);
-                border: 1px solid var(--border);
-                border-radius: 6px;
-                padding: 8px 10px;
-                cursor: pointer;
-                transition: border-color 0.15s ease;
-            }
-            .addr:hover {
-                border-color: var(--accent);
-            }
-            .addr::-webkit-scrollbar {
-                display: none;
-            }
-            .addr.copied {
-                border-color: var(--accent);
-            }
-            .addr.copied::after {
-                content: "✓";
-                position: absolute;
-                right: 6px;
-                top: 50%;
-                transform: translateY(-50%);
-                background: var(--bg-elevated);
-                color: var(--accent);
-                font-size: 0.8rem;
-                padding: 1px 8px;
-                border-radius: 4px;
-                border: 1px solid var(--accent);
-            }
-        </style>
+        
     </head>
 
     <body class="landing">
