@@ -9,10 +9,6 @@
       "destination": "/faq.html"
     },
     {
-      "source": "/crypto",
-      "destination": "/crypto.html"
-    },
-    {
       "source": "/c/:userId",
       "destination": "/contact.html?userId=:userId"
     },
@@ -23,6 +19,18 @@
     {
       "source": "/privacy",
       "destination": "/privacy.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/crypto",
+      "destination": "/faq",
+      "permanent": false
+    },
+    {
+      "source": "/crypto.html",
+      "destination": "/faq",
+      "permanent": false
     }
   ],
   "headers": [

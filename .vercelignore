@@ -1,0 +1,7 @@
+# Withdrawn from the public site 2026-08-12 — kept in git, not deployed.
+# The cryptography explainer is unaudited (see the landing copy audit) and is
+# Russian-only on an English-default site. Restore by deleting these three lines,
+# the redirect in vercel.json, and un-commenting the demo card in faq.html.
+crypto.html
+crypto.css
+crypto.js
