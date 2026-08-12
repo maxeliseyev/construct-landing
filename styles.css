@@ -628,7 +628,8 @@ section[aria-labelledby="features-heading"] ul li::before {
 /* ── "Why not Signal" + architecture diagram ──────────────────────────────── */
 .why-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    max-width: 900px;
     gap: var(--space-lg, 1.5rem);
     margin: var(--space-lg, 1.5rem) 0;
 }
