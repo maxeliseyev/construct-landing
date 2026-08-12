@@ -29,10 +29,29 @@ remains in the HTML as a no-JS / failed-fetch fallback. Language chrome is the
 HUD dropdown `LANG::XX ▾`.
 
 ```bash
-python3 scripts/check-i18n.py   # key parity + HTML refs
+python3 scripts/check-i18n.py    # key parity, markup-in-textContent, locale cache key
+python3 scripts/check-claims.py  # every factual claim, re-derived from the sibling repos
 # optional re-extract from class-based HTML (legacy):
 # python3 scripts/migrate-i18n.py
 ```
+
+### Enable the pre-push hook
+
+Both checks run on `git push`. `core.hooksPath` is local config, so a fresh clone
+needs this once:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+`check-claims.py` reads `../construct-core`, `../construct-messenger` and
+`../construct-server`; without them it reports SKIP rather than failing. It exists
+because the site published several things that were not true — a retired component
+named as the production transport, a delivery status that does not exist, and the
+regions where censorship circumvention currently works. `check-i18n.py` also derives
+`I18N_CACHE_VER` in `site.js` from the locale contents: change a translation without
+it and browsers keep serving the old dictionary, which looks like the language
+switcher being broken.
 
 ## Local preview
 

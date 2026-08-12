@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# Refuse to push copy that no longer matches the code.
+#
+# Both checks are cheap (well under a second) and both exist because the site
+# said things that were not true: check-claims re-derives the factual claims from
+# the sibling repositories, check-i18n enforces key parity, catches markup in
+# textContent values, and recomputes the locale cache key that browsers use.
+#
+# Enabled with:   git config core.hooksPath .githooks
+# (hooksPath is local config, so a fresh clone needs that line again — see README.)
+#
+# Escape hatch:   git push --no-verify
+# Use it when the sibling repos are not checked out, not to silence a real result.
+
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+fail=0
+
+printf '\n[pre-push] i18n consistency\n'
+python3 scripts/check-i18n.py || fail=1
+
+printf '\n[pre-push] claims still match the code\n'
+python3 scripts/check-claims.py || fail=1
+
+if [ "$fail" -ne 0 ]; then
+    cat <<'EOF'
+
+[pre-push] BLOCKED — the site would publish something the checks disagree with.
+
+Fix the finding, or push with --no-verify if you are certain the check is wrong
+(and then fix the check, because the next person will hit it too).
+EOF
+    exit 1
+fi
+
+printf '\n[pre-push] ok\n\n'

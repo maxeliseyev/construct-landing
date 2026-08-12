@@ -730,15 +730,7 @@
                         <span data-i18n="home.roadmap.decentralization-roadmap">Decentralization Roadmap</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.roadmap.t5"><strong
- >Phase 1 — Core Relay (H2 2026):</strong
- >
- standalone
- <code>construct-relay</code> binary deployable
- on a \$5 VPS or Raspberry Pi · single Docker
- container, no Kafka/Redis/PostgreSQL required ·
- preserves all E2EE guarantees · federation
- gateway for backward compatibility.</span>
+                            <span data-i18n-html="home.roadmap.t5"><strong>Phase 1 — Core Relay:</strong> the standalone <code>construct-relay</code> binary — store-and-forward for server-to-server messages, verifying each origin signature before passing it on. Deployable on a small VPS or a Raspberry Pi from a two-container compose file (the relay plus Redis for its retry queue); no PostgreSQL, no Kafka. It carries sealed ciphertext it cannot read, so end-to-end guarantees are unchanged. The binary exists; the federated network it is for does not yet.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.roadmap.t6"><strong
@@ -949,10 +941,7 @@
                     </div>
                     <p style="font-size: 0.875rem; color: var(--fg-muted)">
                         <span data-i18n="home.support.t6">Security tip: these addresses are also published, PGP-signed, in the project repository — cross-check them there before sending, in case this page is ever tampered with. Signing key fingerprint:</span>
-                        <code style="word-break: break-all"
-                            >13AC BE18 0D7B 20A2 4D2D D6B0 99DD 3ECE 736F
-                            0672</code
-                        >
+                        <code>13AC BE18 0D7B 20A2 4D2D D6B0 99DD 3ECE 736F 0672</code>
                     </p>
                 </div>
             </section>
