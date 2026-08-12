@@ -645,6 +645,27 @@ section[aria-labelledby="features-heading"] ul li::before {
     padding-left: 1rem;
 }
 .why-answer { margin: 0; }
+/* "Opaque identifier" is the one piece of jargon this block cannot avoid — it is
+   the accurate word for what the server holds. Explaining it inline would bloat
+   the statement it belongs to, so it gets a footnote instead: the term stays
+   precise for a reader who knows it, and a reader who does not gets an answer
+   without leaving the page. */
+.fn-marker {
+    color: var(--accent);
+    font-size: 0.75em;
+    vertical-align: super;
+    line-height: 0;
+    margin-left: 1px;
+}
+.why-note {
+    max-width: 68ch;
+    /* Aligned with the text inside .why-item, past its 2px rule + 1rem padding,
+       so the note reads as belonging to the list rather than to the page. */
+    padding-left: calc(1rem + 2px);
+    margin: var(--space-sm) 0 0;
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+}
 .why-counter {
     border: 1px solid var(--border);
     border-radius: 8px;

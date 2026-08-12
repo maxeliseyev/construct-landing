@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=d81bcf89d9" as="style" />
-        <link rel="stylesheet" href="styles.css?v=d81bcf89d9" />
-        <link rel="stylesheet" href="effects.css?v=d81bcf89d9" />
+        <link rel="preload" href="styles.css?v=0be9933931" as="style" />
+        <link rel="stylesheet" href="styles.css?v=0be9933931" />
+        <link rel="stylesheet" href="effects.css?v=0be9933931" />
         
     </head>
 
@@ -202,15 +202,16 @@
                         <p class="why-answer"><span data-i18n-html="home.why.id.answer"><strong>An account is a keypair.</strong> No phone number, no email, no required username, and discovery is off by default. A subpoena to a carrier reaches nothing, because no carrier is in the loop.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.transport.answer"><strong>A live stream, not polling.</strong> gRPC bidirectional over QUIC with HTTP/2 fallback — one long-lived stream that survives a change of network without a new handshake.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional over QUIC with HTTP/2 fallback — one long-lived stream that survives a change of network without a new handshake.</span></p>
                     </div>
                     <div class="why-item">
                         <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-768 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH). The first message of a conversation is classical-only by design; everything after it is not.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender is unconditional for ordinary traffic. To route a message the server has an opaque account id, a size and a time.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<span class="fn-marker">*</span> is unconditional for ordinary traffic. To route a message the server has an opaque account id<span class="fn-marker">&dagger;</span>, a size and a time.</span></p>
                     </div>
                     </div>
+                    <p class="why-note"><span data-i18n-html="home.why.note"><span class="fn-marker">*</span> <strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.<br /><span class="fn-marker">&dagger;</span> An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created. Like a cloakroom ticket: it gets your coat back, but the ticket itself tells nobody whose coat it is.</span></p>
                     <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The counterweight, stated plainly: this is alpha.</strong> One server, iOS only, and no external audit yet. One-to-one chats and calls work; group chats and channels do not exist yet, and neither does sync between your own devices.</span></p>
 
             </section>
@@ -278,7 +279,7 @@
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.limit"
-                            ><strong>The honest limit:</strong> cryptography
+                            >The limit: cryptography
                             cannot make you unobservable. Timing and IP
                             correlation remain visible on the wire, and a
                             sufficiently resourced adversary works at that
@@ -417,7 +418,7 @@
                         <span data-i18n="home.roadmap.development-roadmap">Development Roadmap</span></h2>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf · live <strong>gRPC bidi MessageStream over QUIC</strong> (HTTP/2 fallback; intercontinental production validation) · X3DH + Double Ratchet · PQXDH with ML-KEM-768 · session healing · WebRTC voice/video calls with E2EE signaling · iOS TestFlight beta · censorship-resistant transport · always-on Stealth (sealed sender) for eligible traffic.</span>
+                            <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf · live <strong>gRPC bidi MessageStream over QUIC</strong> (HTTP/2 fallback; intercontinental production validation) · X3DH + Double Ratchet · PQXDH with ML-KEM-768 · session healing · WebRTC voice calls with E2EE signaling · iOS TestFlight beta · censorship-resistant transport · always-on Stealth (sealed sender) for eligible traffic.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> macOS Desktop client (iOS-direct crypto path, no public build yet) · Android client (currently Phase 0 — Rust core builds, Kotlin wrapper TBD) · BIP39 / SLIP-39 social recovery · MLS group chats (RFC 9420) · first external security audit · hybrid PQ signatures (ML-DSA-65) — crypto core and server storage / verification implemented, client-side orchestration (identity generation, key rotation) not yet wired into the shared core.</span>
@@ -436,7 +437,7 @@
                         <span data-i18n="home.roadmap.other-planned-work">Other Planned Work</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n="home.roadmap.t10">Privacy Pass token enforcement (anti-spam on the always-on sealed-sender path) · desktop applications for Windows, Linux · formal verification (Kani).</span>
+                            <span data-i18n="home.roadmap.t10">video calls · Privacy Pass token enforcement (anti-spam on the always-on sealed-sender path) · desktop applications for Windows, Linux · formal verification (Kani).</span>
                             </li>
                     </ul>
                     <p>
@@ -491,7 +492,7 @@
                     <h2 id="support-heading">
                         <span data-i18n="home.support.support-the-project">Support the Project</span></h2>
                     <p>
-                        <span data-i18n-html="home.support.t2">No ads, no data resale, no telemetry — Konstruct
+                        <span data-i18n-html="home.support.t2">No ads, data resale or telemetry — Konstruct
  runs on voluntary donations. If you want the
  messaging core to stay free and independent, a
  donation directly funds development and the server.
@@ -656,7 +657,7 @@
                     "Post-quantum key agreement (ML-KEM-768, PQXDH)",
                     "ChaCha20-Poly1305 AEAD",
                     "gRPC bidirectional MessageStream over QUIC (HTTP/2 fallback)",
-                    "WebRTC voice/video calls with E2EE signaling",
+                    "WebRTC voice calls with E2EE signaling",
                     "Censorship-resistant transport",
                     "Federation (planned)",
                     "Direct P2P delivery (planned)",
@@ -671,6 +672,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=0b2fdb8c9f" defer></script>
+        <script src="/site.js?v=5dc148185c" defer></script>
     </body>
 </html>

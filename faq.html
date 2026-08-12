@@ -22,8 +22,8 @@
             sizes="180x180"
             href="apple-touch-icon.png"
         />
-        <link rel="preload" href="styles.css?v=d81bcf89d9" as="style" />
-        <link rel="stylesheet" href="styles.css?v=d81bcf89d9" />
+        <link rel="preload" href="styles.css?v=0be9933931" as="style" />
+        <link rel="stylesheet" href="styles.css?v=0be9933931" />
 
         <style>
             .status-list { list-style: none; padding: 0; margin: 0; }
@@ -434,7 +434,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.contacts.p3">The system is designed so that a stranger cannot simply start messaging you. To open a conversation, one of you shares a QR code or an invite link and the other scans or follows it. Those are single-use and expire in about five minutes — a link that has been accepted once cannot be accepted again. Separately, you may switch on discovery in settings and be findable by username; that is off by default, so unless you turn it on, an invite is the only way in.</p>
+                            <p data-i18n="faq.contacts.p3">The system is designed so that a stranger cannot simply start messaging you. To start a conversation, one of you shares a QR code or an invite link and the other scans or follows it. Those are single-use and expire in five minutes — a link that has been accepted once cannot be accepted again. Separately, you may switch on discovery in settings and be findable by username; that is off by default, so unless you turn it on, an invite is the only way in.</p>
                             </div>
                     </details>
 
@@ -458,7 +458,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.contacts.p7">The code lives for about five minutes and can be accepted only once, so a leaked link is either already spent or about to expire. If someone does get in, you will see a new conversation and can block them immediately.</p>
+                            <p data-i18n="faq.contacts.p7">The code lives for five minutes and can be accepted only once, so a leaked link is either already spent or about to expire. If someone does get in, you will see a new conversation and can block them immediately.</p>
                             </div>
                     </details>
                 </section>
@@ -480,7 +480,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read content technically, not just by policy. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-768</strong> secret to the recipient's Kyber prekey and it is mixed into the ratchet, which is what limits "record now, decrypt with a quantum computer later". One honest detail: the contribution is applied after the first message, so message zero of a new conversation is protected classically and everything from the second message on is not. Messages then use Double Ratchet, which rotates keys with every message, so compromising one key exposes neither past nor future messages (forward secrecy + break-in recovery).</p>
+                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-768</strong> secret to the recipient's Kyber prekey and it is mixed into the ratchet, which is what limits "record now, decrypt with a quantum computer later". One honest detail: the contribution is applied after the first message, so message zero of a new conversation is protected classically and everything from the second message on is not. Messages then use Double Ratchet, which rotates keys with every message, so compromising one key exposes neither past nor future messages.</p>
                             </div>
                     </details>
 
@@ -492,7 +492,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an <strong>opaque account id</strong> for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Delivered messages are not kept. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
+                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an opaque account id for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Delivered messages are not kept. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
                             </div>
                     </details>
 
@@ -566,7 +566,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.profile.p3">Your Display Name and avatar live on your device; they are not part of your public profile and nobody can look them up. When you start a new conversation the other person sees only a generated pseudonym, deterministic — always the same for a given ID. To show them your real name and photo, open their profile and tap "Share Profile": both travel over the encrypted channel. One honest exception: if you send a contact request, your username and Display Name are attached to it so the recipient can tell who is asking. The server stores that snapshot encrypted at rest, under a key the server itself holds — it is not end-to-end encrypted, and your avatar is never included.</p>
+                            <p data-i18n="faq.profile.p3">Your Display Name and avatar live on your device; they are not part of your public profile and nobody can look them up. When you start a new conversation the other person sees only a generated pseudonym, deterministic — always the same for a given ID. To show them your real name and photo, open their profile and tap "Share Profile": both travel over the encrypted channel. One exception: if you send a contact request, your username and Display Name are attached to it so the recipient can tell who is asking. The server stores that snapshot encrypted at rest, under a key the server itself holds — it is not end-to-end encrypted, and your avatar is never included.</p>
                             </div>
                     </details>
 
@@ -578,7 +578,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.profile.p5">A blank name would be awkward — you'd see featureless rows in your chat list with no way to tell contacts apart. The generated name is stable: "Quick Falcon" is always "Quick Falcon" for that ID, on any device. That's more useful than a raw UUID.</p>
+                            <p data-i18n="faq.profile.p5">A blank name would be awkward — you'd see featureless rows in your chat list with no way to tell contacts apart. The generated name is stable: "Quick Falcon" is always "Quick Falcon" for that ID, on any device.</p>
                             </div>
                     </details>
 
@@ -628,7 +628,7 @@
                                         <span class="status-icon status-icon--ok"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.6 10.2l2.3 2.3 4.5-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                                         <span class="status-text">
                                             <strong data-i18n="faq.messages.status.delivered.name">Delivered</strong>
-                                            <span data-i18n="faq.messages.status.delivered.what">the recipient's device decrypted it and sent back an encrypted receipt</span>
+                                            <span data-i18n="faq.messages.status.delivered.what">the recipient's device decrypted it and sent back a confirmation</span>
                                         </span>
                                     </li>
                                     <li class="status-row">
@@ -745,7 +745,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.resilience.donate.p">No ads, no data resale, no telemetry — the flip side is that Konstruct runs on voluntary donations. They go directly to development and the server. Prefer <strong>Monero (XMR)</strong> if you care about privacy — unlike Bitcoin its chain isn't public. Always cross-check an address against the project repository before sending, in case a page is tampered with.</p>
+                            <p data-i18n-html="faq.resilience.donate.p">No ads, data resale or telemetry — the flip side is that Konstruct runs on voluntary donations. They go directly to development and the server. Prefer <strong>Monero (XMR)</strong> if you care about privacy — unlike Bitcoin its chain isn't public. Always cross-check an address against the project repository before sending, in case a page is tampered with.</p>
                             <ul data-i18n-html="faq.resilience.donate.list"><li><strong>Monero (XMR)</strong> — recommended:<br /><code class="addr" title="Click to copy">496i5qvPzRtJPQjiPXnLvEGutjHFth4pWDQaJwbbMreyaTYg4qfbo48MXrTnYH32MHiAn5GcSEN1c48EYBvVkrx9Pi5BWvn</code></li><li><strong>Bitcoin (BTC)</strong>:<br /><code class="addr" title="Click to copy">bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm</code></li><li><strong>Ko-fi</strong> — convenient but not private, the processor knows your identity:<br /><a href="https://ko-fi.com/construct_msg" rel="noopener noreferrer" target="_blank">ko-fi.com/construct_msg</a></li></ul>
                         </div>
                     </details>
@@ -901,7 +901,7 @@
                             <span data-i18n="faq.demo-title.t2">An interactive cryptography demo shows how key exchange, Double Ratchet, and post-quantum algorithms work step by step. Available for testers and the curious.</span>
                             </p>
                         <a href="/crypto" class="demo-btn">
-                            <span data-i18n="faq.demo-title.open-cryptography-demo">Open Cryptography Demo →</span>
+                            <span data-i18n="faq.demo-title.open-cryptography-demo">Open Cryptography Demo</span>
                             </a>
                     </div>
                 </section>
@@ -914,7 +914,7 @@
             <div class="container">
                 <p>
                     <a href="/">
-                        <span data-i18n="faq.demo-title.back-to-home">← Back to home</span>
+                        <span data-i18n="faq.demo-title.back-to-home">Back to home</span>
                         </a>
                 </p>
                 <p>
@@ -926,6 +926,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=0b2fdb8c9f" defer></script>
+        <script src="/site.js?v=5dc148185c" defer></script>
     </body>
 </html>

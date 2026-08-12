@@ -41,11 +41,24 @@ def read(path: pathlib.Path) -> str | None:
 
 
 def site_copy() -> str:
-    """All public English copy: the i18n strings plus the pages without i18n."""
+    """Every published string, in every locale, plus the pages themselves.
+
+    This read en.json alone for its first month, which made it a checker for the
+    *translation*. Russian is the language the copy is written in — the English
+    and Japanese are derived from it — so scanning only English inspected the
+    downstream copy and trusted the source. A claim corrected in en.json while
+    ru.json kept the old sentence passed green, and a claim only ever made in
+    Russian was never read at all.
+
+    Locale values are joined with a newline, not a space: a sentence ending one
+    string and a sentence starting the next must not fuse into a phrase that
+    matches a pattern neither of them contains.
+    """
     parts = []
-    en = read(SITE / "i18n/en.json")
-    if en:
-        parts.append(" ".join(json.loads(en).values()))
+    for lang in ("en", "ru", "ja"):
+        raw = read(SITE / f"i18n/{lang}.json")
+        if raw:
+            parts.append("\n".join(json.loads(raw).values()))
     for page in ("index.html", "faq.html", "privacy.html", "crypto.html"):
         t = read(SITE / page)
         if t:
@@ -312,6 +325,110 @@ if donate:
             f"qr-{kind}.svg does not encode the signed {kind.upper()} address ({verdict}). "
             f"A swapped QR is invisible to every text check on this page.",
         )
+
+# ── The two identity spaces ──────────────────────────────────────────────────
+#
+# The privacy policy said the User ID was "derived mathematically from your
+# device's cryptographic Identity Key". It is not: the server inserts
+# gen_random_uuid(). What IS a hash of the identity key is the *Device ID*
+# (hex(SHA256(pk)[0..16])), a different identifier in a different space —
+# exactly the confusion AGENTS.md flags as CRITICAL, here leaking into a legal
+# document. It also had the privacy argument backwards: a derived id is
+# computable by anyone holding the public key, a random UUID is not.
+#
+# Both halves are pinned, because either drifting alone re-opens the claim.
+
+repo_claim(
+    "user-id-is-server-random",
+    SERVER, "crates/construct-db/src/lib.rs",
+    r"INSERT INTO users\s*\([^)]*\bid\b[^)]*\)\s*VALUES\s*\(\s*gen_random_uuid\(\)",
+    present=True,
+    detail="users.id is no longer gen_random_uuid(). The policy says the User ID is a "
+           "random UUID the server generates and is not derived from your keys — "
+           "re-read the INSERT before touching privacy.s2_1.li3.",
+)
+
+repo_claim(
+    "device-id-is-hash-of-identity-key",
+    CORE, "src/device_id.rs",
+    r"fn derive_device_id\(identity_public_key: &\[u8\]\)",
+    present=True,
+    detail="derive_device_id() changed shape. The policy says the Device ID is a hash "
+           "of the public Identity Key (privacy.s2_1.li3b) — verify before shipping.",
+)
+
+# The first version of this check matched only "derived|выведен|導出", because that
+# is the wording of the one instance I had found. It passed green while a second
+# copy of the same false claim sat in privacy.s8_1.p2 saying "cryptographic hash"
+# — a checker written against the sample instead of against the claim. The claim
+# is "the User ID is a function of something", however that is phrased.
+if copy_says(r"user\s*id"):
+    check(
+        "user-id-not-claimed-derived",
+        not copy_says(
+            # The gap must not cross a sentence end OR a string boundary: strings are
+            # concatenated to form the corpus, and "[^.!?]" happily matched the
+            # newline between them — fusing the Japanese User ID line to the Device
+            # ID line that follows it, which legitimately says "hash". Japanese ends
+            # sentences with "。", so that has to stop the gap too.
+            r"user\s*id[^.!?。\n]{0,160}"
+            r"(derived|derive|выведен|производн|"
+            r"(cryptographic |криптографическ\w+ )?(hash|хеш|хэш|ハッシュ)|"
+            # Japanese negates after the verb, so the stem alone matches the
+            # sentence that says the opposite: 導出されておらず = "is NOT derived".
+            r"導出(?![^。]{0,14}(おらず|いません|いない|ありません|ず))|"
+            r"from your .{0,30}key|из .{0,30}ключа)"
+        ),
+        "The copy says the User ID is a hash of, or derived from, something. It is "
+        "gen_random_uuid() on the server — a value with no preimage. Being a function "
+        "of a key would be WORSE here: anyone holding that public key could recompute "
+        "it. Derivation belongs to the Device ID (privacy.s2_1.li3b), not the User ID.",
+    )
+
+# ── Calls are audio-only ─────────────────────────────────────────────────────
+#
+# The privacy policy had a section headed "Voice and Video Calls" and described
+# encrypting "call media (audio/video)". Video was never started: CallsFeature
+# says isVideoEnabled = false, every call site passes hasVideo: false, and there
+# is not one VideoTrack in Services/Calls. The signalling wiring exists, which is
+# how the claim got written — wiring is not a feature.
+
+repo_claim(
+    "video-calls-still-off",
+    IOS, "ConstructMessenger/Services/Calls/CallsFeature.swift",
+    r"isVideoEnabled: Bool \{ false \}",
+    present=True,
+    detail="isVideoEnabled is no longer hard-false. If video calling shipped, the "
+           "privacy policy (privacy.s2_7.*) and the roadmap have to stop saying it "
+           "is not implemented.",
+)
+
+# A blacklist of the phrasings that actually shipped on this site, not a general
+# "is video mentioned" test. The first attempt at this check was vacuous: it
+# accepted the copy if the word "planned" appeared ANYWHERE, and the roadmap
+# always contains it, so the assertion was true by construction. Mutation caught
+# it — restoring the old "Voice and Video Calls" heading did not turn it red.
+#
+# NOT COVERED, deliberately: a novel phrasing ("we support camera calls") passes
+# this. The load-bearing guard is video-calls-still-off above, which reads the
+# flag in the app; this one only stops the exact sentences from coming back.
+VIDEO_SHIPPED = (
+    r"voice(?: |/|, | and )*video calls? (?:are|is)\b|"
+    r"call media \(audio/video\)|voice/video call|audio/video\b|"
+    r"voice and video calls|"
+    r"аудио-? и видеозвонк|видеозвонки защищ|аудио/видеозвонк|"
+    r"音声・ビデオ通話|音声/ビデオ通話"
+)
+
+if copy_says(r"video call|видеозвон|ビデオ通話"):
+    check(
+        "video-calls-not-claimed-shipped",
+        not copy_says(VIDEO_SHIPPED),
+        "The copy states video calls as a working feature. CallsFeature."
+        "isVideoEnabled is false, every call site passes hasVideo: false, and there "
+        "is no VideoTrack anywhere in Services/Calls. The signalling is wired, which "
+        "is how this got written the first time — wiring is not a feature.",
+    )
 
 # ── Roadmap honesty ──────────────────────────────────────────────────────────
 
