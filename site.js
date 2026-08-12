@@ -21,7 +21,11 @@
     };
 
     // Bump when JSON shape or cache semantics change.
-    var I18N_CACHE_VER = "v1";
+    // Bump on ANY change to i18n/*.json. The sessionStorage copy is keyed by this
+// alone, so a stale dict survives a deploy: adding privacy.* left the switcher
+// reading RU while every string fell back to English, because the cached
+// dictionary simply had no such keys and applyI18n skips a missing value.
+var I18N_CACHE_VER = "v2";
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
