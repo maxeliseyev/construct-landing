@@ -211,7 +211,7 @@
                         <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender is unconditional for ordinary traffic. To route a message the server has an opaque account id, a size and a time.</span></p>
                     </div>
                     </div>
-                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The counterweight, stated plainly: this is alpha.</strong> One server, iOS only, and no external audit yet. Calls are one-to-one; group chats and sync between your own devices are still being built. If you need something that simply works for a group of people today, this is not it yet.</span></p>
+                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The counterweight, stated plainly: this is alpha.</strong> One server, iOS only, and no external audit yet. One-to-one chats and calls work; group chats and channels do not exist yet, and neither does sync between your own devices.</span></p>
 
             </section>
             <section aria-labelledby="about-heading">
@@ -404,50 +404,8 @@
                     <h2 id="telemetry-heading">
                         <span data-i18n="home.telemetry.no-telemetry-not-anonymised-absent">No Telemetry. Not Anonymised — Absent.</span></h2>
                     <p>
-                        <span data-i18n-html="home.telemetry.t2">Konstruct collects
- <strong
- >no analytics, no usage metrics, no behavioural
- events, no crash phone-home</strong
- >
- and no advertising identifiers. Not "collected and
- anonymised" — <em>not collected</em>. This is
- possible because we are not funded by advertising or
- data resale, so there is no reason to watch you, and
- the app is built so we can't.</span>
-                        </p>
-                    <ul>
-                        <li>
-                            <span data-i18n-html="home.telemetry.t3"><strong>No third-party SDKs.</strong> No
- Firebase, Crashlytics, Sentry, Amplitude,
- Segment — no tracker of any kind. The app's only
- external dependencies are transport and media
- infrastructure (gRPC, WebRTC) and an on-device
- ML library. No ATT prompt, no SKAdNetwork.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.telemetry.t4"><strong>Production keeps no logs.</strong>
- Release builds write no diagnostic log to disk
- and expose no debug or log-export surface. When
- we need logs to fix a bug, it is
- <em>you</em> who taps "share" in a beta build —
- never a silent background upload.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.telemetry.t5"><strong
- >Honest about what the server must
- see.</strong
- >
- To route ciphertext the server necessarily holds
- a small, fixed set of metadata (recipient,
- timing, size, your public keys, push token) —
- always-on sealed sender removes even
- <em>who sent</em> a message from the stored
- envelope. What we don't yet fully solve
- (timing/IP correlation) lives in our
- <a href="/privacy">Privacy Policy</a>, not in a
- marketing promise.</span>
-                            </li>
-                    </ul>
+                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, push token — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
+                    </p>
                 </div>
             </section>
 
@@ -713,6 +671,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=071607bfef" defer></script>
+        <script src="/site.js?v=0b2fdb8c9f" defer></script>
     </body>
 </html>
