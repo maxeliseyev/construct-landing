@@ -31,6 +31,7 @@ SERVER = HOME / "construct-server"
 VERBOSE = "-v" in sys.argv
 failures: list[str] = []
 skipped: list[str] = []
+executed = 0
 
 
 def read(path: pathlib.Path) -> str | None:
@@ -67,9 +68,11 @@ def site_copy() -> str:
 
 
 def check(name: str, ok: bool | None, detail: str) -> None:
+    global executed
     if ok is None:
         skipped.append(f"SKIP {name}: {detail}")
         return
+    executed += 1
     if ok:
         if VERBOSE:
             print(f"  ok   {name}")
@@ -452,4 +455,19 @@ if failures:
     print(f"\n{len(failures)} claim(s) no longer match the code.")
     sys.exit(1)
 
-print("OK: every checked claim still matches the code.")
+# Without the sibling repos every repo_claim SKIPs and this printed "OK: every
+# checked claim still matches the code" with exit 0 — true, vacuously, because
+# nothing was checked. That is the reassuring shape this whole file exists to
+# avoid, and it is the shape that let SessionQueueWiringTests read all-zeros for
+# five weeks. "Could not check" is not "checked and fine", so it is not green.
+#
+# --allow-missing-repos is for the case where you know and accept it (a CI job
+# that only lints the copy). It still prints what went unverified.
+if skipped and "--allow-missing-repos" not in sys.argv:
+    print(f"{len(skipped)} claim(s) COULD NOT BE CHECKED — the code they describe was not\n"
+          "readable. This is not a pass. Check out the sibling repos beside this one, or\n"
+          "pass --allow-missing-repos if you are deliberately linting copy alone.")
+    sys.exit(2)
+
+print(f"OK: {executed} claim(s) checked against the code"
+      + (f"; {len(skipped)} skipped." if skipped else "."))

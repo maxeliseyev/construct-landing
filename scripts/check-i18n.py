@@ -151,6 +151,33 @@ def main() -> int:
               'cache key. Fetch "/i18n/" + lang + ".json?v=" + I18N_CACHE_VER.')
 
 
+    # A privacy policy's "Last Updated" is not decoration — it states when users
+    # were told something. On 2026-08-12 the policy's definition of the User ID was
+    # corrected, a Device ID entry was added and video calling was removed from it,
+    # and the line still read "July 27, 2026". Nobody lied; a hand-maintained date
+    # just does not move on its own. Same fix as the cache markers: stamp what the
+    # date refers to, and fail when the text moves without it.
+    stamp_file = ROOT / "scripts/.privacy-stamp"
+    raw = stamp_file.read_text(encoding="utf-8").split() if stamp_file.exists() else []
+    h = hashlib.sha256()
+    for lang in LANGS:
+        d = load_dict(lang)
+        for key in sorted(k for k in d
+                          if k.startswith("privacy.") and k != "privacy.privacy-policy.p2"):
+            h.update(key.encode() + b"\x00" + d[key].encode() + b"\x00")
+    want_stamp = h.hexdigest()[:12]
+    if len(raw) != 2:
+        ok = False
+        print("FAIL scripts/.privacy-stamp is missing or malformed — "
+              "run `python3 scripts/stamp-privacy.py`.")
+    elif raw[1] != want_stamp:
+        ok = False
+        print(f"FAIL privacy policy text changed ({raw[1]} -> {want_stamp}) but "
+              f'"Last Updated" still says {raw[0]}. If the change was substantive, run '
+              "`python3 scripts/stamp-privacy.py`; if it was a typo fix, run it anyway — "
+              "a date that is slightly too recent is honest, one that is stale is not.")
+
+
     # Same failure one layer up: I18N_CACHE_VER is derived from the locale files,
     # but site.js itself was served from cache (vercel.json allows a day of
     # stale-while-revalidate) and styles.css carried a hand-typed ?v= that nobody

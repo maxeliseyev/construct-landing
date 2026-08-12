@@ -172,7 +172,7 @@
   "home.why.title": "4つの性質",
   "home.why.transport.answer": "QUIC 上の gRPC 双方向、HTTP/2 フォールバック付き——ネットワークが変わってもハンドシェイクを張り直さない、1本の長寿命ストリーム。",
   "privacy.privacy-policy.h11": "Privacy Policy",
-  "privacy.privacy-policy.p2": "Last Updated: July 27, 2026  ·  Effective Date: March 4, 2026",
+  "privacy.privacy-policy.p2": "Last Updated: August 12, 2026  ·  Effective Date: March 4, 2026",
   "privacy.s1.h21": "1. Introduction",
   "privacy.s1.p2": "Konstruct is a privacy-first, end-to-end encrypted messenger built on the Signal Protocol. This policy explains exactly what data we collect, why we collect it, and what we do not collect. We have designed Konstruct from the ground up to minimize the data we hold about you.",
   "privacy.s1.p3": "<strong>Core Principle:</strong> We collect the absolute minimum data necessary to route encrypted messages. Your message content is end-to-end encrypted — our servers cannot read it, and we do not attempt to.",
