@@ -650,21 +650,45 @@ section[aria-labelledby="features-heading"] ul li::before {
    the statement it belongs to, so it gets a footnote instead: the term stays
    precise for a reader who knows it, and a reader who does not gets an answer
    without leaving the page. */
+/* The marker is a link, not a decoration. A tooltip was the alternative and was
+   rejected: `title` shows nothing on touch, a custom one needs JS and overflows
+   a narrow viewport, and either way it hides the explanation behind an action
+   the reader who needs it does not know to perform. A link costs one tap, works
+   with no JS, survives printing, and is announced by a screen reader. */
+a.fn-marker,
 .fn-marker {
     color: var(--accent);
     font-size: 0.75em;
     vertical-align: super;
     line-height: 0;
     margin-left: 1px;
+    text-decoration: none;
 }
-.why-note {
+a.fn-marker:hover,
+a.fn-marker:focus-visible {
+    text-decoration: underline;
+}
+.why-notes {
     max-width: 68ch;
     /* Aligned with the text inside .why-item, past its 2px rule + 1rem padding,
-       so the note reads as belonging to the list rather than to the page. */
+       so the notes read as belonging to the list rather than to the page. */
     padding-left: calc(1rem + 2px);
     margin: var(--space-sm) 0 0;
+    list-style: none;
     font-size: 0.875rem;
     color: var(--fg-muted);
+}
+.why-notes li + li {
+    margin-top: 0.5rem;
+}
+.why-notes li::before {
+    content: none;
+}
+.why-notes li:target {
+    /* Jumping to a note lands mid-page; without this the reader cannot tell
+       which of the two they were sent to. */
+    color: var(--fg);
+    scroll-margin-top: 30vh;
 }
 .why-counter {
     border: 1px solid var(--border);

@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=0be9933931" as="style" />
-        <link rel="stylesheet" href="styles.css?v=0be9933931" />
-        <link rel="stylesheet" href="effects.css?v=0be9933931" />
+        <link rel="preload" href="styles.css?v=bb708933fc" as="style" />
+        <link rel="stylesheet" href="styles.css?v=bb708933fc" />
+        <link rel="stylesheet" href="effects.css?v=bb708933fc" />
         
     </head>
 
@@ -208,11 +208,14 @@
                         <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-768 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH). The first message of a conversation is classical-only by design; everything after it is not.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<span class="fn-marker">*</span> is unconditional for ordinary traffic. To route a message the server has an opaque account id<span class="fn-marker">&dagger;</span>, a size and a time.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<a class="fn-marker" href="#fn-sender" aria-label="What sealed sender means">*</a> is unconditional for ordinary traffic. To route a message the server has an opaque account id<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a>, a size and a time.</span></p>
                     </div>
                     </div>
-                    <p class="why-note"><span data-i18n-html="home.why.note"><span class="fn-marker">*</span> <strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.<br /><span class="fn-marker">&dagger;</span> An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created. Like a cloakroom ticket: it gets your coat back, but the ticket itself tells nobody whose coat it is.</span></p>
-                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The counterweight, stated plainly: this is alpha.</strong> One server, iOS only, and no external audit yet. One-to-one chats and calls work; group chats and channels do not exist yet, and neither does sync between your own devices.</span></p>
+                    <ul class="why-notes">
+                        <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.</span></li>
+                        <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created. Like a cloakroom ticket: it gets your coat back, but the ticket itself tells nobody whose coat it is.</span></li>
+                    </ul>
+                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The caveat: this is alpha.</strong> One server, iOS only, and no external audit yet. One-to-one chats and calls work; group chats and channels do not exist yet, and neither does sync between your own devices.</span></p>
 
             </section>
             <section aria-labelledby="about-heading">
@@ -672,6 +675,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=3ea8714ca9" defer></script>
+        <script src="/site.js?v=66a385c554" defer></script>
     </body>
 </html>
