@@ -111,6 +111,28 @@ def main() -> int:
         print(f"FAIL {len(markup)} textContent value(s) contain tags "
               f"— use data-i18n-html: {markup[:5]}")
 
+
+    # The sessionStorage locale cache is keyed only by I18N_CACHE_VER in site.js.
+    # If the dictionaries change and that constant does not, browsers keep serving
+    # the old dictionary and every new key silently falls back to the English in
+    # the markup — the switcher says RU over English text. It went wrong twice in
+    # two days, the second time with a comment in site.js saying "bump this".
+    # So it is derived, not remembered: the value must be the content hash.
+    import hashlib
+    h = hashlib.sha256()
+    for lang in ("en", "ru", "ja"):
+        h.update((ROOT / f"i18n/{lang}.json").read_bytes())
+    want = h.hexdigest()[:10]
+    site = (ROOT / "site.js").read_text(encoding="utf-8")
+    m = re.search(r'var I18N_CACHE_VER = "([^"]*)";', site)
+    if not m:
+        ok = False
+        print("FAIL site.js: I18N_CACHE_VER not found")
+    elif m.group(1) != want:
+        ok = False
+        print(f'FAIL site.js: I18N_CACHE_VER is "{m.group(1)}", locales hash to "{want}" '
+              f"— stale browser caches will serve the old dictionary. Set it to \"{want}\".")
+
     if ok:
         print(f"OK: {len(base)} keys × {len(LANGS)} langs; {len(used)} HTML refs")
         return 0

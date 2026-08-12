@@ -21,11 +21,15 @@
     };
 
     // Bump when JSON shape or cache semantics change.
-    // Bump on ANY change to i18n/*.json. The sessionStorage copy is keyed by this
-// alone, so a stale dict survives a deploy: adding privacy.* left the switcher
-// reading RU while every string fell back to English, because the cached
-// dictionary simply had no such keys and applyI18n skips a missing value.
-var I18N_CACHE_VER = "v2";
+    // Content hash of i18n/{en,ru,ja}.json — NOT hand-maintained. The sessionStorage
+// copy is keyed by this alone, so a stale dictionary otherwise survives a deploy:
+// a cached dict without the new keys leaves the switcher reading RU while every
+// string falls back to the English in the markup, because applyI18n skips a
+// missing value. That happened twice — once on the privacy.* extraction, and
+// again the very next day on the delivery-status keys, with a comment sitting
+// right here telling me to bump it. `scripts/check-i18n.py` now computes the
+// expected value and fails if this line disagrees, so it cannot be forgotten.
+var I18N_CACHE_VER = "1b122c6471";
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
