@@ -11,7 +11,7 @@ privacy-first, end-to-end-encrypted messenger project.
 | `/` | `index.html` | Landing: mission, architecture, no-telemetry, support |
 | `/faq` | `faq.html` | Frequently asked questions (EN/RU/JA) |
 | `/privacy` | `privacy.html` | Privacy policy |
-| `/crypto` | `crypto.html` | Interactive cryptography demo |
+| ~~`/crypto`~~ | `crypto.html` | **Withdrawn** — in `.vercelignore`, `/crypto` redirects to `/faq` |
 | `/c/:userId` | `contact.html` | Contact deep-link landing |
 
 There is **no build step**. Copy for `index` / `faq` lives in JSON locale files:
@@ -29,7 +29,8 @@ remains in the HTML as a no-JS / failed-fetch fallback. Language chrome is the
 HUD dropdown `LANG::XX ▾`.
 
 ```bash
-python3 scripts/check-i18n.py    # key parity, markup-in-textContent, locale cache key
+python3 scripts/sync-versions.py # after editing copy or styles — recompute cache markers
+python3 scripts/check-i18n.py    # key parity, markup-in-textContent, cache markers
 python3 scripts/check-claims.py  # every factual claim, re-derived from the sibling repos
 # optional re-extract from class-based HTML (legacy):
 # python3 scripts/migrate-i18n.py
@@ -100,7 +101,7 @@ Git integration: push to `main` → production deploy (if the project is already
 |-----|--------|--------|
 | `/` | `index.html` | Landing |
 | `/faq` | rewrite → `faq.html` | see `vercel.json` |
-| `/privacy`, `/crypto`, `/add` | rewrites | same pattern |
+| `/privacy`, `/add` | rewrites | same pattern (`/crypto` is a 307 to `/faq`) |
 | `/c/:userId` | rewrite → `contact.html` | deep link |
 | `/site.js`, `/effects.js` | static | language switcher + HUD effects |
 | `/i18n/en.json`, `/i18n/ru.json`, `/i18n/ja.json` | static | **required** for non-EN locales |
@@ -127,8 +128,12 @@ Locale JSON is same-origin only. Do not host `i18n/` on another domain without u
 | `/fonts/*`, images (`favicon`, `og-image`) | long `immutable` |
 | `/styles.css`, `/effects.css`, `/contact.css` | short TTL (`max-age=60`) — **not** immutable (no content hash in URL) |
 
-`site.js` also keeps a **sessionStorage** dictionary cache keyed by  
-`construct-i18n-v1-{lang}`. After a large copy rewrite, bump `I18N_CACHE_VER` in `site.js` so open tabs drop the old dictionary.
+`site.js` keeps a **sessionStorage** dictionary cache keyed by `I18N_CACHE_VER`, and the pages
+carry `?v=` on `styles.css` and `site.js`. All three are **content hashes**, not hand-typed —
+`scripts/sync-versions.py` recomputes them and `check-i18n.py` fails when one is stale. This is
+not optional bookkeeping: editing copy without moving the marker leaves browsers on the old
+dictionary, which presents as the language switcher being broken, and editing CSS without moving
+it leaves them on the old stylesheet.
 
 ### Post-deploy smoke checklist
 

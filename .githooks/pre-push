@@ -30,8 +30,13 @@ if [ "$fail" -ne 0 ]; then
 
 [pre-push] BLOCKED — the site would publish something the checks disagree with.
 
-Fix the finding, or push with --no-verify if you are certain the check is wrong
-(and then fix the check, because the next person will hit it too).
+If the failure is about I18N_CACHE_VER or a ?v= asset version, that is not a
+judgement call — you edited copy or styles and the cache markers have to follow:
+
+    python3 scripts/sync-versions.py && git commit --amend --no-edit
+
+Anything else is a real finding. Push with --no-verify only if you are certain
+the check is wrong, and then fix the check — the next person will hit it too.
 EOF
     exit 1
 fi
