@@ -254,20 +254,12 @@
                     </h2>
                     <p>
                         <span data-i18n-html="home.identity.lead"
-                            >Every centralised platform starts from the same assumption: that "you" are a row in its database — a phone number, a profile, a graph of contacts it owns and can hand over. Konstruct starts from less. The server holds an account id, your public keys and a push token, because routing ciphertext needs that much. It does not hold a phone number, an email, a real name, or your contact list — so there is very little to hand over.</span
+                            >Every centralised platform starts from one assumption: “you” are a row in its database. A phone number, a profile, a contact graph that belongs to it and that it can hand over. Konstruct starts from less. The server holds an account identifier, your public keys and a push token, and about the message itself only its size and the time it arrived. Exactly what routing ciphertext requires.</span
                         >
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.authorship"
-                            ><strong
-                                >Your authorship is separable from your
-                                message.</strong
-                            >
-                            Always-on sealed sender removes the sender identity
-                            from the stored envelope. The recipient can unseal
-                            who wrote; the server cannot. Being read and being
-                            identified are different events, and we treat them
-                            as such.</span
+                            >Always-on sealed sender removes the sender's identifier from the message's metadata. The recipient can reveal who wrote it; the server cannot.</span
                         >
                     </p>
                     <p>
@@ -277,18 +269,12 @@
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.discovery"
-                            ><strong>How people find each other.</strong> Without a phone book there is no cold outreach: a conversation starts with a QR code or an invite link, single-use and valid for about five minutes. Discovery by username exists, is optional, and is off until you turn it on.</span
+                            >With no address book there are no cold messages: a conversation starts from a QR code or an invite link — single-use and alive for five minutes. Search by username exists, is optional, and is off until you turn it on.</span
                         >
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.limit"
-                            >The limit: cryptography
-                            cannot make you unobservable. Timing and IP
-                            correlation remain visible on the wire, and a
-                            sufficiently resourced adversary works at that
-                            layer, not this one. What we can guarantee is
-                            narrower and worth stating plainly — no component of
-                            this system is designed to accumulate you.</span
+                            >Cryptography cannot make you unobservable. Timing and IP correlation remain visible on the wire, and a sufficiently resourced adversary works at that layer, not this one. Even so, no component of our system is designed to accumulate your data.</span
                         >
                     </p>
                 </div>
@@ -675,6 +661,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=66a385c554" defer></script>
+        <script src="/site.js?v=32482e07a1" defer></script>
     </body>
 </html>
