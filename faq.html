@@ -26,6 +26,20 @@
         <link rel="stylesheet" href="styles.css?v=20260812-lang" />
 
         <style>
+            .status-list { list-style: none; padding: 0; margin: 0; }
+            .status-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+                padding: 0.4rem 0;
+            }
+            .status-icon { flex: 0 0 auto; width: 1.15rem; height: 1.15rem; margin-top: 0.15rem; }
+            .status-icon svg { width: 100%; height: 100%; display: block; }
+            .status-icon--dim { color: var(--fg-muted); }
+            .status-icon--ok  { color: #3fb950; }
+            .status-icon--bad { color: #f85149; }
+            .status-text strong { margin-right: 0.35rem; }
+
             /* ── Top nav ─────────────────────────────────────────────────── */
             .page-nav {
                 position: sticky;
@@ -420,7 +434,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.contacts.p3">The system is designed so that you can't message a random person, even knowing their username. To start a conversation, one of you must share a QR code or an invite link, and the other must scan or follow it. Codes and links are temporary — they expire in 5 minutes. In the future they'll become single-use as well, so a leaked link can't trigger a spam attack.</p>
+                            <p data-i18n="faq.contacts.p3">The system is designed so that a stranger cannot simply start messaging you. To open a conversation, one of you shares a QR code or an invite link and the other scans or follows it. Those are single-use and expire in about five minutes — a link that has been accepted once cannot be accepted again. Separately, you may switch on discovery in settings and be findable by username; that is off by default, so unless you turn it on, an invite is the only way in.</p>
                             </div>
                     </details>
 
@@ -444,7 +458,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.contacts.p7">The code only lives for 5 minutes — even if intercepted, the window is very short. Once someone adds you, you'll see a new conversation and can immediately block them. Single-use codes will completely close this scenario in the future.</p>
+                            <p data-i18n="faq.contacts.p7">The code lives for about five minutes and can be accepted only once, so a leaked link is either already spent or about to expire. If someone does get in, you will see a new conversation and can block them immediately.</p>
                             </div>
                     </details>
                 </section>
@@ -562,7 +576,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.profile.p3">Display Name and avatar are stored only on your device — they never go to the server. When you start a new conversation, the other person sees only a generated pseudonym (deterministic — always the same for a given ID). If you want them to see your real name and photo, go to their profile and tap "Share Profile" — your Display Name and avatar will be sent directly over the encrypted channel.</p>
+                            <p data-i18n="faq.profile.p3">Your Display Name and avatar live on your device; they are not part of your public profile and nobody can look them up. When you start a new conversation the other person sees only a generated pseudonym, deterministic — always the same for a given ID. To show them your real name and photo, open their profile and tap "Share Profile": both travel over the encrypted channel. One honest exception: if you send a contact request, your username and Display Name are attached to it so the recipient can tell who is asking. The server stores that snapshot encrypted at rest, under a key the server itself holds — it is not end-to-end encrypted, and your avatar is never included.</p>
                             </div>
                     </details>
 
@@ -605,29 +619,44 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <ul data-i18n-html="faq.messages.status.list">
-                                <li>
-                                    <strong>Sending</strong> — message is being
-                                    encrypted and sent to the server
-                                </li>
-                                <li>
-                                    <strong>Sent</strong> — server accepted the
-                                    message
-                                </li>
-                                <li>
-                                    <strong>Delivered</strong> — the recipient's
-                                    app received and decrypted it
-                                </li>
-                                <li>
-                                    <strong>Read</strong> — the recipient opened
-                                    the chat and saw the message
-                                </li>
+                            <ul class="status-list">
+                                    <li class="status-row">
+                                        <span class="status-icon status-icon--dim"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                                        <span class="status-text">
+                                            <strong data-i18n="faq.messages.status.sending.name">Sending</strong>
+                                            <span data-i18n="faq.messages.status.sending.what">being encrypted and handed to the transport</span>
+                                        </span>
+                                    </li>
+                                    <li class="status-row">
+                                        <span class="status-icon status-icon--dim"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="currentColor"/></svg></span>
+                                        <span class="status-text">
+                                            <strong data-i18n="faq.messages.status.sent.name">Sent</strong>
+                                            <span data-i18n="faq.messages.status.sent.what">the server has accepted it</span>
+                                        </span>
+                                    </li>
+                                    <li class="status-row">
+                                        <span class="status-icon status-icon--ok"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.6 10.2l2.3 2.3 4.5-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                        <span class="status-text">
+                                            <strong data-i18n="faq.messages.status.delivered.name">Delivered</strong>
+                                            <span data-i18n="faq.messages.status.delivered.what">the recipient's device decrypted it and sent back an encrypted receipt</span>
+                                        </span>
+                                    </li>
+                                    <li class="status-row">
+                                        <span class="status-icon status-icon--dim"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10a6 6 0 1 1-1.9-4.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16.3 3.2v3.1h-3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                        <span class="status-text">
+                                            <strong data-i18n="faq.messages.status.queued.name">Queued</strong>
+                                            <span data-i18n="faq.messages.status.queued.what">the recipient is offline; tap to retry</span>
+                                        </span>
+                                    </li>
+                                    <li class="status-row">
+                                        <span class="status-icon status-icon--bad"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="currentColor"/><path d="M10 5.8v4.9" fill="none" stroke="var(--bg,#090909)" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="14" r="1.05" fill="var(--bg,#090909)"/></svg></span>
+                                        <span class="status-text">
+                                            <strong data-i18n="faq.messages.status.failed.name">Failed</strong>
+                                            <span data-i18n="faq.messages.status.failed.what">it did not go out; tap to retry</span>
+                                        </span>
+                                    </li>
                             </ul>
-                            <p data-i18n="faq.messages.status.note">
-                                "Delivered" and "Read" are acknowledgements
-                                (ACKs) sent back through the same encrypted
-                                channel.
-                            </p>
+                            <p data-i18n="faq.messages.status.note">There is no "read" status, and that is deliberate: a read receipt would tell the sender when you opened the app, which is a fact about you that the message does not need. "Delivered" is an encrypted receipt from the recipient's device — not the server saying it forwarded something.</p>
                         </div>
                     </details>
 
