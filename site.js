@@ -80,9 +80,11 @@
             }
         } catch (e) {}
 
+        // Use default HTTP cache (honours Cache-Control from vercel.json).
+        // Do not use force-cache: it can serve stale locale files across deploys.
         return fetch("/i18n/" + lang + ".json", {
             credentials: "same-origin",
-            cache: "force-cache",
+            cache: "default",
         })
             .then(function (res) {
                 if (!res.ok) throw new Error("i18n " + lang + " HTTP " + res.status);

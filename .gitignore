@@ -1,6 +1,9 @@
 .vercel
 .DS_Store
 scripts/signing_key.pem
+scripts/__pycache__/
+__pycache__/
+*.pyc
 target
 JetBrainsMono-2.304/
 *-SECRET.asc

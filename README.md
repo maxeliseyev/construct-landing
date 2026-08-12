@@ -41,8 +41,109 @@ It is a static site — no bundler. Any static server works:
 ```bash
 python3 -m http.server 8000      # then open http://localhost:8000
 # or
-npx vercel dev                   # to also exercise vercel.json rewrites/headers
+npx vercel dev                   # exercises vercel.json rewrites + headers (needs CLI login)
 ```
+
+**Important for i18n:** open via `http://localhost:…`, not `file://`.  
+`site.js` loads `/i18n/{lang}.json` with `fetch`; that only works over HTTP(S) same-origin.
+
+## Deploy on Vercel
+
+This repo is a **static** project. There is no `package.json` and no build output directory.
+
+### Dashboard settings (Project → Settings → General / Build & Development)
+
+| Setting | Value |
+|---------|--------|
+| **Framework Preset** | Other |
+| **Build Command** | *(empty / disabled)* |
+| **Output Directory** | *(empty / `.` / leave default for static root)* |
+| **Install Command** | *(empty / disabled)* |
+| **Root Directory** | `.` (repo root) |
+| **Node.js Version** | any (unused; no build) |
+
+Do **not** set Output Directory to `dist` or `public` — HTML/JS/CSS/`i18n/` live at the repository root.
+
+### First-time link (CLI)
+
+```bash
+# from repo root
+npx vercel login
+npx vercel link          # bind to the existing konstruct.cc project
+npx vercel --prod        # production deploy
+```
+
+Git integration: push to `main` → production deploy (if the project is already connected to this GitHub repo).
+
+### What production must serve
+
+| URL | Source | Notes |
+|-----|--------|--------|
+| `/` | `index.html` | Landing |
+| `/faq` | rewrite → `faq.html` | see `vercel.json` |
+| `/privacy`, `/crypto`, `/add` | rewrites | same pattern |
+| `/c/:userId` | rewrite → `contact.html` | deep link |
+| `/site.js`, `/effects.js` | static | language switcher + HUD effects |
+| `/i18n/en.json`, `/i18n/ru.json`, `/i18n/ja.json` | static | **required** for non-EN locales |
+| `/fonts/*`, `/styles.css`, `/effects.css` | static | self-hosted assets |
+
+If `/i18n/ja.json` returns 404, Japanese (and any non-fallback language) will not apply — English HTML fallback still shows.
+
+### CSP and i18n fetch
+
+`vercel.json` sets:
+
+```
+connect-src 'self'
+```
+
+Locale JSON is same-origin only. Do not host `i18n/` on another domain without updating CSP.
+
+### Caching (after i18n)
+
+| Path | Cache-Control |
+|------|----------------|
+| `/i18n/*.json` | `max-age=60, stale-while-revalidate=86400` — copy can change every deploy |
+| `/site.js`, `/effects.js` | same short TTL |
+| `/fonts/*`, hashed-looking static images/CSS | long `immutable` |
+
+`site.js` also keeps a **sessionStorage** dictionary cache keyed by  
+`construct-i18n-v1-{lang}`. After a large copy rewrite, bump `I18N_CACHE_VER` in `site.js` so open tabs drop the old dictionary.
+
+### Post-deploy smoke checklist
+
+```bash
+# 1. HTML + rewrite
+curl -sI https://konstruct.cc/ | head -5
+curl -sI https://konstruct.cc/faq | head -5
+
+# 2. Locale files (must be 200 + application/json)
+curl -sI https://konstruct.cc/i18n/en.json
+curl -sI https://konstruct.cc/i18n/ru.json
+curl -sI https://konstruct.cc/i18n/ja.json
+
+# 3. Scripts
+curl -sI https://konstruct.cc/site.js
+
+# 4. CSP still blocks third-party connect (optional)
+curl -sI https://konstruct.cc/ | grep -i content-security
+```
+
+In the browser (production):
+
+1. Open DevTools → Network → reload. Expect `i18n/en.json` (or `ru`/`ja` from auto-detect).
+2. Switch `LANG::` to JA / RU — body text and `document.title` update without full reload.
+3. Hard-refresh; no CSP errors on `fetch` of `/i18n/*.json`.
+4. Disable JS briefly: English fallback text in HTML remains visible.
+
+### Domains
+
+Production hostname: **konstruct.cc** (and `www` if configured).  
+Apex + www should both point at the same Vercel project; SSL is automatic.
+
+### Local env / secrets
+
+None required for the marketing site. Do not put signing private keys or deploy secrets in the Vercel project env for this static frontend.
 
 ## Security & privacy posture
 
@@ -57,9 +158,9 @@ This site practises what the product preaches (see
   securityheaders.com (capped only by a pragmatic `script-src 'unsafe-inline'` — see below).
 - **Static only** — no server-side code, minimal attack surface.
 
-> **Known CSP note:** `script-src` still allows `'unsafe-inline'` because the crypto demo and the
-> language switcher use inline event handlers. It still blocks *external* and injected scripts. Moving
-> to strict `script-src 'self'` (A+) requires externalising the inline JS.
+> **CSP:** global policy is `script-src 'self'` and `connect-src 'self'` (locale JSON is same-origin).
+> `style-src` still allows `'unsafe-inline'` for a few page-local `<style>` blocks. Do not load
+> scripts or i18n dictionaries from a third-party host without changing CSP.
 
 ## Donations
 
