@@ -16,7 +16,7 @@
         </title>
         <meta
             name="description"
-            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, hybrid post-quantum KEM, gRPC over QUIC. No phone number. Your data is yours — not digital oil."
+            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, continuous post-quantum ratchet (ML-KEM-768), gRPC over QUIC. No phone number, no email, no required username."
         />
         <meta
             name="keywords"
@@ -39,7 +39,7 @@
         <meta property="og:image:height" content="630" />
         <meta
             property="og:image:alt"
-            content="Konstruct Messenger — Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+            content="Konstruct Messenger — Open-Source E2EE Messenger, No Phone Number"
         />
 
         <!-- Twitter -->
@@ -47,11 +47,11 @@
         <meta property="twitter:url" content="https://konstruct.cc/" />
         <meta
             property="twitter:title"
-            content="Konstruct Messenger — Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+            content="Konstruct Messenger — Open-Source E2EE Messenger, No Phone Number"
         />
         <meta
             property="twitter:description"
-            content="Federated, post-quantum ready, minimalist hybrid messenger and email with end-to-end encryption."
+            content="Minimalist end-to-end encrypted messenger. No phone number, no email, no required username. Federation and P2P are on the roadmap."
         />
         <meta
             property="twitter:image"
@@ -59,7 +59,7 @@
         />
         <meta
             property="twitter:image:alt"
-            content="Konstruct Messenger - Federated, Post-Quantum Ready, Hybrid E2EE Messenger & Email"
+            content="Konstruct Messenger - Open-Source E2EE Messenger, No Phone Number"
         />
 
         <!-- Canonical URL -->
@@ -212,14 +212,7 @@
                 </h1>
                 <p>
                     <span data-i18n="home.t4"
-                        >Identity is a construct — not a phone number in someone
-                        else's database. Konstruct is an open-source encrypted
-                        messenger built on the Signal Protocol design (X3DH +
-                        Double Ratchet) with hybrid post-quantum key exchange
-                        (ML-KEM-768). The state must not monopolize information
-                        exchange. Corporations must not build apps engineered
-                        for infinite scroll. Your data is yours — not digital
-                        oil.</span
+                        >Identity is a construct — not a phone number in someone else's database. Konstruct is an open-source encrypted messenger built on the Signal Protocol design (X3DH + Double Ratchet), extended with a continuous post-quantum ratchet (ML-KEM-768). No phone number, no email, no required username.</span
                     >
                     </p>
 
@@ -298,24 +291,10 @@
  censurability at the protocol level.</span>
                         </p>
                     <p>
-                        <span data-i18n-html="home.about.t8"><strong>5. Post-quantum readiness.</strong>
- "Capture now, decrypt later" is an active threat
- model. Hybrid post-quantum key exchange must be
- integrated today to protect data against future
- cryptanalytic breakthroughs.</span>
+                        <span data-i18n-html="home.about.t8"><strong>5. Post-quantum readiness.</strong> "Capture now, decrypt later" is an active threat model, so post-quantum key material has to enter the protocol before the machines exist — not after.</span>
                         </p>
                     <p>
-                        <span data-i18n-html="home.about.t9">Konstruct implements these principles using the
- <strong>Signal Protocol</strong> design (X3DH
- handshake + Double Ratchet) — the same end-to-end
- encryption design that powers Signal and WhatsApp —
- implemented from scratch in Rust. We extend it with
- a
- <strong>hybrid post-quantum KEM</strong>
- (ML-KEM-768, NIST FIPS&nbsp;203) so that traffic
- recorded today remains protected once
- cryptographically relevant quantum computers
- exist.</span>
+                        <span data-i18n-html="home.about.t9">Konstruct implements these principles using the <strong>Signal Protocol</strong> design (X3DH handshake + Double Ratchet) — the same end-to-end encryption design that powers Signal and WhatsApp — implemented from scratch in Rust. We extend it with a continuous <strong>ML-KEM-768</strong> ratchet (NIST FIPS&nbsp;203), so a recorded conversation keeps acquiring fresh post-quantum secrets rather than resting on a single exchange.</span>
                         </p>
                     <p>
                         <span data-i18n-html="home.about.t10">Unlike centralized platforms, Konstruct is designed
@@ -342,12 +321,7 @@
                         </p>
                     <p>
                         <span data-i18n-html="home.about.t11"
-                            ><strong>Three lines we will not cross.</strong>
-                            The state must not monopolize information exchange.
-                            Corporations must not build apps engineered for
-                            infinite scroll. Your data is yours — not someone
-                            else's digital oil. Konstruct is built around those
-                            constraints, not around engagement metrics.</span
+                            ><strong>What we won't build.</strong> No backdoor, whatever the pretext. No engagement mechanics — no infinite scroll, no streaks, no notification bait. No data resale: there is no advertising business here to fund, and no profile to sell.</span
                         >
                         </p>
                 </div>
@@ -362,13 +336,7 @@
                     </h2>
                     <p>
                         <span data-i18n-html="home.identity.lead"
-                            >Every centralised platform starts from the same
-                            assumption: that "you" are a row in its database — a
-                            phone number, a profile, a graph of contacts it owns
-                            and can hand over. Konstruct rejects that premise at
-                            registration. There is no canonical record of you
-                            anywhere in this system, because there is nothing to
-                            record.</span
+                            >Every centralised platform starts from the same assumption: that "you" are a row in its database — a phone number, a profile, a graph of contacts it owns and can hand over. Konstruct starts from less. The server holds an account id, your public keys and a push token, because routing ciphertext needs that much. It does not hold a phone number, an email, a real name, or your contact list — so there is very little to hand over.</span
                         >
                     </p>
                     <p>
@@ -420,15 +388,7 @@
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.continuity"
-                            ><strong
-                                >Your continuity is distributed, not
-                                held.</strong
-                            >
-                            Social recovery (BIP39 / SLIP-39) reconstructs
-                            access from fragments you entrusted to people you
-                            chose — no company holds the master copy of you,
-                            because no master copy exists
-                            <em>(in development)</em>.</span
+                            ><strong>Your continuity is distributed, not held.</strong> Social recovery (BIP39 / SLIP-39) is designed to reconstruct access from fragments you gave to people you chose, so getting back in does not depend on us keeping a copy of your keys <em>(in development — not shipped)</em>.</span
                         >
                     </p>
                     <p>
@@ -463,20 +423,7 @@
                     <h2 id="how-it-works-heading">
                         <span data-i18n="home.how-it-works.technical-architecture">Technical Architecture</span></h2>
                     <p>
-                        <span data-i18n-html="home.how-it-works.t2">Konstruct uses
- <strong>gRPC with Protocol Buffers</strong> for
- efficient binary framing, and keeps a
- <strong
- >persistent bidirectional MessageStream</strong
- >
- open for real-time delivery — not request/response
- polling. The backend is split into independent
- microservices (auth, user, messaging, signaling,
- media) for fault isolation. Most consumer messengers
- still ship REST/JSON or proprietary TCP stacks;
- Konstruct’s live path is
- <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as
- automatic fallback.</span>
+                        <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. Konstruct’s live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback.</span>
                         </p>
                     <h3>
                         <span data-i18n="home.how-it-works.cryptography-stack">Cryptography Stack</span></h3>
@@ -490,11 +437,7 @@
  post-compromise security (self-healing).</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t5"><strong>Hybrid Post-Quantum KEM:</strong>
- X25519 classical +
- <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203,
- Kyber-768) for key exchange. If either component
- is broken, the other still protects.</span>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum ratchet:</strong> <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203) runs continuously inside the Double Ratchet, next to the classical X25519 ratchet — a conversation keeps deriving fresh post-quantum secrets as it goes, instead of once at setup. It is negotiated per conversation and engages when both devices support it. The X3DH handshake itself is classical today (X25519 + Ed25519).</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t6"><strong
@@ -530,28 +473,14 @@
  out.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t9"><strong>Crypto Agility:</strong> versioned
- protocol suites allow algorithm upgrades without
- rebuilding client apps.</span>
+                            <span data-i18n-html="home.how-it-works.t9"><strong>Crypto Agility:</strong> the protocol carries a suite version, so devices running different algorithm sets keep talking while a migration rolls out — no flag day, no requirement that everyone update at once. Adding an algorithm still means shipping a new build; what versioning removes is the need for it to happen everywhere simultaneously.</span>
                             </li>
                     </ul>
                     <h3>
                         <span data-i18n="home.how-it-works.transport-layer">Transport Layer</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t11"><strong
- >gRPC bidirectional MessageStream over
- QUIC</strong
- >
- — live production path on iOS (ConstructEngine /
- construct-transport). One long-lived stream
- carries heartbeats, inbound messages, and
- delivery receipts without opening a new TCP
- handshake per event. QUIC brings connection
- migration, multiplexed streams, and faster
- recovery on lossy or long-haul links (validated
- intercontinentally, e.g. Australia → EU
- edge).</span>
+                            <span data-i18n-html="home.how-it-works.t11"><strong>gRPC bidirectional MessageStream over QUIC</strong> — the live production path on iOS (construct-transport). One long-lived stream carries heartbeats, inbound messages, and delivery receipts without a new TCP handshake per event. QUIC brings connection migration, multiplexed streams, and faster recovery on lossy or long-haul links.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t12"><strong
@@ -562,29 +491,10 @@
  same E2EE payload, no user toggle.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t13"><strong>Why this is a product edge:</strong>
- mainstream privacy messengers still lean on
- REST/JSON (Signal-class stacks) or closed
- proprietary wire formats (WhatsApp, Telegram
- MTProto). Shipping a modern
- <em>gRPC bidi + QUIC</em> live path is rare in
- consumer messaging — lower framing overhead,
- fewer reconnect storms, and a stack that matches
- how high-performance services are built today.
- E2EE stays on top; transport only moves sealed
- ciphertext.</span>
+                            <span data-i18n-html="home.how-it-works.t13"><strong>Why a bidirectional stream over QUIC:</strong> one long-lived stream instead of a request per event means less framing overhead and fewer reconnect storms on flaky mobile links, and QUIC survives a network change without a fresh handshake. E2EE sits above all of it — the transport moves sealed ciphertext only, so changing transports changes nothing about the guarantees.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t14"><strong>VEIL (anti-censorship):</strong>
- traffic obfuscation when direct TLS is throttled
- or blocked. Today: obfs4 + WebTunnel pluggable
- transports, currently throttled by active DPI in
- some regions.
- <em>veil-front</em>, an honest-front HTTPS layer
- that makes tunnelled traffic indistinguishable
- from a real public web service, is implemented
- and validated on real devices with provisioned
- tickets; public rollout is in progress.</span>
+                            <span data-i18n-html="home.how-it-works.t14"><strong>Censorship resistance:</strong> when a direct TLS connection is blocked or throttled, the client routes through an obfuscation layer instead, automatically and with no user action. The implementation is open source (<code>construct-veil</code>, MPL-2.0) and the design is public. Operational detail — which transports are live, which entry points exist and where — is not published, and neither the app nor this site displays it.</span>
                             </li>
                     </ul>
                 </div>
@@ -606,12 +516,7 @@
  messages stay secure even if keys leak.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key exchange</strong> —
- hybrid X25519 +
- <strong>ML-KEM-768</strong> (Kyber-768).
- Signatures are Ed25519 today;
- <strong>ML-DSA-65</strong> (Dilithium-3) for
- hybrid signatures is planned.</span>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum ratchet</strong> — <strong>ML-KEM-768</strong> (Kyber-768) re-keys continuously inside the Double Ratchet, negotiated per conversation. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up. The X3DH handshake is classical today.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.features.t5"><strong>Federation</strong> — run your own
@@ -629,11 +534,7 @@
  interaction.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC
- bidirectional MessageStream over
- <strong>QUIC</strong> (HTTP/2 fallback), VEIL
- when the path is censored, direct P2P planned
- when both peers are online.</span>
+                            <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC bidirectional MessageStream over <strong>QUIC</strong> (HTTP/2 fallback), censorship-resistant routing when the direct path is blocked, direct P2P planned when both peers are online.</span>
                             </li>
                     </ul>
                 </div>
@@ -800,23 +701,7 @@
                             "
                         >
                             <span data-i18n-html="home.comparison.t9"
-                                >* Telegram E2EE only in "Secret Chats", not
-                                default.<br />
-                                † Session also requires no phone number — that
-                                is its main pitch. Session V1 still uses static
-                                long-term keys with
-                                <em>no forward secrecy or post-compromise
-                                security</em>. Anonymity without forward secrecy
-                                is a compromise, not a full answer; Konstruct
-                                aims for both (Signal Protocol design + no
-                                required identifier).<br />
-                                ‡ Konstruct's PQ KEM (ML-KEM-768) is opt-in and
-                                deployed; PQ signatures (ML-DSA-65) have working
-                                crypto and server-side verification — client
-                                rotation orchestration is still in progress.<br />
-                                Live messaging uses a gRPC bidirectional stream
-                                on QUIC (HTTP/2 fallback) — not REST/JSON
-                                polling.</span
+                                >* Telegram E2EE only in "Secret Chats", not default.<br /> † Session also requires no phone number — that is its main pitch. Session V1 still uses static long-term keys with <em>no forward secrecy or post-compromise security</em>.<br /> ‡ Konstruct's post-quantum KEM (ML-KEM-768) is deployed as a continuous ratchet, negotiated per conversation; the X3DH handshake is classical today. Hybrid PQ signatures (ML-DSA-65) have working crypto and server-side verification — client rotation orchestration is still in progress.<br /> Live messaging uses a gRPC bidirectional stream on QUIC (HTTP/2 fallback).</span
                             >
                             </p>
                     </div>

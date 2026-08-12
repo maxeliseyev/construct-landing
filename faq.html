@@ -477,7 +477,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read content technically, not just by policy. For key establishment, Konstruct uses X3DH extended with a post-quantum protocol (PQXDH) — protecting against "record now, decrypt with quantum computer later" attacks. Messages use Double Ratchet, which rotates keys with every message, so compromising one key doesn't expose past or future messages (forward secrecy + break-in recovery).</p>
+                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read content technically, not just by policy. Key establishment uses X3DH, and that handshake is classical today (X25519 + Ed25519). Post-quantum protection comes from the ratchet instead: <strong>ML-KEM-768</strong> re-keys continuously inside the Double Ratchet whenever both devices support it, which is what limits "record now, decrypt with a quantum computer later". We do not claim PQXDH — that is a different construction and we have not shipped it. Double Ratchet also rotates keys with every message, so compromising one key exposes neither past nor future messages (forward secrecy + break-in recovery).</p>
                             </div>
                     </details>
 
@@ -489,7 +489,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.encryption.p5">The server sees: that device A transmitted encrypted bytes to device B, the approximate size, and a timestamp. It doesn't see: message content, names, avatars, or Display Names. Messages aren't stored on the server after delivery. Usernames are stored only for routing purposes and aren't connected to real identities.</p>
+                            <p data-i18n-html="faq.encryption.p5">The server sees: that device A transmitted encrypted bytes to device B, the approximate size, and a timestamp. It doesn't see message content, names, avatars, or display names. Messages aren't stored on the server after delivery. A username is optional and is <strong>not</strong> used for routing — messages are addressed by an opaque account id. If you set one, the server keeps only a keyed hash of it, used for nothing but letting other people find you; and that lookup is off until you turn discovery on, so by default an account cannot be found by name at all.</p>
                             </div>
                     </details>
 
@@ -684,34 +684,25 @@
 
                     <details class="faq-item">
                         <summary>
-                            <span data-i18n="faq.veil.q1">What is VEIL?</span>
+                            <span data-i18n="faq.veil.q1">Does Konstruct work where messengers are blocked?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.veil.p2">VEIL — Variable Encoded Interface Layer. In Konstruct, VEIL serves two roles: (1) a transport layer that disguises messenger traffic as ordinary background noise, defeating DPI systems and censorship firewalls; (2) a relay tier — when a direct connection to the main server is unavailable, VEIL relay nodes can route traffic. Even if packets are intercepted, they look like random data, not messenger traffic.</p>
+                            <p data-i18n-html="faq.veil.p2">There is a censorship-protection mode that changes how the app reaches the network when a direct connection is blocked or throttled. In Settings it is a single control with three positions — off, automatic, on — and automatic is the default: the app uses a direct connection while it works and switches only on demonstrated failure. There is nothing to configure and no addresses to enter; setup happens in the background. The implementation is open source (<code>construct-veil</code>, MPL-2.0), so the design can be reviewed by anyone.</p>
                             </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span data-i18n="faq.veil.q3">Is VEIL always on or only during blocks?</span>
+                            <span data-i18n="faq.veil.q3">Is censorship protection always on?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.veil.p4">It's configurable. Under normal conditions you
- can use a direct connection — it's faster. VEIL
- activates automatically or manually when a
- direct connection is unavailable or undesirable.
- Today VEIL's obfs4/WebTunnel transport is
- deployed but currently throttled by active DPI
- in some regions; a replacement —
- <em>veil-front</em> — is implemented and
- validated on real devices, with public rollout
- in progress.</p>
+                            <p data-i18n-html="faq.veil.p4">By default it is automatic — a direct connection is faster, so the app uses it while it works and switches only when it demonstrably fails. You can also force it on or off. What we deliberately do not publish is which techniques are live and where they currently do or do not get through: a public, up-to-date status report is free feedback for whoever is doing the blocking, and the app itself shows none of it either, for the same reason.</p>
                             </div>
                     </details>
                 </section>
@@ -911,24 +902,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.technical.p7">Live messaging is a
- <strong
- >gRPC bidirectional MessageStream</strong
- >
- — one long-lived stream for heartbeats, inbound
- messages, and delivery receipts — not
- request/response polling. On current iOS builds
- the production path is
- <strong>QUIC</strong> (ConstructEngine); if QUIC
- is blocked or the handshake fails, the client
- falls back to
- <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong>
- automatically. End-to-end encryption is
- independent of the transport: the wire only
- carries sealed ciphertext. That combination
- (modern gRPC bidi + QUIC) is uncommon among
- consumer privacy messengers, which typically use
- REST/JSON or proprietary TCP stacks.</p>
+                            <p data-i18n-html="faq.technical.p7">Live messaging is a <strong>gRPC bidirectional MessageStream</strong> — one long-lived stream for heartbeats, inbound messages, and delivery receipts — not request/response polling. On current iOS builds the production path is <strong>QUIC</strong> (construct-transport); if QUIC is blocked or the handshake fails, the client falls back to <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong> automatically. End-to-end encryption is independent of the transport: the wire only carries sealed ciphertext.</p>
                             </div>
                     </details>
                 </section>
