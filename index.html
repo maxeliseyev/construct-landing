@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=b9f2ff0b16" as="style" />
-        <link rel="stylesheet" href="styles.css?v=b9f2ff0b16" />
-        <link rel="stylesheet" href="effects.css?v=b9f2ff0b16" />
+        <link rel="preload" href="styles.css?v=86ae627eea" as="style" />
+        <link rel="stylesheet" href="styles.css?v=86ae627eea" />
+        <link rel="stylesheet" href="effects.css?v=86ae627eea" />
         
     </head>
 
@@ -213,39 +213,6 @@
                     </div>
                     <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The counterweight, stated plainly: this is alpha.</strong> One server, no federation, iOS only, and no external audit yet. Established messengers are ahead on multi-device, group calls and years of hardening. If you need something that simply works for a group of people today, this is not it yet.</span></p>
 
-                    <h2 id="arch-heading"><span data-i18n="home.arch.title">What actually runs today</span></h2>
-                    <svg class="arch" viewBox="0 0 640 250" role="img" aria-labelledby="archtitle">
-                        <title id="archtitle">Konstruct network today: one server between two devices. Relays, federation and direct peer-to-peer are planned.</title>
-                        <defs>
-                            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                                <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
-                            </marker>
-                        </defs>
-                        <g class="arch-solid" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="8"   y="40" width="150" height="52" rx="8"/>
-                            <rect x="245" y="40" width="150" height="52" rx="8"/>
-                            <rect x="482" y="40" width="150" height="52" rx="8"/>
-                            <line x1="162" y1="66" x2="238" y2="66" marker-end="url(#ah)"/>
-                            <line x1="399" y1="66" x2="475" y2="66" marker-end="url(#ah)"/>
-                            <text data-i18n="home.arch.you" x="83"  y="62" fill="currentColor" stroke="none">YOU</text>
-                            <text data-i18n="home.arch.server" x="320" y="62" fill="currentColor" stroke="none">SERVER</text>
-                            <text data-i18n="home.arch.them" x="557" y="62" fill="currentColor" stroke="none">THEM</text>
-                            <text class="sub" x="83"  y="80" fill="currentColor" stroke="none">gRPC · QUIC</text>
-                            <text data-i18n="home.arch.today" class="sub" x="320" y="80" fill="currentColor" stroke="none">sealed ciphertext</text>
-                            <text class="sub" x="557" y="80" fill="currentColor" stroke="none">gRPC · QUIC</text>
-                        </g>
-                        <g class="arch-dashed" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="5 4">
-                            <rect x="245" y="140" width="150" height="46" rx="8"/>
-                            <line x1="162" y1="163" x2="238" y2="163" marker-end="url(#ah)"/>
-                            <line x1="399" y1="163" x2="475" y2="163" marker-end="url(#ah)"/>
-                            <text data-i18n="home.arch.relay" x="320" y="162" fill="currentColor" stroke="none">RELAY</text>
-                            <text data-i18n="home.arch.planned" class="sub" x="320" y="178" fill="currentColor" stroke="none">federation · 2027</text>
-                            <path d="M83 100 C 83 225, 557 225, 557 100" marker-end="url(#ah)"/>
-                            <text data-i18n="home.arch.p2p" class="sub" x="320" y="232" fill="currentColor" stroke="none">direct P2P · 2027+</text>
-                        </g>
-                    </svg>
-                    <p class="arch-note"><span data-i18n="home.arch.note">The solid path is the whole network as it exists: one server, which cannot read what it carries and does not learn who sent it. Dashed is roadmap — the relay binary exists, the federated network it is for does not.</span></p>
-                </div>
             </section>
             <section aria-labelledby="about-heading">
                 <div class="container">
@@ -746,6 +713,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=3499742317" defer></script>
+        <script src="/site.js?v=daeb5d36a8" defer></script>
     </body>
 </html>
