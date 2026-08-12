@@ -5,7 +5,10 @@
 //   data-i18n="key"       → textContent
 //   data-i18n-html="key"  → innerHTML (first-party trusted copy only)
 (function () {
-    var SUPPORTED = ["en", "ru", "ja"];
+    // "ja" is intentionally absent: ja.json is machine-drafted and has not been
+    // reviewed by a Japanese speaker. The translations are kept in i18n/ja.json —
+    // re-add "ja" here and restore the switcher entries once they are checked.
+    var SUPPORTED = ["en", "ru"];
     var LABELS = {
         en: "EN",
         ru: "RU",
