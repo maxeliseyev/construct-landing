@@ -134,6 +134,23 @@ def main() -> int:
               f"— stale browser caches will serve the old dictionary. Set it to \"{want}\".")
 
 
+    # The third layer, and the one that actually bit: the constant above versions
+    # the *sessionStorage* key, but the fetch URL was a bare "/i18n/en.json". That
+    # path is served with stale-while-revalidate=86400, so a browser answers from a
+    # day-old copy instantly — and site.js then files that stale dictionary under
+    # the fresh key. Marker moved, words did not. A section removed from the repo,
+    # the deploy and the live JSON was still on screen for exactly this reason.
+    # Putting the version in the URL makes the stale entry unreachable instead of
+    # merely discouraged, so the URL must carry it.
+    if "/i18n/" in site and not re.search(
+            r'fetch\(\s*"/i18n/"\s*\+\s*lang\s*\+\s*"\.json\?v="\s*\+\s*I18N_CACHE_VER',
+            site):
+        ok = False
+        print("FAIL site.js: the locale fetch URL does not carry I18N_CACHE_VER — "
+              "stale-while-revalidate can serve a day-old dictionary under the new "
+              'cache key. Fetch "/i18n/" + lang + ".json?v=" + I18N_CACHE_VER.')
+
+
     # Same failure one layer up: I18N_CACHE_VER is derived from the locale files,
     # but site.js itself was served from cache (vercel.json allows a day of
     # stale-while-revalidate) and styles.css carried a hand-typed ?v= that nobody

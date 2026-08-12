@@ -29,7 +29,7 @@
 // again the very next day on the delivery-status keys, with a comment sitting
 // right here telling me to bump it. `scripts/check-i18n.py` now computes the
 // expected value and fails if this line disagrees, so it cannot be forgotten.
-var I18N_CACHE_VER = "3e8d3c6a59";
+var I18N_CACHE_VER = "be90d5efa0";
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
@@ -91,9 +91,14 @@ var I18N_CACHE_VER = "3e8d3c6a59";
             }
         } catch (e) {}
 
-        // Use default HTTP cache (honours Cache-Control from vercel.json).
-        // Do not use force-cache: it can serve stale locale files across deploys.
-        return fetch("/i18n/" + lang + ".json", {
+        // The version goes in the URL, not just in the sessionStorage key. Without
+        // it this fetch is subject to `stale-while-revalidate=86400` and a browser
+        // hands back a day-old dictionary instantly — which then gets stored under
+        // the NEW cache key, so the marker moved and the words did not. That is how
+        // the dropped Signal section stayed on screen after it was gone from the
+        // repo, from the deploy, and from the live JSON. A changed URL cannot hit a
+        // cache entry, so this is a mechanism rather than a request to be careful.
+        return fetch("/i18n/" + lang + ".json?v=" + I18N_CACHE_VER, {
             credentials: "same-origin",
             cache: "default",
         })

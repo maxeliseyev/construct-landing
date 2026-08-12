@@ -97,7 +97,7 @@
   "home.about.t3": "譲らない2つの立場：",
   "home.about.t4": "<strong>1. 安全なバックドアは存在しません。</strong>暗号を意図的に弱めれば抜け穴ができ、そこをすり抜けるのは、その穴を残した相手ではありません。",
   "home.about.t5": "<strong>2. 既定でプライベート。</strong>利用者が何もしなくても成り立つ必要があります——設定ではなく、プロトコルの性質です。",
-  "home.about.t9": "実装は Signal Protocol の設計（X3DH + Double Ratchet）——Signal や WhatsApp を支えるのと同じエンドツーエンド暗号化——を Rust でゼロから書き、ポスト量子鍵合意（ML-KEM-768）で拡張したものです。",
+  "home.about.t9": "実装は Signal Protocol の設計（X3DH + Double Ratchet）を Rust でゼロから書き、ポスト量子鍵合意（ML-KEM-768）で拡張したものです。",
   "home.alpha-build": "ALPHA BUILD",
   "home.badge.no-phone": "電話番号不要",
   "home.e2ee-active": "E2EE::ACTIVE",

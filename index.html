@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=86ae627eea" as="style" />
-        <link rel="stylesheet" href="styles.css?v=86ae627eea" />
-        <link rel="stylesheet" href="effects.css?v=86ae627eea" />
+        <link rel="preload" href="styles.css?v=d81bcf89d9" as="style" />
+        <link rel="stylesheet" href="styles.css?v=d81bcf89d9" />
+        <link rel="stylesheet" href="effects.css?v=d81bcf89d9" />
         
     </head>
 
@@ -192,7 +192,7 @@
 
         <main id="main-content">
 
-            <!-- ── What is different / architecture ─────────────────────── -->
+            <!-- ── Four properties, and the caveat ──────────────────────── -->
             <section aria-labelledby="why-heading">
                 <div class="container">
                     <h2 id="why-heading"><span data-i18n="home.why.title">Four properties</span></h2>
@@ -228,7 +228,7 @@
                         <span data-i18n-html="home.about.t5"><strong>2. Privacy by default.</strong> It has to hold without the user doing anything: a property of the protocol, not a setting.</span>
                         </p>
                     <p>
-                        <span data-i18n-html="home.about.t9">The implementation is the Signal Protocol design (X3DH + Double Ratchet) — the same end-to-end encryption that powers Signal and WhatsApp — written from scratch in Rust, extended with post-quantum key agreement (ML-KEM-768).</span>
+                        <span data-i18n-html="home.about.t9">The implementation is the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-768).</span>
                         </p>
                     <p>
                         <span data-i18n-html="home.about.t10">The server holds public keys and ciphertext, never plaintext, and does not see who sent a message — only the recipient, the time and the size. Timing and IP stay visible on the wire. Today the network is a single trusted server.</span>
@@ -713,6 +713,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=1420f9d4fb" defer></script>
+        <script src="/site.js?v=9368e2ff5c" defer></script>
     </body>
 </html>

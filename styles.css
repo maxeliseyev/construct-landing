@@ -625,27 +625,33 @@ section[aria-labelledby="features-heading"] ul li::before {
     border: 1px solid var(--accent);
 }
 
-/* ── "Why not Signal" + architecture diagram ──────────────────────────────── */
+/* ── Four properties ──────────────────────────────────────────────────────────
+   One column, deliberately. This was a two-column grid, inherited from when the
+   section held four problem/answer PAIRS and the pairing set the reading order.
+   Four independent statements have no such order, and the grid cost three things:
+   it left the reading path ambiguous (down, or across?), it ragged the bottom
+   edge because the items are not the same length, and — worst in a monospace
+   face — a 320px column hyphenated terms mid-word, breaking "ML-KEM-768" across
+   two lines. A single measure fixes all three and costs nothing. */
 .why-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    max-width: 900px;
-    gap: var(--space-lg, 1.5rem);
+    grid-template-columns: 1fr;
+    max-width: 68ch;
+    gap: var(--space-md, 1rem);
     margin: var(--space-lg, 1.5rem) 0;
 }
 .why-item {
     border-left: 2px solid var(--border);
     padding-left: 1rem;
 }
-.why-problem {
-    color: var(--fg-muted);
-    margin: 0 0 0.35rem;
-}
 .why-answer { margin: 0; }
 .why-counter {
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 1rem;
+    /* Same measure as the list above it, or the caveat reads as a different
+       section rather than the fifth thing in the same argument. */
+    max-width: 68ch;
     margin-top: var(--space-lg, 1.5rem);
 }
 

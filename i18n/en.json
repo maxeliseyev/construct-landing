@@ -97,7 +97,7 @@
   "home.about.t3": "Two positions we do not trade away:",
   "home.about.t4": "<strong>1. There is no safe backdoor.</strong> Any deliberate weakening of encryption creates a loophole, and whoever slips through it is not the one it was left for.",
   "home.about.t5": "<strong>2. Privacy by default.</strong> It has to hold without the user doing anything: a property of the protocol, not a setting.",
-  "home.about.t9": "The implementation is the Signal Protocol design (X3DH + Double Ratchet) — the same end-to-end encryption that powers Signal and WhatsApp — written from scratch in Rust, extended with post-quantum key agreement (ML-KEM-768).",
+  "home.about.t9": "The implementation is the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-768).",
   "home.alpha-build": "ALPHA BUILD",
   "home.badge.no-phone": "No Phone Number",
   "home.e2ee-active": "E2EE::ACTIVE",
