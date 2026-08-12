@@ -492,7 +492,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p5">The server sees: that device A transmitted encrypted bytes to device B, the approximate size, and a timestamp. It doesn't see message content, names, avatars, or display names. Messages aren't stored on the server after delivery. A username is optional and is <strong>not</strong> used for routing — messages are addressed by an opaque account id. If you set one, the server keeps only a keyed hash of it, used for nothing but letting other people find you; and that lookup is off until you turn discovery on, so by default an account cannot be found by name at all.</p>
+                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an <strong>opaque account id</strong> for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Delivered messages are not kept. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
                             </div>
                     </details>
 
@@ -510,23 +510,13 @@
 
                     <details class="faq-item">
                         <summary>
-                            <span data-i18n="faq.encryption.q8">Can I hide my identity from the server when sending?</span>
+                            <span data-i18n="faq.encryption.q8">Does the server know who sent a message?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p9">Yes — and it is <strong>always on</strong> for
- eligible traffic (user messages, receipts, call
- signaling, profile shares). There is no user
- toggle in production: the device leaves the
- sender field out of the envelope and seals a
- signed sender certificate to the recipient's
- identity key. The recipient decrypts and
- verifies who sent it; the server cannot. A few
- control paths (e.g. E2E heartbeats, multi-device
- sync, pure session control) stay identified by
- design.</p>
+                            <p data-i18n-html="faq.encryption.p9">No — the sender field is left out of the envelope, and this is <strong>always on</strong> for ordinary traffic (messages, delivery receipts, call setup, profile sharing). There is no switch to forget. Your device seals a signed sender certificate to the recipient's key: the recipient can open it and verify who wrote, the server cannot. A few internal paths — keep-alives, syncing your own devices, session housekeeping — still carry a sender by design.<br /><br />It is worth being precise about what is being hidden, because it is not an identity. The server never had one: an account here is a keypair and an opaque id, with no phone number, email or real name attached, so there is nothing to link to a person in the first place. What sealed sender removes is the last link between two of those ids — who wrote to whom. The network layer is a separate matter and is covered above: timing and IP remain visible, and that is where a well-resourced observer works.</p>
                             <p data-i18n-html="faq.encryption.p10">Honest limits: Stealth hides the sender
  <em>identity</em> from the server, not message
  timing, size, or your IP address — those remain
