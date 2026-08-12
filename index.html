@@ -771,33 +771,10 @@
                         <span data-i18n="home.roadmap.development-roadmap">Development Roadmap</span></h2>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf
- · live
- <strong
- >gRPC bidi MessageStream over QUIC</strong
- >
- (HTTP/2 fallback; intercontinental production
- validation) · X3DH + Double Ratchet · hybrid
- PQXDH with ML-KEM-768 (opt-in) · session healing
- · WebRTC voice/video calls with E2EE signaling ·
- iOS TestFlight beta · VEIL anti-censorship
- (obfs4, WebTunnel) · veil-front implemented and
- validated on-device · always-on Stealth (sealed
- sender) for eligible traffic.</span>
+                            <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf · live <strong>gRPC bidi MessageStream over QUIC</strong> (HTTP/2 fallback; intercontinental production validation) · X3DH + Double Ratchet · PQXDH with ML-KEM-768 · session healing · WebRTC voice/video calls with E2EE signaling · iOS TestFlight beta · censorship-resistant transport · always-on Stealth (sealed sender) for eligible traffic.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> veil-front public
- ticket rollout · macOS Desktop client
- (iOS-direct crypto path, no public build yet) ·
- Android client (currently Phase 0 — Rust core
- builds, Kotlin wrapper TBD) · BIP39 / SLIP-39
- social recovery · MLS group chats (RFC 9420) ·
- first external security audit · hybrid PQ
- signatures (ML-DSA-65) — crypto core and server
- storage /verification implemented, client-side
- orchestration (identity generation, key
- rotation) not yet wired into the shared
- core.</span>
+                            <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> macOS Desktop client (iOS-direct crypto path, no public build yet) · Android client (currently Phase 0 — Rust core builds, Kotlin wrapper TBD) · BIP39 / SLIP-39 social recovery · MLS group chats (RFC 9420) · first external security audit · hybrid PQ signatures (ML-DSA-65) — crypto core and server storage / verification implemented, client-side orchestration (identity generation, key rotation) not yet wired into the shared core.</span>
                             </li>
                     </ul>
 
@@ -854,19 +831,7 @@
                             </li>
                     </ul>
                     <p>
-                        <span data-i18n-html="home.roadmap.t11"><strong>Honest current status:</strong> alpha. iOS
- via TestFlight only (<a
- href="https://testflight.apple.com/join/NH3WssFh"
- >join the beta</a
- >); no public App Store release yet. macOS Desktop
- client is in active development, no build available
- yet. Single trusted server (no federation). VEIL
- obfs4 transport is deployed but currently throttled
- by active DPI in some regions; the veil-front
- replacement is implemented and validated on-device,
- with public ticket rollout in progress. Not
- recommended for adversarial threat models until
- first external audit completes.</span>
+                        <span data-i18n-html="home.roadmap.t11"><strong>Honest current status:</strong> alpha. iOS via TestFlight only (<a href="https://testflight.apple.com/join/NH3WssFh">join the beta</a>); no public App Store release yet. macOS Desktop client is in active development, no build available yet. Single trusted server (no federation). Censorship-resistant transport ships and is on by default, but we do not publish where it currently does or does not get through. Not recommended for adversarial threat models until the first external audit completes.</span>
                         </p>
                 </div>
             </section>
@@ -877,7 +842,7 @@
                         <span data-i18n="home.get-involved.open-source-amp-contributions">Open Source & Contributions</span>
                         </h2>
                     <p>
-                        <span data-i18n="home.get-involved.t2">Konstruct is open source under weak-copyleft licenses: MPL-2.0 for the client apps and VEIL, AGPL-3.0 for the server and relay, Apache-2.0 for shared libraries, and CC-BY-4.0 for text / specs. Privacy technology should be transparent and auditable by anyone — including the open issues we haven't fixed yet.</span>
+                        <span data-i18n="home.get-involved.t2">Konstruct is open source under weak-copyleft licenses: MPL-2.0 for the client apps and <code>construct-veil</code>, AGPL-3.0 for the server and relay, Apache-2.0 for shared libraries, and CC-BY-4.0 for text / specs. Privacy technology should be transparent and auditable by anyone — including the open issues we haven't fixed yet.</span>
                         </p>
                     <p>
                         <span data-i18n-html="home.get-involved.t3"><strong>Contributions welcome</strong> — from code
@@ -1078,15 +1043,15 @@
                     "price": "0",
                     "priceCurrency": "USD"
                 },
-                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with hybrid post-quantum KEM (ML-KEM-768) and a live gRPC bidirectional MessageStream over QUIC. Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
+                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with post-quantum key agreement (ML-KEM-768, PQXDH) and a live gRPC bidirectional MessageStream over QUIC. Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
                 "featureList": [
                     "End-to-end encryption (X3DH + Double Ratchet)",
                     "Forward secrecy and post-compromise security",
-                    "Hybrid post-quantum KEM (ML-KEM-768, opt-in)",
+                    "Post-quantum key agreement (ML-KEM-768, PQXDH)",
                     "ChaCha20-Poly1305 AEAD",
                     "gRPC bidirectional MessageStream over QUIC (HTTP/2 fallback)",
                     "WebRTC voice/video calls with E2EE signaling",
-                    "VEIL anti-censorship transport (obfs4, WebTunnel)",
+                    "Censorship-resistant transport",
                     "Federation (planned)",
                     "Direct P2P delivery (planned)",
                     "Lightweight Rust server"

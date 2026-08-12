@@ -406,10 +406,10 @@
                 </p>
                 <p>
                     If you want to keep your network address off the path
-                    entirely, route your connection through <strong>VEIL</strong>
-                    (our obfuscation transport), a VPN, or Tor — though the
-                    endpoint that terminates your connection still sees the
-                    apparent source address of that connection.
+                    entirely, turn on <strong>censorship protection</strong> in
+                    Settings, or use a VPN or Tor — though the endpoint that
+                    terminates your connection still sees the apparent source
+                    address of that connection.
                 </p>
 
                 <h2>3. Traffic Analysis Protection</h2>
@@ -436,16 +436,16 @@
                     running.
                 </p>
                 <p>
-                    Separately, <strong>VEIL</strong> is Konstruct's
-                    network-level transport obfuscation layer (obfs4 / WebTunnel
-                    pluggable transports, with a
-                    <em>veil-front</em> honest-front HTTPS layer in rollout). It
-                    helps your connection blend in with ordinary HTTPS traffic
-                    when direct TLS is throttled or blocked, but it is a
-                    censorship-circumvention mechanism, not a metadata-hiding
-                    one — it does not by itself prevent a network observer who
-                    can already see your connection from inferring message
-                    timing or size.
+                    Separately, <strong>censorship protection</strong> is a
+                    network-level obfuscation layer that helps your connection
+                    blend in with ordinary HTTPS traffic when direct TLS is
+                    throttled or blocked. It is a censorship-circumvention
+                    mechanism, not a metadata-hiding one — it does not by itself
+                    prevent a network observer who can already see your
+                    connection from inferring message timing or size. We do not
+                    publish which techniques are live or where they currently
+                    get through; that would be free feedback for whoever is
+                    doing the blocking.
                 </p>
 
                 <h2>4. Anti-Spam: Proof of Work</h2>

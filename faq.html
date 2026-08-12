@@ -501,18 +501,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p7">This is the harder part. The server can still
- observe that <em>someone</em> delivered
- ciphertext to device B (recipient, time, size).
- With always-on
- <strong>Stealth (sealed sender)</strong>, it
- does <em>not</em> learn who sent that ciphertext
- — see the next question. VEIL partially obscures
- the network path. Full anonymity at the routing
- layer (hiding from the recipient's side and from
- network-level IP/timing correlation too) is a
- problem of a different order of magnitude and
- isn't solved today.</p>
+                            <p data-i18n-html="faq.encryption.p7">This is the harder part. The server can still observe that <em>someone</em> delivered ciphertext to device B (recipient, time, size). With always-on <strong>Stealth (sealed sender)</strong>, it does <em>not</em> learn who sent that ciphertext — see the next question. Censorship protection partially obscures the network path. Full anonymity at the routing layer (hiding from the recipient's side and from network-level IP/timing correlation too) is a problem of a different order of magnitude and isn't solved today.</p>
                             </div>
                     </details>
 
@@ -678,9 +667,9 @@
                     </details>
                 </section>
 
-                <!-- ── Section 6: VEIL ─────────────────────────────────────── -->
+                <!-- ── Section 6: Censorship protection ────────────────────── -->
                 <section class="faq-section" aria-labelledby="section-veil">
-                    <h2 id="section-veil">VEIL</h2>
+                    <h2 id="section-veil" data-i18n="faq.veil.censorship-protection">Censorship protection</h2>
 
                     <details class="faq-item">
                         <summary>
@@ -724,28 +713,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.resilience.p3"><em
- >Today: alpha runs on a single trusted
- server — if it goes offline, messaging stops
- until it returns.</em
- >
- The target architecture is three tiers of
- graceful degradation:
- <strong>federated servers</strong> (planned 2027
- — anyone can run one, so even if the founding
- team's server goes down, community servers
- continue);
- <strong>VEIL relay nodes</strong> (planned —
- lightweight relay nodes that route messages
- without storing anything, designed to run on
- hardware as small as a Raspberry Pi);
- <strong>direct P2P</strong> (planned — when both
- users are online simultaneously, messages will
- travel directly between devices over QUIC/VEIL
- with no server involved). Once all three tiers
- ship, two users will be able to communicate as
- long as they have internet access, regardless of
- central infrastructure.</p>
+                            <p data-i18n-html="faq.resilience.p3"><em>Today: alpha runs on a single trusted server — if it goes offline, messaging stops until it returns.</em> The target architecture is three tiers of graceful degradation: <strong>federated servers</strong> (planned 2027 — anyone can run one, so even if the founding team's server goes down, community servers continue); <strong>community relay nodes</strong> (planned — lightweight relays that route messages without storing anything, designed to run on hardware as small as a Raspberry Pi); <strong>direct P2P</strong> (planned — when both users are online simultaneously, messages will travel directly between devices over QUIC with no server involved). Once all three tiers ship, two users will be able to communicate as long as they have internet access, regardless of central infrastructure.</p>
                             </div>
                     </details>
 
@@ -807,25 +775,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.resilience.p8"><em
- >P2P mode is planned, not yet implemented —
- all traffic currently goes through the
- central server.</em
- >
- The target design: when both users are
- simultaneously online and connected to a
- Konstruct server, the server will signal them to
- upgrade to a direct peer-to-peer QUIC/VEIL
- connection. Once established, the server exits
- the message relay path — traffic flows directly
- between devices. If either user goes offline,
- the server automatically resumes relaying. The
- encryption (Signal Protocol) is identical in
- both modes — the server was never able to read
- message content either way. P2P is planned for
- desktop clients first (always-on connection);
- mobile clients will support short P2P bursts
- when both have the app open.</p>
+                            <p data-i18n-html="faq.resilience.p8"><em>P2P mode is planned, not yet implemented — all traffic currently goes through the central server.</em> The target design: when both users are simultaneously online and connected to a Konstruct server, the server will signal them to upgrade to a direct peer-to-peer QUIC connection. Once established, the server exits the message relay path — traffic flows directly between devices. If either side goes offline, delivery falls back to the server.</p>
                             </div>
                     </details>
                 </section>
