@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=20260812-lang" as="style" />
-        <link rel="stylesheet" href="styles.css?v=20260812-lang" />
-        <link rel="stylesheet" href="effects.css?v=20260812-lang" />
+        <link rel="preload" href="styles.css?v=3b40e5de43" as="style" />
+        <link rel="stylesheet" href="styles.css?v=3b40e5de43" />
+        <link rel="stylesheet" href="effects.css?v=3b40e5de43" />
         
     </head>
 
@@ -200,12 +200,12 @@
             <!-- ── Why not Signal / architecture ─────────────────────────── -->
             <section aria-labelledby="why-heading">
                 <div class="container">
-                    <h2 id="why-heading"><span data-i18n="home.why.title">Why not just use Signal?</span></h2>
-                    <p><span data-i18n="home.why.lead">The honest answer has two halves.</span></p>
+                    <h2 id="why-heading"><span data-i18n="home.why.title">What is different here</span></h2>
+                    <p><span data-i18n="home.why.lead">Four things, and an honest counterweight.</span></p>
                     <div class="why-grid">
                     <div class="why-item">
-                        <p class="why-problem"><span data-i18n="home.why.id.problem">Signal needs your phone number.</span></p>
-                        <p class="why-answer"><span data-i18n="home.why.id.answer">An account here is a keypair. No number, no email, no required username, and discovery is off by default. No carrier in the loop to subpoena.</span></p>
+                        <p class="why-problem"><span data-i18n="home.why.id.problem">Most messengers need a phone number.</span></p>
+                        <p class="why-answer"><span data-i18n="home.why.id.answer">An account here is a keypair. No number, no email, no required username, and discovery is off by default. A subpoena to a carrier reaches nothing, because no carrier is in the loop.</span></p>
                     </div>
                     <div class="why-item">
                         <p class="why-problem"><span data-i18n="home.why.transport.problem">Most private messengers still poll.</span></p>
@@ -220,7 +220,7 @@
                         <p class="why-answer"><span data-i18n="home.why.sealed.answer">Here it is unconditional: the sender field is not in the envelope. To route a message the server has an opaque account id, a size and a time.</span></p>
                     </div>
                     </div>
-                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The other half: Signal is ahead where it counts for most people.</strong> Audited, mature multi-device, group calls, years of hardening. Konstruct is alpha — one server, no federation, iOS only, no external audit yet. If you need a messenger that just works for a group today, use Signal.</span></p>
+                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The counterweight, stated plainly: this is alpha.</strong> One server, no federation, iOS only, and no external audit yet. Established messengers are ahead on multi-device, group calls and years of hardening. If you need something that simply works for a group of people today, this is not it yet.</span></p>
 
                     <h2 id="arch-heading"><span data-i18n="home.arch.title">What actually runs today</span></h2>
                     <svg class="arch" viewBox="0 0 640 250" role="img" aria-labelledby="archtitle">
@@ -230,27 +230,27 @@
                                 <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
                             </marker>
                         </defs>
-                        <g class="arch-solid">
+                        <g class="arch-solid" fill="none" stroke="currentColor" stroke-width="1.5">
                             <rect x="8"   y="40" width="150" height="52" rx="8"/>
                             <rect x="245" y="40" width="150" height="52" rx="8"/>
                             <rect x="482" y="40" width="150" height="52" rx="8"/>
                             <line x1="162" y1="66" x2="238" y2="66" marker-end="url(#ah)"/>
                             <line x1="399" y1="66" x2="475" y2="66" marker-end="url(#ah)"/>
-                            <text data-i18n="home.arch.you" x="83"  y="62">YOU</text>
-                            <text data-i18n="home.arch.server" x="320" y="62">SERVER</text>
-                            <text data-i18n="home.arch.them" x="557" y="62">THEM</text>
-                            <text class="sub" x="83"  y="80">gRPC · QUIC</text>
-                            <text data-i18n="home.arch.today" class="sub" x="320" y="80">sealed ciphertext</text>
-                            <text class="sub" x="557" y="80">gRPC · QUIC</text>
+                            <text data-i18n="home.arch.you" x="83"  y="62" fill="currentColor" stroke="none">YOU</text>
+                            <text data-i18n="home.arch.server" x="320" y="62" fill="currentColor" stroke="none">SERVER</text>
+                            <text data-i18n="home.arch.them" x="557" y="62" fill="currentColor" stroke="none">THEM</text>
+                            <text class="sub" x="83"  y="80" fill="currentColor" stroke="none">gRPC · QUIC</text>
+                            <text data-i18n="home.arch.today" class="sub" x="320" y="80" fill="currentColor" stroke="none">sealed ciphertext</text>
+                            <text class="sub" x="557" y="80" fill="currentColor" stroke="none">gRPC · QUIC</text>
                         </g>
-                        <g class="arch-dashed">
+                        <g class="arch-dashed" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="5 4">
                             <rect x="245" y="140" width="150" height="46" rx="8"/>
                             <line x1="162" y1="163" x2="238" y2="163" marker-end="url(#ah)"/>
                             <line x1="399" y1="163" x2="475" y2="163" marker-end="url(#ah)"/>
-                            <text data-i18n="home.arch.relay" x="320" y="162">RELAY</text>
-                            <text data-i18n="home.arch.planned" class="sub" x="320" y="178">federation · 2027</text>
+                            <text data-i18n="home.arch.relay" x="320" y="162" fill="currentColor" stroke="none">RELAY</text>
+                            <text data-i18n="home.arch.planned" class="sub" x="320" y="178" fill="currentColor" stroke="none">federation · 2027</text>
                             <path d="M83 100 C 83 225, 557 225, 557 100" marker-end="url(#ah)"/>
-                            <text data-i18n="home.arch.p2p" class="sub" x="320" y="232">direct P2P · 2027+</text>
+                            <text data-i18n="home.arch.p2p" class="sub" x="320" y="232" fill="currentColor" stroke="none">direct P2P · 2027+</text>
                         </g>
                     </svg>
                     <p class="arch-note"><span data-i18n="home.arch.note">The solid path is the whole network as it exists: one server, which cannot read what it carries and does not learn who sent it. Dashed is roadmap — the relay binary exists, the federated network it is for does not.</span></p>
@@ -283,19 +283,6 @@
  must protect confidentiality without requiring user
  action or justification. Privacy is a property of
  the protocol, not a setting.</span>
-                        </p>
-                    <p>
-                        <span data-i18n-html="home.about.t6"><strong>3. Server-blind architecture.</strong> The server must be technically incapable of reading content or resolving group membership, and whatever it must hold to route a message has to stay minimal and unlinked to a person. Trusting the operator is not a substitute for cryptographic guarantees.</span>
-                        </p>
-                    <p>
-                        <span data-i18n-html="home.about.t7"><strong>4. Decentralisation by design.</strong>
- Centralised platforms present a single point of
- legal and technical pressure. Federated and P2P
- topologies distribute trust and eliminate
- censurability at the protocol level.</span>
-                        </p>
-                    <p>
-                        <span data-i18n-html="home.about.t8"><strong>5. Post-quantum readiness.</strong> "Capture now, decrypt later" is an active threat model, so post-quantum key material has to enter the protocol before the machines exist — not after.</span>
                         </p>
                     <p>
                         <span data-i18n-html="home.about.t9">Konstruct implements these principles using the <strong>Signal Protocol</strong> design (X3DH handshake + Double Ratchet) — the same end-to-end encryption design that powers Signal and WhatsApp — implemented from scratch in Rust. We extend it with post-quantum key agreement (<strong>ML-KEM-768</strong>, NIST FIPS&nbsp;203) at session setup, and a continuous ML-KEM ratchet during the session, so traffic recorded today stays protected once cryptographically relevant quantum computers exist.</span>
@@ -344,27 +331,6 @@
                         >
                     </p>
                     <p>
-                        <span data-i18n-html="home.identity.keypair"
-                            ><strong>Your identity is a keypair.</strong> An identifier is something you may add for convenience, never something the system demands in order to let you exist. That is not a slogan about minimalism: Signal, WhatsApp and Telegram bind you to a phone number, which means a subpoena to a carrier is a subpoena to your identity. Here there is no carrier in the loop, because there is no number in the loop. Your account is cryptographic material generated on your own device, and the server only ever learns the public half.</span
-                        >
-                    </p>
-                    <p>
-                        <span data-i18n-html="home.identity.address"
-                            ><strong
-                                >Your address is a choice, not an
-                                assignment.</strong
-                            >
-                            Federated addressing
-                            (<code>you@your-server.example</code>) means the
-                            namespace you live in is one you picked or run
-                            yourself. No operator can revoke who you are, only
-                            where you happen to be reachable
-                            <em
-                                >(federation is on the 2027 roadmap)</em
-                            >.</span
-                        >
-                    </p>
-                    <p>
                         <span data-i18n-html="home.identity.authorship"
                             ><strong
                                 >Your authorship is separable from your
@@ -384,15 +350,7 @@
                     </p>
                     <p>
                         <span data-i18n-html="home.identity.discovery"
-                            ><strong>How people find each other.</strong>
-                            Without a phone book there is no cold outreach:
-                            conversations start with a temporary QR code or
-                            invite link (mutual consent; codes expire in
-                            minutes). An optional username is a convenience
-                            alias only — not required to exist. When federation
-                            ships, addresses will look like email and can be
-                            dictated over the phone
-                            (<code>you@your-server.example</code>).</span
+                            ><strong>How people find each other.</strong> Without a phone book there is no cold outreach: a conversation starts with a QR code or an invite link, single-use and valid for about five minutes. Discovery by username exists, is optional, and is off until you turn it on. When federation ships, addresses will look like email and can be read out over the phone <em>(2027)</em>.</span
                         >
                     </p>
                     <p>
@@ -471,18 +429,7 @@
                         <span data-i18n="home.how-it-works.transport-layer">Transport Layer</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t11"><strong>gRPC bidirectional MessageStream over QUIC</strong> — the live production path on iOS (construct-transport). One long-lived stream carries heartbeats, inbound messages, and delivery receipts without a new TCP handshake per event. QUIC brings connection migration, multiplexed streams, and faster recovery on lossy or long-haul links.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.how-it-works.t12"><strong
- >gRPC over HTTP/2 (TLS&nbsp;1.3):</strong
- >
- automatic fallback when QUIC is blocked or
- handshakes time out — same protobuf contracts,
- same E2EE payload, no user toggle.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.how-it-works.t13"><strong>Why a bidirectional stream over QUIC:</strong> one long-lived stream instead of a request per event means less framing overhead and fewer reconnect storms on flaky mobile links, and QUIC survives a network change without a fresh handshake. E2EE sits above all of it — the transport moves sealed ciphertext only, so changing transports changes nothing about the guarantees.</span>
+                            <span data-i18n-html="home.how-it-works.t11"><strong>gRPC bidirectional MessageStream over QUIC</strong> — the production path on iOS (construct-transport). One long-lived stream carries heartbeats, inbound messages and receipts without a TCP handshake per event, survives a change of network, and falls back to <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong> automatically when QUIC is blocked. E2EE sits above it: the transport moves sealed ciphertext only, so changing it changes nothing about the guarantees.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t14"><strong>Censorship resistance:</strong> when a direct TLS connection is blocked or throttled, the client routes through an obfuscation layer instead, automatically and with no user action. The implementation is open source (<code>construct-veil</code>, MPL-2.0) and the design is public. Operational detail — which transports are live, which entry points exist and where — is not published, and neither the app nor this site displays it.</span>
@@ -699,62 +646,6 @@
                 </div>
             </section>
 
-            <section aria-labelledby="resilience-heading">
-                <div class="container">
-                    <h2 id="resilience-heading">
-                        <span data-i18n="home.resilience.designed-for-graceful-degradation">Designed for Graceful Degradation</span></h2>
-                    <p>
-                        <span data-i18n-html="home.resilience.t2">Centralised privacy projects are fragile: when
- funding dries up or a single operator is compelled
- to shut down, the network goes with them. Konstruct
- is designed around the opposite principle — as
- components disappear, the rest keeps working. The
- target architecture is three tiers, each with the
- same end-to-end cryptographic guarantees regardless
- of delivery path.
- <em
- >Today only Tier 1 with a single trusted server
- is live; Tiers 2 and 3 are on the roadmap.</em
- ></span>
-                        </p>
-                    <ul>
-                        <li>
-                            <span data-i18n-html="home.resilience.t3"><strong
- >Tier 1 — Federated servers (planned
- 2027):</strong
- >
- anyone will be able to run a Konstruct server
- with an email-style address
- (<code>you@your-server.example</code>). If the
- founding team disappears, community-operated
- nodes can keep the network alive.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.resilience.t4"><strong
- >Tier 2 — Community relay nodes (planned
- 2027):</strong
- >
- lightweight relays (designed to run on hardware
- as small as a Raspberry Pi) will provide message
- routing without a full server — no user
- database, no key storage.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.resilience.t5"><strong
- >Tier 3 — Direct P2P (planned
- 2027+):</strong
- >
- when both users are online, messages will travel
- directly between devices over QUIC/ICE — the
- server steps out of the data path
- entirely.</span>
-                            </li>
-                    </ul>
-                    <p>
-                        <span data-i18n="home.resilience.t6">The Signal Protocol design (X3DH + Double Ratchet + hybrid PQ KEM) is transport-agnostic: whether messages travel through a server, a relay node, or directly between devices, the cryptographic guarantees stay the same.</span>
-                        </p>
-                </div>
-            </section>
 
             <section aria-labelledby="roadmap-heading">
                 <div class="container">
@@ -773,36 +664,7 @@
                         <span data-i18n="home.roadmap.decentralization-roadmap">Decentralization Roadmap</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.roadmap.t5"><strong>Phase 1 — Core Relay:</strong> the standalone <code>construct-relay</code> binary — store-and-forward for server-to-server messages, verifying each origin signature before passing it on. Deployable on a small VPS or a Raspberry Pi from a two-container compose file (the relay plus Redis for its retry queue); no PostgreSQL, no Kafka. It carries sealed ciphertext it cannot read, so end-to-end guarantees are unchanged. The binary exists; the federated network it is for does not yet.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.roadmap.t6"><strong
- >Phase 2 — DHT &amp; Discovery
- (2027):</strong
- >
- Kademlia DHT overlay for peer discovery and
- responsible-node routing · signed user records
- in DHT · offline message storage with
- replication · bootstrap node network.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.roadmap.t7"><strong
- >Phase 3 — Hybrid Routing &amp; P2P
- (2027):</strong
- >
- direct peer-to-peer delivery via libp2p
- hole-punching · automatic fallback to relay
- routing · online presence in DHT · client
- multi-relay support.</span>
-                            </li>
-                        <li>
-                            <span data-i18n-html="home.roadmap.t8"><strong
- >Phase 4 — Ecosystem (2027–2028):</strong
- >
- public seed nodes · spam resistance (RLN /
- proof-of-work) · MLS group chats over
- decentralised transport · reputation for relay
- operators · external security audit.</span>
+                            <span data-i18n-html="home.roadmap.t5"><strong>Decentralisation, in order:</strong> the standalone <code>construct-relay</code> binary (store-and-forward for server-to-server messages, origin signatures verified, two containers on a small VPS) · a DHT for peer discovery and offline storage · direct peer-to-peer delivery with relay fallback · public seed nodes, spam resistance and MLS groups over the decentralised transport. The relay binary exists; everything after it is 2027 and later.</span>
                             </li>
                     </ul>
 
@@ -1045,6 +907,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js" defer></script>
+        <script src="/site.js?v=f6bd99a7a4" defer></script>
     </body>
 </html>

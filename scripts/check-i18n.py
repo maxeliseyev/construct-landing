@@ -133,6 +133,31 @@ def main() -> int:
         print(f'FAIL site.js: I18N_CACHE_VER is "{m.group(1)}", locales hash to "{want}" '
               f"— stale browser caches will serve the old dictionary. Set it to \"{want}\".")
 
+
+    # Same failure one layer up: I18N_CACHE_VER is derived from the locale files,
+    # but site.js itself was served from cache (vercel.json allows a day of
+    # stale-while-revalidate) and styles.css carried a hand-typed ?v= that nobody
+    # moved. A derived version marker is useless if the file carrying it is stale.
+    # Both query strings are now content hashes and are checked here.
+    import hashlib as _hl
+
+    def _h10(name):
+        return _hl.sha256((ROOT / name).read_bytes()).hexdigest()[:10]
+
+    for asset, pattern in (("styles.css", r"styles\.css\?v=([0-9a-z-]+)"),
+                           ("site.js", r'src="/site\.js\?v=([0-9a-z]+)"')):
+        expect = _h10(asset)
+        for name in HTML_FILES:
+            text = (ROOT / name).read_text(encoding="utf-8")
+            found = set(re.findall(pattern, text))
+            if not found:
+                ok = False
+                print(f"FAIL {name}: no content-hash version on {asset}")
+            elif found != {expect}:
+                ok = False
+                print(f'FAIL {name}: {asset}?v={sorted(found)[0]} but it hashes to '
+                      f'"{expect}" — browsers will keep the cached file.')
+
     if ok:
         print(f"OK: {len(base)} keys × {len(LANGS)} langs; {len(used)} HTML refs")
         return 0
