@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css" as="style" />
-        <link rel="stylesheet" href="styles.css" />
-        <link rel="stylesheet" href="effects.css" />
+        <link rel="preload" href="styles.css?v=20260812-lang" as="style" />
+        <link rel="stylesheet" href="styles.css?v=20260812-lang" />
+        <link rel="stylesheet" href="effects.css?v=20260812-lang" />
         <style>
             
             /* One-line address that can scroll on narrow screens without an
@@ -151,13 +151,7 @@
                         >
                     </div>
                 </div>
-                <div
-                    style="
-                        display: flex;
-                        justify-content: flex-end;
-                        margin-bottom: 1.5rem;
-                    "
-                >
+                <div class="lang-bar">
                     <div class="lang-switcher" id="langSwitcher">
                         <button
                             type="button"
@@ -182,8 +176,8 @@
                                     data-lang-btn="en"
                                     aria-selected="true"
                                 >
-                                    <span class="lang-code">EN</span
-                                    ><span class="lang-name">English</span>
+                                    <span class="lang-code">EN</span>
+                                    <span class="lang-name">English</span>
                                 </button>
                             </li>
                             <li>
@@ -193,8 +187,8 @@
                                     data-lang-btn="ru"
                                     aria-selected="false"
                                 >
-                                    <span class="lang-code">RU</span
-                                    ><span class="lang-name">Русский</span>
+                                    <span class="lang-code">RU</span>
+                                    <span class="lang-name">Русский</span>
                                 </button>
                             </li>
                             <li>
@@ -204,8 +198,8 @@
                                     data-lang-btn="ja"
                                     aria-selected="false"
                                 >
-                                    <span class="lang-code">JA</span
-                                    ><span class="lang-name">日本語</span>
+                                    <span class="lang-code">JA</span>
+                                    <span class="lang-name">日本語</span>
                                 </button>
                             </li>
                         </ul>

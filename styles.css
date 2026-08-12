@@ -421,12 +421,27 @@ section[aria-labelledby="features-heading"] ul li::before {
 }
 
 
-/* Language Switcher — compact HUD dropdown (scales to many locales) */
+/* Row that holds the language control — keeps absolute menu out of document flow */
+.lang-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 50;
+  min-height: 2rem;
+  overflow: visible;
+}
+
+/* Language Switcher — compact HUD dropdown (scales to many locales).
+   Menu MUST stay position:absolute so open state does not reflow the header. */
 .lang-switcher {
   position: relative;
   display: inline-flex;
   align-items: center;
   z-index: 50;
+  /* Reserve trigger height only; dropdown paints outside the flow */
+  vertical-align: top;
 }
 .lang-trigger {
   display: inline-flex;
@@ -440,10 +455,11 @@ section[aria-labelledby="features-heading"] ul li::before {
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   font-family: var(--font-sans);
   letter-spacing: 0.06em;
   line-height: 1.2;
+  white-space: nowrap;
 }
 .lang-trigger:hover,
 .lang-switcher.is-open .lang-trigger {
@@ -465,7 +481,13 @@ section[aria-labelledby="features-heading"] ul li::before {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
+  left: auto;
+  z-index: 200;
+  display: block;
+  box-sizing: border-box;
   min-width: 11.5rem;
+  width: max-content;
+  max-width: min(18rem, 90vw);
   margin: 0;
   padding: 4px;
   list-style: none;
@@ -473,13 +495,17 @@ section[aria-labelledby="features-heading"] ul li::before {
   border: 1px solid var(--border);
   border-radius: 6px;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  /* Never participate in parent flex/grid sizing */
+  flex: none;
 }
 .lang-menu[hidden] {
   display: none !important;
 }
 .lang-menu li {
+  display: block;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 .lang-menu button {
   display: flex;
@@ -487,7 +513,7 @@ section[aria-labelledby="features-heading"] ul li::before {
   gap: 0.55rem;
   width: 100%;
   background: none;
-  border: none;
+  border: 1px solid transparent;
   color: var(--fg-muted);
   padding: 7px 10px;
   border-radius: 4px;
@@ -496,14 +522,16 @@ section[aria-labelledby="features-heading"] ul li::before {
   cursor: pointer;
   text-align: left;
   font-family: var(--font-sans);
-  transition: background 0.12s ease, color 0.12s ease;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  white-space: nowrap;
 }
 .lang-menu button .lang-code {
-  flex: 0 0 1.6rem;
+  flex: 0 0 1.75rem;
   letter-spacing: 0.06em;
   color: var(--fg-secondary, var(--fg-muted));
 }
 .lang-menu button .lang-name {
+  flex: 1 1 auto;
   letter-spacing: 0;
   font-weight: 400;
 }
@@ -514,6 +542,7 @@ section[aria-labelledby="features-heading"] ul li::before {
 .lang-menu button.active {
   color: var(--accent);
   background: rgba(0, 98, 255, 0.12);
+  border-color: rgba(0, 98, 255, 0.35);
 }
 .lang-menu button.active .lang-code {
   color: var(--accent);
@@ -533,6 +562,7 @@ section[aria-labelledby="features-heading"] ul li::before {
   backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
+  overflow: visible;
 }
 .page-nav .container {
   display: flex;

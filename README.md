@@ -105,7 +105,8 @@ Locale JSON is same-origin only. Do not host `i18n/` on another domain without u
 |------|----------------|
 | `/i18n/*.json` | `max-age=60, stale-while-revalidate=86400` — copy can change every deploy |
 | `/site.js`, `/effects.js` | same short TTL |
-| `/fonts/*`, hashed-looking static images/CSS | long `immutable` |
+| `/fonts/*`, images (`favicon`, `og-image`) | long `immutable` |
+| `/styles.css`, `/effects.css`, `/contact.css` | short TTL (`max-age=60`) — **not** immutable (no content hash in URL) |
 
 `site.js` also keeps a **sessionStorage** dictionary cache keyed by  
 `construct-i18n-v1-{lang}`. After a large copy rewrite, bump `I18N_CACHE_VER` in `site.js` so open tabs drop the old dictionary.
