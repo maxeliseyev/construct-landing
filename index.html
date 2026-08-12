@@ -2,8 +2,10 @@
 <html
     lang="en"
     data-lang="en"
+    data-i18n-page="home"
     data-title-en="Konstruct - Privacy-First Secure Messenger with Post-Quantum Encryption"
     data-title-ru="Konstruct — Мессенджер с постквантовым шифрованием"
+    data-title-ja="Konstruct — ポスト量子暗号対応のプライバシー重視メッセンジャー"
 >
     <head>
         <meta charset="UTF-8" />
@@ -14,7 +16,7 @@
         </title>
         <meta
             name="description"
-            content="Professional-grade encrypted messenger: Signal Protocol design, hybrid post-quantum KEM, and a live gRPC bidirectional stream over QUIC. Privacy is a fundamental right, not a feature."
+            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, hybrid post-quantum KEM, gRPC over QUIC. No phone number. Your data is yours — not digital oil."
         />
         <meta
             name="keywords"
@@ -30,7 +32,7 @@
         />
         <meta
             property="og:description"
-            content="Professional-grade encrypted messenger with post-quantum cryptography. Privacy is a fundamental right."
+            content="Identity is a construct. Post-quantum E2EE messenger — no phone number, no infinite scroll, your data is yours."
         />
         <meta property="og:image" content="https://konstruct.cc/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -80,10 +82,7 @@
         <link rel="stylesheet" href="styles.css" />
         <link rel="stylesheet" href="effects.css" />
         <style>
-            html[data-lang="en"] .ru,
-            html[data-lang="ru"] .en {
-                display: none !important;
-            }
+            
             /* One-line address that can scroll on narrow screens without an
                ugly scrollbar; on desktop the full-width card fits it outright.
                Click-to-copy: the whole address is the button. */
@@ -134,19 +133,13 @@
                 <div class="hud-bar" aria-hidden="true">
                     <div class="hud-bar__left">
                         <span class="hud-indicator">
-                            <span class="en">SYS::ONLINE</span
-                            ><span class="ru">SYS::ONLINE</span>
-                        </span>
+                            <span data-i18n="home.sys-online">SYS::ONLINE</span></span>
                         <span class="hud-indicator hud-indicator--accent">
-                            <span class="en">E2EE::ACTIVE</span
-                            ><span class="ru">E2EE::ACTIVE</span>
-                        </span>
+                            <span data-i18n="home.e2ee-active">E2EE::ACTIVE</span></span>
                     </div>
                     <div class="hud-bar__right">
                         <span class="hud-indicator hud-indicator--warn">
-                            <span class="en">ALPHA BUILD</span
-                            ><span class="ru">ALPHA BUILD</span>
-                        </span>
+                            <span data-i18n="home.alpha-build">ALPHA BUILD</span></span>
                         <span>PQ::ML-KEM-768</span>
                         <span class="hud-readout" id="hudUptime"
                             >T+00:00:00</span
@@ -166,9 +159,56 @@
                     "
                 >
                     <div class="lang-switcher" id="langSwitcher">
-                        <button data-lang-btn="en">EN</button>
-                        <span class="lang-sep">|</span>
-                        <button data-lang-btn="ru">RU</button>
+                        <button
+                            type="button"
+                            class="lang-trigger"
+                            data-lang-trigger
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-label="Language"
+                        >
+                            <span class="lang-trigger-label"
+                                >LANG::<span data-lang-current>EN</span></span
+                            >
+                            <span class="lang-trigger-caret" aria-hidden="true"
+                                >▾</span
+                            >
+                        </button>
+                        <ul class="lang-menu" role="listbox" hidden>
+                            <li>
+                                <button
+                                    type="button"
+                                    role="option"
+                                    data-lang-btn="en"
+                                    aria-selected="true"
+                                >
+                                    <span class="lang-code">EN</span
+                                    ><span class="lang-name">English</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    role="option"
+                                    data-lang-btn="ru"
+                                    aria-selected="false"
+                                >
+                                    <span class="lang-code">RU</span
+                                    ><span class="lang-name">Русский</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    role="option"
+                                    data-lang-btn="ja"
+                                    aria-selected="false"
+                                >
+                                    <span class="lang-code">JA</span
+                                    ><span class="lang-name">日本語</span>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <h1>
@@ -177,56 +217,44 @@
                     >
                 </h1>
                 <p>
-                    <span class="en"
-                        >Privacy is a fundamental human right, not a luxury
-                        feature. Konstruct is an open-source encrypted messenger
-                        built on the Signal Protocol design (X3DH + Double
-                        Ratchet) with a hybrid post-quantum key exchange
-                        (ML-KEM-768). The internet must remain a free space for
-                        information exchange, without ideological censorship or
-                        mass surveillance.</span
+                    <span data-i18n="home.t4"
+                        >Identity is a construct — not a phone number in someone
+                        else's database. Konstruct is an open-source encrypted
+                        messenger built on the Signal Protocol design (X3DH +
+                        Double Ratchet) with hybrid post-quantum key exchange
+                        (ML-KEM-768). The state must not monopolize information
+                        exchange. Corporations must not build apps engineered
+                        for infinite scroll. Your data is yours — not digital
+                        oil.</span
                     >
-                    <span class="ru"
-                        >Приватность — фундаментальное право человека, а не
-                        платная функция. Конструкт — криптостойкий мессенджер с
-                        открытым исходным кодом, построенный на проверенном
-                        шифровании Signal Protocol с постквантовой защитой.
-                        Интернет должен оставаться свободным пространством для
-                        обмена информацией — без идеологической цензуры и
-                        массовой слежки.</span
-                    >
-                </p>
+                    </p>
 
                 <div class="badges">
                     <span class="badge"
-                        ><span class="en">End-to-End Encrypted</span
-                        ><span class="ru">Сквозное шифрование</span></span
-                    >
-                    <span class="badge"
-                        ><span class="en">Post-Quantum KEM</span
-                        ><span class="ru">Постквантовый KEM</span></span
-                    >
-                    <span class="badge"
-                        ><span class="en">Federated (Planned)</span
-                        ><span class="ru">Федерация (план)</span></span
-                    >
-                    <span class="badge"
-                        ><span class="en">P2P (Planned)</span
-                        ><span class="ru">P2P (план)</span></span
-                    >
-                    <span class="badge"
-                        ><span class="en">Server-Blind Content</span
-                        ><span class="ru"
-                            >Сервер без доступа к контенту</span
+                        ><span data-i18n="home.badge.no-phone"
+                            >No Phone Number</span
                         ></span
                     >
                     <span class="badge"
-                        ><span class="en">gRPC + QUIC stream</span
-                        ><span class="ru">gRPC + QUIC поток</span></span
+                        ><span data-i18n="home.end-to-end-encrypted">End-to-End Encrypted</span></span
                     >
                     <span class="badge"
-                        ><span class="en">Open Source</span
-                        ><span class="ru">Открытый исходный код</span></span
+                        ><span data-i18n="home.post-quantum-kem">Post-Quantum KEM</span></span
+                    >
+                    <span class="badge"
+                        ><span data-i18n="home.federated-planned">Federated (Planned)</span></span
+                    >
+                    <span class="badge"
+                        ><span data-i18n="home.p2p-planned">P2P (Planned)</span></span
+                    >
+                    <span class="badge"
+                        ><span data-i18n="home.server-blind-content">Server-Blind Content</span></span
+                    >
+                    <span class="badge"
+                        ><span data-i18n="home.grpc-quic-stream">gRPC + QUIC stream</span></span
+                    >
+                    <span class="badge"
+                        ><span data-i18n="home.open-source">Open Source</span></span
                     >
                 </div>
             </div>
@@ -236,208 +264,201 @@
             <section aria-labelledby="about-heading">
                 <div class="container">
                     <h2 id="about-heading">
-                        <span class="en">Our Mission</span
-                        ><span class="ru">Наша миссия</span>
+                        <span data-i18n="home.about.our-mission">Our Mission</span></h2>
+                    <p>
+                        <span data-i18n-html="home.about.t2"><strong
+ >Privacy and security are not optional.</strong
+ >
+ In an era of mass surveillance, data breaches, and
+ emerging quantum computing threats, communication
+ privacy is more critical than ever.</span>
+                        </p>
+                    <p>
+                        <span data-i18n="home.about.t3">Konstruct is built on cryptographic principles we treat as invariant:</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t4"><strong>1. No safe backdoors.</strong> Any
+ intentional weakening of encryption — regardless of
+ pretext — creates a vulnerability that will be
+ exploited by adversaries. E2EE must be absolute and
+ verifiable.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t5"><strong>2. Privacy-by-default.</strong> The system
+ must protect confidentiality without requiring user
+ action or justification. Privacy is a property of
+ the protocol, not a setting.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t6"><strong>3. Server-blind architecture.</strong> The
+ server must be technically incapable of reading
+ content, resolving group membership, or exposing
+ decryptable metadata. Trusting the operator is not a
+ substitute for cryptographic guarantees.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t7"><strong>4. Decentralisation by design.</strong>
+ Centralised platforms present a single point of
+ legal and technical pressure. Federated and P2P
+ topologies distribute trust and eliminate
+ censurability at the protocol level.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t8"><strong>5. Post-quantum readiness.</strong>
+ "Capture now, decrypt later" is an active threat
+ model. Hybrid post-quantum key exchange must be
+ integrated today to protect data against future
+ cryptanalytic breakthroughs.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t9">Konstruct implements these principles using the
+ <strong>Signal Protocol</strong> design (X3DH
+ handshake + Double Ratchet) — the same end-to-end
+ encryption design that powers Signal and WhatsApp —
+ implemented from scratch in Rust. We extend it with
+ a
+ <strong>hybrid post-quantum KEM</strong>
+ (ML-KEM-768, NIST FIPS&nbsp;203) so that traffic
+ recorded today remains protected once
+ cryptographically relevant quantum computers
+ exist.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t10">Unlike centralized platforms, Konstruct is designed
+ for <strong>federation</strong> — eventually you
+ will be able to choose or run your own server
+ (<code>you@your-server.example</code>). The server
+ is blind to message <strong>content</strong>: it
+ stores only public keys and encrypted ciphertext,
+ never plaintext. Sender-side metadata minimisation
+ uses
+ <strong>always-on sealed sender (Stealth)</strong>
+ for eligible traffic — the server does not see who
+ sent a message, only the recipient, arrival time,
+ and size (honest limits: timing/IP still visible on
+ the wire). A future release will also support
+ <strong>direct peer-to-peer delivery</strong> when
+ both parties are online, removing the server from
+ the data path entirely.
+ <em
+ >Federation and P2P are part of the 2027
+ roadmap; today the network is a single trusted
+ server.</em
+ ></span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t11"
+                            ><strong>Three lines we will not cross.</strong>
+                            The state must not monopolize information exchange.
+                            Corporations must not build apps engineered for
+                            infinite scroll. Your data is yours — not someone
+                            else's digital oil. Konstruct is built around those
+                            constraints, not around engagement metrics.</span
+                        >
+                        </p>
+                </div>
+            </section>
+
+            <section aria-labelledby="identity-heading">
+                <div class="container">
+                    <h2 id="identity-heading">
+                        <span data-i18n="home.identity.title"
+                            >Identity is a Construct</span
+                        >
                     </h2>
                     <p>
-                        <span class="en"
+                        <span data-i18n-html="home.identity.lead"
+                            >Every centralised platform starts from the same
+                            assumption: that "you" are a row in its database — a
+                            phone number, a profile, a graph of contacts it owns
+                            and can hand over. Konstruct rejects that premise at
+                            registration. There is no canonical record of you
+                            anywhere in this system, because there is nothing to
+                            record.</span
+                        >
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.keypair"
                             ><strong
-                                >Privacy and security are not optional.</strong
+                                >Your identity is a keypair. Nothing else is
+                                required.</strong
                             >
-                            In an era of mass surveillance, data breaches, and
-                            emerging quantum computing threats, communication
-                            privacy is more critical than ever.</span
+                            No phone number. No email. Not even a username — an
+                            identifier is something you may add for convenience,
+                            never something the system demands in order to
+                            exist. Signal, WhatsApp and Telegram all bind you to
+                            a phone number, which means a subpoena to a carrier
+                            is a subpoena to your identity. Here there is no
+                            carrier in the loop, because there is no number in
+                            the loop. Your account is cryptographic material you
+                            generated on your own device, and the server learns
+                            only the public half.</span
                         >
-                        <span class="ru"
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.address"
                             ><strong
-                                >Приватность и безопасность — не опции.</strong
+                                >Your address is a choice, not an
+                                assignment.</strong
                             >
-                            В эпоху массовой слежки, утечек и сбора данных, а
-                            так же угроз квантовых вычислений конфиденциальность
-                            коммуникаций становится важнее чем когда-либо.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            >Konstruct is built on cryptographic principles we
-                            treat as invariant:</span
-                        >
-                        <span class="ru"
-                            >Конструкт построен на криптографических принципах,
-                            которые мы считаем инвариантными:</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            ><strong>1. No safe backdoors.</strong> Any
-                            intentional weakening of encryption — regardless of
-                            pretext — creates a vulnerability that will be
-                            exploited by adversaries. E2EE must be absolute and
-                            verifiable.</span
-                        >
-                        <span class="ru"
-                            ><strong
-                                >1. Безопасных бэкдоров не существует.</strong
-                            >
-                            Любое намеренное ослабление шифрования — независимо
-                            от предлога — создаёт уязвимость, которая будет
-                            использована противником. Сквозное шифрование должно
-                            быть абсолютным и проверяемым.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            ><strong>2. Privacy-by-default.</strong> The system
-                            must protect confidentiality without requiring user
-                            action or justification. Privacy is a property of
-                            the protocol, not a setting.</span
-                        >
-                        <span class="ru"
-                            ><strong>2. Приватность по умолчанию.</strong>
-                            Система обязана защищать конфиденциальность без
-                            действий со стороны пользователя. Приватность —
-                            свойство протокола, а не настройка.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            ><strong>3. Server-blind architecture.</strong> The
-                            server must be technically incapable of reading
-                            content, resolving group membership, or exposing
-                            decryptable metadata. Trusting the operator is not a
-                            substitute for cryptographic guarantees.</span
-                        >
-                        <span class="ru"
-                            ><strong>3. Server-blind архитектура.</strong>
-                            Сервер не должен иметь технической возможности
-                            читать контент, определять состав групп или
-                            раскрывать расшифруемые метаданные. Доверие к
-                            оператору — не замена криптографическим
-                            гарантиям.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            ><strong>4. Decentralisation by design.</strong>
-                            Centralised platforms present a single point of
-                            legal and technical pressure. Federated and P2P
-                            topologies distribute trust and eliminate
-                            censurability at the protocol level.</span
-                        >
-                        <span class="ru"
-                            ><strong>4. Децентрализация в дизайне.</strong>
-                            Централизованные платформы — единая точка
-                            юридического и технического давления. Федеративные и
-                            P2P-топологии распределяют доверие и устраняют
-                            подверженность цензуре на уровне протокола.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            ><strong>5. Post-quantum readiness.</strong>
-                            "Capture now, decrypt later" is an active threat
-                            model. Hybrid post-quantum key exchange must be
-                            integrated today to protect data against future
-                            cryptanalytic breakthroughs.</span
-                        >
-                        <span class="ru"
-                            ><strong>5. Постквантовая готовность.</strong>
-                            «Перехвати сейчас — расшифруй потом» — актуальная
-                            модель угрозы. Гибридный постквантовый обмен ключами
-                            должен быть встроен сегодня для защиты данных от
-                            будущих криптоаналитических прорывов.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            >Konstruct implements these principles using the
-                            <strong>Signal Protocol</strong> design (X3DH
-                            handshake + Double Ratchet) — the same end-to-end
-                            encryption design that powers Signal and WhatsApp —
-                            implemented from scratch in Rust. We extend it with
-                            a
-                            <strong>hybrid post-quantum KEM</strong>
-                            (ML-KEM-768, NIST FIPS&nbsp;203) so that traffic
-                            recorded today remains protected once
-                            cryptographically relevant quantum computers
-                            exist.</span
-                        >
-                        <span class="ru"
-                            >Конструкт реализует эти принципы через
-                            <strong>Signal Protocol</strong>
-                            (X3DH + Double Ratchet) — тот же дизайн сквозного
-                            шифрования, что применяют Signal и WhatsApp — с
-                            собственной реализацией на Rust. Расширен
-                            <strong>гибридным постквантовым KEM</strong>
-                            (ML-KEM-768, NIST FIPS&nbsp;203), чтобы трафик,
-                            записанный сегодня, оставался защищённым после
-                            появления криптографически значимых квантовых
-                            компьютеров.</span
-                        >
-                    </p>
-                    <p>
-                        <span class="en"
-                            >Unlike centralized platforms, Konstruct is designed
-                            for <strong>federation</strong> — eventually you
-                            will be able to choose or run your own server
-                            (<code>you@your-server.example</code>). The server
-                            is blind to message <strong>content</strong>: it
-                            stores only public keys and encrypted ciphertext,
-                            never plaintext. Sender-side metadata minimisation
-                            uses
-                            <strong>always-on sealed sender (Stealth)</strong>
-                            for eligible traffic — the server does not see who
-                            sent a message, only the recipient, arrival time,
-                            and size (honest limits: timing/IP still visible on
-                            the wire). A future release will also support
-                            <strong>direct peer-to-peer delivery</strong> when
-                            both parties are online, removing the server from
-                            the data path entirely.
+                            Federated addressing
+                            (<code>you@your-server.example</code>) means the
+                            namespace you live in is one you picked or run
+                            yourself. No operator can revoke who you are, only
+                            where you happen to be reachable
                             <em
-                                >Federation and P2P are part of the 2027
-                                roadmap; today the network is a single trusted
-                                server.</em
-                            ></span
-                        >
-                        <span class="ru"
-                            >В отличие от централизованных платформ, Конструкт
-                            спроектирован под <strong>федерацию</strong> — в
-                            будущем вы сможете выбрать или запустить собственный
-                            сервер (<code>you@your-server.example</code>).
-                            Сервер не видит
-                            <strong>содержимого</strong> сообщений: хранит
-                            только публичные ключи и минимальное количество
-                            метаданных, вроде username или состава групп в виде
-                            необратимого хэша, никогда не plaintext. Минимизация
-                            метаданных со стороны отправителя — через
-                            <strong>always-on sealed sender (Stealth)</strong>
-                            для подходящего трафика: сервер не видит, кто
-                            отправил, только получателя, время прибытия и размер
-                            (честные пределы: timing/IP на проводе всё ещё
-                            видны). Будущий релиз также поддержит
-                            <strong>прямую P2P-доставку</strong>, когда оба
-                            собеседника онлайн, убирая сервер из пути данных.
-                            <em
-                                >Федерация и P2P — часть дорожной карты на 2027
-                                год; сегодня сеть — один доверенный сервер.</em
-                            ></span
+                                >(federation is on the 2027 roadmap)</em
+                            >.</span
                         >
                     </p>
                     <p>
-                        <span class="en"
-                            ><strong>The internet must remain free.</strong> No
-                            government, corporation, or algorithm should control
-                            what you can say or who you can talk to. Konstruct
-                            is built to protect that freedom.</span
-                        >
-                        <span class="ru"
+                        <span data-i18n-html="home.identity.authorship"
                             ><strong
-                                >Интернет должен оставаться свободным.</strong
+                                >Your authorship is separable from your
+                                message.</strong
                             >
-                            Ни правительство, ни корпорация, ни алгоритм не
-                            должны контролировать что ты говоришь и с кем
-                            общаешься. Конструкт создан чтобы защитить эту
-                            свободу.</span
+                            Always-on sealed sender removes the sender identity
+                            from the stored envelope. The recipient can unseal
+                            who wrote; the server cannot. Being read and being
+                            identified are different events, and we treat them
+                            as such.</span
+                        >
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.continuity"
+                            ><strong
+                                >Your continuity is distributed, not
+                                held.</strong
+                            >
+                            Social recovery (BIP39 / SLIP-39) reconstructs
+                            access from fragments you entrusted to people you
+                            chose — no company holds the master copy of you,
+                            because no master copy exists
+                            <em>(in development)</em>.</span
+                        >
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.discovery"
+                            ><strong>How people find each other.</strong>
+                            Without a phone book there is no cold outreach:
+                            conversations start with a temporary QR code or
+                            invite link (mutual consent; codes expire in
+                            minutes). An optional username is a convenience
+                            alias only — not required to exist. When federation
+                            ships, addresses will look like email and can be
+                            dictated over the phone
+                            (<code>you@your-server.example</code>).</span
+                        >
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.limit"
+                            ><strong>The honest limit:</strong> cryptography
+                            cannot make you unobservable. Timing and IP
+                            correlation remain visible on the wire, and a
+                            sufficiently resourced adversary works at that
+                            layer, not this one. What we can guarantee is
+                            narrower and worth stating plainly — no component of
+                            this system is designed to accumulate you.</span
                         >
                     </p>
                 </div>
@@ -446,280 +467,131 @@
             <section aria-labelledby="how-it-works-heading">
                 <div class="container">
                     <h2 id="how-it-works-heading">
-                        <span class="en">Technical Architecture</span
-                        ><span class="ru">Техническая архитектура</span>
-                    </h2>
+                        <span data-i18n="home.how-it-works.technical-architecture">Technical Architecture</span></h2>
                     <p>
-                        <span class="en"
-                            >Konstruct uses
-                            <strong>gRPC with Protocol Buffers</strong> for
-                            efficient binary framing, and keeps a
-                            <strong
-                                >persistent bidirectional MessageStream</strong
-                            >
-                            open for real-time delivery — not request/response
-                            polling. The backend is split into independent
-                            microservices (auth, user, messaging, signaling,
-                            media) for fault isolation. Most consumer messengers
-                            still ship REST/JSON or proprietary TCP stacks;
-                            Konstruct’s live path is
-                            <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as
-                            automatic fallback.</span
-                        >
-                        <span class="ru"
-                            >Конструкт использует
-                            <strong>gRPC с Protocol Buffers</strong> для
-                            эффективной бинарной передачи и держит
-                            <strong
-                                >постоянный двунаправленный
-                                MessageStream</strong
-                            >
-                            для доставки в реальном времени — без polling.
-                            Бэкенд разделён на независимые микросервисы (auth,
-                            user, messaging, signaling, media) для изоляции
-                            отказов. Большинство потребительских мессенджеров
-                            всё ещё сидят на REST/JSON или проприетарном TCP;
-                            боевой путь Конструкта —
-                            <strong>gRPC bidi поверх QUIC</strong>, с
-                            автоматическим fallback на HTTP/2.</span
-                        >
-                    </p>
+                        <span data-i18n-html="home.how-it-works.t2">Konstruct uses
+ <strong>gRPC with Protocol Buffers</strong> for
+ efficient binary framing, and keeps a
+ <strong
+ >persistent bidirectional MessageStream</strong
+ >
+ open for real-time delivery — not request/response
+ polling. The backend is split into independent
+ microservices (auth, user, messaging, signaling,
+ media) for fault isolation. Most consumer messengers
+ still ship REST/JSON or proprietary TCP stacks;
+ Konstruct’s live path is
+ <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as
+ automatic fallback.</span>
+                        </p>
                     <h3>
-                        <span class="en">Cryptography Stack</span
-                        ><span class="ru">Стек криптографии</span>
-                    </h3>
+                        <span data-i18n="home.how-it-works.cryptography-stack">Cryptography Stack</span></h3>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >X3DH + Double Ratchet (Signal Protocol
-                                    design):</strong
-                                >
-                                end-to-end encryption with forward secrecy and
-                                post-compromise security (self-healing).</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >X3DH + Double Ratchet (дизайн Signal
-                                    Protocol):</strong
-                                >
-                                сквозное шифрование с прямой секретностью и
-                                post-compromise security
-                                (самовосстановление).</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t4"><strong
+ >X3DH + Double Ratchet (Signal Protocol
+ design):</strong
+ >
+ end-to-end encryption with forward secrecy and
+ post-compromise security (self-healing).</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Hybrid Post-Quantum KEM:</strong>
-                                X25519 classical +
-                                <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203,
-                                Kyber-768) for key exchange. If either component
-                                is broken, the other still protects.</span
-                            >
-                            <span class="ru"
-                                ><strong>Гибридный постквантовый KEM:</strong>
-                                классический X25519 +
-                                <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203,
-                                Kyber-768) для обмена ключами. Если одна из
-                                компонент скомпрометирована, вторая продолжает
-                                защищать.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Hybrid Post-Quantum KEM:</strong>
+ X25519 classical +
+ <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203,
+ Kyber-768) for key exchange. If either component
+ is broken, the other still protects.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Authentication signatures: Ed25519</strong
-                                >
-                                today. Hybrid
-                                <strong>ML-DSA-65</strong> (Dilithium-3, NIST
-                                FIPS&nbsp;204) signing and verification are
-                                implemented and cross-verified between client
-                                and server; client-side key rotation
-                                orchestration is still in progress.</span
-                            >
-                            <span class="ru"
-                                ><strong>Подписи: Ed25519</strong> сегодня.
-                                Гибридные
-                                <strong>ML-DSA-65</strong> (Dilithium-3, NIST
-                                FIPS&nbsp;204) подпись и верификация реализованы
-                                и кросс-верифицированы между клиентом и
-                                сервером; оркестрация ротации ключей на клиенте
-                                ещё в работе.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t6"><strong
+ >Authentication signatures: Ed25519</strong
+ >
+ today. Hybrid
+ <strong>ML-DSA-65</strong> (Dilithium-3, NIST
+ FIPS&nbsp;204) signing and verification are
+ implemented and cross-verified between client
+ and server; client-side key rotation
+ orchestration is still in progress.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>AEAD:</strong> ChaCha20-Poly1305 for
-                                message encryption.
-                                <strong>KDF:</strong> HKDF-SHA256 with
-                                domain-separation labels per protocol section.
-                                <strong>Anti-spam PoW:</strong> Argon2id.</span
-                            >
-                            <span class="ru"
-                                ><strong>AEAD:</strong> ChaCha20-Poly1305 для
-                                шифрования сообщений.
-                                <strong>KDF:</strong> HKDF-SHA256 с метками
-                                domain-separation для каждой секции протокола.
-                                <strong>Anti-spam PoW:</strong> Argon2id.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t7"><strong>AEAD:</strong> ChaCha20-Poly1305 for
+ message encryption.
+ <strong>KDF:</strong> HKDF-SHA256 with
+ domain-separation labels per protocol section.
+ <strong>Anti-spam PoW:</strong> Argon2id.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Server is blind to content:</strong>
-                                messages are stored only as ciphertext; the
-                                server cannot decrypt. By default the server
-                                still sees delivery timestamps and recipient for
-                                routing. Eligible user traffic uses
-                                <strong
-                                    >always-on sealed sender (Stealth)</strong
-                                >
-                                so the envelope omits the sender id — only the
-                                recipient can unseal who wrote. Privacy Pass
-                                anti-spam tokens can accompany sealed sends;
-                                server-side token enforcement is still rolling
-                                out.</span
-                            >
-                            <span class="ru"
-                                ><strong>Сервер не видит содержимого:</strong>
-                                сообщения хранятся только в виде шифротекста;
-                                сервер не может расшифровать. Для маршрутизации
-                                сервер видит время доставки и получателя.
-                                Подходящий пользовательский трафик идёт с
-                                <strong
-                                    >always-on sealed sender (Stealth)</strong
-                                >
-                                — в конверте нет id отправителя, только
-                                получатель может раскрыть, кто написал. Токены
-                                Privacy Pass могут сопровождать sealed-отправки;
-                                server-side enforcement токенов ещё
-                                раскатывается.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t8"><strong>Server is blind to content:</strong>
+ messages are stored only as ciphertext; the
+ server cannot decrypt. By default the server
+ still sees delivery timestamps and recipient for
+ routing. Eligible user traffic uses
+ <strong
+ >always-on sealed sender (Stealth)</strong
+ >
+ so the envelope omits the sender id — only the
+ recipient can unseal who wrote. Privacy Pass
+ anti-spam tokens can accompany sealed sends;
+ server-side token enforcement is still rolling
+ out.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Crypto Agility:</strong> versioned
-                                protocol suites allow algorithm upgrades without
-                                rebuilding client apps.</span
-                            >
-                            <span class="ru"
-                                ><strong>Крипто-эластичность:</strong>
-                                версионированные крипто-suite позволяют
-                                обновлять алгоритмы без пересборки клиентских
-                                приложений.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t9"><strong>Crypto Agility:</strong> versioned
+ protocol suites allow algorithm upgrades without
+ rebuilding client apps.</span>
+                            </li>
                     </ul>
                     <h3>
-                        <span class="en">Transport Layer</span
-                        ><span class="ru">Транспортный уровень</span>
-                    </h3>
+                        <span data-i18n="home.how-it-works.transport-layer">Transport Layer</span></h3>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >gRPC bidirectional MessageStream over
-                                    QUIC</strong
-                                >
-                                — live production path on iOS (ConstructEngine /
-                                construct-transport). One long-lived stream
-                                carries heartbeats, inbound messages, and
-                                delivery receipts without opening a new TCP
-                                handshake per event. QUIC brings connection
-                                migration, multiplexed streams, and faster
-                                recovery on lossy or long-haul links (validated
-                                intercontinentally, e.g. Australia → EU
-                                edge).</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Двунаправленный gRPC MessageStream поверх
-                                    QUIC</strong
-                                >
-                                — боевой путь на iOS (ConstructEngine /
-                                construct-transport). Один долгоживущий поток
-                                несёт heartbeat’ы, входящие сообщения и
-                                receipt’ы без нового TCP-handshake на каждое
-                                событие. QUIC даёт migration соединения,
-                                мультиплексирование и быстрое восстановление на
-                                нестабильных и дальних линках (проверено на
-                                межконтинентальных связях, напр. Австралия → EU
-                                edge).</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t11"><strong
+ >gRPC bidirectional MessageStream over
+ QUIC</strong
+ >
+ — live production path on iOS (ConstructEngine /
+ construct-transport). One long-lived stream
+ carries heartbeats, inbound messages, and
+ delivery receipts without opening a new TCP
+ handshake per event. QUIC brings connection
+ migration, multiplexed streams, and faster
+ recovery on lossy or long-haul links (validated
+ intercontinentally, e.g. Australia → EU
+ edge).</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >gRPC over HTTP/2 (TLS&nbsp;1.3):</strong
-                                >
-                                automatic fallback when QUIC is blocked or
-                                handshakes time out — same protobuf contracts,
-                                same E2EE payload, no user toggle.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >gRPC поверх HTTP/2 (TLS&nbsp;1.3):</strong
-                                >
-                                автоматический fallback, если QUIC режется или
-                                handshake не успевает — те же protobuf-контракты
-                                и E2EE-полезная нагрузка, без пользовательского
-                                переключателя.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t12"><strong
+ >gRPC over HTTP/2 (TLS&nbsp;1.3):</strong
+ >
+ automatic fallback when QUIC is blocked or
+ handshakes time out — same protobuf contracts,
+ same E2EE payload, no user toggle.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Why this is a product edge:</strong>
-                                mainstream privacy messengers still lean on
-                                REST/JSON (Signal-class stacks) or closed
-                                proprietary wire formats (WhatsApp, Telegram
-                                MTProto). Shipping a modern
-                                <em>gRPC bidi + QUIC</em> live path is rare in
-                                consumer messaging — lower framing overhead,
-                                fewer reconnect storms, and a stack that matches
-                                how high-performance services are built today.
-                                E2EE stays on top; transport only moves sealed
-                                ciphertext.</span
-                            >
-                            <span class="ru"
-                                ><strong>Почему это преимущество:</strong>
-                                массовые приватные мессенджеры по-прежнему
-                                опираются на REST/JSON (класс Signal) или
-                                закрытые wire-форматы (WhatsApp, Telegram
-                                MTProto). Боевой путь
-                                <em>gRPC bidi + QUIC</em> в consumer-мессенджере
-                                — редкость: меньше overhead на кадрирование,
-                                меньше reconnect-штормов, стек как у
-                                high-performance сервисов. E2EE остаётся сверху;
-                                транспорт двигает только sealed
-                                ciphertext.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t13"><strong>Why this is a product edge:</strong>
+ mainstream privacy messengers still lean on
+ REST/JSON (Signal-class stacks) or closed
+ proprietary wire formats (WhatsApp, Telegram
+ MTProto). Shipping a modern
+ <em>gRPC bidi + QUIC</em> live path is rare in
+ consumer messaging — lower framing overhead,
+ fewer reconnect storms, and a stack that matches
+ how high-performance services are built today.
+ E2EE stays on top; transport only moves sealed
+ ciphertext.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>VEIL (anti-censorship):</strong>
-                                traffic obfuscation when direct TLS is throttled
-                                or blocked. Today: obfs4 + WebTunnel pluggable
-                                transports, currently throttled by active DPI in
-                                some regions.
-                                <em>veil-front</em>, an honest-front HTTPS layer
-                                that makes tunnelled traffic indistinguishable
-                                from a real public web service, is implemented
-                                and validated on real devices with provisioned
-                                tickets; public rollout is in progress.</span
-                            >
-                            <span class="ru"
-                                ><strong>VEIL (защита от цензуры):</strong>
-                                обфускация трафика когда прямой TLS режется или
-                                блокируется. Сегодня: obfs4 + WebTunnel
-                                pluggable transports, сейчас режутся активным
-                                DPI в ряде регионов.
-                                <em>veil-front</em> — honest-front HTTPS слой,
-                                который делает туннельный трафик неотличимым от
-                                настоящего публичного web-сервиса — реализован и
-                                провалидирован на реальных устройствах с
-                                выданными тикетами; публичная раскатка в
-                                процессе.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.how-it-works.t14"><strong>VEIL (anti-censorship):</strong>
+ traffic obfuscation when direct TLS is throttled
+ or blocked. Today: obfs4 + WebTunnel pluggable
+ transports, currently throttled by active DPI in
+ some regions.
+ <em>veil-front</em>, an honest-front HTTPS layer
+ that makes tunnelled traffic indistinguishable
+ from a real public web service, is implemented
+ and validated on real devices with provisioned
+ tickets; public rollout is in progress.</span>
+                            </li>
                     </ul>
                 </div>
             </section>
@@ -727,105 +599,48 @@
             <section aria-labelledby="features-heading">
                 <div class="container">
                     <h2 id="features-heading">
-                        <span class="en">Key Features</span
-                        ><span class="ru">Ключевые возможности</span>
-                    </h2>
+                        <span data-i18n="home.features.key-features">Key Features</span></h2>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >End-to-end encryption by default</strong
-                                >
-                                — servers see only encrypted blobs.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Сквозное шифрование по умолчанию</strong
-                                >
-                                — серверы видят только зашифрованные
-                                данные.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t2"><strong
+ >End-to-end encryption by default</strong
+ >
+ — servers see only encrypted blobs.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Forward secrecy</strong> — past
-                                messages stay secure even if keys leak.</span
-                            >
-                            <span class="ru"
-                                ><strong>Прямая секретность</strong> — прошлые
-                                сообщения остаются защищёнными даже при
-                                компрометации ключей.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t3"><strong>Forward secrecy</strong> — past
+ messages stay secure even if keys leak.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Post-quantum key exchange</strong> —
-                                hybrid X25519 +
-                                <strong>ML-KEM-768</strong> (Kyber-768).
-                                Signatures are Ed25519 today;
-                                <strong>ML-DSA-65</strong> (Dilithium-3) for
-                                hybrid signatures is planned.</span
-                            >
-                            <span class="ru"
-                                ><strong>Постквантовый обмен ключами</strong> —
-                                гибрид X25519 + <strong>ML-KEM-768</strong>
-                                (Kyber-768). Подписи сейчас Ed25519;
-                                <strong>ML-DSA-65</strong> (Dilithium-3) для
-                                гибридных подписей — в планах.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key exchange</strong> —
+ hybrid X25519 +
+ <strong>ML-KEM-768</strong> (Kyber-768).
+ Signatures are Ed25519 today;
+ <strong>ML-DSA-65</strong> (Dilithium-3) for
+ hybrid signatures is planned.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Federation</strong> — run your own
-                                server or use a trusted provider, with
-                                email-like addressing.</span
-                            >
-                            <span class="ru"
-                                ><strong>Федерация</strong> — собственный сервер
-                                или доверенный провайдер с email-подобной
-                                адресацией.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t5"><strong>Federation</strong> — run your own
+ server or use a trusted provider, with
+ email-like addressing.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Lightweight server</strong> —
-                                Rust-based, minimal resource use, easy
-                                self-hosting.</span
-                            >
-                            <span class="ru"
-                                ><strong>Лёгкий сервер</strong> — на Rust,
-                                минимальное потребление ресурсов, простой
-                                самостоятельный хостинг.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t6"><strong>Lightweight server</strong> —
+ Rust-based, minimal resource use, easy
+ self-hosting.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Zen UI</strong> — no notification spam,
-                                no social noise, focus on calm
-                                interaction.</span
-                            >
-                            <span class="ru"
-                                ><strong>Дзен-интерфейс</strong> — никакого
-                                спама уведомлений, никакого социального шума,
-                                только спокойное общение.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t7"><strong>Zen UI</strong> — no notification spam,
+ no social noise, focus on calm
+ interaction.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Modern live transport</strong> — gRPC
-                                bidirectional MessageStream over
-                                <strong>QUIC</strong> (HTTP/2 fallback), VEIL
-                                when the path is censored, direct P2P planned
-                                when both peers are online.</span
-                            >
-                            <span class="ru"
-                                ><strong>Современный live-транспорт</strong> —
-                                двунаправленный gRPC MessageStream поверх
-                                <strong>QUIC</strong> (fallback HTTP/2), VEIL
-                                при цензуре, прямой P2P — в плане, когда оба
-                                peer’а онлайн.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC
+ bidirectional MessageStream over
+ <strong>QUIC</strong> (HTTP/2 fallback), VEIL
+ when the path is censored, direct P2P planned
+ when both peers are online.</span>
+                            </li>
                     </ul>
                 </div>
             </section>
@@ -833,111 +648,51 @@
             <section aria-labelledby="telemetry-heading">
                 <div class="container">
                     <h2 id="telemetry-heading">
-                        <span class="en"
-                            >No Telemetry. Not Anonymised — Absent.</span
-                        ><span class="ru"
-                            >Никакой телеметрии. Не «обезличенной» — её просто
-                            нет.</span
-                        >
-                    </h2>
+                        <span data-i18n="home.telemetry.no-telemetry-not-anonymised-absent">No Telemetry. Not Anonymised — Absent.</span></h2>
                     <p>
-                        <span class="en"
-                            >Konstruct collects
-                            <strong
-                                >no analytics, no usage metrics, no behavioural
-                                events, no crash phone-home</strong
-                            >
-                            and no advertising identifiers. Not "collected and
-                            anonymised" — <em>not collected</em>. This is
-                            possible because we are not funded by advertising or
-                            data resale, so there is no reason to watch you, and
-                            the app is built so we can't.</span
-                        >
-                        <span class="ru"
-                            >Konstruct не собирает
-                            <strong
-                                >никакой аналитики, метрик использования,
-                                поведенческих событий, отправки крашей</strong
-                            >
-                            и рекламных идентификаторов. Не «собрано и
-                            обезличено» — <em>не собрано вовсе</em>. Это
-                            возможно потому, что мы не живём на рекламе или
-                            перепродаже данных — а значит, нет причин за тобой
-                            следить, и приложение построено так, что мы не
-                            можем.</span
-                        >
-                    </p>
+                        <span data-i18n-html="home.telemetry.t2">Konstruct collects
+ <strong
+ >no analytics, no usage metrics, no behavioural
+ events, no crash phone-home</strong
+ >
+ and no advertising identifiers. Not "collected and
+ anonymised" — <em>not collected</em>. This is
+ possible because we are not funded by advertising or
+ data resale, so there is no reason to watch you, and
+ the app is built so we can't.</span>
+                        </p>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong>No third-party SDKs.</strong> No
-                                Firebase, Crashlytics, Sentry, Amplitude,
-                                Segment — no tracker of any kind. The app's only
-                                external dependencies are transport and media
-                                infrastructure (gRPC, WebRTC) and an on-device
-                                ML library. No ATT prompt, no SKAdNetwork.</span
-                            >
-                            <span class="ru"
-                                ><strong>Никаких сторонних SDK.</strong> Ни
-                                Firebase, ни Crashlytics, ни Sentry, ни
-                                Amplitude, ни Segment — вообще никаких трекеров.
-                                Единственные внешние зависимости — транспорт и
-                                медиа (gRPC, WebRTC) и on-device ML-библиотека.
-                                Без ATT-запроса, без SKAdNetwork.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.telemetry.t3"><strong>No third-party SDKs.</strong> No
+ Firebase, Crashlytics, Sentry, Amplitude,
+ Segment — no tracker of any kind. The app's only
+ external dependencies are transport and media
+ infrastructure (gRPC, WebRTC) and an on-device
+ ML library. No ATT prompt, no SKAdNetwork.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>Production keeps no logs.</strong>
-                                Release builds write no diagnostic log to disk
-                                and expose no debug or log-export surface. When
-                                we need logs to fix a bug, it is
-                                <em>you</em> who taps "share" in a beta build —
-                                never a silent background upload.</span
-                            >
-                            <span class="ru"
-                                ><strong>В проде нет логов.</strong> Релизные
-                                сборки не пишут диагностических логов на диск и
-                                не дают доступа к дебагу или экспорту логов.
-                                Когда нам нужны логи для починки бага, их
-                                отправляешь <em>ты</em> кнопкой «поделиться» в
-                                бета-сборке — никакой тихой фоновой
-                                отправки.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.telemetry.t4"><strong>Production keeps no logs.</strong>
+ Release builds write no diagnostic log to disk
+ and expose no debug or log-export surface. When
+ we need logs to fix a bug, it is
+ <em>you</em> who taps "share" in a beta build —
+ never a silent background upload.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Honest about what the server must
-                                    see.</strong
-                                >
-                                To route ciphertext the server necessarily holds
-                                a small, fixed set of metadata (recipient,
-                                timing, size, your public keys, push token) —
-                                always-on sealed sender removes even
-                                <em>who sent</em> a message from the stored
-                                envelope. What we don't yet fully solve
-                                (timing/IP correlation) lives in our
-                                <a href="/privacy">Privacy Policy</a>, not in a
-                                marketing promise.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Честно о том, что видит сервер.</strong
-                                >
-                                Чтобы маршрутизировать шифротекст, сервер
-                                вынужденно хранит небольшой фиксированный набор
-                                метаданных (получатель, время, размер, твои
-                                публичные ключи, push-токен) — always-on sealed
-                                sender убирает из хранимого конверта даже то,
-                                <em>кто отправил</em>
-                                сообщение. Что мы пока не решаем полностью
-                                (корреляция timing/IP) — описано в
-                                <a href="/privacy"
-                                    >Политике конфиденциальности</a
-                                >, а не в маркетинге.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.telemetry.t5"><strong
+ >Honest about what the server must
+ see.</strong
+ >
+ To route ciphertext the server necessarily holds
+ a small, fixed set of metadata (recipient,
+ timing, size, your public keys, push token) —
+ always-on sealed sender removes even
+ <em>who sent</em> a message from the stored
+ envelope. What we don't yet fully solve
+ (timing/IP correlation) lives in our
+ <a href="/privacy">Privacy Policy</a>, not in a
+ marketing promise.</span>
+                            </li>
                     </ul>
                 </div>
             </section>
@@ -945,47 +700,37 @@
             <section aria-labelledby="comparison-heading">
                 <div class="container">
                     <h2 id="comparison-heading">
-                        <span class="en">Industry Comparison</span
-                        ><span class="ru">Сравнение с другими</span>
-                    </h2>
+                        <span data-i18n="home.comparison.industry-comparison">Industry Comparison</span></h2>
 
                     <div role="region" aria-labelledby="comparison-heading">
                         <table role="table" aria-label="Messenger comparison">
                             <thead>
                                 <tr>
                                     <th scope="col">
-                                        <span class="en">Platform</span
-                                        ><span class="ru">Платформа</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.platform">Platform</span></th>
                                     <th scope="col">
-                                        <span class="en">Federated</span
-                                        ><span class="ru">Федеративный</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.identifier"
+                                            >Identifier Required</span
+                                        ></th
+                                    >
                                     <th scope="col">
-                                        <span class="en">E2EE Default</span
-                                        ><span class="ru">E2EE по умолч.</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.federated">Federated</span></th>
                                     <th scope="col">
-                                        <span class="en">Post-Quantum</span
-                                        ><span class="ru">Постквантовый</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.e2ee-default">E2EE Default</span></th>
                                     <th scope="col">
-                                        <span class="en">P2P Mode</span
-                                        ><span class="ru">P2P-режим</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.post-quantum">Post-Quantum</span></th>
                                     <th scope="col">
-                                        <span class="en">Protocol</span
-                                        ><span class="ru">Протокол</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.p2p-mode">P2P Mode</span></th>
                                     <th scope="col">
-                                        <span class="en">Open Source</span
-                                        ><span class="ru">Открытый код</span>
-                                    </th>
+                                        <span data-i18n="home.comparison.protocol">Protocol</span></th>
+                                    <th scope="col">
+                                        <span data-i18n="home.comparison.open-source">Open Source</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th scope="row">Signal</th>
+                                    <td>Phone</td>
                                     <td>No</td>
                                     <td>Yes</td>
                                     <td>Yes (PQXDH)</td>
@@ -995,6 +740,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">WhatsApp</th>
+                                    <td>Phone</td>
                                     <td>No</td>
                                     <td>Yes</td>
                                     <td>No</td>
@@ -1004,6 +750,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Telegram</th>
+                                    <td>Phone</td>
                                     <td>No</td>
                                     <td>No*</td>
                                     <td>No</td>
@@ -1013,6 +760,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Matrix</th>
+                                    <td>Username</td>
                                     <td>Yes</td>
                                     <td>Optional</td>
                                     <td>Planned</td>
@@ -1022,6 +770,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Session†</th>
+                                    <td><strong>None</strong></td>
                                     <td>Decentralised</td>
                                     <td>Yes</td>
                                     <td>No</td>
@@ -1033,6 +782,7 @@
                                     <th scope="row">
                                         <strong>Konstruct</strong>
                                     </th>
+                                    <td><strong>None</strong></td>
                                     <td><strong>Planned</strong></td>
                                     <td>Yes</td>
                                     <td>
@@ -1055,11 +805,17 @@
                                 color: var(--fg-muted);
                             "
                         >
-                            <span class="en"
+                            <span data-i18n-html="home.comparison.t9"
                                 >* Telegram E2EE only in "Secret Chats", not
                                 default.<br />
-                                † Session V1 protocol uses static long-term keys
-                                — no forward secrecy or PCS.<br />
+                                † Session also requires no phone number — that
+                                is its main pitch. Session V1 still uses static
+                                long-term keys with
+                                <em>no forward secrecy or post-compromise
+                                security</em>. Anonymity without forward secrecy
+                                is a compromise, not a full answer; Konstruct
+                                aims for both (Signal Protocol design + no
+                                required identifier).<br />
                                 ‡ Konstruct's PQ KEM (ML-KEM-768) is opt-in and
                                 deployed; PQ signatures (ML-DSA-65) have working
                                 crypto and server-side verification — client
@@ -1068,21 +824,7 @@
                                 on QUIC (HTTP/2 fallback) — not REST/JSON
                                 polling.</span
                             >
-                            <span class="ru"
-                                >* E2EE в Telegram только в «Секретных чатах»,
-                                не по умолчанию.<br />
-                                † Session V1 использует статические долгосрочные
-                                ключи — без forward secrecy и PCS.<br />
-                                ‡ Постквантовый KEM Конструкта (ML-KEM-768) —
-                                opt-in и развёрнут; постквантовые подписи
-                                (ML-DSA-65) — криптография и серверная
-                                верификация готовы, оркестрация ротации на
-                                клиенте ещё в работе.<br />
-                                Live-сообщения идут по двунаправленному gRPC
-                                stream поверх QUIC (fallback HTTP/2) — не
-                                REST/JSON polling.</span
-                            >
-                        </p>
+                            </p>
                     </div>
                 </div>
             </section>
@@ -1090,426 +832,201 @@
             <section aria-labelledby="resilience-heading">
                 <div class="container">
                     <h2 id="resilience-heading">
-                        <span class="en">Designed for Graceful Degradation</span
-                        ><span class="ru"
-                            >Спроектировано для плавной деградации</span
-                        >
-                    </h2>
+                        <span data-i18n="home.resilience.designed-for-graceful-degradation">Designed for Graceful Degradation</span></h2>
                     <p>
-                        <span class="en"
-                            >Centralised privacy projects are fragile: when
-                            funding dries up or a single operator is compelled
-                            to shut down, the network goes with them. Konstruct
-                            is designed around the opposite principle — as
-                            components disappear, the rest keeps working. The
-                            target architecture is three tiers, each with the
-                            same end-to-end cryptographic guarantees regardless
-                            of delivery path.
-                            <em
-                                >Today only Tier 1 with a single trusted server
-                                is live; Tiers 2 and 3 are on the roadmap.</em
-                            ></span
-                        >
-                        <span class="ru"
-                            >Централизованные privacy-проекты хрупки: когда
-                            финансирование заканчивается или единственного
-                            оператора заставляют закрыться — сеть исчезает
-                            вместе с ним. Конструкт построен по обратному
-                            принципу: по мере исчезновения компонентов остальные
-                            продолжают работать. Целевая архитектура — три
-                            уровня, на каждом сохраняются одни и те же
-                            E2E-гарантии независимо от пути доставки.
-                            <em
-                                >Сегодня работает только Tier 1 с одним
-                                доверенным сервером; Tier 2 и 3 — в дорожной
-                                карте.</em
-                            ></span
-                        >
-                    </p>
+                        <span data-i18n-html="home.resilience.t2">Centralised privacy projects are fragile: when
+ funding dries up or a single operator is compelled
+ to shut down, the network goes with them. Konstruct
+ is designed around the opposite principle — as
+ components disappear, the rest keeps working. The
+ target architecture is three tiers, each with the
+ same end-to-end cryptographic guarantees regardless
+ of delivery path.
+ <em
+ >Today only Tier 1 with a single trusted server
+ is live; Tiers 2 and 3 are on the roadmap.</em
+ ></span>
+                        </p>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Tier 1 — Federated servers (planned
-                                    2027):</strong
-                                >
-                                anyone will be able to run a Konstruct server
-                                with an email-style address
-                                (<code>you@your-server.example</code>). If the
-                                founding team disappears, community-operated
-                                nodes can keep the network alive.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Tier 1 — Федеративные серверы (план:
-                                    2027):</strong
-                                >
-                                любой сможет запустить Конструкт-сервер с
-                                адресом email-стиля
-                                (<code>you@your-server.example</code>). Если
-                                основная команда исчезнет, ноды сообщества
-                                смогут поддерживать сеть.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.resilience.t3"><strong
+ >Tier 1 — Federated servers (planned
+ 2027):</strong
+ >
+ anyone will be able to run a Konstruct server
+ with an email-style address
+ (<code>you@your-server.example</code>). If the
+ founding team disappears, community-operated
+ nodes can keep the network alive.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Tier 2 — Community relay nodes (planned
-                                    2027):</strong
-                                >
-                                lightweight relays (designed to run on hardware
-                                as small as a Raspberry Pi) will provide message
-                                routing without a full server — no user
-                                database, no key storage.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Tier 2 — Ноды-ретрансляторы сообщества
-                                    (план: 2027):</strong
-                                >
-                                лёгкие ретрансляторы (рассчитанные на железо
-                                уровня Raspberry Pi) будут обеспечивать
-                                маршрутизацию сообщений без полноценного сервера
-                                — без базы пользователей, без хранения
-                                ключей.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.resilience.t4"><strong
+ >Tier 2 — Community relay nodes (planned
+ 2027):</strong
+ >
+ lightweight relays (designed to run on hardware
+ as small as a Raspberry Pi) will provide message
+ routing without a full server — no user
+ database, no key storage.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Tier 3 — Direct P2P (planned
-                                    2027+):</strong
-                                >
-                                when both users are online, messages will travel
-                                directly between devices over QUIC/ICE — the
-                                server steps out of the data path
-                                entirely.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Tier 3 — Прямой P2P (план: 2027+):</strong
-                                >
-                                когда оба собеседника онлайн, сообщения будут
-                                идти напрямую между устройствами по QUIC/ICE —
-                                сервер полностью выйдет из пути данных.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.resilience.t5"><strong
+ >Tier 3 — Direct P2P (planned
+ 2027+):</strong
+ >
+ when both users are online, messages will travel
+ directly between devices over QUIC/ICE — the
+ server steps out of the data path
+ entirely.</span>
+                            </li>
                     </ul>
                     <p>
-                        <span class="en"
-                            >The Signal Protocol design (X3DH + Double Ratchet +
-                            hybrid PQ KEM) is transport-agnostic: whether
-                            messages travel through a server, a relay node, or
-                            directly between devices, the cryptographic
-                            guarantees stay the same.</span
-                        >
-                        <span class="ru"
-                            >Дизайн Signal Protocol (X3DH + Double Ratchet +
-                            гибридный PQ KEM) не зависит от транспорта: идут ли
-                            сообщения через сервер, ретранслятор или напрямую
-                            между устройствами — криптографические гарантии
-                            остаются теми же.</span
-                        >
-                    </p>
+                        <span data-i18n="home.resilience.t6">The Signal Protocol design (X3DH + Double Ratchet + hybrid PQ KEM) is transport-agnostic: whether messages travel through a server, a relay node, or directly between devices, the cryptographic guarantees stay the same.</span>
+                        </p>
                 </div>
             </section>
 
             <section aria-labelledby="roadmap-heading">
                 <div class="container">
                     <h2 id="roadmap-heading">
-                        <span class="en">Development Roadmap</span
-                        ><span class="ru">Дорожная карта</span>
-                    </h2>
+                        <span data-i18n="home.roadmap.development-roadmap">Development Roadmap</span></h2>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong>Done (H1 2026):</strong> gRPC/Protobuf
-                                · live
-                                <strong
-                                    >gRPC bidi MessageStream over QUIC</strong
-                                >
-                                (HTTP/2 fallback; intercontinental production
-                                validation) · X3DH + Double Ratchet · hybrid
-                                PQXDH with ML-KEM-768 (opt-in) · session healing
-                                · WebRTC voice/video calls with E2EE signaling ·
-                                iOS TestFlight beta · VEIL anti-censorship
-                                (obfs4, WebTunnel) · veil-front implemented and
-                                validated on-device · always-on Stealth (sealed
-                                sender) for eligible traffic.</span
-                            >
-                            <span class="ru"
-                                ><strong>Сделано (H1 2026):</strong>
-                                gRPC/Protobuf · боевой
-                                <strong
-                                    >gRPC bidi MessageStream поверх QUIC</strong
-                                >
-                                (fallback HTTP/2; межконтинентальная
-                                production-валидация) · X3DH + Double Ratchet ·
-                                гибридный PQXDH с ML-KEM-768 (opt-in) · session
-                                healing · WebRTC голос/видео с E2EE-сигналингом
-                                · iOS TestFlight бета · always-on Stealth
-                                (sealed sender) для подходящего трафика · VEIL
-                                anti-censorship (obfs4, WebTunnel) · veil-front
-                                реализован и провалидирован на устройстве.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf
+ · live
+ <strong
+ >gRPC bidi MessageStream over QUIC</strong
+ >
+ (HTTP/2 fallback; intercontinental production
+ validation) · X3DH + Double Ratchet · hybrid
+ PQXDH with ML-KEM-768 (opt-in) · session healing
+ · WebRTC voice/video calls with E2EE signaling ·
+ iOS TestFlight beta · VEIL anti-censorship
+ (obfs4, WebTunnel) · veil-front implemented and
+ validated on-device · always-on Stealth (sealed
+ sender) for eligible traffic.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong>In progress:</strong> veil-front public
-                                ticket rollout · macOS Desktop client
-                                (iOS-direct crypto path, no public build yet) ·
-                                Android client (currently Phase 0 — Rust core
-                                builds, Kotlin wrapper TBD) · BIP39 / SLIP-39
-                                social recovery · MLS group chats (RFC 9420) ·
-                                first external security audit · hybrid PQ
-                                signatures (ML-DSA-65) — crypto core and server
-                                storage /verification implemented, client-side
-                                orchestration (identity generation, key
-                                rotation) not yet wired into the shared
-                                core.</span
-                            >
-                            <span class="ru"
-                                ><strong>В работе:</strong> публичная раскатка
-                                тикетов veil-front · macOS Desktop-клиент
-                                (iOS-direct крипто-путь, публичной сборки пока
-                                нет) · Android-клиент (сейчас Phase 0 — Rust
-                                core собирается, Kotlin-обёртка в работе) ·
-                                BIP39 / SLIP-39 социальное восстановление · MLS
-                                групповые чаты (RFC 9420) · первый внешний
-                                security-аудит · гибридные PQ-подписи
-                                (ML-DSA-65) — crypto core и серверное
-                                хранение/верификация реализованы, оркестрация на
-                                клиенте (генерация identity, ротация ключей) в
-                                общем ядре ещё не реализована.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> veil-front public
+ ticket rollout · macOS Desktop client
+ (iOS-direct crypto path, no public build yet) ·
+ Android client (currently Phase 0 — Rust core
+ builds, Kotlin wrapper TBD) · BIP39 / SLIP-39
+ social recovery · MLS group chats (RFC 9420) ·
+ first external security audit · hybrid PQ
+ signatures (ML-DSA-65) — crypto core and server
+ storage /verification implemented, client-side
+ orchestration (identity generation, key
+ rotation) not yet wired into the shared
+ core.</span>
+                            </li>
                     </ul>
 
                     <h3>
-                        <span class="en">Decentralization Roadmap</span
-                        ><span class="ru">Дорожная карта децентрализации</span>
-                    </h3>
+                        <span data-i18n="home.roadmap.decentralization-roadmap">Decentralization Roadmap</span></h3>
                     <ul>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Phase 1 — Core Relay (H2 2026):</strong
-                                >
-                                standalone
-                                <code>construct-relay</code> binary deployable
-                                on a \$5 VPS or Raspberry Pi · single Docker
-                                container, no Kafka/Redis/PostgreSQL required ·
-                                preserves all E2EE guarantees · federation
-                                gateway for backward compatibility.</span
-                            >
-                            <span class="ru"
-                                ><strong>Фаза 1 — Core Relay (H2 2026):</strong>
-                                отдельный бинарник
-                                <code>construct-relay</code>, запускаемый на \$5
-                                VPS или Raspberry Pi · один Docker-контейнер без
-                                Kafka/Redis/PostgreSQL · все E2EE-гарантии
-                                сохранены · федеративный шлюз для обратной
-                                совместимости.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.roadmap.t5"><strong
+ >Phase 1 — Core Relay (H2 2026):</strong
+ >
+ standalone
+ <code>construct-relay</code> binary deployable
+ on a \$5 VPS or Raspberry Pi · single Docker
+ container, no Kafka/Redis/PostgreSQL required ·
+ preserves all E2EE guarantees · federation
+ gateway for backward compatibility.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Phase 2 — DHT &amp; Discovery
-                                    (2027):</strong
-                                >
-                                Kademlia DHT overlay for peer discovery and
-                                responsible-node routing · signed user records
-                                in DHT · offline message storage with
-                                replication · bootstrap node network.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Фаза 2 — DHT и Discovery (2027):</strong
-                                >
-                                оверлей Kademlia DHT для поиска узлов и
-                                маршрутизации · подписанные записи пользователей
-                                в DHT · хранение оффлайн-сообщений с репликацией
-                                · сеть bootstrap-нод.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.roadmap.t6"><strong
+ >Phase 2 — DHT &amp; Discovery
+ (2027):</strong
+ >
+ Kademlia DHT overlay for peer discovery and
+ responsible-node routing · signed user records
+ in DHT · offline message storage with
+ replication · bootstrap node network.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Phase 3 — Hybrid Routing &amp; P2P
-                                    (2027):</strong
-                                >
-                                direct peer-to-peer delivery via libp2p
-                                hole-punching · automatic fallback to relay
-                                routing · online presence in DHT · client
-                                multi-relay support.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Фаза 3 — Гибридный роутинг и P2P
-                                    (2027):</strong
-                                >
-                                прямая P2P-доставка через libp2p hole-punching ·
-                                автоматический fallback на релейный роутинг ·
-                                онлайн-присутствие в DHT · поддержка нескольких
-                                релеев на клиенте.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.roadmap.t7"><strong
+ >Phase 3 — Hybrid Routing &amp; P2P
+ (2027):</strong
+ >
+ direct peer-to-peer delivery via libp2p
+ hole-punching · automatic fallback to relay
+ routing · online presence in DHT · client
+ multi-relay support.</span>
+                            </li>
                         <li>
-                            <span class="en"
-                                ><strong
-                                    >Phase 4 — Ecosystem (2027–2028):</strong
-                                >
-                                public seed nodes · spam resistance (RLN /
-                                proof-of-work) · MLS group chats over
-                                decentralised transport · reputation for relay
-                                operators · external security audit.</span
-                            >
-                            <span class="ru"
-                                ><strong
-                                    >Фаза 4 — Экосистема (2027–2028):</strong
-                                >
-                                публичные seed-ноды · защита от спама (RLN /
-                                proof-of-work) · групповые MLS-чаты поверх
-                                децентрализованного транспорта · репутация
-                                операторов релеев · внешний
-                                security-аудит.</span
-                            >
-                        </li>
+                            <span data-i18n-html="home.roadmap.t8"><strong
+ >Phase 4 — Ecosystem (2027–2028):</strong
+ >
+ public seed nodes · spam resistance (RLN /
+ proof-of-work) · MLS group chats over
+ decentralised transport · reputation for relay
+ operators · external security audit.</span>
+                            </li>
                     </ul>
 
                     <h3>
-                        <span class="en">Other Planned Work</span
-                        ><span class="ru">Прочие планы</span>
-                    </h3>
+                        <span data-i18n="home.roadmap.other-planned-work">Other Planned Work</span></h3>
                     <ul>
                         <li>
-                            <span class="en"
-                                >Privacy Pass token enforcement (anti-spam on
-                                the always-on sealed-sender path) · desktop
-                                applications for Windows, Linux · formal
-                                verification (Kani).</span
-                            >
-                            <span class="ru"
-                                >Enforcement Privacy Pass токенов (анти-спам на
-                                always-on sealed-sender пути) ·
-                                десктоп-приложения для Windows, Linux ·
-                                формальная верификация (Kani).</span
-                            >
-                        </li>
+                            <span data-i18n="home.roadmap.t10">Privacy Pass token enforcement (anti-spam on the always-on sealed-sender path) · desktop applications for Windows, Linux · formal verification (Kani).</span>
+                            </li>
                     </ul>
                     <p>
-                        <span class="en"
-                            ><strong>Honest current status:</strong> alpha. iOS
-                            via TestFlight only (<a
-                                href="https://testflight.apple.com/join/NH3WssFh"
-                                >join the beta</a
-                            >); no public App Store release yet. macOS Desktop
-                            client is in active development, no build available
-                            yet. Single trusted server (no federation). VEIL
-                            obfs4 transport is deployed but currently throttled
-                            by active DPI in some regions; the veil-front
-                            replacement is implemented and validated on-device,
-                            with public ticket rollout in progress. Not
-                            recommended for adversarial threat models until
-                            first external audit completes.</span
-                        >
-                        <span class="ru"
-                            ><strong>Честный текущий статус:</strong> alpha. iOS
-                            только через TestFlight (<a
-                                href="https://testflight.apple.com/join/NH3WssFh"
-                                >присоединиться к бете</a
-                            >); публичного релиза в App Store пока нет. macOS
-                            Desktop-клиент в активной разработке, сборки пока
-                            нет. Один доверенный сервер (без федерации). VEIL
-                            obfs4-транспорт развёрнут, но сейчас режется
-                            активным DPI в ряде регионов; замена veil-front
-                            реализована и провалидирована на устройстве,
-                            публичная раскатка тикетов в процессе. Не
-                            рекомендуется для adversarial-угроз до завершения
-                            первого внешнего аудита.</span
-                        >
-                    </p>
+                        <span data-i18n-html="home.roadmap.t11"><strong>Honest current status:</strong> alpha. iOS
+ via TestFlight only (<a
+ href="https://testflight.apple.com/join/NH3WssFh"
+ >join the beta</a
+ >); no public App Store release yet. macOS Desktop
+ client is in active development, no build available
+ yet. Single trusted server (no federation). VEIL
+ obfs4 transport is deployed but currently throttled
+ by active DPI in some regions; the veil-front
+ replacement is implemented and validated on-device,
+ with public ticket rollout in progress. Not
+ recommended for adversarial threat models until
+ first external audit completes.</span>
+                        </p>
                 </div>
             </section>
 
             <section aria-labelledby="get-involved-heading">
                 <div class="container">
                     <h2 id="get-involved-heading">
-                        <span class="en">Open Source &amp; Contributions</span>
-                        <span class="ru">Открытый исходный код и участие</span>
-                    </h2>
+                        <span data-i18n="home.get-involved.open-source-amp-contributions">Open Source & Contributions</span>
+                        </h2>
                     <p>
-                        <span class="en"
-                            >Konstruct is open source under weak-copyleft
-                            licenses: MPL-2.0 for the client apps and VEIL,
-                            AGPL-3.0 for the server and relay, Apache-2.0 for
-                            shared libraries, and CC-BY-4.0 for text / specs.
-                            Privacy technology should be transparent and
-                            auditable by anyone — including the open issues we
-                            haven't fixed yet.</span
-                        >
-                        <span class="ru"
-                            >Конструкт открыт под weak-copyleft лицензиями:
-                            MPL-2.0 для клиентских приложений и VEIL, AGPL-3.0
-                            для сервера и релея, Apache-2.0 для общих библиотек
-                            и CC-BY-4.0 для текстов / спецификаций. Технологии
-                            приватности должны быть прозрачными и доступными для
-                            аудита любым желающим — включая открытые проблемы,
-                            которые мы пока не исправили.</span
-                        >
-                    </p>
+                        <span data-i18n="home.get-involved.t2">Konstruct is open source under weak-copyleft licenses: MPL-2.0 for the client apps and VEIL, AGPL-3.0 for the server and relay, Apache-2.0 for shared libraries, and CC-BY-4.0 for text / specs. Privacy technology should be transparent and auditable by anyone — including the open issues we haven't fixed yet.</span>
+                        </p>
                     <p>
-                        <span class="en"
-                            ><strong>Contributions welcome</strong> — from code
-                            improvements to security review to documentation. We
-                            are a tiny team; PRs and issues are read by humans,
-                            not triaged by a queue.</span
-                        >
-                        <span class="ru"
-                            ><strong>Контрибьюторы приветствуются</strong> — от
-                            улучшений кода до review безопасности и
-                            документации. Команда крошечная: PR и issues читают
-                            живые люди, а не фильтрует очередь.</span
-                        >
-                    </p>
+                        <span data-i18n-html="home.get-involved.t3"><strong>Contributions welcome</strong> — from code
+ improvements to security review to documentation. We
+ are a tiny team; PRs and issues are read by humans,
+ not triaged by a queue.</span>
+                        </p>
                     <ul>
                         <li>
                             <a href="https://github.com/konstruct-msg/"
-                                ><span class="en">GitHub</span
-                                ><span class="ru">GitHub</span></a
+                                ><span data-i18n="home.get-involved.github">GitHub</span></a
                             >
                         </li>
                         <li>
                             <a
                                 href="https://konstruct-msg.github.io/construct-protocol/"
-                                ><span class="en"
-                                    >Protocol specification &amp;
-                                    whitepaper</span
-                                ><span class="ru"
-                                    >Спецификация протокола и whitepaper</span
-                                ></a
+                                ><span data-i18n="home.get-involved.t5">Protocol specification & whitepaper</span></a
                             >
                         </li>
                         <li>
                             <a href="https://testflight.apple.com/join/NH3WssFh"
-                                ><span class="en"
-                                    >iOS TestFlight Public Alpha</span
-                                ><span class="ru"
-                                    >iOS TestFlight Public Alpha</span
-                                ></a
+                                ><span data-i18n="home.get-involved.ios-testflight-public-alpha">iOS TestFlight Public Alpha</span></a
                             >
                         </li>
                         <li>
                             <a
                                 href="https://github.com/konstruct-msg/construct-core/security/advisories/new"
-                                ><span class="en"
-                                    >Report a security issue (GitHub private
-                                    advisory)</span
-                                ><span class="ru"
-                                    >Сообщить о security-проблеме (приватный
-                                    advisory на GitHub)</span
-                                ></a
+                                ><span data-i18n="home.get-involved.t7">Report a security issue (GitHub private advisory)</span></a
                             >
                         </li>
                     </ul>
@@ -1519,31 +1036,17 @@
             <section aria-labelledby="support-heading">
                 <div class="container">
                     <h2 id="support-heading">
-                        <span class="en">Support the Project</span
-                        ><span class="ru">Поддержать проект</span>
-                    </h2>
+                        <span data-i18n="home.support.support-the-project">Support the Project</span></h2>
                     <p>
-                        <span class="en"
-                            >No ads, no data resale, no telemetry — Konstruct
-                            runs on voluntary donations. If you want the
-                            messaging core to stay free and independent, a
-                            donation directly funds development and the server.
-                            Prefer <strong>Monero</strong> if you value privacy:
-                            unlike Bitcoin, its chain is not public, so your
-                            donation isn't linkable and the balance isn't
-                            visible.</span
-                        >
-                        <span class="ru"
-                            >Без рекламы, без перепродажи данных, без телеметрии
-                            — Konstruct живёт на добровольных донатах. Если
-                            хочешь, чтобы ядро мессенджера оставалось бесплатным
-                            и независимым, донат напрямую идёт на разработку и
-                            сервер. Если ценишь приватность — предпочти
-                            <strong>Monero</strong>: в отличие от биткоина его
-                            цепочка не публична, донат нельзя связать, а баланс
-                            не виден.</span
-                        >
-                    </p>
+                        <span data-i18n-html="home.support.t2">No ads, no data resale, no telemetry — Konstruct
+ runs on voluntary donations. If you want the
+ messaging core to stay free and independent, a
+ donation directly funds development and the server.
+ Prefer <strong>Monero</strong> if you value privacy:
+ unlike Bitcoin, its chain is not public, so your
+ donation isn't linkable and the balance isn't
+ visible.</span>
+                        </p>
                     <div
                         style="
                             display: flex;
@@ -1579,11 +1082,7 @@
                             <div style="min-width: 0; flex: 1 1 320px">
                                 <div style="margin-bottom: 8px">
                                     <strong>Monero (XMR)</strong> —
-                                    <span class="en">recommended, private</span
-                                    ><span class="ru"
-                                        >рекомендуется, приватно</span
-                                    >
-                                </div>
+                                    <span data-i18n="home.support.recommended-private">recommended, private</span></div>
                                 <code class="addr"
                                     >496i5qvPzRtJPQjiPXnLvEGutjHFth4pWDQaJwbbMreyaTYg4qfbo48MXrTnYH32MHiAn5GcSEN1c48EYBvVkrx9Pi5BWvn</code
                                 >
@@ -1637,12 +1136,7 @@
                             <div style="min-width: 0; flex: 1 1 320px">
                                 <div style="margin-bottom: 8px">
                                     <strong>Ko-fi</strong> —
-                                    <span class="en"
-                                        >convenient but not private</span
-                                    ><span class="ru"
-                                        >удобно, но не приватно</span
-                                    >
-                                </div>
+                                    <span data-i18n="home.support.convenient-but-not-private">convenient but not private</span></div>
                                 <a
                                     href="https://ko-fi.com/construct_msg"
                                     rel="noopener noreferrer"
@@ -1657,33 +1151,12 @@
                                         color: var(--fg-muted);
                                     "
                                 >
-                                    <span class="en"
-                                        >Note: fiat payments aren't anonymous —
-                                        the processor knows who you are. Use
-                                        Monero for a private donation.</span
-                                    ><span class="ru"
-                                        >Заметь: фиатные платежи не анонимны —
-                                        платёжный сервис знает, кто ты. Для
-                                        приватного доната используй
-                                        Monero.</span
-                                    >
-                                </p>
+                                    <span data-i18n="home.support.t5">Note: fiat payments aren't anonymous — the processor knows who you are. Use Monero for a private donation.</span></p>
                             </div>
                         </div>
                     </div>
                     <p style="font-size: 0.875rem; color: var(--fg-muted)">
-                        <span class="en"
-                            >Security tip: these addresses are also published,
-                            PGP-signed, in the project repository — cross-check
-                            them there before sending, in case this page is ever
-                            tampered with. Signing key fingerprint:</span
-                        >
-                        <span class="ru"
-                            >Совет по безопасности: эти адреса также
-                            опубликованы и PGP-подписаны в репозитории проекта —
-                            сверь их там перед отправкой на случай, если эту
-                            страницу подменят. Отпечаток ключа подписи:</span
-                        >
+                        <span data-i18n="home.support.t6">Security tip: these addresses are also published, PGP-signed, in the project repository — cross-check them there before sending, in case this page is ever tampered with. Signing key fingerprint:</span>
                         <code style="word-break: break-all"
                             >13AC BE18 0D7B 20A2 4D2D D6B0 99DD 3ECE 736F
                             0672</code
@@ -1696,30 +1169,18 @@
         <footer role="contentinfo">
             <div class="container">
                 <p>
-                    <span class="en"
-                        >Built with Rust, Swift, and a commitment to privacy.<br />
-                        Open source (MPL-2.0 apps · AGPL-3.0 server) · No
-                        telemetry · No ads · No compromises</span
-                    >
-                    <span class="ru"
-                        >Создан на Rust, Swift и принципах приватности.<br />
-                        Открытый код (MPL-2.0 приложения · AGPL-3.0 сервер) ·
-                        Без телеметрии · Без рекламы · Без компромиссов</span
-                    >
-                </p>
+                    <span data-i18n-html="home.support.t7">Built with Rust, Swift, and a commitment to privacy.<br />
+ Open source (MPL-2.0 apps · AGPL-3.0 server) · No
+ telemetry · No ads · No compromises</span>
+                    </p>
                 <p style="margin-top: 1rem; font-size: 0.8125rem">
-                    <span class="en"
-                        >© 2026 Konstruct. Privacy is a right, not a
-                        privilege.</span
+                    <span data-i18n="home.support.t8"
+                        >© 2026 Konstruct. Identity is a construct.</span
                     >
-                    <span class="ru"
-                        >© 2026 Konstruct. Приватность — это право, а не
-                        привилегия.</span
-                    >
+                    
                     ·
                     <a href="/privacy" style="color: var(--fg-muted)"
-                        ><span class="en">Privacy Policy</span
-                        ><span class="ru">Политика конфиденциальности</span></a
+                        ><span data-i18n="home.support.privacy-policy">Privacy Policy</span></a
                     >
                 </p>
             </div>

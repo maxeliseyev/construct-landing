@@ -287,16 +287,37 @@ body.landing .crt-noise {
 }
 
 /* ── Lang switcher HUD treatment ── */
-.landing .lang-switcher button {
+.landing .lang-trigger {
   border-radius: 0;
   clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
 }
 
-.landing .lang-switcher button:hover,
-.landing .lang-switcher button.active {
+.landing .lang-trigger:hover,
+.landing .lang-switcher.is-open .lang-trigger {
   border-color: var(--neon-cyan);
   color: var(--neon-cyan);
   box-shadow: 0 0 10px rgba(111, 216, 209, 0.2);
+}
+
+.landing .lang-menu {
+  border-radius: 0;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  background: rgba(9, 9, 9, 0.96);
+  border-color: rgba(111, 216, 209, 0.25);
+  box-shadow:
+    0 0 18px rgba(111, 216, 209, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.55);
+}
+
+.landing .lang-menu button:hover,
+.landing .lang-menu button.active {
+  background: rgba(111, 216, 209, 0.08);
+  color: var(--neon-cyan);
+}
+
+.landing .lang-menu button:hover .lang-code,
+.landing .lang-menu button.active .lang-code {
+  color: var(--neon-cyan);
 }
 
 /* ── Table: scanline sweep on Konstruct row ── */

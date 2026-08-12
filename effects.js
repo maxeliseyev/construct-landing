@@ -7,10 +7,35 @@
   var GLYPHS = ">$#@%&*+=\\|~^:;[]{}0123456789";
 
   function getTextTarget(el) {
+    // JSON i18n: text lives on the node itself (or a data-i18n descendant).
+    // Legacy class-based locales (.en/.ru/.ja) still work if present.
     var lang = document.documentElement.getAttribute("data-lang") || "en";
+    var marked =
+      el.matches && el.matches("[data-i18n], [data-i18n-html]")
+        ? el
+        : el.querySelector("[data-i18n], [data-i18n-html]");
+    if (marked) return marked;
     var inner = el.querySelector("." + lang);
     return inner || el;
   }
+
+  function clearScrambleCache() {
+    document
+      .querySelectorAll(".corrupt-target, [data-i18n], [data-i18n-html]")
+      .forEach(function (n) {
+        if (n.dataset && n.dataset.originalText != null) {
+          delete n.dataset.originalText;
+        }
+        var inner = n.querySelector("[data-i18n], [data-i18n-html], .en, .ru, .ja");
+        if (inner && inner.dataset && inner.dataset.originalText != null) {
+          delete inner.dataset.originalText;
+        }
+      });
+  }
+
+  document.addEventListener("construct:langchange", function () {
+    clearScrambleCache();
+  });
 
   function scramble(el, durationMs) {
     if (reducedMotion || el.dataset.scrambling === "1") return;
@@ -64,7 +89,7 @@
   }
 
   bindCorrupt(".landing .badge");
-  bindCorrupt(".landing .lang-switcher button");
+  bindCorrupt(".landing .lang-trigger");
   bindCorrupt(".landing main section:last-of-type a");
 
   // ── Live uptime readout: real elapsed time since page load ──

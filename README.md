@@ -9,12 +9,30 @@ privacy-first, end-to-end-encrypted messenger project.
 | Path | File | What |
 |------|------|------|
 | `/` | `index.html` | Landing: mission, architecture, no-telemetry, support |
-| `/faq` | `faq.html` | Frequently asked questions (EN/RU) |
+| `/faq` | `faq.html` | Frequently asked questions (EN/RU/JA) |
 | `/privacy` | `privacy.html` | Privacy policy |
 | `/crypto` | `crypto.html` | Interactive cryptography demo |
 | `/c/:userId` | `contact.html` | Contact deep-link landing |
 
-All pages are bilingual (EN/RU) via a CSS class toggle; there is no build step.
+There is **no build step**. Copy for `index` / `faq` lives in JSON locale files:
+
+```
+i18n/en.json
+i18n/ru.json
+i18n/ja.json
+```
+
+HTML uses a single tree with `data-i18n` / `data-i18n-html` keys. `site.js`
+auto-detects the language (`navigator.languages` + `localStorage`), fetches
+`/i18n/{lang}.json` (sessionStorage-cached), and applies strings. English text
+remains in the HTML as a no-JS / failed-fetch fallback. Language chrome is the
+HUD dropdown `LANG::XX ▾`.
+
+```bash
+python3 scripts/check-i18n.py   # key parity + HTML refs
+# optional re-extract from class-based HTML (legacy):
+# python3 scripts/migrate-i18n.py
+```
 
 ## Local preview
 

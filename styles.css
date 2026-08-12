@@ -421,13 +421,17 @@ section[aria-labelledby="features-heading"] ul li::before {
 }
 
 
-/* Language Switcher */
+/* Language Switcher — compact HUD dropdown (scales to many locales) */
 .lang-switcher {
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  z-index: 50;
 }
-.lang-switcher button {
+.lang-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: none;
   border: 1px solid var(--border);
   color: var(--fg-muted);
@@ -438,16 +442,81 @@ section[aria-labelledby="features-heading"] ul li::before {
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: var(--font-sans);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
 }
-.lang-switcher button:hover {
+.lang-trigger:hover,
+.lang-switcher.is-open .lang-trigger {
   border-color: var(--accent);
   color: var(--accent);
 }
-.lang-switcher button.active {
-  border-color: var(--accent);
-  color: var(--accent);
+.lang-trigger-label {
+  font-variant-numeric: tabular-nums;
+}
+.lang-trigger-caret {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+.lang-switcher.is-open .lang-trigger-caret {
+  transform: rotate(180deg);
+}
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 11.5rem;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--bg-elevated, #111);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+.lang-menu[hidden] {
+  display: none !important;
+}
+.lang-menu li {
+  margin: 0;
+  padding: 0;
+}
+.lang-menu button {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--fg-muted);
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-sans);
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.lang-menu button .lang-code {
+  flex: 0 0 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-secondary, var(--fg-muted));
+}
+.lang-menu button .lang-name {
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.lang-menu button:hover {
   background: rgba(0, 98, 255, 0.1);
+  color: var(--accent);
+}
+.lang-menu button.active {
+  color: var(--accent);
+  background: rgba(0, 98, 255, 0.12);
+}
+.lang-menu button.active .lang-code {
+  color: var(--accent);
 }
 .lang-sep {
   color: var(--border);
@@ -480,8 +549,5 @@ section[aria-labelledby="features-heading"] ul li::before {
 }
 .nav-logo:hover { color: var(--accent); }
 
-/* Language visibility — hides inactive language content */
-html[data-lang="en"] .ru,
-html[data-lang="ru"] .en {
-  display: none !important;
-}
+/* Locale text is applied via data-i18n / data-i18n-html + /i18n/{lang}.json.
+   Legacy class-based .en/.ru/.ja siblings are no longer used on index/faq. */

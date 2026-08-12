@@ -1,5 +1,12 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html
+    lang="en"
+    data-lang="en"
+    data-i18n-page="faq"
+    data-title-en="FAQ — Konstruct Messenger"
+    data-title-ru="FAQ — Konstruct Мессенджер"
+    data-title-ja="FAQ — Konstruct メッセンジャー"
+>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,12 +26,6 @@
         <link rel="stylesheet" href="styles.css" />
 
         <style>
-            /* ── Language visibility ─────────────────────────────────────── */
-            html[data-lang="en"] .ru,
-            html[data-lang="ru"] .en {
-                display: none;
-            }
-
             /* ── Top nav ─────────────────────────────────────────────────── */
             .page-nav {
                 position: sticky;
@@ -53,38 +54,6 @@
             }
 
             .nav-logo:hover {
-                color: var(--accent);
-            }
-
-            .lang-switcher {
-                display: flex;
-                align-items: center;
-                gap: 0.25rem;
-                font-size: 0.8125rem;
-            }
-
-            .lang-switcher .sep {
-                color: var(--fg-muted);
-                user-select: none;
-            }
-
-            .lang-btn {
-                background: none;
-                border: none;
-                cursor: pointer;
-                font-family: var(--font-sans);
-                font-size: 0.8125rem;
-                font-weight: 500;
-                color: var(--fg-muted);
-                padding: 0.25rem 0.375rem;
-                border-radius: 4px;
-                transition: color 0.15s ease;
-            }
-
-            .lang-btn:hover {
-                color: var(--fg);
-            }
-            .lang-btn.active {
                 color: var(--accent);
             }
 
@@ -317,24 +286,57 @@
         <nav class="page-nav" aria-label="Site navigation">
             <div class="container">
                 <a href="/" class="nav-logo">Konstruct</a>
-                <div class="lang-switcher" aria-label="Language switcher">
+                <div class="lang-switcher" id="langSwitcher">
                     <button
-                        class="lang-btn active"
-                        id="btn-en"
-                        data-lang-btn="en"
-                        aria-label="Switch to English"
+                        type="button"
+                        class="lang-trigger"
+                        data-lang-trigger
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Language"
                     >
-                        EN
+                        <span class="lang-trigger-label"
+                            >LANG::<span data-lang-current>EN</span></span
+                        >
+                        <span class="lang-trigger-caret" aria-hidden="true"
+                            >▾</span
+                        >
                     </button>
-                    <span class="sep" aria-hidden="true">|</span>
-                    <button
-                        class="lang-btn"
-                        id="btn-ru"
-                        data-lang-btn="ru"
-                        aria-label="Переключить на русский"
-                    >
-                        RU
-                    </button>
+                    <ul class="lang-menu" role="listbox" hidden>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="en"
+                                aria-selected="true"
+                            >
+                                <span class="lang-code">EN</span
+                                ><span class="lang-name">English</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="ru"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">RU</span
+                                ><span class="lang-name">Русский</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="ja"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">JA</span
+                                ><span class="lang-name">日本語</span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -343,19 +345,11 @@
         <header class="faq-header" role="banner">
             <div class="container">
                 <h1>
-                    <span class="en">Frequently Asked Questions</span>
-                    <span class="ru">Часто задаваемые вопросы</span>
-                </h1>
+                    <span data-i18n="faq.frequently-asked-questions">Frequently Asked Questions</span>
+                    </h1>
                 <p>
-                    <span class="en"
-                        >How Konstruct works, why it works this way, and answers
-                        from users and testers.</span
-                    >
-                    <span class="ru"
-                        >Как работает Конструкт, почему именно так, и ответы на
-                        вопросы от пользователей и тестировщиков.</span
-                    >
-                </p>
+                    <span data-i18n="faq.t2">How Konstruct works, why it works this way, and answers from users and testers.</span>
+                    </p>
             </div>
         </header>
 
@@ -367,229 +361,98 @@
                     aria-labelledby="section-registration"
                 >
                     <h2 id="section-registration">
-                        <span class="en">Registration &amp; Account</span>
-                        <span class="ru">Регистрация и аккаунт</span>
-                    </h2>
+                        <span data-i18n="faq.registration.registration-amp-account">Registration & Account</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Why no username and password?</span
-                            >
-                            <span class="ru"
-                                >Почему не нужны логин и пароль?</span
-                            >
+                            <span data-i18n="faq.registration.q2">Why no username and password?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                During registration, the app receives a
-                                cryptographic Proof of Work challenge from the
-                                server and solves it — this prevents automated
-                                bot registrations. At the same time, several
-                                cryptographic key sets are generated on-device:
-                                long-term identity keys, signed prekeys, and
-                                one-time prekeys (including post-quantum
-                                ML-KEM-768 keys). Only the public parts of these
-                                keys and the PoW result are sent to the server.
-                                Private keys never leave your device. Your
-                                identity
-                                <em>is</em> these keys — there's no password to
-                                steal or recover.
-                            </p>
-                            <p class="ru">
-                                Во время регистрации приложение получает от
-                                сервера небольшую криптографическую задачу
-                                (Proof of Work) и решает её — это защита от
-                                автоматической регистрации ботами. Параллельно
-                                генерируются уникальные идентификаторы
-                                устройства и несколько наборов ключей
-                                шифрования: долгосрочные ключи идентичности,
-                                подписанные предварительные ключи и одноразовые
-                                предварительные ключи (включая постквантовые
-                                ML-KEM-768). На сервер уходят только публичные
-                                части этих ключей и результат PoW-задачи.
-                                Приватные ключи никогда не покидают устройство.
-                                Вместо пароля твоя идентичность — это и есть эти
-                                ключи.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a
+ cryptographic Proof of Work challenge from the
+ server and solves it — this prevents automated
+ bot registrations. At the same time, several
+ cryptographic key sets are generated on-device:
+ long-term identity keys, signed prekeys, and
+ one-time prekeys (including post-quantum
+ ML-KEM-768 keys). Only the public parts of these
+ keys and the PoW result are sent to the server.
+ Private keys never leave your device. Your
+ identity
+ <em>is</em> these keys — there's no password to
+ steal or recover.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Can I sign out and sign back in?</span
-                            >
-                            <span class="ru"
-                                >Можно ли выйти из аккаунта и войти
-                                заново?</span
-                            >
+                            <span data-i18n="faq.registration.q4">Can I sign out and sign back in?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Not yet. In conventional messengers, "sign out
-                                and back in" means entering a username and
-                                password. Here your identity is the
-                                cryptographic keys stored on your device —
-                                without them, you can't authenticate. Deleting
-                                the app is equivalent to losing your account.
-                            </p>
-                            <p class="ru">
-                                Пока нет. В обычных мессенджерах "выйти и войти"
-                                означает ввести логин/пароль. Здесь твоя
-                                идентичность — это ключи на устройстве, и без
-                                них войти невозможно. Удаление приложения
-                                равнозначно потере аккаунта.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.registration.p5">Not yet. In conventional messengers, "sign out and back in" means entering a username and password. Here your identity is the cryptographic keys stored on your device — without them, you can't authenticate. Deleting the app is equivalent to losing your account.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >How do I keep my account when switching
-                                phones?</span
-                            >
-                            <span class="ru"
-                                >Как не потерять аккаунт при смене
-                                телефона?</span
-                            >
+                            <span data-i18n="faq.registration.q6">How do I keep my account when switching phones?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                In Settings you can generate a seed phrase — a
-                                sequence of words that can reconstruct your
-                                private keys. It works the same way as a
-                                recovery phrase in crypto wallets. Write it down
-                                and keep it somewhere safe — this is the only
-                                way to transfer your account to a new device.
-                            </p>
-                            <p class="ru">
-                                В настройках можно сгенерировать seed-фразу —
-                                последовательность слов, из которой можно
-                                восстановить приватные ключи. Это примерно то же
-                                самое, что фраза восстановления в
-                                криптокошельках. Запиши её и храни в надёжном
-                                месте — это единственный способ перенести
-                                аккаунт на новое устройство.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.registration.p7">In Settings you can generate a seed phrase — a sequence of words that can reconstruct your private keys. It works the same way as a recovery phrase in crypto wallets. Write it down and keep it somewhere safe — this is the only way to transfer your account to a new device.</p>
+                            </div>
                     </details>
                 </section>
 
                 <!-- ── Section 2: Contacts ────────────────────────────────── -->
                 <section class="faq-section" aria-labelledby="section-contacts">
                     <h2 id="section-contacts">
-                        <span class="en">Contacts</span>
-                        <span class="ru">Контакты</span>
-                    </h2>
+                        <span data-i18n="faq.contacts.contacts">Contacts</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en">How do I message someone?</span>
-                            <span class="ru">Как написать кому-то?</span>
+                            <span data-i18n="faq.contacts.q2">How do I message someone?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                The system is designed so that you can't message
-                                a random person, even knowing their username. To
-                                start a conversation, one of you must share a QR
-                                code or an invite link, and the other must scan
-                                or follow it. Codes and links are temporary —
-                                they expire in 5 minutes. In the future they'll
-                                become single-use as well, so a leaked link
-                                can't trigger a spam attack.
-                            </p>
-                            <p class="ru">
-                                Вся система спроектирована так, что ты не можешь
-                                написать случайному пользователю, даже зная его
-                                никнейм. Чтобы начать переписку, кто-то из вас
-                                должен поделиться QR-кодом или
-                                ссылкой-приглашением, а второй —
-                                отсканировать/перейти. Коды и ссылки временные,
-                                живут 5 минут. В будущем они станут ещё и
-                                одноразовыми, чтобы утечка ссылки не могла
-                                спровоцировать спам-атаку.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.contacts.p3">The system is designed so that you can't message a random person, even knowing their username. To start a conversation, one of you must share a QR code or an invite link, and the other must scan or follow it. Codes and links are temporary — they expire in 5 minutes. In the future they'll become single-use as well, so a leaked link can't trigger a spam attack.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Why this restriction? Isn't it
-                                inconvenient?</span
-                            >
-                            <span class="ru"
-                                >Зачем такое ограничение? Это же неудобно.</span
-                            >
+                            <span data-i18n="faq.contacts.q4">Why this restriction? Isn't it inconvenient?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                It's an intentional design choice. In most
-                                messengers, knowing someone's phone number or
-                                username is enough to start flooding them with
-                                messages. Here, mutual consent is baked into the
-                                architecture — not just declared in a privacy
-                                policy.
-                            </p>
-                            <p class="ru">
-                                Это намеренное решение. В большинстве
-                                мессенджеров достаточно знать номер телефона или
-                                никнейм, чтобы начать засыпать человека
-                                сообщениями. Здесь взаимное согласие зашито в
-                                архитектуру, а не просто задекларировано в
-                                политике.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.contacts.p5">It's an intentional design choice. In most messengers, knowing someone's phone number or username is enough to start flooding them with messages. Here, mutual consent is baked into the architecture — not just declared in a privacy policy.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What if someone shares my QR code without my
-                                permission?</span
-                            >
-                            <span class="ru"
-                                >Что будет, если кто-то поделится моим QR-кодом
-                                без моего ведома?</span
-                            >
+                            <span data-i18n="faq.contacts.q6">What if someone shares my QR code without my permission?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                The code only lives for 5 minutes — even if
-                                intercepted, the window is very short. Once
-                                someone adds you, you'll see a new conversation
-                                and can immediately block them. Single-use codes
-                                will completely close this scenario in the
-                                future.
-                            </p>
-                            <p class="ru">
-                                Код живёт 5 минут — даже если его перехватили,
-                                окно очень маленькое. После того как кто-то
-                                добавит тебя, ты увидишь новый диалог и сможешь
-                                сразу его заблокировать. В будущем одноразовые
-                                коды полностью закроют этот сценарий.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.contacts.p7">The code only lives for 5 minutes — even if intercepted, the window is very short. Once someone adds you, you'll see a new conversation and can immediately block them. Single-use codes will completely close this scenario in the future.</p>
+                            </div>
                     </details>
                 </section>
 
@@ -599,373 +462,168 @@
                     aria-labelledby="section-encryption"
                 >
                     <h2 id="section-encryption">
-                        <span class="en">Encryption &amp; Privacy</span>
-                        <span class="ru">Шифрование и приватность</span>
-                    </h2>
+                        <span data-i18n="faq.encryption.encryption-amp-privacy">Encryption & Privacy</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en">How does encryption work?</span>
-                            <span class="ru">Как работает шифрование?</span>
+                            <span data-i18n="faq.encryption.q2">How does encryption work?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                All messages are encrypted on the sender's
-                                device before transmission and can only be
-                                decrypted on the recipient's device. The server
-                                sees only an encrypted stream and routes it — it
-                                cannot read content technically, not just by
-                                policy. For key establishment, Konstruct uses
-                                X3DH extended with a post-quantum protocol
-                                (PQXDH) — protecting against "record now,
-                                decrypt with quantum computer later" attacks.
-                                Messages use Double Ratchet, which rotates keys
-                                with every message, so compromising one key
-                                doesn't expose past or future messages (forward
-                                secrecy + break-in recovery).
-                            </p>
-                            <p class="ru">
-                                Все сообщения шифруются на устройстве
-                                отправителя перед отправкой и расшифровываются
-                                только на устройстве получателя. Сервер видит
-                                только зашифрованный поток и маршрутизирует его.
-                                Прочитать содержимое сервер не может технически,
-                                не только по политике. Для установки сессии
-                                используется протокол X3DH с постквантовым
-                                расширением (PQXDH) — защита от сценария
-                                «записать сейчас, расшифровать квантовым
-                                компьютером потом». Сами сообщения шифруются
-                                через Double Ratchet — алгоритм, меняющий ключи
-                                с каждым сообщением, так что компрометация
-                                одного ключа не раскрывает ни прошлых, ни
-                                будущих сообщений.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read content technically, not just by policy. For key establishment, Konstruct uses X3DH extended with a post-quantum protocol (PQXDH) — protecting against "record now, decrypt with quantum computer later" attacks. Messages use Double Ratchet, which rotates keys with every message, so compromising one key doesn't expose past or future messages (forward secrecy + break-in recovery).</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What exactly does the server see?</span
-                            >
-                            <span class="ru">Что именно видит сервер?</span>
+                            <span data-i18n="faq.encryption.q4">What exactly does the server see?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                The server sees: that device A transmitted
-                                encrypted bytes to device B, the approximate
-                                size, and a timestamp. It doesn't see: message
-                                content, names, avatars, or Display Names.
-                                Messages aren't stored on the server after
-                                delivery. Usernames are stored only for routing
-                                purposes and aren't connected to real
-                                identities.
-                            </p>
-                            <p class="ru">
-                                Сервер видит: что устройство A передало
-                                зашифрованные байты устройству B, примерный
-                                объём и временну́ю метку. Сервер не видит:
-                                содержимого сообщений, имён, аватаров, Display
-                                Name. Сообщения не хранятся — после доставки их
-                                нет нигде на сервере. Username хранится только
-                                для маршрутизации по приглашениям и нигде не
-                                связывается с реальной личностью.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.encryption.p5">The server sees: that device A transmitted encrypted bytes to device B, the approximate size, and a timestamp. It doesn't see: message content, names, avatars, or Display Names. Messages aren't stored on the server after delivery. Usernames are stored only for routing purposes and aren't connected to real identities.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What about metadata? Who talks to whom?</span
-                            >
-                            <span class="ru"
-                                >А метаданные? Кто с кем общается?</span
-                            >
+                            <span data-i18n="faq.encryption.q6">What about metadata? Who talks to whom?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                This is the harder part. The server can still
-                                observe that <em>someone</em> delivered
-                                ciphertext to device B (recipient, time, size).
-                                With always-on
-                                <strong>Stealth (sealed sender)</strong>, it
-                                does <em>not</em> learn who sent that ciphertext
-                                — see the next question. VEIL partially obscures
-                                the network path. Full anonymity at the routing
-                                layer (hiding from the recipient's side and from
-                                network-level IP/timing correlation too) is a
-                                problem of a different order of magnitude and
-                                isn't solved today.
-                            </p>
-                            <p class="ru">
-                                Это сложнее. Сервер всё ещё может видеть, что
-                                <em>кто-то</em> доставил ciphertext на
-                                устройство B (получатель, время, размер). С
-                                always-on
-                                <strong>Stealth (sealed sender)</strong> он
-                                <em>не</em> узнаёт, кто отправил этот ciphertext
-                                — см. следующий вопрос. VEIL частично скрывает
-                                сетевой путь. Полная анонимность на уровне
-                                маршрутизации (скрытие и от получателя, и от
-                                корреляции IP/timing) — задача другого порядка
-                                сложности и сегодня не решена.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.encryption.p7">This is the harder part. The server can still
+ observe that <em>someone</em> delivered
+ ciphertext to device B (recipient, time, size).
+ With always-on
+ <strong>Stealth (sealed sender)</strong>, it
+ does <em>not</em> learn who sent that ciphertext
+ — see the next question. VEIL partially obscures
+ the network path. Full anonymity at the routing
+ layer (hiding from the recipient's side and from
+ network-level IP/timing correlation too) is a
+ problem of a different order of magnitude and
+ isn't solved today.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Can I hide my identity from the server when
-                                sending?</span
-                            >
-                            <span class="ru"
-                                >Можно ли скрыть свою личность от сервера при
-                                отправке?</span
-                            >
+                            <span data-i18n="faq.encryption.q8">Can I hide my identity from the server when sending?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Yes — and it is <strong>always on</strong> for
-                                eligible traffic (user messages, receipts, call
-                                signaling, profile shares). There is no user
-                                toggle in production: the device leaves the
-                                sender field out of the envelope and seals a
-                                signed sender certificate to the recipient's
-                                identity key. The recipient decrypts and
-                                verifies who sent it; the server cannot. A few
-                                control paths (e.g. E2E heartbeats, multi-device
-                                sync, pure session control) stay identified by
-                                design.
-                            </p>
-                            <p class="en">
-                                Honest limits: Stealth hides the sender
-                                <em>identity</em> from the server, not message
-                                timing, size, or your IP address — those remain
-                                visible at the network/transport layer. Privacy
-                                Pass tokens can ride along for anti-spam;
-                                server-side enforcement is still rolling out, so
-                                treat token-based rate control as maturing, not
-                                finished.
-                            </p>
-                            <p class="ru">
-                                Да — и это <strong>всегда включено</strong> для
-                                подходящего трафика (сообщения, receipt’ы,
-                                call-сигналинг, profile shares). В production
-                                нет пользовательского переключателя: устройство
-                                убирает поле отправителя из конверта и
-                                запечатывает подписанный сертификат
-                                identity-ключом получателя. Получатель
-                                расшифровывает и проверяет, кто отправил; сервер
-                                — нет. Несколько control-путей (E2E heartbeat’ы,
-                                multi-device sync, чистый session control) по
-                                дизайну остаются identified.
-                            </p>
-                            <p class="ru">
-                                Честные ограничения: Stealth скрывает
-                                <em>личность</em> отправителя от сервера, но не
-                                время, размер или IP — это видно на
-                                сетевом/транспортном уровне. Токены Privacy Pass
-                                могут идти вместе с sealed-отправкой для
-                                анти-спама; server-side enforcement ещё
-                                раскатывается — rate-control на токенах
-                                считается зреющим, не завершённым.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.encryption.p9">Yes — and it is <strong>always on</strong> for
+ eligible traffic (user messages, receipts, call
+ signaling, profile shares). There is no user
+ toggle in production: the device leaves the
+ sender field out of the envelope and seals a
+ signed sender certificate to the recipient's
+ identity key. The recipient decrypts and
+ verifies who sent it; the server cannot. A few
+ control paths (e.g. E2E heartbeats, multi-device
+ sync, pure session control) stay identified by
+ design.</p>
+                            <p data-i18n-html="faq.encryption.p10">Honest limits: Stealth hides the sender
+ <em>identity</em> from the server, not message
+ timing, size, or your IP address — those remain
+ visible at the network/transport layer. Privacy
+ Pass tokens can ride along for anti-spam;
+ server-side enforcement is still rolling out, so
+ treat token-based rate control as maturing, not
+ finished.</p>
+                            </div>
                     </details>
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Do you collect analytics or telemetry?</span
-                            >
-                            <span class="ru"
-                                >Вы собираете аналитику или телеметрию?</span
-                            >
+                            <span data-i18n="faq.encryption.q11">Do you collect analytics or telemetry?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                No — none. No analytics, no usage metrics, no
-                                behavioural events, no crash phone-home, no
-                                advertising identifiers. Not "collected and
-                                anonymised" — <em>not collected</em>. The app
-                                has no third-party trackers (no Firebase,
-                                Crashlytics, Sentry, Amplitude, Segment); its
-                                only external dependencies are transport/media
-                                infrastructure and an on-device ML library.
-                                Production builds also write
-                                <strong>no diagnostic logs to disk</strong> and
-                                expose no debug or log-export screen. When we
-                                need logs to fix a bug, it is you who taps
-                                "share" in a beta build — never a silent upload.
-                            </p>
-                            <p class="ru">
-                                Нет — вообще. Никакой аналитики, метрик
-                                использования, поведенческих событий, отправки
-                                крашей, рекламных идентификаторов. Не «собрано и
-                                обезличено» — <em>не собрано вовсе</em>. В
-                                приложении нет сторонних трекеров (ни Firebase,
-                                ни Crashlytics, ни Sentry, ни Amplitude, ни
-                                Segment); единственные внешние зависимости —
-                                транспорт/медиа и on-device ML-библиотека.
-                                Релизные сборки к тому же
-                                <strong
-                                    >не пишут диагностических логов на
-                                    диск</strong
-                                >
-                                и не дают экрана дебага или экспорта логов.
-                                Когда нам нужны логи для починки бага, их
-                                отправляешь ты кнопкой «поделиться» в
-                                бета-сборке — никакой тихой отправки.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.encryption.p12">No — none. No analytics, no usage metrics, no
+ behavioural events, no crash phone-home, no
+ advertising identifiers. Not "collected and
+ anonymised" — <em>not collected</em>. The app
+ has no third-party trackers (no Firebase,
+ Crashlytics, Sentry, Amplitude, Segment); its
+ only external dependencies are transport/media
+ infrastructure and an on-device ML library.
+ Production builds also write
+ <strong>no diagnostic logs to disk</strong> and
+ expose no debug or log-export screen. When we
+ need logs to fix a bug, it is you who taps
+ "share" in a beta build — never a silent upload.</p>
+                            </div>
                     </details>
                 </section>
 
                 <!-- ── Section 4: Profile ─────────────────────────────────── -->
                 <section class="faq-section" aria-labelledby="section-profile">
                     <h2 id="section-profile">
-                        <span class="en">Profile</span>
-                        <span class="ru">Профиль</span>
-                    </h2>
+                        <span data-i18n="faq.profile.profile">Profile</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What is the Display Name for?</span
-                            >
-                            <span class="ru">Зачем нужен Display Name?</span>
+                            <span data-i18n="faq.profile.q2">What is the Display Name for?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Display Name and avatar are stored only on your
-                                device — they never go to the server. When you
-                                start a new conversation, the other person sees
-                                only a generated pseudonym (deterministic —
-                                always the same for a given ID). If you want
-                                them to see your real name and photo, go to
-                                their profile and tap "Share Profile" — your
-                                Display Name and avatar will be sent directly
-                                over the encrypted channel.
-                            </p>
-                            <p class="ru">
-                                Display Name и аватар хранятся только на твоём
-                                устройстве, на сервер они никогда не уходят.
-                                Когда ты начинаешь новый диалог, собеседник
-                                видит только сгенерированное псевдо-имя
-                                (детерминированное — всегда одно и то же для
-                                данного ID). Если хочешь, чтобы он видел твоё
-                                реальное имя или фото, зайди в его профиль и
-                                нажми «Поделиться профилем» — тогда Display Name
-                                и аватар будут отправлены ему напрямую через
-                                зашифрованный канал.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.profile.p3">Display Name and avatar are stored only on your device — they never go to the server. When you start a new conversation, the other person sees only a generated pseudonym (deterministic — always the same for a given ID). If you want them to see your real name and photo, go to their profile and tap "Share Profile" — your Display Name and avatar will be sent directly over the encrypted channel.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Why a generated name instead of just
-                                blank?</span
-                            >
-                            <span class="ru"
-                                >Почему сгенерированное имя, а не просто
-                                пустое?</span
-                            >
+                            <span data-i18n="faq.profile.q4">Why a generated name instead of just blank?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                A blank name would be awkward — you'd see
-                                featureless rows in your chat list with no way
-                                to tell contacts apart. The generated name is
-                                stable: "Quick Falcon" is always "Quick Falcon"
-                                for that ID, on any device. That's more useful
-                                than a raw UUID.
-                            </p>
-                            <p class="ru">
-                                Пустое имя неудобно: в списке чатов ты видел бы
-                                безликие строки, не мог бы отличить один контакт
-                                от другого. Сгенерированное имя стабильно —
-                                «Быстрый Сокол» всегда будет «Быстрым Соколом»
-                                для этого ID, на любом устройстве. Это удобнее,
-                                чем UUID.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.profile.p5">A blank name would be awkward — you'd see featureless rows in your chat list with no way to tell contacts apart. The generated name is stable: "Quick Falcon" is always "Quick Falcon" for that ID, on any device. That's more useful than a raw UUID.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >If someone has a username, do I see it?</span
-                            >
-                            <span class="ru"
-                                >Если у пользователя задан username, я его
-                                вижу?</span
-                            >
+                            <span data-i18n="faq.profile.q6">If someone has a username, do I see it?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Yes. Display priority: Display Name (if they
-                                shared it) → username → generated name. So if
-                                someone registered with @john, you'll see that,
-                                not "Peaceful Whale".
-                            </p>
-                            <p class="ru">
-                                Да. Приоритет отображения: Display Name (если
-                                поделился) → username → сгенерированное имя.
-                                Если человек зарегистрировался с username @john,
-                                ты увидишь именно его, а не «Мирный Кит».
-                            </p>
-                        </div>
+                            <p data-i18n="faq.profile.p7">Yes. Display priority: Display Name (if they shared it) → username → generated name. So if someone registered with @john, you'll see that, not "Peaceful Whale".</p>
+                            </div>
                     </details>
                 </section>
 
                 <!-- ── Section 5: Messages ────────────────────────────────── -->
                 <section class="faq-section" aria-labelledby="section-messages">
                     <h2 id="section-messages">
-                        <span class="en">Messages</span>
-                        <span class="ru">Сообщения</span>
-                    </h2>
+                        <span data-i18n="faq.messages.messages">Messages</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What do delivery status indicators mean?</span
-                            >
-                            <span class="ru"
-                                >Что означают статусы у сообщений?</span
-                            >
+                            <span data-i18n="faq.messages.q2">What do delivery status indicators mean?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <ul class="en">
+                            <ul data-i18n-html="faq.messages.status.list">
                                 <li>
                                     <strong>Sending</strong> — message is being
                                     encrypted and sent to the server
@@ -983,101 +641,36 @@
                                     the chat and saw the message
                                 </li>
                             </ul>
-                            <p class="en">
+                            <p data-i18n="faq.messages.status.note">
                                 "Delivered" and "Read" are acknowledgements
                                 (ACKs) sent back through the same encrypted
                                 channel.
                             </p>
-                            <ul class="ru">
-                                <li>
-                                    <strong>Отправляется</strong> — сообщение
-                                    шифруется и уходит на сервер
-                                </li>
-                                <li>
-                                    <strong>Отправлено</strong> — сервер принял
-                                    сообщение
-                                </li>
-                                <li>
-                                    <strong>Доставлено</strong> — приложение
-                                    получателя приняло и расшифровало его
-                                </li>
-                                <li>
-                                    <strong>Прочитано</strong> — получатель
-                                    открыл чат и увидел сообщение
-                                </li>
-                            </ul>
-                            <p class="ru">
-                                Статусы «доставлено» и «прочитано» — это
-                                подтверждения (ACK), которые отправляются
-                                обратно через тот же зашифрованный канал.
-                            </p>
                         </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en">Can I edit sent messages?</span>
-                            <span class="ru"
-                                >Можно ли редактировать отправленные
-                                сообщения?</span
-                            >
+                            <span data-i18n="faq.messages.q3">Can I edit sent messages?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Yes, editing is supported. After changes, the
-                                message is marked as "edited". The edit
-                                propagates to the recipient's device through the
-                                same delivery mechanism as regular messages.
-                            </p>
-                            <p class="ru">
-                                Да, редактирование поддерживается. После
-                                изменения у сообщения появляется пометка
-                                «изменено». Редактирование распространяется на
-                                устройство получателя через тот же механизм
-                                доставки, что и обычные сообщения.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.messages.p4">Yes, editing is supported. After changes, the message is marked as "edited". The edit propagates to the recipient's device through the same delivery mechanism as regular messages.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Why don't notifications arrive when the app is
-                                closed?</span
-                            >
-                            <span class="ru"
-                                >Почему иногда не приходят уведомления, когда
-                                приложение закрыто?</span
-                            >
+                            <span data-i18n="faq.messages.q5">Why don't notifications arrive when the app is closed?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Notifications are delivered through Apple Push
-                                Notification Service (APNs). A stable internet
-                                connection is required. If the phone is in
-                                airplane mode, behind a VPN with aggressive
-                                filtering, or Apple decided the push was "low
-                                priority" — the notification may be delayed or
-                                not arrive at all. When the app opens again,
-                                messages sync automatically.
-                            </p>
-                            <p class="ru">
-                                Уведомления доставляются через Apple Push
-                                Notification Service (APNs). Нужно стабильное
-                                интернет-соединение. Если телефон в авиарежиме,
-                                за VPN с агрессивной фильтрацией или Apple сочла
-                                пуш «низкоприоритетным» — уведомление может
-                                прийти с задержкой или не прийти вообще. Когда
-                                приложение снова откроется, сообщения подтянутся
-                                автоматически.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.messages.p6">Notifications are delivered through Apple Push Notification Service (APNs). A stable internet connection is required. If the phone is in airplane mode, behind a VPN with aggressive filtering, or Apple decided the push was "low priority" — the notification may be delayed or not arrive at all. When the app opens again, messages sync automatically.</p>
+                            </div>
                     </details>
                 </section>
 
@@ -1087,79 +680,35 @@
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en">What is VEIL?</span>
-                            <span class="ru">Что такое VEIL?</span>
+                            <span data-i18n="faq.veil.q1">What is VEIL?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                VEIL — Variable Encoded Interface Layer. In
-                                Konstruct, VEIL serves two roles: (1) a
-                                transport layer that disguises messenger traffic
-                                as ordinary background noise, defeating DPI
-                                systems and censorship firewalls; (2) a relay
-                                tier — when a direct connection to the main
-                                server is unavailable, VEIL relay nodes can
-                                route traffic. Even if packets are intercepted,
-                                they look like random data, not messenger
-                                traffic.
-                            </p>
-                            <p class="ru">
-                                VEIL — Уровень вариативного шифрования,
-                                (Variable Encoded Interface Layer). В Конструкте
-                                VEIL выполняет две роли: (1) транспортный
-                                уровень, который маскирует трафик мессенджера
-                                под обычный информационный шум, обходя DPI и
-                                цензурные фаерволы; (2) уровень ретрансляции —
-                                когда прямое соединение с основным сервером
-                                недоступно, VEIL relay-ноды могут
-                                маршрутизировать трафик. Даже если кто-то
-                                перехватит пакеты, они выглядят как случайные
-                                данные, а не трафик мессенджера.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.veil.p2">VEIL — Variable Encoded Interface Layer. In Konstruct, VEIL serves two roles: (1) a transport layer that disguises messenger traffic as ordinary background noise, defeating DPI systems and censorship firewalls; (2) a relay tier — when a direct connection to the main server is unavailable, VEIL relay nodes can route traffic. Even if packets are intercepted, they look like random data, not messenger traffic.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Is VEIL always on or only during blocks?</span
-                            >
-                            <span class="ru"
-                                >VEIL работает всегда или только при
-                                блокировках?</span
-                            >
+                            <span data-i18n="faq.veil.q3">Is VEIL always on or only during blocks?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                It's configurable. Under normal conditions you
-                                can use a direct connection — it's faster. VEIL
-                                activates automatically or manually when a
-                                direct connection is unavailable or undesirable.
-                                Today VEIL's obfs4/WebTunnel transport is
-                                deployed but currently throttled by active DPI
-                                in some regions; a replacement —
-                                <em>veil-front</em> — is implemented and
-                                validated on real devices, with public rollout
-                                in progress.
-                            </p>
-                            <p class="ru">
-                                Это настраиваемо. В обычных условиях можно
-                                использовать прямое соединение — оно быстрее.
-                                VEIL включается автоматически или вручную когда
-                                прямое соединение недоступно или нежелательно.
-                                Сегодня транспорт VEIL на основе obfs4/WebTunnel
-                                развёрнут, но сейчас режется активным DPI в ряде
-                                регионов; замена — <em>veil-front</em> —
-                                реализована и провалидирована на реальных
-                                устройствах, публичная раскатка в процессе.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.veil.p4">It's configurable. Under normal conditions you
+ can use a direct connection — it's faster. VEIL
+ activates automatically or manually when a
+ direct connection is unavailable or undesirable.
+ Today VEIL's obfs4/WebTunnel transport is
+ deployed but currently throttled by active DPI
+ in some regions; a replacement —
+ <em>veil-front</em> — is implemented and
+ validated on real devices, with public rollout
+ in progress.</p>
+                            </div>
                     </details>
                 </section>
 
@@ -1169,146 +718,64 @@
                     aria-labelledby="section-resilience"
                 >
                     <h2 id="section-resilience">
-                        <span class="en"
-                            >Network Resilience &amp; Sustainability</span
-                        >
-                        <span class="ru"
-                            >Устойчивость сети и жизнеспособность</span
-                        >
-                    </h2>
+                        <span data-i18n="faq.resilience.network-resilience-amp-sustainability">Network Resilience & Sustainability</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What happens if Konstruct's servers go
-                                offline?</span
-                            >
-                            <span class="ru"
-                                >Что будет если серверы Конструкта
-                                отключатся?</span
-                            >
+                            <span data-i18n="faq.resilience.q2">What happens if Konstruct's servers go offline?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                <em
-                                    >Today: alpha runs on a single trusted
-                                    server — if it goes offline, messaging stops
-                                    until it returns.</em
-                                >
-                                The target architecture is three tiers of
-                                graceful degradation:
-                                <strong>federated servers</strong> (planned 2027
-                                — anyone can run one, so even if the founding
-                                team's server goes down, community servers
-                                continue);
-                                <strong>VEIL relay nodes</strong> (planned —
-                                lightweight relay nodes that route messages
-                                without storing anything, designed to run on
-                                hardware as small as a Raspberry Pi);
-                                <strong>direct P2P</strong> (planned — when both
-                                users are online simultaneously, messages will
-                                travel directly between devices over QUIC/VEIL
-                                with no server involved). Once all three tiers
-                                ship, two users will be able to communicate as
-                                long as they have internet access, regardless of
-                                central infrastructure.
-                            </p>
-                            <p class="ru">
-                                <em
-                                    >Сегодня: alpha работает на одном доверенном
-                                    сервере — если он уйдёт оффлайн, обмен
-                                    сообщениями остановится до его
-                                    возвращения.</em
-                                >
-                                Целевая архитектура — три уровня плавной
-                                деградации:
-                                <strong>федеративные серверы</strong> (план 2027
-                                — любой сможет запустить свой, и даже если
-                                сервер основной команды упадёт, серверы
-                                сообщества продолжат работу);
-                                <strong>VEIL relay-ноды</strong> (план — лёгкие
-                                ретрансляторы без хранения данных, рассчитанные
-                                на железо уровня Raspberry Pi);
-                                <strong>прямой P2P</strong> (план — когда оба
-                                пользователя онлайн одновременно, сообщения
-                                будут идти напрямую между устройствами по
-                                QUIC/VEIL без участия сервера). После релиза
-                                всех трёх уровней два пользователя смогут
-                                общаться пока есть интернет — независимо от
-                                центральной инфраструктуры.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.resilience.p3"><em
+ >Today: alpha runs on a single trusted
+ server — if it goes offline, messaging stops
+ until it returns.</em
+ >
+ The target architecture is three tiers of
+ graceful degradation:
+ <strong>federated servers</strong> (planned 2027
+ — anyone can run one, so even if the founding
+ team's server goes down, community servers
+ continue);
+ <strong>VEIL relay nodes</strong> (planned —
+ lightweight relay nodes that route messages
+ without storing anything, designed to run on
+ hardware as small as a Raspberry Pi);
+ <strong>direct P2P</strong> (planned — when both
+ users are online simultaneously, messages will
+ travel directly between devices over QUIC/VEIL
+ with no server involved). Once all three tiers
+ ship, two users will be able to communicate as
+ long as they have internet access, regardless of
+ central infrastructure.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Will basic messaging always be free?</span
-                            >
-                            <span class="ru"
-                                >Базовый мессенджинг всегда будет
-                                бесплатным?</span
-                            >
+                            <span data-i18n="faq.resilience.q4">Will basic messaging always be free?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Yes — unconditionally. Sending messages,
-                                receiving messages, E2EE, and all security
-                                features will never go behind a paywall.
-                                Donation-only models have historically proved
-                                fragile for privacy projects, so Konstruct plans
-                                a mix: voluntary donations, optional premium
-                                features (larger file transfers, extended
-                                history, custom themes — never security
-                                features), and B2B hosted instances for
-                                organizations. The core will always be free.
-                            </p>
-                            <p class="ru">
-                                Да — безусловно. Отправка сообщений, получение
-                                сообщений, E2EE и все функции безопасности
-                                никогда не окажутся за платным барьером. Модель
-                                только на донатах исторически оказалась хрупкой
-                                для privacy-проектов, поэтому Конструкт
-                                планирует комбинацию: добровольные
-                                пожертвования, опциональные premium-функции
-                                (большие файлы, расширенная история, темы —
-                                никогда функции безопасности) и B2B-хостинг для
-                                организаций. Ядро всегда будет бесплатным.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.resilience.p5">Yes — unconditionally. Sending messages, receiving messages, E2EE, and all security features will never go behind a paywall. Donation-only models have historically proved fragile for privacy projects, so Konstruct plans a mix: voluntary donations, optional premium features (larger file transfers, extended history, custom themes — never security features), and B2B hosted instances for organizations. The core will always be free.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >How is Konstruct funded? Can I donate?</span
-                            >
-                            <span class="ru"
-                                >На что живёт Konstruct? Можно задонатить?</span
-                            >
+                            <span data-i18n="faq.resilience.q6">How is Konstruct funded? Can I donate?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                No ads, no data resale, no telemetry — the flip
-                                side is that Konstruct runs on voluntary
-                                donations. They go directly to development and
-                                the server. Prefer
-                                <strong>Monero (XMR)</strong> if you care about
-                                privacy — unlike Bitcoin its chain isn't public.
-                                Always cross-check an address against the
-                                project repository before sending, in case a
-                                page is tampered with.
-                            </p>
-                            <ul class="en">
+                            <p data-i18n-html="faq.resilience.donate.p">No ads, no data resale, no telemetry — the flip side is that Konstruct runs on voluntary donations. They go directly to development and the server. Prefer <strong>Monero (XMR)</strong> if you care about privacy — unlike Bitcoin its chain isn't public. Always cross-check an address against the project repository before sending, in case a page is tampered with.</p>
+                            <ul data-i18n-html="faq.resilience.donate.list">
                                 <li>
                                     <strong>Monero (XMR)</strong> —
                                     recommended:<br />
@@ -1334,187 +801,68 @@
                                     >
                                 </li>
                             </ul>
-                            <p class="ru">
-                                Без рекламы, без перепродажи данных, без
-                                телеметрии — обратная сторона в том, что
-                                Konstruct живёт на добровольных донатах. Они
-                                идут напрямую на разработку и сервер. Если
-                                ценишь приватность — предпочти
-                                <strong>Monero (XMR)</strong>, в отличие от
-                                биткоина его цепочка не публична. Перед
-                                отправкой всегда сверяй адрес с репозиторием
-                                проекта на случай подмены страницы.
-                            </p>
-                            <ul class="ru">
-                                <li>
-                                    <strong>Monero (XMR)</strong> —
-                                    рекомендуется:<br />
-                                    <code style="word-break: break-all"
-                                        >496i5qvPzRtJPQjiPXnLvEGutjHFth4pWDQaJwbbMreyaTYg4qfbo48MXrTnYH32MHiAn5GcSEN1c48EYBvVkrx9Pi5BWvn</code
-                                    >
-                                </li>
-                                <li>
-                                    <strong>Bitcoin (BTC)</strong>:<br />
-                                    <code style="word-break: break-all"
-                                        >bc1q5cthgu6k9utg9hk2mx2xshdtsrhvu54ysmqhmm</code
-                                    >
-                                </li>
-                                <li>
-                                    <strong>Ko-fi</strong> — удобно, но не
-                                    приватно: платёжный сервис знает, кто ты:<br />
-                                    <a
-                                        href="https://ko-fi.com/construct_msg"
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                        >ko-fi.com/construct_msg</a
-                                    >
-                                </li>
-                            </ul>
                         </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What is P2P mode and when does it
-                                activate?</span
-                            >
-                            <span class="ru"
-                                >Что такое P2P-режим и когда он
-                                активируется?</span
-                            >
+                            <span data-i18n="faq.resilience.q7">What is P2P mode and when does it activate?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                <em
-                                    >P2P mode is planned, not yet implemented —
-                                    all traffic currently goes through the
-                                    central server.</em
-                                >
-                                The target design: when both users are
-                                simultaneously online and connected to a
-                                Konstruct server, the server will signal them to
-                                upgrade to a direct peer-to-peer QUIC/VEIL
-                                connection. Once established, the server exits
-                                the message relay path — traffic flows directly
-                                between devices. If either user goes offline,
-                                the server automatically resumes relaying. The
-                                encryption (Signal Protocol) is identical in
-                                both modes — the server was never able to read
-                                message content either way. P2P is planned for
-                                desktop clients first (always-on connection);
-                                mobile clients will support short P2P bursts
-                                when both have the app open.
-                            </p>
-                            <p class="ru">
-                                <em
-                                    >P2P-режим запланирован, но пока не
-                                    реализован — весь трафик сейчас идёт через
-                                    центральный сервер.</em
-                                >
-                                Целевой дизайн: когда оба пользователя
-                                одновременно онлайн и подключены к
-                                Конструкт-серверу, сервер подаст им сигнал для
-                                установки прямого P2P-соединения по QUIC/VEIL.
-                                После установки сервер выходит из цепочки
-                                ретрансляции — трафик идёт напрямую между
-                                устройствами. Если кто-то из пользователей уйдёт
-                                оффлайн, сервер автоматически возобновит
-                                ретрансляцию. Шифрование (Signal Protocol)
-                                одинаково в обоих режимах — сервер всё равно
-                                никогда не мог прочитать содержимое сообщений.
-                                P2P планируется сначала для десктоп-клиентов
-                                (постоянное подключение); мобильные клиенты
-                                будут поддерживать короткие P2P-сессии когда оба
-                                держат приложение открытым.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.resilience.p8"><em
+ >P2P mode is planned, not yet implemented —
+ all traffic currently goes through the
+ central server.</em
+ >
+ The target design: when both users are
+ simultaneously online and connected to a
+ Konstruct server, the server will signal them to
+ upgrade to a direct peer-to-peer QUIC/VEIL
+ connection. Once established, the server exits
+ the message relay path — traffic flows directly
+ between devices. If either user goes offline,
+ the server automatically resumes relaying. The
+ encryption (Signal Protocol) is identical in
+ both modes — the server was never able to read
+ message content either way. P2P is planned for
+ desktop clients first (always-on connection);
+ mobile clients will support short P2P bursts
+ when both have the app open.</p>
+                            </div>
                     </details>
                 </section>
 
                 <!-- ── Section 8: Security & Protection ──────────────────── -->
                 <section class="faq-section" aria-labelledby="section-security">
                     <h2 id="section-security">
-                        <span class="en">Security &amp; Protection</span>
-                        <span class="ru">Безопасность и защита</span>
-                    </h2>
+                        <span data-i18n="faq.security.security-amp-protection">Security & Protection</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What if strangers start mass-messaging
-                                me?</span
-                            >
-                            <span class="ru"
-                                >Что если мне начнут массово писать незнакомые
-                                люди?</span
-                            >
+                            <span data-i18n="faq.security.q2">What if strangers start mass-messaging me?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                For this, the app has Lockdown Mode. When
-                                enabled, notifications only come from people who
-                                were in your contacts at activation time.
-                                Messages from new senders are still saved — they
-                                just won't disturb you. Useful if you're a
-                                public figure and want to temporarily close off
-                                from new contacts.
-                            </p>
-                            <p class="ru">
-                                Для этого в приложении есть режим Lockdown.
-                                Когда он включён, уведомления и оповещения
-                                приходят только от людей, которые были у тебя в
-                                контактах на момент его активации. Сообщения от
-                                новых отправителей всё равно сохраняются — они
-                                просто не будут тебя тревожить. Режим полезен,
-                                если ты публичный человек и хочешь временно
-                                закрыться от новых контактов.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.security.p3">For this, the app has Lockdown Mode. When enabled, notifications only come from people who were in your contacts at activation time. Messages from new senders are still saved — they just won't disturb you. Useful if you're a public figure and want to temporarily close off from new contacts.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What if one person starts spamming hundreds of
-                                messages?</span
-                            >
-                            <span class="ru"
-                                >А если один конкретный человек начнёт спамить
-                                сотнями сообщений?</span
-                            >
+                            <span data-i18n="faq.security.q4">What if one person starts spamming hundreds of messages?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                If a suspiciously high number of messages
-                                arrives from a single sender in a short time
-                                (more than ~10 in 30 seconds), the client
-                                automatically shows a warning and mutes
-                                notifications from them. You can then allow them
-                                (if it was a glitch) or block them. Importantly:
-                                this is receiver-side protection and works
-                                regardless of what client the attacker uses.
-                            </p>
-                            <p class="ru">
-                                Если от одного отправителя приходит
-                                подозрительно много сообщений за короткое время
-                                (больше ~10 за 30 секунд), клиент автоматически
-                                покажет предупреждение и заглушит уведомления от
-                                него. Ты сможешь либо разрешить его, либо
-                                заблокировать. Важно: это защита на стороне
-                                получателя и работает независимо от того, каким
-                                клиентом пользуется отправитель.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.security.p5">If a suspiciously high number of messages arrives from a single sender in a short time (more than ~10 in 30 seconds), the client automatically shows a warning and mutes notifications from them. You can then allow them (if it was a glitch) or block them. Importantly: this is receiver-side protection and works regardless of what client the attacker uses.</p>
+                            </div>
                     </details>
                 </section>
 
@@ -1524,144 +872,60 @@
                     aria-labelledby="section-technical"
                 >
                     <h2 id="section-technical">
-                        <span class="en">Technical</span>
-                        <span class="ru">Технические вопросы</span>
-                    </h2>
+                        <span data-i18n="faq.technical.technical">Technical</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What is a "session" and why does it sometimes
-                                "break"?</span
-                            >
-                            <span class="ru"
-                                >Что такое «сессия» и почему она иногда
-                                «ломается»?</span
-                            >
+                            <span data-i18n="faq.technical.q2">What is a "session" and why does it sometimes "break"?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                A session is an established encrypted channel
-                                between two devices. It's built on one-time keys
-                                that can't be reused, and keys rotate with every
-                                message. If the app was inactive for a long
-                                time, the device was reinstalled, or state
-                                desynchronization occurred — the session may
-                                stop decrypting incoming messages. In this case,
-                                automatic session healing kicks in: the app
-                                renegotiates keys and restores the channel in
-                                the background. Usually the user notices nothing
-                                — messages just start arriving again.
-                            </p>
-                            <p class="ru">
-                                Сессия — это установленный зашифрованный канал
-                                между двумя устройствами. Она строится на
-                                одноразовых ключах, которые нельзя
-                                переиспользовать, и ключи вращаются с каждым
-                                сообщением. Если приложение долго не работало,
-                                устройство переустановили или произошла
-                                десинхронизация — сессия может перестать
-                                расшифровывать входящие сообщения. В этом случае
-                                запускается автоматическое «лечение» (session
-                                healing): приложение пересогласует ключи и
-                                восстанавливает канал в фоне. Пользователь, как
-                                правило, ничего не замечает.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.technical.p3">A session is an established encrypted channel between two devices. It's built on one-time keys that can't be reused, and keys rotate with every message. If the app was inactive for a long time, the device was reinstalled, or state desynchronization occurred — the session may stop decrypting incoming messages. In this case, automatic session healing kicks in: the app renegotiates keys and restores the channel in the background. Usually the user notices nothing — messages just start arriving again.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Is multiple-device support available?</span
-                            >
-                            <span class="ru"
-                                >Поддерживается ли несколько устройств?</span
-                            >
+                            <span data-i18n="faq.technical.q4">Is multiple-device support available?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Sync between multiple devices (phone + desktop)
-                                is in development. The desktop app exists as a
-                                prototype. Since identity is tied to keys rather
-                                than a server account, multi-device support
-                                requires a separate key-binding mechanism —
-                                we're working on it.
-                            </p>
-                            <p class="ru">
-                                Синхронизация между несколькими устройствами
-                                (телефон + десктоп) находится в разработке.
-                                Десктоп-приложение существует как прототип.
-                                Поскольку идентичность привязана к ключам, а не
-                                к аккаунту на сервере, многоустройственность
-                                требует отдельного механизма привязки ключей —
-                                над этим работаем.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.technical.p5">Sync between multiple devices (phone + desktop) is in development. The desktop app exists as a prototype. Since identity is tied to keys rather than a server account, multi-device support requires a separate key-binding mechanism — we're working on it.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >What transport does Konstruct use for live
-                                messages?</span
-                            >
-                            <span class="ru"
-                                >Какой транспорт у Конструкта для
-                                live-сообщений?</span
-                            >
+                            <span data-i18n="faq.technical.q6">What transport does Konstruct use for live messages?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                Live messaging is a
-                                <strong
-                                    >gRPC bidirectional MessageStream</strong
-                                >
-                                — one long-lived stream for heartbeats, inbound
-                                messages, and delivery receipts — not
-                                request/response polling. On current iOS builds
-                                the production path is
-                                <strong>QUIC</strong> (ConstructEngine); if QUIC
-                                is blocked or the handshake fails, the client
-                                falls back to
-                                <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong>
-                                automatically. End-to-end encryption is
-                                independent of the transport: the wire only
-                                carries sealed ciphertext. That combination
-                                (modern gRPC bidi + QUIC) is uncommon among
-                                consumer privacy messengers, which typically use
-                                REST/JSON or proprietary TCP stacks.
-                            </p>
-                            <p class="ru">
-                                Live-сообщения идут по
-                                <strong
-                                    >двунаправленному gRPC MessageStream</strong
-                                >
-                                — один долгоживущий поток для heartbeat’ов,
-                                входящих сообщений и receipt’ов, без
-                                request/response polling. На актуальных iOS
-                                сборках боевой путь —
-                                <strong>QUIC</strong> (ConstructEngine); если
-                                QUIC режется или handshake не успевает, клиент
-                                автоматически падает на
-                                <strong
-                                    >gRPC поверх HTTP/2 + TLS&nbsp;1.3</strong
-                                >. Сквозное шифрование не зависит от транспорта:
-                                по проводу едет только sealed ciphertext. Такая
-                                связка (современный gRPC bidi + QUIC) редко
-                                встречается у consumer-приватных мессенджеров —
-                                обычно REST/JSON или закрытый TCP-стек.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.technical.p7">Live messaging is a
+ <strong
+ >gRPC bidirectional MessageStream</strong
+ >
+ — one long-lived stream for heartbeats, inbound
+ messages, and delivery receipts — not
+ request/response polling. On current iOS builds
+ the production path is
+ <strong>QUIC</strong> (ConstructEngine); if QUIC
+ is blocked or the handshake fails, the client
+ falls back to
+ <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong>
+ automatically. End-to-end encryption is
+ independent of the transport: the wire only
+ carries sealed ciphertext. That combination
+ (modern gRPC bidi + QUIC) is uncommon among
+ consumer privacy messengers, which typically use
+ REST/JSON or proprietary TCP stacks.</p>
+                            </div>
                     </details>
                 </section>
 
@@ -1671,145 +935,70 @@
                     aria-labelledby="section-testers"
                 >
                     <h2 id="section-testers">
-                        <span class="en">For Testers</span>
-                        <span class="ru">Для тестировщиков</span>
-                    </h2>
+                        <span data-i18n="faq.testers.for-testers">For Testers</span>
+                        </h2>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en">What to check first?</span>
-                            <span class="ru"
-                                >Что проверять в первую очередь?</span
-                            >
+                            <span data-i18n="faq.testers.q2">What to check first?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <ul class="en">
-                                <li>
-                                    Registration and adding a contact via QR
-                                    code
-                                </li>
-                                <li>
-                                    Sending and receiving messages (both
-                                    directions)
-                                </li>
-                                <li>
-                                    Delivery statuses — do "delivered" and
-                                    "read" appear?
-                                </li>
-                                <li>
-                                    Message editing — does the recipient see the
-                                    changes?
-                                </li>
-                                <li>Notifications with the app backgrounded</li>
-                                <li>
-                                    Behavior with poor connectivity (airplane
-                                    mode → restore)
-                                </li>
-                                <li>
-                                    Conversation recovery after app reinstall
-                                </li>
-                            </ul>
-                            <ul class="ru">
-                                <li>
-                                    Регистрация и добавление контакта через
-                                    QR-код
-                                </li>
-                                <li>
-                                    Отправка и получение сообщений (туда и
-                                    обратно)
-                                </li>
-                                <li>
-                                    Статусы доставки — появляются ли
-                                    «доставлено» и «прочитано»?
-                                </li>
-                                <li>
-                                    Редактирование сообщений — видит ли
-                                    получатель изменения?
-                                </li>
-                                <li>Уведомления при свёрнутом приложении</li>
-                                <li>
-                                    Поведение при плохом соединении (авиарежим →
-                                    обратно)
-                                </li>
-                                <li>
-                                    Восстановление переписки после переустановки
-                                    приложения
-                                </li>
-                            </ul>
-                        </div>
+                            <ul data-i18n-html="faq.testers.list3"><li>
+ Registration and adding a contact via QR
+ code
+ </li><li>
+ Sending and receiving messages (both
+ directions)
+ </li><li>
+ Delivery statuses — do "delivered" and
+ "read" appear?
+ </li><li>
+ Message editing — does the recipient see the
+ changes?
+ </li><li>Notifications with the app backgrounded</li><li>
+ Behavior with poor connectivity (airplane
+ mode → restore)
+ </li><li>
+ Conversation recovery after app reinstall
+ </li></ul>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en">How to report a bug?</span>
-                            <span class="ru">Как сообщить о баге?</span>
+                            <span data-i18n="faq.testers.q4">How to report a bug?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                In diagnostic (internal) builds you can attach
-                                logs from Settings → "Debug" → "Export Logs".
-                                Note that public/production builds keep
-                                <strong>no logs</strong> and have no debug
-                                screen by design — if your build doesn't show
-                                the option, just describe the scenario and we'll
-                                get a diagnostic build to you. The more precise
-                                the description (what you did, what you
-                                expected, what happened), the faster we can
-                                investigate. For a session issue, include logs
-                                from both devices.
-                            </p>
-                            <p class="ru">
-                                В диагностических (внутренних) сборках логи
-                                можно приложить из Настройки → «Отладка» →
-                                «Экспорт логов». Учти: публичные/релизные сборки
-                                <strong>логов не хранят</strong> и не имеют
-                                экрана отладки — это специально; если в твоей
-                                сборке опции нет, просто опиши сценарий, и мы
-                                дадим тебе диагностическую сборку. Чем точнее
-                                описание (что делал, что ожидал, что произошло),
-                                тем быстрее разберёмся. Если проблема с сессией
-                                — логи с обоих устройств.
-                            </p>
-                        </div>
+                            <p data-i18n-html="faq.testers.p5">In diagnostic (internal) builds you can attach
+ logs from Settings → "Debug" → "Export Logs".
+ Note that public/production builds keep
+ <strong>no logs</strong> and have no debug
+ screen by design — if your build doesn't show
+ the option, just describe the scenario and we'll
+ get a diagnostic build to you. The more precise
+ the description (what you did, what you
+ expected, what happened), the faster we can
+ investigate. For a session issue, include logs
+ from both devices.</p>
+                            </div>
                     </details>
 
                     <details class="faq-item">
                         <summary>
-                            <span class="en"
-                                >Why are there so many repeated lines in the
-                                logs?</span
-                            >
-                            <span class="ru"
-                                >Почему в логах так много повторяющихся
-                                строк?</span
-                            >
+                            <span data-i18n="faq.testers.q6">Why are there so many repeated lines in the logs?</span>
                             <span class="faq-chevron" aria-hidden="true"
                                 >▸</span
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p class="en">
-                                In debug builds, some components intentionally
-                                log on every UI update — this is normal for
-                                development. Lines like "🔄 FRC updated: N
-                                recent + 0 historic" indicate chat list
-                                refreshes and don't indicate a problem.
-                            </p>
-                            <p class="ru">
-                                В отладочной сборке некоторые компоненты
-                                намеренно пишут в лог при каждом обновлении UI —
-                                это нормально для разработки. Строки вида «🔄
-                                FRC updated: N recent + 0 historic» означают
-                                обновление списка сообщений в интерфейсе и не
-                                указывают на проблему.
-                            </p>
-                        </div>
+                            <p data-i18n="faq.testers.p7">In debug builds, some components intentionally log on every UI update — this is normal for development. Lines like "🔄 FRC updated: N recent + 0 historic" indicate chat list refreshes and don't indicate a problem.</p>
+                            </div>
                     </details>
                 </section>
 
@@ -1817,29 +1006,14 @@
                 <section class="demo-section" aria-labelledby="demo-title">
                     <div class="demo-card">
                         <h2 id="demo-title">
-                            <span class="en">Want to see it in action?</span>
-                            <span class="ru"
-                                >Хочешь посмотреть как это работает?</span
-                            >
-                        </h2>
+                            <span data-i18n="faq.demo-title.want-to-see-it-in-action">Want to see it in action?</span>
+                            </h2>
                         <p>
-                            <span class="en"
-                                >An interactive cryptography demo shows how key
-                                exchange, Double Ratchet, and post-quantum
-                                algorithms work step by step. Available for
-                                testers and the curious.</span
-                            >
-                            <span class="ru"
-                                >Интерактивное демо криптографии показывает
-                                пошагово как работает обмен ключами, Double
-                                Ratchet и постквантовые алгоритмы. Доступно для
-                                тестировщиков и любопытных.</span
-                            >
-                        </p>
+                            <span data-i18n="faq.demo-title.t2">An interactive cryptography demo shows how key exchange, Double Ratchet, and post-quantum algorithms work step by step. Available for testers and the curious.</span>
+                            </p>
                         <a href="/crypto" class="demo-btn">
-                            <span class="en">Open Cryptography Demo →</span>
-                            <span class="ru">Открыть демо криптографии →</span>
-                        </a>
+                            <span data-i18n="faq.demo-title.open-cryptography-demo">Open Cryptography Demo →</span>
+                            </a>
                     </div>
                 </section>
             </div>
@@ -1850,16 +1024,14 @@
             <div class="container">
                 <p>
                     <a href="/">
-                        <span class="en">← Back to home</span>
-                        <span class="ru">← На главную</span>
-                    </a>
+                        <span data-i18n="faq.demo-title.back-to-home">← Back to home</span>
+                        </a>
                 </p>
                 <p>
                     © 2026 Konstruct ·
                     <a href="/privacy">
-                        <span class="en">Privacy Policy</span>
-                        <span class="ru">Политика конфиденциальности</span>
-                    </a>
+                        <span data-i18n="faq.demo-title.privacy-policy">Privacy Policy</span>
+                        </a>
                 </p>
             </div>
         </footer>
