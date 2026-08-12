@@ -16,7 +16,7 @@
         </title>
         <meta
             name="description"
-            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, continuous post-quantum ratchet (ML-KEM-768), gRPC over QUIC. No phone number, no email, no required username."
+            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, post-quantum key agreement (ML-KEM-768, PQXDH), gRPC over QUIC. No phone number, no email, no required username."
         />
         <meta
             name="keywords"
@@ -212,7 +212,7 @@
                 </h1>
                 <p>
                     <span data-i18n="home.t4"
-                        >Identity is a construct — not a phone number in someone else's database. Konstruct is an open-source encrypted messenger built on the Signal Protocol design (X3DH + Double Ratchet), extended with a continuous post-quantum ratchet (ML-KEM-768). No phone number, no email, no required username.</span
+                        >Identity is a construct — not a phone number in someone else's database. Konstruct is an open-source encrypted messenger built on the Signal Protocol design (X3DH + Double Ratchet), extended with post-quantum key agreement (ML-KEM-768). No phone number, no email, no required username.</span
                     >
                     </p>
 
@@ -294,7 +294,7 @@
                         <span data-i18n-html="home.about.t8"><strong>5. Post-quantum readiness.</strong> "Capture now, decrypt later" is an active threat model, so post-quantum key material has to enter the protocol before the machines exist — not after.</span>
                         </p>
                     <p>
-                        <span data-i18n-html="home.about.t9">Konstruct implements these principles using the <strong>Signal Protocol</strong> design (X3DH handshake + Double Ratchet) — the same end-to-end encryption design that powers Signal and WhatsApp — implemented from scratch in Rust. We extend it with a continuous <strong>ML-KEM-768</strong> ratchet (NIST FIPS&nbsp;203), so a recorded conversation keeps acquiring fresh post-quantum secrets rather than resting on a single exchange.</span>
+                        <span data-i18n-html="home.about.t9">Konstruct implements these principles using the <strong>Signal Protocol</strong> design (X3DH handshake + Double Ratchet) — the same end-to-end encryption design that powers Signal and WhatsApp — implemented from scratch in Rust. We extend it with post-quantum key agreement (<strong>ML-KEM-768</strong>, NIST FIPS&nbsp;203) at session setup, and a continuous ML-KEM ratchet during the session, so traffic recorded today stays protected once cryptographically relevant quantum computers exist.</span>
                         </p>
                     <p>
                         <span data-i18n-html="home.about.t10">Unlike centralized platforms, Konstruct is designed
@@ -437,7 +437,7 @@
  post-compromise security (self-healing).</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum ratchet:</strong> <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203) runs continuously inside the Double Ratchet, next to the classical X25519 ratchet — a conversation keeps deriving fresh post-quantum secrets as it goes, instead of once at setup. It is negotiated per conversation and engages when both devices support it. The X3DH handshake itself is classical today (X25519 + Ed25519).</span>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-768</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey and mixes it into the ratchet root, so a recorded session is not recoverable by breaking X25519 alone. The very first message is classical-only by design; the post-quantum secret applies from the second message onward. On top of that, sessions that negotiate it run a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t6"><strong
@@ -516,7 +516,7 @@
  messages stay secure even if keys leak.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.features.t4"><strong>Post-quantum ratchet</strong> — <strong>ML-KEM-768</strong> (Kyber-768) re-keys continuously inside the Double Ratchet, negotiated per conversation. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up. The X3DH handshake is classical today.</span>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-768</strong> (Kyber-768) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH), and sessions that negotiate it also re-key continuously inside the Double Ratchet. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.features.t5"><strong>Federation</strong> — run your own
@@ -701,7 +701,7 @@
                             "
                         >
                             <span data-i18n-html="home.comparison.t9"
-                                >* Telegram E2EE only in "Secret Chats", not default.<br /> † Session also requires no phone number — that is its main pitch. Session V1 still uses static long-term keys with <em>no forward secrecy or post-compromise security</em>.<br /> ‡ Konstruct's post-quantum KEM (ML-KEM-768) is deployed as a continuous ratchet, negotiated per conversation; the X3DH handshake is classical today. Hybrid PQ signatures (ML-DSA-65) have working crypto and server-side verification — client rotation orchestration is still in progress.<br /> Live messaging uses a gRPC bidirectional stream on QUIC (HTTP/2 fallback).</span
+                                >* Telegram E2EE only in "Secret Chats", not default.<br /> † Session also requires no phone number — that is its main pitch. Session V1 still uses static long-term keys with <em>no forward secrecy or post-compromise security</em>.<br /> ‡ Konstruct's post-quantum key agreement (ML-KEM-768, PQXDH) is deployed and applies from the second message of a conversation; sessions that negotiate it additionally run a continuous ML-KEM ratchet. Hybrid PQ signatures (ML-DSA-65) have working crypto and server-side verification — client rotation orchestration is still in progress.<br /> Live messaging uses a gRPC bidirectional stream on QUIC (HTTP/2 fallback).</span
                             >
                             </p>
                     </div>
