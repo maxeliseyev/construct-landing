@@ -132,7 +132,6 @@
   "home.how-it-works.technical-architecture": "Technical Architecture",
   "home.how-it-works.transport-layer": "Transport Layer",
   "home.identity.authorship": "Always-on sealed sender removes the sender's identifier from the message's metadata. The recipient can reveal who wrote it; the server cannot.",
-  "home.identity.continuity": "<strong>Your continuity is distributed, not held.</strong> Social recovery (BIP39 / SLIP-39) is designed to reconstruct access from fragments you gave to people you chose, so getting back in does not depend on us keeping a copy of your keys <em>(in development — not shipped)</em>.",
   "home.identity.discovery": "With no address book there are no cold messages: a conversation starts from a QR code or an invite link — single-use and alive for five minutes. Search by username exists, is optional, and is off until you turn it on.",
   "home.identity.lead": "Every centralised platform starts from one assumption: “you” are a row in its database. A phone number, a profile, a contact graph that belongs to it and that it can hand over. Konstruct starts from less. The server holds an account identifier, your public keys and a push token, and about the message itself only its size and the time it arrived. Exactly what routing ciphertext requires.",
   "home.identity.limit": "Cryptography cannot make you unobservable. Timing and IP correlation remain visible on the wire, and a sufficiently resourced adversary works at that layer, not this one. Even so, no component of our system is designed to accumulate your data.",

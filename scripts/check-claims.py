@@ -433,6 +433,42 @@ if copy_says(r"video call|видеозвон|ビデオ通話"):
         "is how this got written the first time — wiring is not a feature.",
     )
 
+# ── Social recovery ──────────────────────────────────────────────────────────
+#
+# Two different features share a vocabulary, and only one of them exists.
+#
+#   seed phrase / backup export   SHIPPED — Settings ▸ Account ▸ Export Backup
+#                                 (ExportBackupView generates a mnemonic and
+#                                 writes a backup file). faq.registration.p7 may
+#                                 say so.
+#   social recovery, SLIP-39      NOT BUILT — access reassembled from shards
+#                                 handed to people you chose. Roadmap only.
+#
+# The home page described the second as design intent. It was not a false claim
+# — it carried "(in development — not shipped)" — and it was removed as an
+# editorial call: the site does not describe what does not exist. This check
+# keeps the distinction from eroding into "we have social recovery".
+
+# Checked per string, not across the corpus. Asking "does 'in progress' appear
+# anywhere?" is how the video check came out tautological — the roadmap always
+# contains it, so the answer is always yes and the assertion means nothing. The
+# marker has to be in the SAME string as the mention.
+SOCIAL = r"SLIP-?39|social recovery|социальн\w+ восстановлен"
+PLANNED = r"in progress|в работе|planned|roadmap|進行中|not shipped|не выпущено"
+
+stray = [ln for ln in COPY.splitlines()
+         if re.search(SOCIAL, ln, re.I) and not re.search(PLANNED, ln, re.I)]
+if re.search(SOCIAL, COPY, re.I):
+    check(
+        "social-recovery-marked-unbuilt",
+        not stray,
+        "Social recovery / SLIP-39 is described without a planned marker in the same "
+        "sentence. Sharded recovery is NOT built. What ships is a personal seed "
+        "phrase (Settings ▸ Account ▸ Export Backup, ExportBackupView) — a different "
+        "feature that happens to share the vocabulary. First offending line:\n       "
+        + (stray[0][:160] if stray else ""),
+    )
+
 # ── Roadmap honesty ──────────────────────────────────────────────────────────
 
 if copy_says(r"\bfederat"):
