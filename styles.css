@@ -583,6 +583,10 @@ section[aria-labelledby="features-heading"] ul li::before {
   font-size: 1rem;
   color: var(--fg);
   letter-spacing: -0.01em;
+  /* Same line-height as the links. Centring two boxes of different heights
+     centres the boxes, not the text baselines — matching them makes the row
+     exact rather than approximately right. */
+  line-height: 1;
 }
 .nav-logo:hover { color: var(--accent); }
 
@@ -611,6 +615,17 @@ section[aria-labelledby="features-heading"] ul li::before {
   scrollbar-width: none;
 }
 .nav-links::-webkit-scrollbar { display: none; }
+/* Base `li` carries margin-bottom: 1rem and `ul` a max-width of 760px — both
+   meant for prose lists. In a 56px bar the margin made the <ul> box 16px taller
+   than the logo's, so centring the boxes left the link text sitting ~8px above
+   it: the logo looked stuck to the bottom and the links to the top. */
+.nav-links {
+  max-width: none;
+}
+.nav-links li {
+  margin-bottom: 0;
+  line-height: 1;
+}
 .nav-links li::before { content: none; }
 .nav-links a {
   color: var(--fg-muted);
