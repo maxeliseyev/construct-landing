@@ -288,18 +288,18 @@ var I18N_CACHE_VER = "1c420bc35a";
     // there is one list of sections and one place to add to it.
     function wireBurger() {
         var burger = document.getElementById("navBurger");
-        var links = document.getElementById("navLinks");
-        if (!burger || !links) return;
+        var panel = document.getElementById("navPanel");
+        if (!burger || !panel) return;
 
         function setOpen(open) {
             burger.setAttribute("aria-expanded", open ? "true" : "false");
-            links.classList.toggle("is-open", open);
+            panel.classList.toggle("is-open", open);
             // Locking the body is what stops the page scrolling behind the panel;
             // without it a swipe moves the article under an opaque overlay and the
             // reader loses their place for no visible reason.
             document.body.classList.toggle("nav-open", open);
             if (open) {
-                var first = links.querySelector("a");
+                var first = panel.querySelector(".nav-links a");
                 if (first) first.focus();
             }
         }
@@ -311,8 +311,12 @@ var I18N_CACHE_VER = "1c420bc35a";
 
         // Following a link must close the panel: on a same-page anchor the browser
         // does not navigate, so an overlay left open would swallow the destination.
-        links.addEventListener("click", function (e) {
-            if (e.target.closest("a")) setOpen(false);
+        panel.addEventListener("click", function (e) {
+            // Only section links dismiss. The language control lives in here
+            // too, and closing the panel out from under its dropdown would
+            // make the language impossible to change on a phone.
+            if (e.target.closest(".nav-links a")) setOpen(false);
+            else e.stopPropagation();
         });
 
         document.addEventListener("keydown", function (e) {

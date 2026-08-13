@@ -22,8 +22,8 @@
             sizes="180x180"
             href="apple-touch-icon.png"
         />
-        <link rel="preload" href="styles.css?v=7c7ccf3955" as="style" />
-        <link rel="stylesheet" href="styles.css?v=7c7ccf3955" />
+        <link rel="preload" href="styles.css?v=3d4d02dc39" as="style" />
+        <link rel="stylesheet" href="styles.css?v=3d4d02dc39" />
 
         <style>
             .status-list { list-style: none; padding: 0; margin: 0; }
@@ -304,7 +304,8 @@
         <nav class="page-nav" aria-label="Site navigation">
             <div class="container">
                 <a href="/" class="nav-logo">Konstruct</a>
-                <ul class="nav-links" id="navLinks">
+                <div class="nav-panel" id="navPanel">
+                <ul class="nav-links">
                     <li><a href="/technical" data-i18n="nav.technical">Technical</a></li>
                     <li><a href="/roadmap" data-i18n="nav.roadmap">Roadmap</a></li>
                     <li><a href="/faq" data-i18n="nav.faq">FAQ</a></li>
@@ -352,12 +353,13 @@
                         </li>
                     </ul>
                 </div>
+                </div>
                 <button
                     type="button"
                     class="nav-burger"
                     id="navBurger"
                     aria-expanded="false"
-                    aria-controls="navLinks"
+                    aria-controls="navPanel"
                     aria-label="Menu"
                 >
                     <span></span><span></span><span></span>
@@ -943,6 +945,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=4735e449c0" defer></script>
+        <script src="/site.js?v=840fb1adae" defer></script>
     </body>
 </html>

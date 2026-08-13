@@ -595,6 +595,17 @@ section[aria-labelledby="features-heading"] ul li::before {
    worse than a link that has to be scrolled to. */
 .page-nav .lang-switcher { flex: 0 0 auto; }
 
+/* The wrapper exists for the mobile overlay: on a phone the language control has
+   to travel with the sections, and CSS cannot move an element inside a sibling.
+   On desktop it is a plain flex row, so the bar looks exactly as it did. */
+.nav-panel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 /* Section navigation. The home page used to carry the technical architecture,
    the feature list and the roadmap inline — roughly a third of its length, most
    of it addressed to a reader who had already decided. Those moved to /technical
@@ -674,18 +685,14 @@ section[aria-labelledby="features-heading"] ul li::before {
 
 @media (max-width: 640px) {
   .nav-burger { display: flex; }
+  /* Nothing else is left in the row, so the burger goes to the edge where a
+     thumb already rests instead of floating beside the wordmark. */
+  .nav-logo { margin-right: auto; }
 
-  /* At 320px the bar holds the wordmark, the language control and the burger.
-     "LANG::RU ▾" plus two 2rem gaps overflows that by ~35px, so the decorative
-     prefix goes and the gaps tighten. The control still reads as a language
-     picker — it shows RU/EN — it just stops announcing itself in a place with
-     no room for the announcement. */
-  .lang-trigger-prefix { display: none; }
-  .page-nav .container { gap: var(--space-sm); }
-
-  /* Same <ul> as the desktop bar, presented as a panel. One list, one place to
-     add a section — two copies of these links would be two places to forget one. */
-  .nav-links {
+  /* The whole panel — sections AND the language control — becomes the overlay.
+     With the bar down to a wordmark and a burger there is room for "LANG::"
+     again, so the prefix comes back inside the menu. */
+  .nav-panel {
     position: fixed;
     inset: 0;
     z-index: 90;
@@ -709,11 +716,24 @@ section[aria-labelledby="features-heading"] ul li::before {
     transform: translateY(8px);
     transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
   }
-  .nav-links.is-open {
+  .nav-panel.is-open {
     opacity: 1;
     visibility: visible;
     transform: none;
     transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s;
+  }
+  .nav-panel .nav-links {
+    display: flex;
+    flex-direction: column;
+    /* Undo the desktop row: it scrolls sideways and grows to fill, neither of
+       which makes sense stacked in a column. */
+    flex: 0 0 auto;
+    overflow: visible;
+    align-items: flex-end;
+    gap: var(--space-md, 1rem);
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
   }
   .nav-links a {
     display: block;
@@ -721,6 +741,8 @@ section[aria-labelledby="features-heading"] ul li::before {
     color: var(--fg);
     text-align: right;
   }
+  /* Sits under the sections, still in the thumb corner. */
+  .nav-panel .lang-switcher { margin-top: var(--space-lg); }
   /* The bar stays above the panel so the × and the logo remain reachable. */
   .page-nav { z-index: 100; }
   body.nav-open { overflow: hidden; }
