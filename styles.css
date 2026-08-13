@@ -639,11 +639,91 @@ section[aria-labelledby="features-heading"] ul li::before {
 /* Below ~640px the four links plus the logo and the language control do not fit
    on one 56px row. Hiding them would strand /technical and /roadmap on a phone,
    so the row scrolls instead — the links stay reachable, they just slide. */
+/* Burger. Hidden on desktop, where the links live in the bar. */
+.nav-burger {
+  display: none;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;                 /* full touch target, not the 18px of the glyph */
+  height: 44px;
+  padding: 0;
+  margin-right: -10px;         /* optical: the target is wider than the icon */
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.nav-burger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  margin-left: auto;
+  background: var(--fg);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+/* Open state turns the same control into the × that closes it, so the button a
+   thumb just pressed is the button that dismisses — no second target to find. */
+.nav-burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
 @media (max-width: 640px) {
+  .nav-burger { display: flex; }
+
+  /* At 320px the bar holds the wordmark, the language control and the burger.
+     "LANG::RU ▾" plus two 2rem gaps overflows that by ~35px, so the decorative
+     prefix goes and the gaps tighten. The control still reads as a language
+     picker — it shows RU/EN — it just stops announcing itself in a place with
+     no room for the announcement. */
+  .lang-trigger-prefix { display: none; }
+  .page-nav .container { gap: var(--space-sm); }
+
+  /* Same <ul> as the desktop bar, presented as a panel. One list, one place to
+     add a section — two copies of these links would be two places to forget one. */
   .nav-links {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    /* Bottom-right: a right thumb reaches the lower corner without regripping,
+       and the reference layout puts the list there for the same reason. */
+    justify-content: flex-end;
+    align-items: flex-end;
     gap: var(--space-md, 1rem);
-    font-size: 0.875rem;
+    margin: 0;
+    padding: 0 var(--space-lg, 2rem) calc(var(--space-2xl, 4rem) + env(safe-area-inset-bottom));
+    background: var(--bg);
+    font-size: 1.5rem;
+    overflow-y: auto;
+
+    /* Closed by default and inert: visibility (not just opacity) keeps the links
+       out of the tab order and away from screen readers while hidden. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
   }
+  .nav-links.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s;
+  }
+  .nav-links a {
+    display: block;
+    padding: var(--space-xs, 0.5rem) 0;
+    color: var(--fg);
+    text-align: right;
+  }
+  /* The bar stays above the panel so the × and the logo remain reachable. */
+  .page-nav { z-index: 100; }
+  body.nav-open { overflow: hidden; }
 }
 
 /* One sentence under the nav saying what the page is, so a visitor arriving from

@@ -280,6 +280,57 @@ var I18N_CACHE_VER = "1c420bc35a";
                 copyAddr(a);
             });
         });
+
+        wireBurger();
+    }
+
+    // Mobile section menu. The panel is the same <ul> the desktop bar shows, so
+    // there is one list of sections and one place to add to it.
+    function wireBurger() {
+        var burger = document.getElementById("navBurger");
+        var links = document.getElementById("navLinks");
+        if (!burger || !links) return;
+
+        function setOpen(open) {
+            burger.setAttribute("aria-expanded", open ? "true" : "false");
+            links.classList.toggle("is-open", open);
+            // Locking the body is what stops the page scrolling behind the panel;
+            // without it a swipe moves the article under an opaque overlay and the
+            // reader loses their place for no visible reason.
+            document.body.classList.toggle("nav-open", open);
+            if (open) {
+                var first = links.querySelector("a");
+                if (first) first.focus();
+            }
+        }
+
+        burger.addEventListener("click", function (e) {
+            e.stopPropagation();
+            setOpen(burger.getAttribute("aria-expanded") !== "true");
+        });
+
+        // Following a link must close the panel: on a same-page anchor the browser
+        // does not navigate, so an overlay left open would swallow the destination.
+        links.addEventListener("click", function (e) {
+            if (e.target.closest("a")) setOpen(false);
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && burger.getAttribute("aria-expanded") === "true") {
+                setOpen(false);
+                burger.focus();
+            }
+        });
+
+        // Resizing past the breakpoint leaves `is-open` on an element that is no
+        // longer a panel — the desktop bar would inherit a hidden state it has no
+        // control to undo.
+        var mq = window.matchMedia("(min-width: 641px)");
+        var onChange = function (ev) {
+            if (ev.matches) setOpen(false);
+        };
+        if (mq.addEventListener) mq.addEventListener("change", onChange);
+        else if (mq.addListener) mq.addListener(onChange);
     }
 
     // Sync chrome ASAP; dictionary apply is async.
