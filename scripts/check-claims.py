@@ -180,16 +180,56 @@ if copy_says(r"discovery is off|not discoverable|until you turn discovery on|п�
 
 # ── Invites ──────────────────────────────────────────────────────────────────
 
-if copy_says(r"expire in minutes|codes expire|истекают|期限"):
-    ok = None
-    if SERVER.exists():
-        t = read(SERVER / "identity-service/src/invite_core.rs")
-        ok = bool(t and re.search(r"unwrap_or\(300\)", t) and re.search(r"\(60\.\.=3600\)", t))
+# This check used to read `unwrap_or(300)` / `(60..=3600)` in invite_core.rs and
+# reported green while the site said five minutes and the apps had moved to twelve
+# hours. Those two numbers belong to `generate_invite` — a server-issued-token RPC
+# with no caller — not to the signed dynamic invite the site is describing. A check
+# pinned to the wrong constant is worse than none: it answers the question.
+#
+# The TTL a user experiences lives in two repositories, and this script is the only
+# place that has both checked out, so it is the only place the two can be compared.
+
+INVITE_TTL_SECONDS = None
+_ttl_sources: dict[str, int | None] = {}
+
+if IOS.exists():
+    t = read(IOS / "ConstructMessenger/Utilities/Constants.swift")
+    m = t and re.search(r"ttlSeconds:\s*TimeInterval\s*=\s*([\d_]+)", t)
+    _ttl_sources["ios"] = int(m.group(1).replace("_", "")) if m else None
+if SERVER.exists():
+    t = read(SERVER / "crates/crypto-agility/src/invites.rs")
+    m = t and re.search(r"INVITE_TTL_SECONDS:\s*i64\s*=\s*([\d_]+)", t)
+    _ttl_sources["server"] = int(m.group(1).replace("_", "")) if m else None
+
+if len(_ttl_sources) == 2:
+    ios_ttl, server_ttl = _ttl_sources["ios"], _ttl_sources["server"]
     check(
-        "invite-ttl-minutes", ok,
-        "The site says invite codes expire in minutes; the TTL default/range in "
-        "invite_core.rs no longer reads 300 s within 60–3600.",
+        "invite-ttl-client-server-agree", None if None in (ios_ttl, server_ttl)
+        else ios_ttl == server_ttl,
+        f"iOS InviteConfig.ttlSeconds={ios_ttl} but construct-server "
+        f"INVITE_TTL_SECONDS={server_ttl}. The server checks expiry first, so the "
+        "shorter one wins and the sender's app shows a link it believes is live.",
     )
+    if ios_ttl == server_ttl:
+        INVITE_TTL_SECONDS = ios_ttl
+else:
+    check("invite-ttl-client-server-agree", None, "both app repos needed to compare")
+
+# What the copy says, against what the code does. Add a spelling here when the copy
+# changes — the point is that the sentence and the constant cannot drift apart
+# silently, not that any particular wording is blessed.
+_SPELLED_TTL = {
+    r"five minutes|пять минут|5分": 300,
+    r"twelve hours|двенадцать часов|12時間": 43_200,
+}
+for pattern, seconds in _SPELLED_TTL.items():
+    if copy_says(pattern):
+        check(
+            f"invite-ttl-copy-{seconds}s", None if INVITE_TTL_SECONDS is None
+            else INVITE_TTL_SECONDS == seconds,
+            f"The site spells the invite lifetime as {seconds} s, the apps use "
+            f"{INVITE_TTL_SECONDS} s.",
+        )
 
 # ── Telemetry ────────────────────────────────────────────────────────────────
 
