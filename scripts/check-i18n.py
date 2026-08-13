@@ -156,6 +156,23 @@ def main() -> int:
             print(f"FAIL {name}: mismatched HTML nesting — " + "; ".join(detail))
 
 
+    # `backdrop-filter` (like `transform` and `filter`) makes an element the
+    # containing block for its position:fixed descendants. `.page-nav` had one, so
+    # the mobile menu — `.nav-panel { position: fixed; inset: 0 }`, a child of that
+    # bar — sized itself to the 56px bar instead of the viewport and rendered as a
+    # strip across the top. Nothing in the markup or in the panel's own rules was
+    # wrong, which is why it took a screenshot to notice.
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    if re.search(r"\.nav-panel\s*\{[^}]*position:\s*fixed", css, re.S):
+        mobile = re.search(r"@media \(max-width: 640px\) \{.*", css, re.S)
+        scoped = mobile.group(0) if mobile else ""
+        if not re.search(r"\.page-nav\s*\{[^}]*backdrop-filter:\s*none", scoped, re.S):
+            ok = False
+            print("FAIL styles.css: .page-nav keeps a backdrop-filter where .nav-panel is "
+                  "position:fixed — the overlay will size to the 56px bar, not the viewport. "
+                  "Set `backdrop-filter: none` on .page-nav inside the mobile query.")
+
+
     # The sessionStorage locale cache is keyed only by I18N_CACHE_VER in site.js.
     # If the dictionaries change and that constant does not, browsers keep serving
     # the old dictionary and every new key silently falls back to the English in

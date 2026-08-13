@@ -684,6 +684,20 @@ section[aria-labelledby="features-heading"] ul li::before {
 }
 
 @media (max-width: 640px) {
+  /* THIS RULE IS LOAD-BEARING, not cosmetic. An element whose `backdrop-filter`
+     is not `none` becomes the containing block for its `position: fixed`
+     descendants — so `.nav-panel { inset: 0 }` resolved against this 56px bar
+     instead of the viewport. The overlay rendered as a strip across the top:
+     `justify-content: flex-end` pushed the links to the bottom of 56px,
+     `overflow-y: auto` clipped all but one, and z-index 90 inside the bar's own
+     stacking context painted it over the logo and the burger. Everything looked
+     wrong except the thing that was wrong.
+     The bar is 92% opaque anyway; on mobile it becomes solid and loses nothing. */
+  .page-nav {
+    backdrop-filter: none;
+    background: var(--bg);
+  }
+
   .nav-burger { display: flex; }
   /* Nothing else is left in the row, so the burger goes to the edge where a
      thumb already rests instead of floating beside the wordmark. */
