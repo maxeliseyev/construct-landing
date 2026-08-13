@@ -5,6 +5,14 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/roadmap",
+      "destination": "/roadmap.html"
+    },
+    {
+      "source": "/technical",
+      "destination": "/technical.html"
+    },
+    {
       "source": "/faq",
       "destination": "/faq.html"
     },

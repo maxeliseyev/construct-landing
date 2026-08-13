@@ -22,8 +22,8 @@
             sizes="180x180"
             href="apple-touch-icon.png"
         />
-        <link rel="preload" href="styles.css?v=bb708933fc" as="style" />
-        <link rel="stylesheet" href="styles.css?v=bb708933fc" />
+        <link rel="preload" href="styles.css?v=9a74d8f7c0" as="style" />
+        <link rel="stylesheet" href="styles.css?v=9a74d8f7c0" />
         <style>
             .privacy-header {
                 padding: var(--space-3xl) 0 var(--space-2xl);
@@ -111,52 +111,61 @@
         </style>
     </head>
     <body>
+        <nav class="page-nav" aria-label="Site navigation">
+            <div class="container">
+                <a href="/" class="nav-logo">Konstruct</a>
+                <ul class="nav-links">
+                    <li><a href="/technical" data-i18n="nav.technical">Technical</a></li>
+                    <li><a href="/roadmap" data-i18n="nav.roadmap">Roadmap</a></li>
+                    <li><a href="/faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="/privacy" data-i18n="nav.privacy">Privacy</a></li>
+                </ul>
+                <div class="lang-switcher" id="langSwitcher">
+                    <button
+                        type="button"
+                        class="lang-trigger"
+                        data-lang-trigger
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Language"
+                    >
+                        <span class="lang-trigger-label"
+                            >LANG::<span data-lang-current>EN</span></span
+                        >
+                        <span class="lang-trigger-caret" aria-hidden="true"
+                            >▾</span
+                        >
+                    </button>
+                    <ul class="lang-menu" role="listbox" hidden>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="en"
+                                aria-selected="true"
+                            >
+                                <span class="lang-code">EN</span>
+                                <span class="lang-name">English</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="ru"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">RU</span>
+                                <span class="lang-name">Русский</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <header class="privacy-header">
             <div class="container">
-                <div class="privacy-topbar">
-                    <a href="/" class="back-link">← Konstruct</a>
-                    <div class="lang-switcher" id="langSwitcher">
-                        <button
-                            type="button"
-                            class="lang-trigger"
-                            data-lang-trigger
-                            aria-haspopup="listbox"
-                            aria-expanded="false"
-                            aria-label="Language"
-                        >
-                            <span class="lang-trigger-label"
-                                >LANG::<span data-lang-current>EN</span></span
-                            >
-                            <span class="lang-trigger-caret" aria-hidden="true"
-                                >▾</span
-                            >
-                        </button>
-                        <ul class="lang-menu" role="listbox" hidden>
-                            <li>
-                                <button
-                                    type="button"
-                                    role="option"
-                                    data-lang-btn="en"
-                                    aria-selected="true"
-                                >
-                                    <span class="lang-code">EN</span>
-                                    <span class="lang-name">English</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button
-                                    type="button"
-                                    role="option"
-                                    data-lang-btn="ru"
-                                    aria-selected="false"
-                                >
-                                    <span class="lang-code">RU</span>
-                                    <span class="lang-name">Русский</span>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
                 <p class="privacy-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 12, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
@@ -502,6 +511,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=dcc053c0c4" defer></script>
+            <script src="/site.js?v=b11fed54fb" defer></script>
     </body>
 </html>

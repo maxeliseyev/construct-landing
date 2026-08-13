@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LANGS = ("en", "ru", "ja")
-HTML_FILES = ("index.html", "faq.html", "privacy.html")
+HTML_FILES = ("index.html", "faq.html", "privacy.html", "technical.html", "roadmap.html")
 
 
 def load_dict(lang: str) -> dict:
@@ -110,6 +110,50 @@ def main() -> int:
         ok = False
         print(f"FAIL {len(markup)} textContent value(s) contain tags "
               f"— use data-i18n-html: {markup[:5]}")
+
+
+    # Nesting. Sections have been cut out of these pages by regex all week — the
+    # architecture diagram, the comparison table, the badges, the technical block —
+    # and one of those cuts took a `</div>` with it. Browsers auto-close, so the page
+    # looked fine and the mistake rode into production unnoticed; it was found only
+    # when something else was being checked. A parser answers in milliseconds what
+    # eyes do not answer at all.
+    from html.parser import HTMLParser
+
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "source", "track", "wbr"}
+
+    class _Nesting(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__()
+            self.stack: list[tuple[str, int]] = []
+            self.errors: list[str] = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag not in VOID:
+                self.stack.append((tag, self.getpos()[0]))
+
+        def handle_endtag(self, tag):
+            if tag in VOID:
+                return
+            if self.stack and self.stack[-1][0] == tag:
+                self.stack.pop()
+            elif self.stack:
+                top, line = self.stack[-1]
+                self.errors.append(
+                    f"line {self.getpos()[0]}: </{tag}> while <{top}> from line {line} is open")
+
+    for name in HTML_FILES:
+        path = ROOT / name
+        if not path.exists():
+            continue
+        parser = _Nesting()
+        parser.feed(path.read_text(encoding="utf-8"))
+        unclosed = [f"<{t}> line {l}" for t, l in parser.stack if t not in ("html", "body")]
+        if parser.errors or unclosed:
+            ok = False
+            detail = (parser.errors + [f"never closed: {u}" for u in unclosed])[:3]
+            print(f"FAIL {name}: mismatched HTML nesting — " + "; ".join(detail))
 
 
     # The sessionStorage locale cache is keyed only by I18N_CACHE_VER in site.js.

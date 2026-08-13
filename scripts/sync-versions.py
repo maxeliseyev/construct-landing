@@ -23,7 +23,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGES = ("index.html", "faq.html", "privacy.html")
+PAGES = ("index.html", "faq.html", "privacy.html", "technical.html", "roadmap.html")
 LANGS = ("en", "ru", "ja")
 
 check_only = "--check" in sys.argv

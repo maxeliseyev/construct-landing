@@ -1,0 +1,128 @@
+<!doctype html>
+<html
+    lang="en"
+    data-lang="en"
+    data-i18n-page="roadmap"
+    data-title-en="Roadmap — Konstruct"
+    data-title-ru="Дорожная карта — Konstruct"
+    data-title-ja="ロードマップ — Konstruct"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Roadmap — Konstruct</title>
+        <meta name="description" content="What is done, what is in progress, and what is planned for Konstruct." />
+        <link rel="canonical" href="https://konstruct.cc/roadmap" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+        <link rel="preload" href="styles.css?v=9a74d8f7c0" as="style" />
+        <link rel="stylesheet" href="styles.css?v=9a74d8f7c0" />
+    </head>
+
+    <body class="landing">
+        <nav class="page-nav" aria-label="Site navigation">
+            <div class="container">
+                <a href="/" class="nav-logo">Konstruct</a>
+                <ul class="nav-links">
+                    <li><a href="/technical" data-i18n="nav.technical">Technical</a></li>
+                    <li><a href="/roadmap" data-i18n="nav.roadmap">Roadmap</a></li>
+                    <li><a href="/faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="/privacy" data-i18n="nav.privacy">Privacy</a></li>
+                </ul>
+                <div class="lang-switcher" id="langSwitcher">
+                    <button
+                        type="button"
+                        class="lang-trigger"
+                        data-lang-trigger
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Language"
+                    >
+                        <span class="lang-trigger-label"
+                            >LANG::<span data-lang-current>EN</span></span
+                        >
+                        <span class="lang-trigger-caret" aria-hidden="true"
+                            >▾</span
+                        >
+                    </button>
+                    <ul class="lang-menu" role="listbox" hidden>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="en"
+                                aria-selected="true"
+                            >
+                                <span class="lang-code">EN</span>
+                                <span class="lang-name">English</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="ru"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">RU</span>
+                                <span class="lang-name">Русский</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <div class="page-intro">
+                <div class="container">
+                    <p><span data-i18n-html="roadmap.intro">What is done, what is being built, and what is only a plan. Most of the third list is honest ambition, not a promise with a date.</span></p>
+                </div>
+            </div>
+
+            <section aria-labelledby="roadmap-heading">
+                <div class="container">
+                    <h2 id="roadmap-heading">
+                        <span data-i18n="home.roadmap.development-roadmap">Development Roadmap</span></h2>
+                    <ul>
+                        <li>
+                            <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf · live <strong>gRPC bidi MessageStream over QUIC</strong> (HTTP/2 fallback; intercontinental production validation) · X3DH + Double Ratchet · PQXDH with ML-KEM-768 · session healing · WebRTC voice calls with E2EE signaling · iOS TestFlight beta · censorship-resistant transport · always-on Stealth (sealed sender) for eligible traffic.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> macOS Desktop client (iOS-direct crypto path, no public build yet) · Android client (currently Phase 0 — Rust core builds, Kotlin wrapper TBD) · BIP39 / SLIP-39 social recovery · MLS group chats (RFC 9420) · first external security audit · hybrid PQ signatures (ML-DSA-65) — crypto core and server storage / verification implemented, client-side orchestration (identity generation, key rotation) not yet wired into the shared core.</span>
+                            </li>
+                    </ul>
+
+                    <h3>
+                        <span data-i18n="home.roadmap.decentralization-roadmap">Decentralization Roadmap</span></h3>
+                    <ul>
+                        <li>
+                            <span data-i18n-html="home.roadmap.t5"><strong>Decentralisation, in order:</strong> the standalone <code>construct-relay</code> binary (store-and-forward for server-to-server messages, origin signatures verified, two containers on a small VPS) · a DHT for peer discovery and offline storage · direct peer-to-peer delivery with relay fallback · public seed nodes, spam resistance and MLS groups over the decentralised transport. The relay binary exists; everything after it is 2027 and later.</span>
+                            </li>
+                    </ul>
+
+                    <h3>
+                        <span data-i18n="home.roadmap.other-planned-work">Other Planned Work</span></h3>
+                    <ul>
+                        <li>
+                            <span data-i18n="home.roadmap.t10">video calls · Privacy Pass token enforcement (anti-spam on the always-on sealed-sender path) · desktop applications for Windows, Linux · formal verification (Kani).</span>
+                            </li>
+                    </ul>
+                    <p>
+                        <span data-i18n-html="home.roadmap.t11"><strong>Honest current status:</strong> alpha. iOS via TestFlight only (<a href="https://testflight.apple.com/join/NH3WssFh">join the beta</a>); no public App Store release yet. macOS Desktop client is in active development, no build available yet. Single trusted server (no federation). Censorship-resistant transport ships and is on by default, but we do not publish where it currently does or does not get through. Not recommended for adversarial threat models until the first external audit completes.</span>
+                        </p>
+                </div>
+            </section>
+
+
+        </main>
+
+        <footer>
+            <div class="container">
+                <p><a href="/" data-i18n="nav.back-home">← Back to konstruct.cc</a></p>
+            </div>
+        </footer>
+
+        <script src="/site.js?v=b11fed54fb"></script>
+    </body>
+</html>

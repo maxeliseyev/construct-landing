@@ -579,6 +579,53 @@ section[aria-labelledby="features-heading"] ul li::before {
 }
 .nav-logo:hover { color: var(--accent); }
 
+/* Section navigation. The home page used to carry the technical architecture,
+   the feature list and the roadmap inline — roughly a third of its length, most
+   of it addressed to a reader who had already decided. Those moved to /technical
+   and /roadmap; this is how anyone still reaches them, from every page. */
+.nav-links {
+  display: flex;
+  gap: var(--space-lg, 1.5rem);
+  list-style: none;
+  margin: 0 auto 0 var(--space-xl, 2rem);
+  padding: 0;
+  font-size: 0.9375rem;
+}
+.nav-links li::before { content: none; }
+.nav-links a {
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--fg);
+}
+
+/* Below ~640px the four links plus the logo and the language control do not fit
+   on one 56px row. Hiding them would strand /technical and /roadmap on a phone,
+   so the row scrolls instead — the links stay reachable, they just slide. */
+@media (max-width: 640px) {
+  .nav-links {
+    margin-left: var(--space-md, 1rem);
+    gap: var(--space-md, 1rem);
+    font-size: 0.875rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+}
+
+/* One sentence under the nav saying what the page is, so a visitor arriving from
+   a search result is not dropped straight into a technical section. */
+.page-intro {
+  padding: var(--space-2xl, 3rem) 0 0;
+}
+.page-intro p {
+  max-width: 68ch;
+  color: var(--fg-muted);
+  margin: 0;
+}
+
 /* Locale text is applied via data-i18n / data-i18n-html + /i18n/{lang}.json.
    Legacy class-based .en/.ru/.ja siblings are no longer used on index/faq. */
 
@@ -690,6 +737,13 @@ a.fn-marker:focus-visible {
     color: var(--fg);
     scroll-margin-top: 30vh;
 }
+.more-link {
+  max-width: 68ch;
+  margin: var(--space-sm) 0 0;
+  padding-left: calc(1rem + 2px);
+  font-size: 0.9375rem;
+}
+.more-link a { color: var(--accent); }
 .why-counter {
     border: 1px solid var(--border);
     border-radius: 8px;

@@ -1,0 +1,203 @@
+<!doctype html>
+<html
+    lang="en"
+    data-lang="en"
+    data-i18n-page="technical"
+    data-title-en="How it works — Konstruct"
+    data-title-ru="Как это устроено — Konstruct"
+    data-title-ja="技術構成 — Konstruct"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>How it works — Konstruct</title>
+        <meta name="description" content="Konstruct technical architecture: gRPC over QUIC, the crypto stack, and what the server can and cannot see." />
+        <link rel="canonical" href="https://konstruct.cc/technical" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+        <link rel="preload" href="styles.css?v=9a74d8f7c0" as="style" />
+        <link rel="stylesheet" href="styles.css?v=9a74d8f7c0" />
+    </head>
+
+    <body class="landing">
+        <nav class="page-nav" aria-label="Site navigation">
+            <div class="container">
+                <a href="/" class="nav-logo">Konstruct</a>
+                <ul class="nav-links">
+                    <li><a href="/technical" data-i18n="nav.technical">Technical</a></li>
+                    <li><a href="/roadmap" data-i18n="nav.roadmap">Roadmap</a></li>
+                    <li><a href="/faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="/privacy" data-i18n="nav.privacy">Privacy</a></li>
+                </ul>
+                <div class="lang-switcher" id="langSwitcher">
+                    <button
+                        type="button"
+                        class="lang-trigger"
+                        data-lang-trigger
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Language"
+                    >
+                        <span class="lang-trigger-label"
+                            >LANG::<span data-lang-current>EN</span></span
+                        >
+                        <span class="lang-trigger-caret" aria-hidden="true"
+                            >▾</span
+                        >
+                    </button>
+                    <ul class="lang-menu" role="listbox" hidden>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="en"
+                                aria-selected="true"
+                            >
+                                <span class="lang-code">EN</span>
+                                <span class="lang-name">English</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="ru"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">RU</span>
+                                <span class="lang-name">Русский</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <div class="page-intro">
+                <div class="container">
+                    <p><span data-i18n-html="technical.intro">The short version is on the front page. This is the long one: the transport, the crypto stack, and what the server can and cannot see.</span></p>
+                </div>
+            </div>
+
+            <section aria-labelledby="how-it-works-heading">
+                <div class="container">
+                    <h2 id="how-it-works-heading">
+                        <span data-i18n="home.how-it-works.technical-architecture">Technical Architecture</span></h2>
+                    <p class="section-lead" data-i18n="home.how-it-works.lead">The short version: messages are encrypted on your device, the server moves them without being able to read them, and it does not learn who sent them. The rest of this section is how, for readers who want it.</p>
+                    <p>
+                        <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. Konstruct’s live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback.</span>
+                        </p>
+                    <h3>
+                        <span data-i18n="home.how-it-works.cryptography-stack">Cryptography Stack</span></h3>
+                    <ul>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t4"><strong
+ >X3DH + Double Ratchet (Signal Protocol
+ design):</strong
+ >
+ end-to-end encryption with forward secrecy and
+ post-compromise security (self-healing).</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-768</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey and mixes it into the ratchet root, so a recorded session is not recoverable by breaking X25519 alone. The very first message is classical-only by design; the post-quantum secret applies from the second message onward. On top of that, sessions that negotiate it run a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t6"><strong
+ >Authentication signatures: Ed25519</strong
+ >
+ today. Hybrid
+ <strong>ML-DSA-65</strong> (Dilithium-3, NIST
+ FIPS&nbsp;204) signing and verification are
+ implemented and cross-verified between client
+ and server; client-side key rotation
+ orchestration is still in progress.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t7"><strong>AEAD:</strong> ChaCha20-Poly1305 for
+ message encryption.
+ <strong>KDF:</strong> HKDF-SHA256 with
+ domain-separation labels per protocol section.
+ <strong>Anti-spam PoW:</strong> Argon2id.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t8"><strong>Server is blind to content:</strong>
+ messages are stored only as ciphertext; the
+ server cannot decrypt. By default the server
+ still sees delivery timestamps and recipient for
+ routing. Eligible user traffic uses
+ <strong
+ >always-on sealed sender (Stealth)</strong
+ >
+ so the envelope omits the sender id — only the
+ recipient can unseal who wrote. Privacy Pass
+ anti-spam tokens can accompany sealed sends;
+ server-side token enforcement is still rolling
+ out.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t9"><strong>Crypto Agility:</strong> the protocol carries a suite version, so devices running different algorithm sets keep talking while a migration rolls out — no flag day, no requirement that everyone update at once. Adding an algorithm still means shipping a new build; what versioning removes is the need for it to happen everywhere simultaneously.</span>
+                            </li>
+                    </ul>
+                    <h3>
+                        <span data-i18n="home.how-it-works.transport-layer">Transport Layer</span></h3>
+                    <ul>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t11"><strong>gRPC bidirectional MessageStream over QUIC</strong> — the production path on iOS (construct-transport). One long-lived stream carries heartbeats, inbound messages and receipts without a TCP handshake per event, survives a change of network, and falls back to <strong>gRPC over HTTP/2 + TLS&nbsp;1.3</strong> automatically when QUIC is blocked. E2EE sits above it: the transport moves sealed ciphertext only, so changing it changes nothing about the guarantees.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.how-it-works.t14"><strong>Censorship resistance:</strong> when a direct TLS connection is blocked or throttled, the client routes through an obfuscation layer instead, automatically and with no user action. The implementation is open source (<code>construct-veil</code>, MPL-2.0) and the design is public. Operational detail — which transports are live, which entry points exist and where — is not published, and neither the app nor this site displays it.</span>
+                            </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section aria-labelledby="features-heading">
+                <div class="container">
+                    <h2 id="features-heading">
+                        <span data-i18n="home.features.key-features">Key Features</span></h2>
+                    <ul>
+                    
+                        <li>
+                            <span data-i18n-html="home.features.t2"><strong
+ >End-to-end encryption by default</strong
+ >
+ — servers see only encrypted blobs.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.features.t3"><strong>Forward secrecy</strong> — past
+ messages stay secure even if keys leak.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.features.t5"><strong>Censorship protection</strong> — on by default. Direct while that works, switching only when it demonstrably stops.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.features.t7"><strong>Zen UI</strong> — no notification spam,
+ no social noise, focus on calm
+ interaction.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-768</strong> (Kyber-768) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH), and sessions that negotiate it also re-key continuously inside the Double Ratchet. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC bidirectional MessageStream over <strong>QUIC</strong> (HTTP/2 fallback), censorship-resistant routing when the direct path is blocked, direct P2P planned when both peers are online.</span>
+                            </li>
+                        <li>
+                            <span data-i18n-html="home.features.t6"><strong>Open source</strong> — clients, server and transport, under weak-copyleft licences. Running your own server is on the roadmap; the app cannot yet be pointed at one.</span>
+                            </li>
+                        </ul>
+                </div>
+            </section>
+
+
+        </main>
+
+        <footer>
+            <div class="container">
+                <p><a href="/" data-i18n="nav.back-home">← Back to konstruct.cc</a></p>
+            </div>
+        </footer>
+
+        <script src="/site.js?v=b11fed54fb"></script>
+    </body>
+</html>
