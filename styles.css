@@ -567,17 +567,29 @@ section[aria-labelledby="features-heading"] ul li::before {
 .page-nav .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-lg);
   padding-top: 0;
   padding-bottom: 0;
+  /* .page-nav is itself display:flex, which made this a flex ITEM — so it sized
+     to its content instead of taking the 1024px every other .container on the
+     page takes. The bar was centred on a different grid than the content under
+     it, and once the links no longer fitted, they ran under the language
+     control. `width: 100%` puts it back on the page's grid. */
+  width: 100%;
 }
 .nav-logo {
+  flex: 0 0 auto;
   font-weight: 700;
   font-size: 1rem;
   color: var(--fg);
   letter-spacing: -0.01em;
 }
 .nav-logo:hover { color: var(--accent); }
+
+/* The language control keeps its width; the links give way first. Reversed, the
+   dropdown is what gets squeezed, and a language switcher that cannot be read is
+   worse than a link that has to be scrolled to. */
+.page-nav .lang-switcher { flex: 0 0 auto; }
 
 /* Section navigation. The home page used to carry the technical architecture,
    the feature list and the roadmap inline — roughly a third of its length, most
@@ -587,10 +599,18 @@ section[aria-labelledby="features-heading"] ul li::before {
   display: flex;
   gap: var(--space-lg, 1.5rem);
   list-style: none;
-  margin: 0 auto 0 var(--space-xl, 2rem);
+  margin: 0 auto 0 0;
   padding: 0;
   font-size: 0.9375rem;
+  /* min-width:0 is what actually stops the overlap: a flex item defaults to
+     min-width:auto and refuses to shrink below its content, so the row overflowed
+     into its neighbour instead of scrolling. */
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.nav-links::-webkit-scrollbar { display: none; }
 .nav-links li::before { content: none; }
 .nav-links a {
   color: var(--fg-muted);
@@ -606,13 +626,9 @@ section[aria-labelledby="features-heading"] ul li::before {
    so the row scrolls instead — the links stay reachable, they just slide. */
 @media (max-width: 640px) {
   .nav-links {
-    margin-left: var(--space-md, 1rem);
     gap: var(--space-md, 1rem);
     font-size: 0.875rem;
-    overflow-x: auto;
-    scrollbar-width: none;
   }
-  .nav-links::-webkit-scrollbar { display: none; }
 }
 
 /* One sentence under the nav saying what the page is, so a visitor arriving from
