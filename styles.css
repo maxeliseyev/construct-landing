@@ -698,7 +698,14 @@ section[aria-labelledby="features-heading"] ul li::before {
     background: var(--bg);
   }
 
-  .nav-burger { display: flex; }
+  /* The overlay is a positioned sibling with z-index: 90. Make the toggle a
+     positioned layer above it; otherwise an opened panel paints over the same
+     button that is meant to close it. */
+  .nav-burger {
+    position: relative;
+    z-index: 91;
+    display: flex;
+  }
   /* Nothing else is left in the row, so the burger goes to the edge where a
      thumb already rests instead of floating beside the wordmark. */
   .nav-logo { margin-right: auto; }
