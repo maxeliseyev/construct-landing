@@ -607,6 +607,43 @@ if core_readme and re.search(r"not yet activated on the wire", core_readme, re.I
         "First offending line:\n       " + (stray_pq[0][:160] if stray_pq else ""),
     )
 
+# Multi-device is the case where the code is finished and the feature is not.
+# Linking and SENDER_SYNC are implemented and unit-tested; no stand run has yet
+# carried a copy through to a second device's transcript, so nothing has been
+# seen working on hardware. construct-messenger/README.md is the authority and
+# keeps it under "In progress / planned" until a run does.
+#
+# Deriving this from the presence of the code would assert the wrong thing —
+# the code is there. What is missing is evidence, and the README is where we
+# record having it.
+ios_readme = read(IOS / "README.md")
+if ios_readme:
+    planned = ios_readme.split("### In progress / planned")[-1]
+    if re.search(r"multi-?device", planned, re.I):
+        # A question is not a claim. The FAQ heading "Поддерживается ли несколько
+        # устройств?" cannot carry a planned marker — its answer does, in the next
+        # string — and flagging it would push the marker into the question, which
+        # is how FAQ headings stop reading like questions.
+        stray_md = [ln for ln in COPY.splitlines()
+                    if re.search(r"multi-?device|мультидевайс|нескольк\w+ устройств|複数.{0,4}デバイス", ln, re.I)
+                    and not ln.rstrip().endswith(("?", "？"))
+                    # "control paths (heartbeats, multi-device, session control) stay
+                    # identified by design" names which internal path carries a sender.
+                    # It is not an offer of the feature, and rewriting it to add a
+                    # planned marker would make the sentence say something false about
+                    # the protocol.
+                    and not re.search(r"session control|heartbeat|control-пут|control path", ln, re.I)
+                    and not re.search(r"in development|in progress|planned|roadmap|not yet|do not exist|"
+                                      r"в разработк|планир|пока нет|開発中|まだ|進行中", ln, re.I)]
+        check(
+            "multi-device-not-claimed-working",
+            not stray_md,
+            "The copy presents multi-device as working. It is implemented but has "
+            "never been confirmed on hardware — construct-messenger/README.md keeps "
+            "it under 'In progress / planned'. Move it there first, then say so here. "
+            "First offending line:\n       " + (stray_md[0][:160] if stray_md else ""),
+        )
+
 # Contact edges ARE stored — as HMAC-SHA256 of both account ids
 # (037_contact_links.sql). "No social-graph metadata at rest" was false while
 # that migration existed, and it is the kind of false that a reader checks in
