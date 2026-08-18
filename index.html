@@ -78,8 +78,8 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=2aed258465" as="style" />
-        <link rel="stylesheet" href="styles.css?v=2aed258465" />
+        <link rel="preload" href="styles.css?v=c6a204a50d" as="style" />
+        <link rel="stylesheet" href="styles.css?v=c6a204a50d" />
         <link rel="stylesheet" href="effects.css?v=2aed258465" />
         
     </head>
@@ -183,9 +183,22 @@
                 </h1>
                 <p>
                     <span data-i18n="home.t4"
-                        >No phone number. No email. No name. Your account is a keypair your device generates, and the server only ever learns the public half.</span
+                        >An account tied to nothing in the real world. No phone number, no email, no name — not at sign-up, not in the database. End-to-end encryption is ordinary now. An account with nothing behind it is not.</span
                     >
                     </p>
+                <p class="hero-stage">
+                    <span data-i18n="home.t4c"
+                        >A second channel, not a replacement for your main messenger. Today that means one-to-one chats and calls on iOS, one server, an early build. No groups, no channels, no sync between your devices — a second channel does not need them.</span
+                    >
+                    </p>
+                <p class="hero-cta">
+                    <a class="hero-cta__primary" href="https://testflight.apple.com/join/NH3WssFh"
+                        ><span data-i18n="home.cta.install">Install the iOS beta</span></a
+                    >
+                    <a class="hero-cta__secondary" href="/privacy"
+                        ><span data-i18n="home.cta.server">What the server sees</span></a
+                    >
+                </p>
                 <p class="hero-anchors" data-i18n="home.t4b">Signal Protocol · post-quantum key agreement (ML-KEM-768) · gRPC stream over QUIC · sealed sender always on</p>
 
             </div>
@@ -214,10 +227,10 @@
                     </div>
                     <ul class="why-notes">
                         <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.</span></li>
-                        <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created. Like a cloakroom ticket: it gets your coat back, but the ticket itself tells nobody whose coat it is.</span></li>
+                        <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created.</span></li>
                     </ul>
                     <p class="more-link"><a href="/technical" data-i18n="home.more.technical">How this is built — transport, crypto stack, what the server sees →</a></p>
-                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The caveat: this is alpha.</strong> One server, iOS only, and no external audit yet. One-to-one chats and calls work; group chats and channels do not exist yet, and neither does sync between your own devices.</span></p>
+                    <p class="why-counter"><span data-i18n-html="home.why.counter"><strong>The caveat: no external audit yet.</strong> Everything above is our own reading of our own code. It has not been checked by anyone outside the project, and until it has, treat the four properties as claims we are prepared to defend rather than as findings. There is also one server: if it is unreachable, nothing is delivered — there is no second route today.</span></p>
                     <p class="more-link"><a href="/roadmap" data-i18n="home.more.roadmap">What is done and what is planned →</a></p>
                 </div>
             </section>
@@ -516,6 +529,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=a781667c4a" defer></script>
+        <script src="/site.js?v=295c5ba35e" defer></script>
     </body>
 </html>

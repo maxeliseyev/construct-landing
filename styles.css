@@ -918,6 +918,56 @@ a.fn-marker:focus-visible {
     letter-spacing: 0.02em;
     margin-top: 0.75rem;
 }
+
+/* The stage line answers the question the line above it provokes — "so can I
+   use this instead of what I have?" — before the reader scrolls to find out.
+   Muted and one step in, so it reads as the qualifier to the claim rather than
+   a second claim. */
+.hero-stage {
+    color: var(--fg-muted);
+    border-left: 2px solid var(--border);
+    padding-left: 1rem;
+    font-size: 1rem;
+    margin-top: var(--space-md, 1rem);
+}
+
+/* Until 2026-08-18 the only way into the beta was a list item far below the
+   fold, so the page made its case and then offered nothing to do about it. */
+.hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm, 0.75rem);
+    margin-top: var(--space-lg, 1.5rem);
+}
+.hero-cta a {
+    display: inline-block;
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+    /* 44px minimum touch target — the same floor the app holds. */
+    min-height: 44px;
+    box-sizing: border-box;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.hero-cta__primary {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+    border: 1px solid var(--accent);
+}
+.hero-cta__primary:hover {
+    background: var(--accent-dim, var(--accent));
+    border-color: var(--accent-dim, var(--accent));
+}
+.hero-cta__secondary {
+    border: 1px solid var(--border);
+    color: var(--fg-secondary);
+}
+.hero-cta__secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
 .section-lead {
     color: var(--fg-muted);
     border-left: 2px solid var(--border);
