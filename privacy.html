@@ -180,7 +180,7 @@
         <header class="privacy-header">
             <div class="container">
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
-                <p class="privacy-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 12, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="privacy-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 18, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
         </header>
 
@@ -263,7 +263,7 @@
                 <p data-i18n-html="privacy.s2_3.p12"><strong>Stealth (sealed sender):</strong> always on for eligible user traffic (messages, receipts, call signaling, etc.; a few control paths are excluded by design). Your device omits the Sender User ID from the envelope and seals a signed sender certificate to the recipient's identity key — only the recipient can recover who sent the message; the server cannot. Privacy Pass anonymous tokens can accompany sealed sends for anti-spam; server-side token enforcement is still rolling out. Stealth does not hide message timing, size, or your IP address from the network layer.</p>
 
                 <h3 data-i18n="privacy.s2_4.h31">2.4 Contact Relationships</h3>
-                <p data-i18n="privacy.s2_4.p2">When you add a contact (via QR code or invite link), the server stores a record of that relationship to determine message routing and stream subscription. This allows Konstruct to notify you when a known contact comes online and to subscribe you to their message stream.</p>
+                <p data-i18n="privacy.s2_4.p2">When you add a contact (via QR code or invite link), the server stores a record of that relationship to determine message routing and stream subscription. This allows Konstruct to notify you when a known contact comes online and to subscribe you to their message stream. The record is blinded: both sides are stored as a keyed hash (HMAC-SHA256) of the account id, never as the ids themselves, so a database leak does not hand anyone a readable social graph. Be precise about what that is worth — the key belongs to the server, so this protects the graph from a leak, not from us.</p>
 
                 <h3 data-i18n="privacy.s2_5.h31">2.5 Push Notification Tokens</h3>
                 <p data-i18n="privacy.s2_5.p2">To deliver real-time message notifications when the app is in the background:</p>
@@ -368,7 +368,7 @@
                 <ul>
                     <li data-i18n-html="privacy.s6_2.li2"><strong>In transit:</strong> Client–server messaging uses a gRPC bidirectional stream over QUIC when available, with automatic fallback to gRPC over HTTP/2 + TLS 1.3 (Envoy / edge on port 443). Control and auth RPCs use the same encrypted transport stack</li>
                     <li data-i18n-html="privacy.s6_2.li3"><strong>At rest:</strong> Database encryption enabled</li>
-                    <li data-i18n-html="privacy.s6_2.li4"><strong>End-to-end:</strong> Signal-Protocol-based — X3DH / PQXDH key agreement (X25519 combined with the post-quantum ML-KEM-768) and a Double Ratchet with ChaCha20-Poly1305 AEAD. Sender authentication uses hybrid Ed25519 + ML-DSA (post-quantum) signatures. Media attachments are encrypted with AES-256-GCM under a per-file key.</li>
+                    <li data-i18n-html="privacy.s6_2.li4"><strong>End-to-end:</strong> Signal-Protocol-based — X3DH / PQXDH key agreement (X25519 combined with the post-quantum ML-KEM-768) and a Double Ratchet with ChaCha20-Poly1305 AEAD. Sender authentication uses Ed25519 signatures today; the hybrid Ed25519 + ML-DSA-65 (post-quantum) path is implemented and cross-verified between client and server, but is not yet active on the wire. Media attachments are encrypted with AES-256-GCM under a per-file key.</li>
                 </ul>
 
                 <h3 data-i18n="privacy.s6_3.h31">6.3 What Is Stored on Your Device</h3>
@@ -431,7 +431,7 @@
                 </table>
 
                 <h2 data-i18n="privacy.s7.h21">7. Data Sharing and Third Parties</h2>
-                <p data-i18n-html="privacy.s7.p2"><strong >We do not sell, rent, or share your data with any third parties for any purpose.</strong ></p>
+                <p data-i18n-html="privacy.s7.p2"><strong >We do not sell or rent your data, and we do not share it for advertising, profiling or any purpose unrelated to running the service.</strong > Operating it does require two providers, listed below; each receives the minimum that its job needs, and neither receives message content.</p>
 
                 <h3 data-i18n="privacy.s7_1.h31">7.1 Infrastructure Providers</h3>
                 <ul>
@@ -472,8 +472,8 @@
                 <h2 data-i18n="privacy.s9.h21">9. Minimum Age</h2>
                 <p data-i18n-html="privacy.s9.p2">Konstruct is intended for users <strong>16 years of age and older</strong>, consistent with the app's 16+ App Store age rating. It is not directed to, or intended for, anyone under 16, and we do not knowingly collect data from anyone under 16. Because Konstruct holds only the minimal routing metadata described above and no message content, the data associated with any account is limited by design. If you believe someone under 16 is using Konstruct, contact us (Section 12) and we will act accordingly.</p>
 
-                <ul>
-                </ul>
+                <h2 data-i18n="privacy.s10.h21">10. Who Is Responsible for Your Data</h2>
+                <p data-i18n-html="privacy.s10.p2">Konstruct is an independent project, not a company. The data controller under the GDPR is <strong>Maxim Eliseyev</strong>, the project's maintainer, reachable at the address in Section 12. Konstruct is not large enough to require a Data Protection Officer, and has not appointed one; requests under Section 8 go to the same address and are answered by the same person. If that changes — an entity is formed, or responsibility passes to someone else — this section changes with it, and the change is announced as described in Section 11.</p>
 
                 <h2 data-i18n="privacy.s11.h21">11. Changes to This Policy</h2>
                 <p data-i18n="privacy.s11.p2">We will notify users of material changes through:</p>
@@ -524,6 +524,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=f85866b016" defer></script>
+            <script src="/site.js?v=a781667c4a" defer></script>
     </body>
 </html>

@@ -283,7 +283,7 @@
                     <h2 id="telemetry-heading">
                         <span data-i18n="home.telemetry.no-telemetry-not-anonymised-absent">No Telemetry. Not Anonymised — Absent.</span></h2>
                     <p>
-                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, push token — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
+                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, push token — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
                     </p>
                 </div>
             </section>
@@ -516,6 +516,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=f85866b016" defer></script>
+        <script src="/site.js?v=a781667c4a" defer></script>
     </body>
 </html>

@@ -518,6 +518,108 @@ if copy_says(r"\bfederat"):
         "Federation is mentioned without being marked planned anywhere. It is not shipped.",
     )
 
+# ── The READMEs say it too ───────────────────────────────────────────────────
+#
+# Everything above reads the *site*. That is where this file started, and it is
+# why an external review on 2026-08-18 found six live contradictions that the
+# checker had passed green a day earlier: the site said video is not
+# implemented, and construct-messenger/README.md said "[x] Voice/video calls",
+# three feet from a checker that already knew isVideoEnabled was false.
+#
+# A reader who is deciding whether to trust the cryptography does not respect
+# the boundary between our website and our repositories. Neither should this.
+#
+# Read the READMEs as one more corpus and re-apply the claims that have already
+# gone wrong once. Missing repos SKIP, they do not pass — same rule as
+# repo_claim, for the same reason.
+
+DOCS = (
+    ("construct-core/README.md", CORE / "README.md"),
+    ("construct-messenger/README.md", IOS / "README.md"),
+    ("construct-server/README.md", SERVER / "README.md"),
+)
+
+
+def doc_lines(pattern: str, unless: str | None = None) -> list[str] | None:
+    """Lines across every README matching `pattern`, or None if none could be read.
+
+    `unless` exempts a line that carries its own correction. Without it the video
+    check flagged the very line that says video is *not* implemented — the same
+    tautology the social-recovery check above was written twice to avoid. A
+    pattern that also matches the fix cannot tell you the fix is in place.
+    """
+    hits, read_any = [], False
+    for label, path in DOCS:
+        text = read(path)
+        if text is None:
+            continue
+        read_any = True
+        hits += [f"{label}: {ln.strip()[:150]}" for ln in text.splitlines()
+                 if re.search(pattern, ln, re.I)
+                 and not (unless and re.search(unless, ln, re.I))]
+    return hits if read_any else None
+
+
+def docs_must_not(name: str, pattern: str, detail: str,
+                  unless: str | None = None) -> None:
+    hits = doc_lines(pattern, unless)
+    if hits is None:
+        check(name, None, "no sibling README was readable")
+        return
+    check(name, not hits, detail + ("\n       " + "\n       ".join(hits[:3]) if hits else ""))
+
+
+# The word means "an auditor looked at this". No auditor has. It sat in the core
+# and iOS READMEs inside "the same audited code", where it was doing the work of
+# "shared" — one implementation, not five — and read as a credential we do not
+# hold. Re-earn it by publishing a report, not by re-typing it.
+docs_must_not(
+    "readme-does-not-claim-audited",
+    r"\baudited\b",
+    "A README calls our own code audited. No external security audit has been "
+    "done — the site says so on the roadmap. Use 'shared' when the point is one "
+    "implementation across platforms.",
+)
+
+# Guarded by video-calls-still-off above, which pins isVideoEnabled == false.
+docs_must_not(
+    "readme-does-not-ship-video-calls",
+    r"voice ?/ ?video calls?|voice and video calls|\[x\].*video",
+    "A README lists video calling as done. CallsFeature.isVideoEnabled is false "
+    "and the privacy policy says video is not implemented.",
+    unless=r"video is not implemented|no video|video: planned",
+)
+
+# construct-core/README.md is the authority: "not yet activated on the wire".
+# Anything that describes the hybrid signature in plain present tense contradicts
+# the one document that tracks it.
+core_readme = read(CORE / "README.md")
+if core_readme and re.search(r"not yet activated on the wire", core_readme, re.I):
+    stray_pq = [ln for ln in COPY.splitlines()
+                if re.search(r"ML-DSA", ln, re.I)
+                and not re.search(r"not yet active|not active|implemented|in progress|"
+                                  r"пока не задействован|реализован|planned|進行中|まだ", ln, re.I)]
+    check(
+        "ml-dsa-not-claimed-active",
+        not stray_pq,
+        "The copy describes ML-DSA signatures as in use. construct-core/README.md "
+        "says they are 'not yet activated on the wire' — implemented is not active. "
+        "First offending line:\n       " + (stray_pq[0][:160] if stray_pq else ""),
+    )
+
+# Contact edges ARE stored — as HMAC-SHA256 of both account ids
+# (037_contact_links.sql). "No social-graph metadata at rest" was false while
+# that migration existed, and it is the kind of false that a reader checks in
+# five minutes against a public schema.
+if (SERVER / "shared/migrations/037_contact_links.sql").exists():
+    docs_must_not(
+        "no-absolute-social-graph-denial",
+        r"no social.graph metadata at rest|does not track who messages whom",
+        "A README denies storing the social graph. contact_links stores an edge "
+        "per contact — blinded (HMAC of both ids), which defeats a database leak, "
+        "but the server holds the key. Say that instead of denying the row.",
+    )
+
 # ── Report ───────────────────────────────────────────────────────────────────
 
 for line in skipped:
