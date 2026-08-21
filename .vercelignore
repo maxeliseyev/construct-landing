@@ -14,3 +14,9 @@ crypto.js
 package.json
 package-lock.json
 node_modules
+
+# The Russian copy exported for editing (scripts/ru-review.py). It is the same
+# words as i18n/ru.json, in a form meant for a person rather than for the site,
+# and publishing it would put a second copy of the policy at a public URL where
+# it could drift from the one that is actually served.
+i18n/review
