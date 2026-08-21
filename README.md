@@ -56,12 +56,26 @@ switcher being broken.
 
 ## Local preview
 
-It is a static site — no bundler. Any static server works:
+It is a static site — no bundler, no dependencies to install.
 
 ```bash
-python3 -m http.server 8000      # then open http://localhost:8000
-# or
-npx vercel dev                   # exercises vercel.json rewrites + headers (needs CLI login)
+npm run dev                      # then open http://localhost:8000
+npm run dev -- 3000              # another port
+```
+
+`scripts/dev-server.js` is ~120 lines of plain Node with no packages behind it.
+It reads `vercel.json` and `.vercelignore`, so the preview answers on the same
+addresses as production: `/faq` resolves through the rewrite (`cleanUrls` is
+`false`, so it resolves *only* through the rewrite), `/crypto` still redirects,
+and files withdrawn from the deployment stay 404 locally too.
+
+A plain file server also works, but it serves the pages at `/faq.html` rather
+than `/faq`, so every nav link 404s:
+
+```bash
+python3 -m http.server 8000
+# or, for the real headers as well (needs CLI login):
+npx vercel dev
 ```
 
 **Important for i18n:** open via `http://localhost:…`, not `file://`.  
@@ -69,7 +83,13 @@ npx vercel dev                   # exercises vercel.json rewrites + headers (nee
 
 ## Deploy on Vercel
 
-This repo is a **static** project. There is no `package.json` and no build output directory.
+This repo is a **static** project: no build step, no dependencies, no build output directory.
+
+The `package.json` at the root is a local convenience only — it holds the `dev`
+preview script and nothing else, has no dependencies and deliberately has no
+`build` script. It is listed in `.vercelignore` so it never reaches the builder:
+an uploaded `package.json` is what turns a static project into one with an
+install/build step, and this project has neither.
 
 ### Dashboard settings (Project → Settings → General / Build & Development)
 

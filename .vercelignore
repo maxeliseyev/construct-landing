@@ -5,3 +5,12 @@
 crypto.html
 crypto.css
 crypto.js
+
+# `package.json` exists so `npm run dev` starts the local preview server. It is
+# not part of the site, and Vercel must not see it: an uploaded package.json is
+# what turns a static project into one with an install/build step, which is
+# exactly what this project does not have. Keeping it out of the upload leaves
+# the deployment byte-identical to before the file existed.
+package.json
+package-lock.json
+node_modules
