@@ -1,0 +1,10 @@
+{
+  "prerender": [
+    {
+      "where": {
+        "href_matches": ["/", "/faq", "/roadmap", "/technical", "/privacy"]
+      },
+      "eagerness": "moderate"
+    }
+  ]
+}

@@ -45,6 +45,27 @@
   display: none !important;
 }
 
+/* Cross-document view transitions: the pages cross-fade into each other instead
+   of the viewport going white and repainting. Nothing here makes a navigation
+   faster — the measured cost is one round trip for the document, ~160-220ms,
+   and every asset already comes from cache (600 bytes moved per section
+   switch). What it removes is the blank frame in the middle, which is the part
+   that reads as "loading" on a site that is almost entirely text.
+
+   Both documents have to opt in, which every page does by sharing this sheet.
+   Firefox ignores the rule and navigates exactly as it did before. */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Self-hosted JetBrains Mono — same family as the iOS/macOS app (CTFont).
    No third-party font CDN: Google Fonts would leak every visitor's IP to Google
    (unacceptable on a no-telemetry site) and add an external CSP origin. */

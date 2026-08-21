@@ -90,6 +90,49 @@
       ]
     },
     {
+      "source": "/speculation-rules.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/speculationrules+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+      ]
+    },
+    {
+      "source": "/faq",
+      "headers": [
+        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+      ]
+    },
+    {
+      "source": "/roadmap",
+      "headers": [
+        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+      ]
+    },
+    {
+      "source": "/technical",
+      "headers": [
+        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+      ]
+    },
+    {
+      "source": "/privacy",
+      "headers": [
+        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+      ]
+    },
+    {
       "source": "/i18n/(.*).json",
       "headers": [
         {
