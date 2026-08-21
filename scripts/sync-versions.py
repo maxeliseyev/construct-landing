@@ -23,7 +23,11 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGES = ("index.html", "faq.html", "privacy.html", "technical.html", "roadmap.html")
+# add.html and contact.html are reached by following an invite, not from the
+# nav, which is how they sat outside this list long enough to freeze at
+# `?v=20260812-lang` while the stylesheet moved on underneath them.
+PAGES = ("index.html", "faq.html", "privacy.html", "technical.html",
+         "roadmap.html", "add.html", "contact.html")
 LANGS = ("en", "ru", "ja")
 
 check_only = "--check" in sys.argv

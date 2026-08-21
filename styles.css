@@ -870,6 +870,54 @@ section[aria-labelledby="features-heading"] ul li::before {
   margin: var(--space-xl) 0 var(--space-sm);
 }
 
+/* ── Invite landing (/add) ──────────────────────────────────────────────────
+   The page somebody reaches by following an invite when the app did not open
+   the link itself — no app installed, a desktop browser, or a webview that
+   ignores Universal Links. It used to live in its own contact.css with its own
+   button and its own container, which is why it looked like a different site
+   than the one the invite was for. It now uses .page-header / .page-content and
+   the hero's buttons; only the two states add.js toggles are its own. */
+.invite-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  color: var(--fg-muted);
+}
+
+.invite-spinner {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: invite-spin 1s linear infinite;
+}
+
+@keyframes invite-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invite-spinner { animation-duration: 3s; }
+}
+
+.invite-error {
+  margin-top: var(--space-lg);
+  padding: var(--space-sm);
+  max-width: 68ch;
+  color: var(--fg-secondary);
+  border: 1px solid var(--danger);
+  border-left-width: 3px;
+  border-radius: 6px;
+  background: rgba(220, 60, 60, 0.08);
+}
+
+.invite-error a {
+  color: var(--accent-hover);
+}
+
 /* Locale text is applied via data-i18n / data-i18n-html + /i18n/{lang}.json.
    Legacy class-based .en/.ru/.ja siblings are no longer used on index/faq. */
 

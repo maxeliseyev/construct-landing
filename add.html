@@ -1,40 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Open a Konstruct Messenger invite">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Konstruct — Invite</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Open a Konstruct Messenger invite" />
+        <!-- An invite is addressed to one person and is single-use; there is
+             nothing here for a search engine to index. -->
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Konstruct — Invite</title>
 
-    <link rel="preload" href="/styles.css?v=20260812-lang" as="style" />
-    <link rel="preload" href="/contact.css?v=20260812-lang" as="style" />
-    <link rel="stylesheet" href="/styles.css?v=20260812-lang" />
-    <link rel="stylesheet" href="/contact.css?v=20260812-lang" />
-</head>
-<body>
-    <main class="contact-page">
-        <div class="contact-container" role="main">
-            <h1>Add Contact</h1>
-            <p class="message" id="message">
-                Open this invite in Konstruct Messenger to connect.
-            </p>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="preload" href="/styles.css?v=b98ca0037b" as="style" />
+        <link rel="stylesheet" href="/styles.css?v=b98ca0037b" />
+    </head>
 
-            <nav aria-label="Invite actions">
-                <a href="#" class="button" id="openAppButton" aria-label="Open invite in Konstruct Messenger">
-                    Open in app
-                </a>
-            </nav>
-
-            <div class="loading" id="loading" aria-live="polite" aria-busy="true" hidden>
-                <div class="spinner" aria-label="Loading"></div>
-                <p style="margin-top: 12px; color: var(--fg-muted);">Opening Konstruct…</p>
+    <body>
+        <header class="page-header" role="banner">
+            <div class="container">
+                <h1>Open your invite</h1>
+                <p id="message">
+                    This link carries an invite to a Konstruct conversation.
+                    Open it in the app to accept it.
+                </p>
             </div>
+        </header>
 
-            <div class="error" id="error" role="alert" aria-live="assertive" hidden></div>
-        </div>
-    </main>
+        <main class="page-content">
+            <div class="container">
+                <p class="hero-cta">
+                    <a
+                        class="hero-cta__primary"
+                        href="#"
+                        id="openAppButton"
+                        aria-label="Open this invite in Konstruct"
+                        >Open in app</a
+                    >
+                </p>
 
-    <script src="/add.js" defer></script>
-</body>
+                <div
+                    class="invite-status"
+                    id="loading"
+                    aria-live="polite"
+                    aria-busy="true"
+                    hidden
+                >
+                    <span class="invite-spinner" aria-hidden="true"></span>
+                    <span>Opening Konstruct…</span>
+                </div>
+
+                <div
+                    class="invite-error"
+                    id="error"
+                    role="alert"
+                    aria-live="assertive"
+                    hidden
+                ></div>
+
+                <p>
+                    An invite can be accepted once and stops working twelve
+                    hours after it was created. If this one has expired, ask
+                    your contact for a fresh link or QR code.
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p><a href="/">← konstruct.cc</a></p>
+            </div>
+        </footer>
+
+        <script src="/add.js" defer></script>
+    </body>
 </html>

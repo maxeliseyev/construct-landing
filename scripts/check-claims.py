@@ -60,7 +60,13 @@ def site_copy() -> str:
         raw = read(SITE / f"i18n/{lang}.json")
         if raw:
             parts.append("\n".join(json.loads(raw).values()))
-    for page in ("index.html", "faq.html", "privacy.html", "crypto.html"):
+    # add.html and contact.html carry their copy inline rather than through the
+    # locale files, so nothing here saw them until they were named. They make
+    # the same claims about invites — single use, twelve hours — that the FAQ
+    # makes, and a claim is no less published for being on a page you reach only
+    # by following a link.
+    for page in ("index.html", "faq.html", "privacy.html", "crypto.html",
+                 "add.html", "contact.html"):
         t = read(SITE / page)
         if t:
             parts.append(t)

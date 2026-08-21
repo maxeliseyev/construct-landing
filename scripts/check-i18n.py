@@ -13,7 +13,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LANGS = ("en", "ru", "ja")
-HTML_FILES = ("index.html", "faq.html", "privacy.html", "technical.html", "roadmap.html")
+HTML_FILES = ("index.html", "faq.html", "privacy.html", "technical.html",
+              "roadmap.html", "add.html", "contact.html")
 
 
 def load_dict(lang: str) -> dict:
@@ -249,6 +250,11 @@ def main() -> int:
     def _h10(name):
         return _hl.sha256((ROOT / name).read_bytes()).hexdigest()[:10]
 
+    # A page that does not load an asset is not a finding — add.html and
+    # contact.html deliberately skip site.js, having no data-i18n keys to apply
+    # and no reason to pull a 58KB dictionary for a page reached by following an
+    # invite. What is a finding is referencing the asset *without* the hash, so
+    # the two cases are told apart rather than lumped together.
     for asset, pattern in (("styles.css", r"styles\.css\?v=([0-9a-z-]+)"),
                            ("site.js", r'src="/site\.js\?v=([0-9a-z]+)"')):
         expect = _h10(asset)
@@ -256,9 +262,12 @@ def main() -> int:
             text = (ROOT / name).read_text(encoding="utf-8")
             found = set(re.findall(pattern, text))
             if not found:
-                ok = False
-                print(f"FAIL {name}: no content-hash version on {asset}")
-            elif found != {expect}:
+                if asset in text:
+                    ok = False
+                    print(f"FAIL {name}: references {asset} without a content-hash "
+                          f"version — browsers will keep the cached file.")
+                continue
+            if found != {expect}:
                 ok = False
                 print(f'FAIL {name}: {asset}?v={sorted(found)[0]} but it hashes to '
                       f'"{expect}" — browsers will keep the cached file.')
