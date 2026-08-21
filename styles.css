@@ -17,6 +17,12 @@
   --warning: #ffa726;
   --danger: #dc3c3c;            /* Color.CT.danger */
 
+  /* Web-only: the hover shade of --accent. The app has no hover state, so this
+     one has no counterpart in Color.CT. --accent-dim is not it — #1e68df reads
+     *lighter* than #0062ff to the eye (more green, less blue), so using it for
+     hover made the button look washed out instead of pushed in. */
+  --accent-press: #0050d6;
+
   /* Typography — JetBrains Mono everywhere, terminal aesthetic */
   --font-sans: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
   --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
@@ -1019,9 +1025,15 @@ a.fn-marker:focus-visible {
     font-weight: 600;
     border: 1px solid var(--accent);
 }
+/* This rule set a background and never a colour, so the generic
+   `a:hover { color: var(--accent-hover) }` was left to decide the label — and it
+   chose #3d82ff, on a blue button. The text all but disappeared at the one
+   moment the button is being looked at. A hover that changes the background has
+   to state the foreground it wants. */
 .hero-cta__primary:hover {
-    background: var(--accent-dim, var(--accent));
-    border-color: var(--accent-dim, var(--accent));
+    background: var(--accent-press);
+    border-color: var(--accent-press);
+    color: #fff;
 }
 .hero-cta__secondary {
     border: 1px solid var(--border);

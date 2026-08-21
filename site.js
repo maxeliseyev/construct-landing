@@ -29,7 +29,7 @@
 // again the very next day on the delivery-status keys, with a comment sitting
 // right here telling me to bump it. `scripts/check-i18n.py` now computes the
 // expected value and fails if this line disagrees, so it cannot be forgotten.
-var I18N_CACHE_VER = "e7fbfd46ed";
+var I18N_CACHE_VER = "465c1d94fe";
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
@@ -129,6 +129,12 @@ var I18N_CACHE_VER = "e7fbfd46ed";
             var val = dict[key];
             if (val == null) return;
             el.textContent = val;
+            // A .glitch-text draws its RGB-split layers from `content:
+            // attr(data-text)`. Translate the label without moving the
+            // attribute and the ghost layers keep saying the previous language,
+            // which is visible the moment the element glitches. Here is the one
+            // place that knows the new string.
+            if (el.hasAttribute("data-text")) el.setAttribute("data-text", val);
             if (el.dataset) delete el.dataset.originalText;
         });
 

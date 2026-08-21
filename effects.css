@@ -154,10 +154,17 @@ body.landing .crt-noise {
   position: relative;
 }
 
+/* `color: inherit`, not `var(--fg)`: the split layers are drawn in the colour of
+   whatever carries them, so the same class works on the hero title and inside a
+   blue button without the button's label being repainted grey. The hero's glow
+   is the hero's, so it lives on the hero's own rule below. */
 .glitch-text {
   position: relative;
   display: inline-block;
-  color: var(--fg);
+  color: inherit;
+}
+
+.landing header h1 .glitch-text {
   text-shadow:
     0 0 20px var(--crt-glow),
     0 0 40px rgba(0, 98, 255, 0.15);
@@ -216,6 +223,23 @@ body.landing .crt-noise {
 
 .glitch-text:hover {
   animation: glitch-skew 0.35s steps(2) 1;
+}
+
+/* The same hiccup on the hero buttons, fired from the <a> rather than from the
+   text: a button's hit area is its padding too, so hanging this on the span
+   would leave the effect dead along the edges people actually aim at. No
+   ambient scheduler here either — the title glitches on its own because it is
+   scenery, a button glitches because you pointed at it. */
+.landing .hero-cta a:hover .glitch-text {
+  animation: glitch-skew 0.35s steps(2) 1;
+}
+
+.landing .hero-cta a:hover .glitch-text::before {
+  animation: glitch-burst-a 0.5s steps(3);
+}
+
+.landing .hero-cta a:hover .glitch-text::after {
+  animation: glitch-burst-b 0.45s steps(3);
 }
 
 @keyframes glitch-skew {
@@ -378,7 +402,10 @@ body.landing .crt-noise {
     opacity: 0;
   }
 
-  .glitch-text:hover {
+  .glitch-text:hover,
+  .landing .hero-cta a:hover .glitch-text,
+  .landing .hero-cta a:hover .glitch-text::before,
+  .landing .hero-cta a:hover .glitch-text::after {
     animation: none;
   }
 
