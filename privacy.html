@@ -43,12 +43,25 @@
             .privacy-content hr {
                 display: none;
             }
+            /* The ✗ is a marker, not decoration: without one this reads as a
+               plain list, and a plain list under "What We Do NOT Collect" is
+               one skipped heading away from looking like the opposite claim.
+               It used to be a ❌ emoji sitting inside the translated string,
+               which put a picture in the middle of a terminal design and made
+               thirty locale values carry their own bullet. A glyph in --danger,
+               mirroring the ✓ in --success the feature list already uses, says
+               the same thing in the site's own alphabet. */
             .not-collected li {
                 list-style: none;
-                padding-left: 0;
+                position: relative;
+                padding-left: 1.5rem;
             }
             .not-collected li::before {
-                content: none;
+                content: "✗";
+                position: absolute;
+                left: 0;
+                color: var(--danger);
+                font-weight: bold;
             }
             .summary-table td:first-child {
                 color: var(--success);
@@ -151,7 +164,7 @@
         <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
-                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 18, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 21, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
         </header>
 
@@ -205,7 +218,7 @@
                         <tr>
                             <td data-i18n="privacy.s2_2.td19">Private keys</td>
                             <td data-i18n="privacy.s2_2.td20">—</td>
-                            <td data-i18n="privacy.s2_2.td21">❌ Never</td>
+                            <td data-i18n="privacy.s2_2.td21">Never</td>
                             <td data-i18n="privacy.s2_2.td22">All private keys remain on your device only</td>
                         </tr>
                     </tbody>
@@ -260,15 +273,15 @@
                 <h3 data-i18n="privacy.s2_9.h31">2.9 What We Do NOT Collect</h3>
                 <p data-i18n-html="privacy.s2_9.p2">The following are explicitly <strong>not</strong> collected or stored:</p>
                 <ul class="not-collected">
-                    <li data-i18n="privacy.s2_9.li3">❌ Phone number</li>
-                    <li data-i18n="privacy.s2_9.li4">❌ Email address</li>
-                    <li data-i18n="privacy.s2_9.li5">❌ Password</li>
-                    <li data-i18n="privacy.s2_9.li6">❌ Real name</li>
-                    <li data-i18n="privacy.s2_9.li7">❌ Message content (end-to-end encrypted — we cannot access it)</li>
-                    <li data-i18n="privacy.s2_9.li8">❌ Message history (deleted after delivery)</li>
-                    <li data-i18n="privacy.s2_9.li9">❌ Location data</li>
-                    <li data-i18n="privacy.s2_9.li10">❌ Typing indicators or read receipts beyond delivery confirmation</li>
-                    <li data-i18n="privacy.s2_9.li11">❌ Third-party analytics or tracking SDKs</li>
+                    <li data-i18n="privacy.s2_9.li3">Phone number</li>
+                    <li data-i18n="privacy.s2_9.li4">Email address</li>
+                    <li data-i18n="privacy.s2_9.li5">Password</li>
+                    <li data-i18n="privacy.s2_9.li6">Real name</li>
+                    <li data-i18n="privacy.s2_9.li7">Message content (end-to-end encrypted — we cannot access it)</li>
+                    <li data-i18n="privacy.s2_9.li8">Message history (deleted after delivery)</li>
+                    <li data-i18n="privacy.s2_9.li9">Location data</li>
+                    <li data-i18n="privacy.s2_9.li10">Typing indicators or read receipts beyond delivery confirmation</li>
+                    <li data-i18n="privacy.s2_9.li11">Third-party analytics or tracking SDKs</li>
                 </ul>
 
                 <h3 data-i18n="privacy.s2_10.h31">2.10 IP Addresses and Connection Metadata</h3>
@@ -495,6 +508,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=bcad4a735d" defer></script>
+            <script src="/site.js?v=f547dd1b1b" defer></script>
     </body>
 </html>
