@@ -60,20 +60,79 @@ const ignored = new Set(
     .filter((line) => line && !line.startsWith("#"))
 );
 
-/** Compile a vercel `source` ("/c/:userId") into a matcher over the pathname. */
+/**
+ * Compile a vercel `source` into a matcher over the pathname. Two forms occur:
+ * `:param` segments in rewrites ("/c/:userId") and `(.*)` wildcards in header
+ * rules ("/fonts/(.*)"). Splitting on the wildcard keeps it out of the escape
+ * pass entirely, so there is no sentinel to collide with anything.
+ */
 function compile(source) {
   const names = [];
+  const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const pattern = source
-    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-    .replace(/:([A-Za-z0-9_]+)/g, (_, name) => {
-      names.push(name);
-      return "([^/]+)";
-    });
+    .split("(.*)")
+    .map((part) =>
+      escape(part).replace(/:([A-Za-z0-9_]+)/g, (_, name) => {
+        names.push(name);
+        return "([^/]+)";
+      })
+    )
+    .join("(.*)");
   return { re: new RegExp(`^${pattern}$`), names };
 }
 
 const redirects = (config.redirects || []).map((r) => ({ ...r, ...compile(r.source) }));
 const rewrites = (config.rewrites || []).map((r) => ({ ...r, ...compile(r.source) }));
+const headerRules = (config.headers || []).map((r) => ({ ...r, ...compile(r.source) }));
+
+/**
+ * Every matching header rule applies, in file order, later keys winning — the
+ * same way Vercel layers the catch-all security headers under the per-asset
+ * ones. Matched against the requested path, before rewrites, because that is
+ * the path the rules are written against.
+ */
+/**
+ * Three of production's headers describe an HTTPS origin and cannot be honoured
+ * by a plain-HTTP preview:
+ *
+ *   Cache-Control            production wants a year on the fonts; a preview
+ *                            that obeys it stops showing you your own edits,
+ *                            which is the one thing it is for.
+ *   Strict-Transport-Security  nothing to enforce off HTTPS, and it is exactly
+ *                            the kind of header that outlives the session that
+ *                            set it.
+ *   upgrade-insecure-requests  rewrites every subresource to https://. Chrome
+ *                            exempts localhost, so this looks harmless until
+ *                            the preview is opened on a LAN address (a phone,
+ *                            another machine) — and then the CSS, the scripts,
+ *                            the fonts and the images all fail at once with
+ *                            ERR_SSL_PROTOCOL_ERROR and the site renders as
+ *                            unstyled HTML.
+ *
+ * The rest of the CSP stays. Keeping it is the point: it is what makes a local
+ * preview refuse the same things production refuses, so a violation is found
+ * here rather than after a deploy.
+ */
+function headersFor(pathname) {
+  const out = {};
+  for (const rule of headerRules) {
+    if (!rule.re.test(pathname)) continue;
+    for (const h of rule.headers) out[h.key] = h.value;
+  }
+
+  delete out["Cache-Control"];
+  delete out["Strict-Transport-Security"];
+
+  if (out["Content-Security-Policy"]) {
+    const kept = out["Content-Security-Policy"]
+      .split(";")
+      .map((d) => d.trim())
+      .filter((d) => d && d !== "upgrade-insecure-requests");
+    out["Content-Security-Policy"] = kept.join("; ");
+  }
+
+  return out;
+}
 
 /** Substitute captured `:param` values into a destination. */
 function expand(destination, names, match) {
@@ -99,6 +158,7 @@ function send(res, status, body, headers = {}) {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, "http://localhost");
   let pathname = decodeURIComponent(url.pathname);
+  const configured = headersFor(pathname);
 
   const redirect = findMatch(redirects, pathname);
   if (redirect) {
@@ -138,6 +198,10 @@ const server = http.createServer((req, res) => {
     log(req, 200, pathname);
     send(res, 200, body, {
       "Content-Type": MIME[path.extname(file).toLowerCase()] || "application/octet-stream",
+      // Configured headers last: vercel.json is the authority on Content-Type
+      // for the paths where it sets one (the .well-known files have no
+      // extension to guess from, and speculation rules need their own type).
+      ...configured,
     });
   });
 });
