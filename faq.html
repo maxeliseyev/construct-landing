@@ -22,8 +22,8 @@
             sizes="180x180"
             href="apple-touch-icon.png"
         />
-        <link rel="preload" href="styles.css?v=c6a204a50d" as="style" />
-        <link rel="stylesheet" href="styles.css?v=c6a204a50d" />
+        <link rel="preload" href="styles.css?v=0e9c11874d" as="style" />
+        <link rel="stylesheet" href="styles.css?v=0e9c11874d" />
 
         <style>
             .status-list { list-style: none; padding: 0; margin: 0; }
@@ -40,73 +40,15 @@
             .status-icon--bad { color: #f85149; }
             .status-text strong { margin-right: 0.35rem; }
 
-            /* ── Top nav ─────────────────────────────────────────────────── */
-            .page-nav {
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                height: 56px;
-                background: var(--bg);
-                border-bottom: 1px solid var(--border);
-                display: flex;
-                align-items: center;
-                overflow: visible;
-            }
-            .page-nav .lang-switcher {
-                z-index: 110;
-            }
+            /* The nav, the page header and the section rhythm are shared with
+               privacy / technical / roadmap and live in styles.css. This page
+               used to redeclare .page-nav and .nav-logo (opaque bar, 1.0625rem
+               logo) and its own header (a smaller clamp than Privacy's, on a
+               narrower measure), which is exactly why the pages did not match.
+               Only what is peculiar to an FAQ is left below. */
 
-            .page-nav .container {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 100%;
-            }
-
-            .nav-logo {
-                font-weight: 700;
-                font-size: 1.0625rem;
-                color: var(--fg);
-                text-decoration: none;
-                letter-spacing: -0.01em;
-            }
-
-            .nav-logo:hover {
-                color: var(--accent);
-            }
-
-            /* ── Page header ─────────────────────────────────────────────── */
-            .faq-header {
-                padding: 4rem 0 2.5rem;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .faq-header h1 {
-                font-size: clamp(1.75rem, 4vw, 2.5rem);
-                font-weight: 700;
-                letter-spacing: -0.03em;
-                color: var(--fg);
-                margin: 0 0 0.75rem;
-            }
-
-            .faq-header p {
-                font-size: 1.0625rem;
-                color: var(--fg-secondary);
-                max-width: 640px;
-                margin: 0;
-                line-height: 1.7;
-            }
-
-            /* ── FAQ sections ────────────────────────────────────────────── */
-            .faq-section {
-                padding: 2.5rem 0;
-                border-bottom: 1px solid var(--border-subtle);
-            }
-
-            .faq-section:last-of-type {
-                border-bottom: none;
-            }
-
+            /* Category labels above the accordion, not prose headings — small
+               uppercase so the questions themselves stay the largest thing. */
             .faq-section h2 {
                 font-size: 0.75rem;
                 font-weight: 600;
@@ -213,12 +155,15 @@
             }
 
             /* ── Testers section ─────────────────────────────────────────── */
-            .testers-section {
+            /* Two classes, not one: the shared `.page-content section` rules are
+               (0,1,1), so a lone `.testers-section` would lose to them and the
+               panel would flatten back into the page. */
+            .faq-section.testers-section {
                 background: var(--bg-elevated);
                 border-top: 1px solid var(--border);
                 border-bottom: 1px solid var(--border);
-                margin: 0 calc(-1 * var(--space-lg));
-                padding: 2.5rem var(--space-lg);
+                margin: var(--space-xl) calc(-1 * var(--space-lg)) 0;
+                padding: var(--space-xl) var(--space-lg);
             }
 
             /* ── Demo card ───────────────────────────────────────────────── */
@@ -279,14 +224,10 @@
             }
 
             /* ── Footer ──────────────────────────────────────────────────── */
-            .faq-footer {
-                border-top: 1px solid var(--border);
-                padding: 2rem 0;
-            }
-
+            /* Size, padding and alignment come from the shared `footer` rule —
+               this page only recolours its links, which are navigation rather
+               than accented body links. */
             .faq-footer p {
-                color: var(--fg-muted);
-                font-size: 0.8125rem;
                 margin: 0 0 0.5rem;
             }
 
@@ -368,7 +309,7 @@
         </nav>
 
         <!-- ── Page header ───────────────────────────────────────────────── -->
-        <header class="faq-header" role="banner">
+        <header class="page-header" role="banner">
             <div class="container">
                 <h1>
                     <span data-i18n="faq.frequently-asked-questions">Frequently Asked Questions</span>
@@ -379,7 +320,7 @@
             </div>
         </header>
 
-        <main id="main-content">
+        <main id="main-content" class="page-content">
             <div class="container">
                 <!-- ── Section 1: Registration & Account ─────────────────── -->
                 <section
@@ -945,6 +886,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=295c5ba35e" defer></script>
+        <script src="/site.js?v=bcad4a735d" defer></script>
     </body>
 </html>

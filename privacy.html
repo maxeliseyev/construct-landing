@@ -22,39 +22,16 @@
             sizes="180x180"
             href="apple-touch-icon.png"
         />
-        <link rel="preload" href="styles.css?v=c6a204a50d" as="style" />
-        <link rel="stylesheet" href="styles.css?v=c6a204a50d" />
+        <link rel="preload" href="styles.css?v=0e9c11874d" as="style" />
+        <link rel="stylesheet" href="styles.css?v=0e9c11874d" />
         <style>
-            .privacy-header {
-                padding: var(--space-3xl) 0 var(--space-2xl);
-                border-bottom: 1px solid var(--border);
-            }
-            .privacy-header h1 {
-                font-size: clamp(2rem, 4vw, 3rem);
-                margin: 0 0 var(--space-sm);
-                letter-spacing: -0.025em;
-                font-weight: 700;
-                line-height: 1.1;
-                background: linear-gradient(
-                    135deg,
-                    var(--fg) 0%,
-                    var(--fg-secondary) 100%
-                );
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-            .privacy-meta {
-                font-size: 0.9375rem;
-                color: var(--fg-muted);
-                margin: 0;
-            }
-            .privacy-content {
-                padding: var(--space-3xl) 0;
-            }
+            /* The header and the content rhythm are shared with faq / technical /
+               roadmap and live in styles.css (.page-header, .page-content). What
+               stays here is only what is peculiar to a policy: its twelve numbered
+               sections are plain siblings inside one container, not <section>
+               elements, so the separating hairline has to hang off the heading. */
             .privacy-content h2 {
-                font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-                margin: var(--space-2xl) 0 var(--space-md);
+                margin: var(--space-xl) 0 var(--space-md);
                 padding-top: var(--space-xl);
                 border-top: 1px solid var(--border-subtle);
             }
@@ -62,12 +39,6 @@
                 margin-top: 0;
                 padding-top: 0;
                 border-top: none;
-            }
-            .privacy-content h3 {
-                font-size: 1.125rem;
-                margin: var(--space-lg) 0 var(--space-sm);
-                color: var(--fg-secondary);
-                font-weight: 600;
             }
             .privacy-content hr {
                 display: none;
@@ -177,14 +148,14 @@
             </div>
         </nav>
 
-        <header class="privacy-header">
+        <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
-                <p class="privacy-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 18, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 18, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
         </header>
 
-        <main class="privacy-content">
+        <main class="page-content privacy-content">
             <div class="container">
                 <h2 data-i18n="privacy.s1.h21">1. Introduction</h2>
                 <p data-i18n="privacy.s1.p2">Konstruct is a privacy-first, end-to-end encrypted messenger built on the Signal Protocol. This policy explains exactly what data we collect, why we collect it, and what we do not collect. We have designed Konstruct from the ground up to minimize the data we hold about you.</p>
@@ -524,6 +495,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=295c5ba35e" defer></script>
+            <script src="/site.js?v=bcad4a735d" defer></script>
     </body>
 </html>

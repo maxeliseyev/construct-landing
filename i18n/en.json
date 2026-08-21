@@ -99,6 +99,8 @@
   "home.about.t5": "<strong>2. Privacy by default.</strong> It has to hold without the user doing anything: a property of the protocol, not a setting.",
   "home.about.t9": "The implementation is the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-768).",
   "home.alpha-build": "ALPHA BUILD",
+  "home.cta.install": "Install the iOS beta",
+  "home.cta.server": "What the server sees",
   "home.e2ee-active": "E2EE::ACTIVE",
   "home.features.key-features": "Key Features",
   "home.features.t2": "<strong>End-to-end encryption by default</strong> — servers see only encrypted blobs.",
@@ -154,11 +156,9 @@
   "home.support.t7": "Built with Rust, Swift, and a commitment to privacy.<br /> Open source (MPL-2.0 apps · AGPL-3.0 server)",
   "home.support.t8": "© 2026 Konstruct. Identity is a construct.",
   "home.sys-online": "SYS::ONLINE",
-  "home.cta.install": "Install the iOS beta",
-  "home.cta.server": "What the server sees",
   "home.t4": "An account tied to nothing in the real world. No phone number, no email, no name — not at sign-up, not in the database. End-to-end encryption is ordinary now. An account with nothing behind it is not.",
-  "home.t4c": "A second channel, not a replacement for your main messenger. Today that means one-to-one chats and calls on iOS, one server, an early build. No groups, no channels, no sync between your devices — a second channel does not need them.",
   "home.t4b": "Signal Protocol · post-quantum key agreement (ML-KEM-768) · gRPC stream over QUIC · sealed sender always on",
+  "home.t4c": "A second channel, not a replacement for your main messenger. Today that means one-to-one chats and calls on iOS, one server, an early build. No groups, no channels, no sync between your devices — a second channel does not need them.",
   "home.telemetry.no-telemetry-not-anonymised-absent": "No Telemetry. Not Anonymised — Absent.",
   "home.telemetry.t2": "Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, push token — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href=\"/privacy\">Privacy Policy</a>.",
   "home.why.counter": "<strong>The caveat: no external audit yet.</strong> Everything above is our own reading of our own code. It has not been checked by anyone outside the project, and until it has, treat the four properties as claims we are prepared to defend rather than as findings. There is also one server: if it is unreachable, nothing is delivered — there is no second route today.",
@@ -367,5 +367,7 @@
   "privacy.summary.td8": "Private keys never leave your device",
   "privacy.summary.td9": "Minimal metadata only",
   "roadmap.intro": "What is done, what is being built, and what is only a plan. Most of the third list is honest ambition, not a promise with a date.",
-  "technical.intro": "The short version is on the front page. This is the long one: the transport, the crypto stack, and what the server can and cannot see."
+  "roadmap.title": "Roadmap",
+  "technical.intro": "The short version is on the front page. This is the long one: the transport, the crypto stack, and what the server can and cannot see.",
+  "technical.title": "How it works"
 }

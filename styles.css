@@ -87,8 +87,10 @@ body {
 /* ASCII noise texture — same charset/seed as CTNoise in ConstructTheme.swift,
    rendered as a tiled SVG instead of a per-pixel canvas. Fixed + behind all
    content so it reads as a faint terminal "matrix grid" rather than a pattern.
-   Scoped to .landing (index.html) only — other pages (privacy, faq, crypto,
-   contact) keep a flat background; their design intentionally stays plain. */
+   Scoped to .landing, which is index.html and nothing else. Every sub-page —
+   faq, privacy, technical, roadmap, crypto, contact — keeps a flat background;
+   their design intentionally stays plain. technical and roadmap did carry this
+   class, so the front page's backdrop showed up behind plain reference copy. */
 body.landing::before {
   content: "";
   position: fixed;
@@ -218,7 +220,7 @@ h2 {
 }
 
 /* Terminal heading treatment ("> SECTION", uppercase) — landing page only.
-   Other pages (privacy, faq, crypto, contact) keep plain headings. */
+   Every sub-page keeps plain headings; see .page-content h2 for theirs. */
 .landing h2 {
   font-size: clamp(1.5rem, 3vw, 2rem);
   letter-spacing: 0.02em;
@@ -769,15 +771,76 @@ section[aria-labelledby="features-heading"] ul li::before {
   body.nav-open { overflow: hidden; }
 }
 
-/* One sentence under the nav saying what the page is, so a visitor arriving from
-   a search result is not dropped straight into a technical section. */
-.page-intro {
-  padding: var(--space-2xl, 3rem) 0 0;
+/* ── Sub-page shell (faq, privacy, technical, roadmap) ──────────────────────
+   Every page below the front page opens the same way — title, one line saying
+   what the page is, one rule — and then runs the same content rhythm under it.
+
+   Before this existed the four pages were four designs: FAQ and Privacy each
+   carried a private copy of the header in an inline <style> (different clamp,
+   different padding, one of them with a gradient fill), while How-it-works and
+   Roadmap had no title at all, only a loose intro paragraph, and still wore
+   `body.landing` — so they also carried the front page's ASCII matrix backdrop
+   and its "> UPPERCASE" heading treatment on what is plain reference copy.
+   The words belong to the pages; the shape belongs here. */
+.page-header {
+  padding: var(--space-2xl) 0 var(--space-xl);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
 }
-.page-intro p {
+
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--fg);
+  margin: 0 0 var(--space-sm);
+}
+
+/* The subtitle, and the privacy policy's date line: same slot, same measure,
+   only the emphasis differs. */
+.page-header p {
+  font-size: 1.0625rem;
+  color: var(--fg-secondary);
   max-width: 68ch;
-  color: var(--fg-muted);
   margin: 0;
+  line-height: 1.7;
+}
+
+.page-header .page-meta {
+  font-size: 0.9375rem;
+  color: var(--fg-muted);
+}
+
+.page-content {
+  padding: var(--space-2xl) 0 var(--space-3xl);
+}
+
+/* Sections here are reference copy, not the front page's full-bleed blocks, so
+   they are separated by a hairline rather than by 6rem of air on each side. */
+.page-content section {
+  padding: 0;
+  border-bottom: none;
+}
+
+.page-content section + section {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.page-content h2 {
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0 0 var(--space-md);
+}
+
+.page-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin: var(--space-xl) 0 var(--space-sm);
 }
 
 /* Locale text is applied via data-i18n / data-i18n-html + /i18n/{lang}.json.
