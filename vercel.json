@@ -18,7 +18,7 @@
     },
     {
       "source": "/c/:userId",
-      "destination": "/contact.html?userId=:userId"
+      "destination": "/contact.html"
     },
     {
       "source": "/add",
@@ -174,15 +174,6 @@
     },
     {
       "source": "/effects.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=60, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/contact.css",
       "headers": [
         {
           "key": "Cache-Control",

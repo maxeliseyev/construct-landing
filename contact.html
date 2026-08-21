@@ -1,42 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Add contact to Konstruct Messenger">
-    <title>Konstruct - Add Contact</title>
-    
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="/styles.css?v=20260812-lang" as="style" />
-    <link rel="preload" href="/contact.css?v=20260812-lang" as="style" />
-    <link rel="stylesheet" href="/styles.css?v=20260812-lang" />
-    <link rel="stylesheet" href="/contact.css?v=20260812-lang" />
-</head>
-<body>
-    <main class="contact-page">
-        <div class="contact-container" role="main">
-            <h1>Add Contact</h1>
-            <div class="username" id="username" aria-live="polite">@username</div>
-            <p class="message" id="message">
-                Click the button below to open this contact in Konstruct Messenger app.
-            </p>
-            
-            <nav aria-label="Contact actions">
-                <a href="#" class="button" id="openAppButton" aria-label="Open contact in Konstruct Messenger app">
-                    Open in app
-                </a>
-            </nav>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="This Konstruct invite link uses a format the app no longer accepts."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Konstruct — Link out of date</title>
 
-            <div class="loading" id="loading" aria-live="polite" aria-busy="true" hidden>
-                <div class="spinner" aria-label="Loading"></div>
-                <p style="margin-top: 12px; color: var(--fg-muted);">Attempting to open app...</p>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="preload" href="/styles.css?v=b98ca0037b" as="style" />
+        <link rel="stylesheet" href="/styles.css?v=b98ca0037b" />
+    </head>
+
+    <body>
+        <header class="page-header" role="banner">
+            <div class="container">
+                <h1>This link is out of date</h1>
+                <p>
+                    Konstruct no longer accepts contact links of this form. Ask
+                    the person who sent it for a fresh invite — a QR code or a
+                    link from the app — and open that one instead.
+                </p>
             </div>
-            
-            <div class="error" id="error" role="alert" aria-live="assertive" hidden></div>
-        </div>
-    </main>
+        </header>
 
-    <script src="/contact.js" defer></script>
-</body>
+        <main class="page-content">
+            <div class="container">
+                <h2>Why it stopped working</h2>
+                <p>
+                    A link like this one carried an account identifier and
+                    nothing else. It was not signed, so anyone who knew an
+                    identifier could produce one, and being sent a link was
+                    enough to be added — which is the opposite of what an invite
+                    is supposed to mean here.
+                </p>
+                <p>
+                    Invites are signed now. Each one can be accepted once, stops
+                    working twelve hours after it was created, and a link that
+                    has already been used does nothing at all. That is what
+                    makes starting a conversation something both people agreed
+                    to rather than something one of them could arrange alone.
+                </p>
+                <p>
+                    The app says the same thing when it sees one of these links:
+                    <em
+                        >This link format is no longer supported. Ask for a
+                        fresh invite QR or link.</em
+                    >
+                    Nothing is wrong with your app or your account.
+                </p>
+
+                <h2>Getting a working invite</h2>
+                <p>
+                    Ask your contact to share a new invite from the app, then
+                    open the link they send or scan the QR code. If you do not
+                    have Konstruct yet, it is in beta on iOS —
+                    <a href="https://testflight.apple.com/join/NH3WssFh"
+                        >join the TestFlight beta</a
+                    >
+                    first, then open the new invite.
+                </p>
+                <p>
+                    <a href="/faq">How invites and contacts work →</a>
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p><a href="/">← konstruct.cc</a></p>
+            </div>
+        </footer>
+    </body>
 </html>
-
