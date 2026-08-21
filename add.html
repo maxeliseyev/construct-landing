@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en" data-i18n-page="add">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,8 +17,8 @@
     <body>
         <header class="page-header" role="banner">
             <div class="container">
-                <h1>Open your invite</h1>
-                <p id="message">
+                <h1 data-i18n="add.title">Open your invite</h1>
+                <p id="message" data-i18n="add.intro">
                     This link carries an invite to a Konstruct conversation.
                     Open it in the app to accept it.
                 </p>
@@ -32,7 +32,7 @@
                         class="hero-cta__primary"
                         href="#"
                         id="openAppButton"
-                        aria-label="Open this invite in Konstruct"
+                        data-i18n="add.open"
                         >Open in app</a
                     >
                 </p>
@@ -45,7 +45,7 @@
                     hidden
                 >
                     <span class="invite-spinner" aria-hidden="true"></span>
-                    <span>Opening Konstruct…</span>
+                    <span data-i18n="add.opening">Opening Konstruct…</span>
                 </div>
 
                 <div
@@ -56,7 +56,7 @@
                     hidden
                 ></div>
 
-                <p>
+                <p data-i18n="add.expiry">
                     An invite can be accepted once and stops working twelve
                     hours after it was created. If this one has expired, ask
                     your contact for a fresh link or QR code.
@@ -66,10 +66,13 @@
 
         <footer>
             <div class="container">
-                <p><a href="/">← konstruct.cc</a></p>
+                <p><a href="/" data-i18n="nav.back-home">← Back to konstruct.cc</a></p>
             </div>
         </footer>
 
+        <!-- site.js first: add.js reads ConstructLang for the strings it builds
+             at runtime. Both are deferred, so they run in document order. -->
+        <script src="/site.js?v=f547dd1b1b" defer></script>
         <script src="/add.js" defer></script>
     </body>
 </html>

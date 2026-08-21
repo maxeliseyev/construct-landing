@@ -66,6 +66,17 @@ def main() -> int:
                 ok = False
                 print(f"FAIL {name}: still has class=\"{lang}\" ({n_bare})")
 
+    # Not every key is reachable from an attribute. add.js builds two of its
+    # strings at runtime — the invite has no payload, the app did not open — and
+    # looks them up through ConstructLang.t(), so scanning only the markup would
+    # report live keys as dead and invite someone to delete them.
+    for js in ("site.js", "add.js", "effects.js"):
+        path = ROOT / js
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        used |= {k for k in base if f'"{k}"' in text or f"'{k}'" in text}
+
     unused = base - used - {k for k in base if k.endswith(".meta.title")}
     # meta.title is applied via page namespace, not data-i18n attr
     unused = {k for k in unused if not k.endswith(".meta.title")}

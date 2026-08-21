@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en" data-i18n-page="contact">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,8 +18,8 @@
     <body>
         <header class="page-header" role="banner">
             <div class="container">
-                <h1>This link is out of date</h1>
-                <p>
+                <h1 data-i18n="contact.title">This link is out of date</h1>
+                <p data-i18n="contact.intro">
                     Konstruct no longer accepts contact links of this form. Ask
                     the person who sent it for a fresh invite — a QR code or a
                     link from the app — and open that one instead.
@@ -29,22 +29,26 @@
 
         <main class="page-content">
             <div class="container">
-                <h2>Why it stopped working</h2>
-                <p>
+                <h2 data-i18n="contact.legacy.h2">Why it stopped working</h2>
+                <p data-i18n="contact.legacy.p1">
                     A link like this one carried an account identifier and
                     nothing else. It was not signed, so anyone who knew an
                     identifier could produce one, and being sent a link was
                     enough to be added — which is the opposite of what an invite
                     is supposed to mean here.
                 </p>
-                <p>
+                <p data-i18n="contact.legacy.p2">
                     Invites are signed now. Each one can be accepted once, stops
                     working twelve hours after it was created, and a link that
                     has already been used does nothing at all. That is what
                     makes starting a conversation something both people agreed
                     to rather than something one of them could arrange alone.
                 </p>
-                <p>
+                <!-- The quoted sentence is copied verbatim from the app's own
+                     Localizable.strings in each language: the reader is holding
+                     a phone that just said it, and a paraphrase would not be
+                     the sentence they are trying to match. -->
+                <p data-i18n-html="contact.legacy.app-says">
                     The app says the same thing when it sees one of these links:
                     <em
                         >This link format is no longer supported. Ask for a
@@ -53,8 +57,8 @@
                     Nothing is wrong with your app or your account.
                 </p>
 
-                <h2>Getting a working invite</h2>
-                <p>
+                <h2 data-i18n="contact.fresh.h2">Getting a working invite</h2>
+                <p data-i18n-html="contact.fresh.p1">
                     Ask your contact to share a new invite from the app, then
                     open the link they send or scan the QR code. If you do not
                     have Konstruct yet, it is in beta on iOS —
@@ -64,15 +68,19 @@
                     first, then open the new invite.
                 </p>
                 <p>
-                    <a href="/faq">How invites and contacts work →</a>
+                    <a href="/faq" data-i18n="contact.fresh.faq"
+                        >How invites and contacts work →</a
+                    >
                 </p>
             </div>
         </main>
 
         <footer>
             <div class="container">
-                <p><a href="/">← konstruct.cc</a></p>
+                <p><a href="/" data-i18n="nav.back-home">← Back to konstruct.cc</a></p>
             </div>
         </footer>
+
+        <script src="/site.js?v=f547dd1b1b" defer></script>
     </body>
 </html>

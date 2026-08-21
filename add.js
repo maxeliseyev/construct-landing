@@ -9,6 +9,23 @@
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/NH3WssFh";
 
+// Two of the strings on this page are built here rather than sitting in the
+// markup, so they need the dictionary. Opening the app must not wait for it:
+// on a phone this script hands off to konstruct:// within milliseconds of load,
+// and blocking that on a 58KB JSON fetch to translate a line the visitor may
+// never see would be the wrong trade. So the English fallback is written
+// immediately and replaced if and when a translation arrives — which, with the
+// dictionary in sessionStorage, is usually the same frame.
+function say(key, fallback, write) {
+    write(fallback);
+    const lang = window.ConstructLang;
+    if (!lang || !lang.ready) return;
+    lang.ready.then(function () {
+        const translated = lang.t(key);
+        if (translated) write(translated);
+    });
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 let invite = urlParams.get("invite");
 
@@ -46,11 +63,20 @@ function setLoading(isLoading) {
 
 if (!invite) {
     if (message) {
-        message.textContent = "This invite link is missing its payload.";
+        // The page's own data-i18n would otherwise put the generic intro back
+        // over this when the dictionary lands, so the key moves with the text.
+        message.removeAttribute("data-i18n");
+        say("add.err.empty.message", "This invite link is missing its payload.", (s) => {
+            message.textContent = s;
+        });
     }
-    if (openAppBtn) openAppBtn.style.display = "none";
-    showError(
-        'No invite data in this URL. Ask your contact to share a fresh link from Settings ▸ Copy Contact Link, or scan their QR code.'
+    // Hide the row, not just the link: an empty .hero-cta still carries its
+    // margin, which left a gap where a button used to be.
+    if (openAppBtn) (openAppBtn.parentElement || openAppBtn).hidden = true;
+    say(
+        "add.err.empty",
+        "No invite data in this URL. Ask your contact to share a fresh link from Settings ▸ Copy Contact Link, or scan their QR code.",
+        showError
     );
 } else {
     // Preserve the raw invite token — it is already base64url; do not re-encode.
@@ -71,11 +97,13 @@ if (!invite) {
 
         window.setTimeout(() => {
             setLoading(false);
-            showError(
+            say(
+                "add.err.noapp",
                 'App not found. Konstruct is in beta — <a href="' +
                     TESTFLIGHT_URL +
                     '">join the TestFlight beta</a>, then open this link again. ' +
-                    "You can also paste the link inside the app (Scan ▸ Paste invite link)."
+                    "You can also paste the link inside the app (Scan ▸ Paste invite link).",
+                showError
             );
         }, 2000);
     }
