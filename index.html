@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=d68344d841" as="style" />
-        <link rel="stylesheet" href="styles.css?v=d68344d841" />
-        <link rel="stylesheet" href="effects.css?v=d68344d841" />
+        <link rel="preload" href="styles.css?v=dff23d057e" as="style" />
+        <link rel="stylesheet" href="styles.css?v=dff23d057e" />
+        <link rel="stylesheet" href="effects.css?v=dff23d057e" />
         
     </head>
 
@@ -186,7 +186,19 @@
                         >Your identity on the Konstruct network is a pair of cryptographic keys, computed when the account is created. No phone number, no email, nothing else that could tie the account to who you are in the real world. Every conversation is end-to-end encrypted with a combination of classical and post-quantum algorithms. In the clear a message carries the minimum: an opaque identifier<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a> for the recipient, a time and a size. Everything else — the sender<a class="fn-marker" href="#fn-sender" aria-label="What sender protection means">*</a> included — is encrypted and readable by the recipient and nobody else.</span
                     >
                     </p>
-                <p class="hero-anchors" data-i18n="home.t4b">Signal Protocol · post-quantum key agreement (ML-KEM-768) · gRPC stream over QUIC · sealed sender always on</p>
+                <!-- The two footnotes sit directly under the paragraph that
+                     raises them, so the markers are answered where they are
+                     read rather than a screen further down. -->
+                <ul class="fn-notes">
+                    <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.</span></li>
+                    <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created.</span></li>
+                </ul>
+                <!-- The protocol line is no longer shown: the paragraph above
+                     says the same thing in words a reader can finish, and
+                     repeating it in jargon added a second claim to skim past.
+                     It stays in the page for crawlers and screen readers,
+                     which is the only job it was still doing. -->
+                <p class="sr-only" data-i18n="home.t4b">Signal Protocol · post-quantum key agreement (ML-KEM-768) · gRPC stream over QUIC · sealed sender always on</p>
 
             </div>
         </header>
@@ -203,10 +215,6 @@
                     <h2 id="why-heading"><span data-i18n="home.why.title">Why this exists</span></h2>
                     <p><span data-i18n="home.lead.mission">Konstruct was built as a counterweight to where the large technology companies have settled: tracking behaviour, accumulating and reselling user data, training models on what those users wrote. Governments, meanwhile, keep tightening their grip on the internet under cover of good intentions. Ordinary, honest users end up bound by the terms of those platforms with no alternative on offer.</span></p>
                     <p><span data-i18n="home.lead.limits">But let us be realistic: Konstruct runs on the same commercial infrastructure as the giants of the market, which means absolute freedom and independence cannot exist here either. What we can do for our own users, we do. We collect and analyse no telemetry at all, not even anonymised. The server keeps the minimum needed to route a message, and the messages themselves sit in ephemeral storage for a short time — until they are delivered — and are then removed. The one thing that stays visible on the network is timing correlation and your IP address; work on that is in progress.</span></p>
-                    <ul class="why-notes">
-                        <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.</span></li>
-                        <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created.</span></li>
-                    </ul>
                     <p class="why-counter"><span data-i18n-html="home.nb.audit"><strong>NB: there has been no external audit.</strong> Everything above is our own reading of our own code. Nobody outside the project has checked it, and while that is the case, treat these properties as claims we are prepared to defend rather than as the findings of a review.</span></p>
                     <p class="hero-cta">
                         <a class="hero-cta__primary" href="https://testflight.apple.com/join/NH3WssFh"

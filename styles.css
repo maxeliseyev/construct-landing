@@ -1007,35 +1007,33 @@ a.fn-marker:hover,
 a.fn-marker:focus-visible {
     text-decoration: underline;
 }
-.why-notes {
+.fn-notes {
     max-width: 68ch;
-    /* Aligned with the text inside .why-item, past its 2px rule + 1rem padding,
-       so the notes read as belonging to the list rather than to the page. */
-    padding-left: calc(1rem + 2px);
+    padding-left: 0;
     margin: var(--space-sm) 0 0;
     list-style: none;
     font-size: 0.875rem;
     color: var(--fg-muted);
 }
-.why-notes li + li {
+/* On /technical the notes follow a .why-grid: aligned with the text inside
+   .why-item, past its 2px rule + 1rem padding, so they read as belonging to
+   the list rather than to the page. Under a plain paragraph — the hero — that
+   indent would instead break the left edge the paragraph sets. */
+.fn-notes--aligned {
+    padding-left: calc(1rem + 2px);
+}
+.fn-notes li + li {
     margin-top: 0.5rem;
 }
-.why-notes li::before {
+.fn-notes li::before {
     content: none;
 }
-.why-notes li:target {
+.fn-notes li:target {
     /* Jumping to a note lands mid-page; without this the reader cannot tell
        which of the two they were sent to. */
     color: var(--fg);
     scroll-margin-top: 30vh;
 }
-.more-link {
-  max-width: 68ch;
-  margin: var(--space-sm) 0 0;
-  padding-left: calc(1rem + 2px);
-  font-size: 0.9375rem;
-}
-.more-link a { color: var(--accent); }
 .why-counter {
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -1047,14 +1045,19 @@ a.fn-marker:focus-visible {
 }
 
 
-/* Layering: every block opens with a sentence a non-technical reader can finish,
-   and the protocol detail follows. Same words, different order — a reader who
-   stops after the first line still leaves knowing what this is. */
-.hero-anchors {
-    color: var(--fg-muted);
-    font-size: 0.875rem;
-    letter-spacing: 0.02em;
-    margin-top: 0.75rem;
+/* Off-screen but in the document: read by a screen reader and by a crawler,
+   drawn for nobody. Not `display: none`, which removes it from both. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* The stage line answers the question the line above it provokes — "so can I
