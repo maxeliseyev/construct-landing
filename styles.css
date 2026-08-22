@@ -1118,3 +1118,24 @@ a.fn-marker:focus-visible {
     padding-left: 1rem;
     margin-bottom: var(--space-lg, 1.5rem);
 }
+
+/* The three places to read next, under the one button. They were three separate
+   `.more-link` paragraphs scattered through the section they belonged to; as a
+   list under the call to action they are a single decision — install, or read
+   one of these — instead of three interruptions inside the argument. */
+.next-links {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg, 1.5rem) 0 0;
+    max-width: 68ch;
+    font-size: 0.9375rem;
+}
+.next-links li {
+    margin-bottom: 0;
+}
+.next-links li + li {
+    margin-top: 0.5rem;
+}
+.next-links a {
+    color: var(--accent);
+}

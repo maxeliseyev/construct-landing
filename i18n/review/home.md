@@ -4,12 +4,6 @@ Edit the Russian only — the `##` heading is the key the site looks the
 string up by, and the `>` line is the English original for reference.
 When you are done: `python3 scripts/ru-review.py import`
 
-## home.about.our-mission  ·  plain text
-
-> Our Mission
-
-Наша миссия
-
 ## home.about.t10  ·  HTML allowed
 
 > The server holds public keys and ciphertext, never plaintext, and does not see who sent a message — only the recipient, the time and the size. Timing and IP stay visible on the wire. Today the network is a single trusted server.
@@ -58,12 +52,6 @@ ALPHA BUILD
 
 Поставить бету на iOS
 
-## home.cta.server  ·  plain text
-
-> What the server sees
-
-Что видит сервер
-
 ## home.e2ee-active  ·  plain text
 
 > E2EE::ACTIVE
@@ -92,7 +80,7 @@ E2EE::ACTIVE
 
 > <strong>Post-quantum key agreement</strong> — <strong>ML-KEM-768</strong> (Kyber-768) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH), and sessions that negotiate it also re-key continuously inside the Double Ratchet. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up.
 
-<strong>Постквантовое согласование ключей</strong> — <strong>ML-KEM-768</strong> (Kyber-768) инкапсулируется в Kyber-префикс получателя при установке сессии (PQXDH), а сессии, договорившиеся об этом, ещё и перевыдают ключи непрерывно внутри Double Ratchet. Подписи гибридные, Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): криптография реализована и кросс-верифицирована между клиентом и сервером, оркестрация ротации ключей на клиенте ещё дописывается.
+<strong>Постквантовое согласование ключей</strong> — <strong>ML-KEM-768</strong> (Kyber-768) инкапсулируется в Kyber-предключ получателя при установке сессии (PQXDH), а сессии, договорившиеся об этом, ещё и перевыдают ключи непрерывно внутри Double Ratchet. Подписи гибридные, Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): криптография реализована и кросс-верифицирована между клиентом и сервером, оркестрация ротации ключей на клиенте ещё дописывается.
 
 ## home.features.t5  ·  HTML allowed
 
@@ -104,7 +92,7 @@ E2EE::ACTIVE
 
 > <strong>Open source</strong> — clients, server and transport, under weak-copyleft licences. Running your own server is on the roadmap; the app cannot yet be pointed at one.
 
-<strong>Открытый код</strong> — клиенты, сервер и транспорт под слабо-копилефтными лицензиями. Свой сервер — в планах: приложение пока нельзя на него направить.
+<strong>Открытый код</strong> — клиенты, сервер и транспорт под лицензиями с ограниченным копилефтом. Свой сервер — в планах: приложение пока нельзя на него направить.
 
 ## home.features.t7  ·  HTML allowed
 
@@ -138,15 +126,15 @@ iOS TestFlight Public Alpha
 
 ## home.get-involved.t2  ·  HTML allowed
 
-> Konstruct is open source under weak-copyleft licenses: MPL-2.0 for the client apps and <code>construct-veil</code>, AGPL-3.0 for the server and relay, Apache-2.0 for shared libraries, and CC-BY-4.0 for text / specs. Privacy technology should be transparent and auditable by anyone — including the open issues we haven't fixed yet.
+> Konstruct is open source under weak-copyleft licences — the code may be built into your own product, but changes to the code itself have to be published: MPL-2.0 for the client apps and <code>construct-veil</code>, AGPL-3.0 for the server and relay, Apache-2.0 for shared libraries, and CC-BY-4.0 for text and specs. Privacy technology should be transparent and auditable by anyone — including the open issues we haven't fixed yet.
 
-Konstruct открыт под слабо-копилефтными лицензиями: MPL-2.0 для клиентских приложений и <code>construct-veil</code>, AGPL-3.0 для сервера и реле, Apache-2.0 для общих библиотек, CC-BY-4.0 для текстов и спецификаций. Технология приватности должна быть прозрачной и проверяемой кем угодно — включая ещё не исправленные проблемы.
+Konstruct открыт под лицензиями с ограниченным копилефтом — встраивать код в свои продукты можно, но правки самого кода нужно публиковать: MPL-2.0 для клиентских приложений и <code>construct-veil</code>, AGPL-3.0 для сервера и реле, Apache-2.0 для общих библиотек, CC-BY-4.0 для текстов и спецификаций. Технология приватности должна быть прозрачной и проверяемой кем угодно — включая ещё не исправленные проблемы.
 
 ## home.get-involved.t3  ·  HTML allowed
 
-> <strong>Contributions welcome</strong> — from code improvements to security review to documentation. We are a tiny team; PRs and issues are read by humans, not triaged by a queue.
+> <strong>Contributions welcome</strong> — from code improvements to security review to documentation.
 
-<strong>Контрибьюторы приветствуются</strong> — от улучшений кода до review безопасности и документации. Команда крошечная: PR и issues читают живые люди, а не фильтрует очередь.
+<strong>Контрибьюторы приветствуются</strong> — от улучшений в коде до ревью безопасности и документации.
 
 ## home.get-involved.t5  ·  plain text
 
@@ -200,7 +188,7 @@ Konstruct использует <strong>gRPC с Protocol Buffers</strong> для 
 
 > <strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-768</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey and mixes it into the ratchet root, so a recorded session is not recoverable by breaking X25519 alone. The very first message is classical-only by design; the post-quantum secret applies from the second message onward. On top of that, sessions that negotiate it run a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup.
 
-<strong>Постквантовое согласование ключей (PQXDH):</strong> при установке сессии инициатор инкапсулирует секрет <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203) в Kyber-префикс получателя и подмешивает его в корень ратчета — так что записанную сессию нельзя восстановить, сломав только X25519. Самое первое сообщение по замыслу остаётся классическим; постквантовый секрет действует со второго. Сверх этого сессии, которые об этом договорились, ведут <strong>непрерывный ратчет ML-KEM-768</strong> — перевыдача ключей по ходу разговора, а не один раз при установке.
+<strong>Постквантовое согласование ключей (PQXDH):</strong> при установке сессии инициатор инкапсулирует секрет <strong>ML-KEM-768</strong> (NIST FIPS&nbsp;203) в Kyber-предключ получателя и подмешивает его в корень ратчета — так что записанную сессию нельзя восстановить, сломав только X25519. Самое первое сообщение по замыслу остаётся классическим; постквантовый секрет действует со второго. Сверх этого сессии, которые об этом договорились, ведут <strong>непрерывный ратчет ML-KEM-768</strong> — перевыдача ключей по ходу разговора, а не один раз при установке.
 
 ## home.how-it-works.t6  ·  HTML allowed
 
@@ -264,9 +252,27 @@ Konstruct использует <strong>gRPC с Protocol Buffers</strong> для 
 
 ## home.identity.title  ·  plain text
 
-> Identity is a Construct
+> Identity is a construct.
 
-Идентичность — это конструкт
+Идентичность — это конструкт.
+
+## home.lead.identity  ·  HTML allowed
+
+> Your identity on the Konstruct network is a pair of cryptographic keys, computed when the account is created. No phone number, no email, nothing else that could tie the account to who you are in the real world. Every conversation is end-to-end encrypted with a combination of classical and post-quantum algorithms. In the clear a message carries the minimum: an opaque identifier<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a> for the recipient, a time and a size. Everything else — the sender<a class="fn-marker" href="#fn-sender" aria-label="What sender protection means">*</a> included — is encrypted and readable by the recipient and nobody else.
+
+Ваша идентичность в сети Konstruct — это пара криптографических ключей, которая вычисляется при создании аккаунта. Ни номера телефона, ни почты, ни чего-либо ещё, что связало бы аккаунт с вашей личностью в реальном мире. Все переписки защищены сквозным шифрованием — комбинацией классических и постквантовых алгоритмов. Незашифрованным сообщение несёт минимум: непрозрачный идентификатор<a class="fn-marker" href="#fn-opaque" aria-label="Что такое непрозрачный идентификатор">**</a> получателя, время и размер. Всё остальное, включая отправителя<a class="fn-marker" href="#fn-sender" aria-label="Что такое защита отправителя">*</a>, зашифровано и доступно только получателю и никому больше.
+
+## home.lead.limits  ·  plain text
+
+> But let us be realistic: Konstruct runs on the same commercial infrastructure as the giants of the market, which means absolute freedom and independence cannot exist here either. What we can do for our own users, we do. We collect and analyse no telemetry at all, not even anonymised. The server keeps the minimum needed to route a message, and the messages themselves sit in ephemeral storage for a short time — until they are delivered — and are then removed. The one thing that stays visible on the network is timing correlation and your IP address; work on that is in progress.
+
+Но будем реалистами: Konstruct работает на базе той же коммерческой инфраструктуры, что и гиганты рынка, а значит абсолютной свободы и независимости здесь тоже быть не может. Зато в отношении своих пользователей мы делаем всё возможное: не собираем и не анализируем никакой телеметрии, даже обезличенной. Сервер хранит минимум данных, нужных для маршрутизации сообщений, а сами сообщения лежат в эфемерном хранилище короткий срок — до доставки, после чего удаляются. Единственное, что остаётся видимым в сети, — корреляция по времени и IP-адрес; решение этого вопроса находится в разработке.
+
+## home.lead.mission  ·  plain text
+
+> Konstruct was built as a counterweight to where the large technology companies have settled: tracking behaviour, accumulating and reselling user data, training models on what those users wrote. Governments, meanwhile, keep tightening their grip on the internet under cover of good intentions. Ordinary, honest users end up bound by the terms of those platforms with no alternative on offer.
+
+Konstruct создан как противовес общей тенденции крупных цифровых корпораций — отслеживать поведение, накапливать и перепродавать данные пользователей, обучать модели на пользовательском контенте. Одновременно с этим государства всё больше стараются контролировать интернет, прикрываясь благими намерениями. Обычные добросовестные пользователи оказываются заложниками условий этих платформ без какой-либо альтернативы.
 
 ## home.meta.title  ·  plain text
 
@@ -274,17 +280,29 @@ Konstruct использует <strong>gRPC с Protocol Buffers</strong> для 
 
 Konstruct — Мессенджер с постквантовым шифрованием
 
+## home.more.privacy  ·  plain text
+
+> The detailed privacy policy →
+
+Подробная политика конфиденциальности →
+
 ## home.more.roadmap  ·  plain text
 
-> What is done and what is planned →
+> What is done and what is planned — the roadmap →
 
-Что уже сделано и что в планах →
+Что сделано, а что в планах — дорожная карта →
 
 ## home.more.technical  ·  plain text
 
-> How this is built — transport, crypto stack, what the server sees →
+> Technical details of how the system works →
 
-Как это устроено — транспорт, криптография, что видит сервер →
+Технические подробности работы системы →
+
+## home.nb.audit  ·  HTML allowed
+
+> <strong>NB: there has been no external audit.</strong> Everything above is our own reading of our own code. Nobody outside the project has checked it, and while that is the case, treat these properties as claims we are prepared to defend rather than as the findings of a review.
+
+<strong>NB: внешнего аудита не было.</strong> Всё, что выше, — это наше собственное прочтение нашего же кода. Никто вне проекта его не проверял, и пока это так, считайте эти свойства заявлениями, которые мы готовы защищать, а не результатами проверки.
 
 ## home.roadmap.decentralization-roadmap  ·  plain text
 
@@ -384,21 +402,15 @@ Konstruct — Мессенджер с постквантовым шифрова�
 
 ## home.support.t8  ·  plain text
 
-> © 2026 Konstruct. Identity is a construct.
+> © 2026 Konstruct.
 
-© 2026 Konstruct. Идентичность — это конструкт.
+© 2026 Konstruct.
 
 ## home.sys-online  ·  plain text
 
 > SYS::ONLINE
 
 SYS::ONLINE
-
-## home.t4  ·  plain text
-
-> An account tied to nothing in the real world. No phone number, no email, no name — not at sign-up, not in the database. End-to-end encryption is ordinary now. An account with nothing behind it is not.
-
-Аккаунт, не связанный ни с одним идентификатором реального мира. Ни номера, ни почты, ни имени — ни при регистрации, ни в базе. Сквозным шифрованием сегодня никого не удивишь; аккаунтом, за которым ничего не стоит, — можно.
 
 ## home.t4b  ·  plain text
 
@@ -424,23 +436,11 @@ Signal Protocol · постквантовое согласование ключ�
 
 Konstruct не собирает аналитику, метрики использования, поведенческие события, отчёты о крашах и рекламные идентификаторы. Сторонних SDK нет — ни Firebase, ни Crashlytics, ни Sentry, — как нет ATT-запроса и SKAdNetwork. Релизные сборки не пишут никаких логов. Одного мы не контролируем: пока бета идёт в TestFlight, Apple отдаёт нам свои стандартные метрики тестирования — дату установки, версию сборки, число сессий и крашей. Это метрики Apple, не наши, и они закончатся с релизом в App Store. Для маршрутизации сервер хранит только небольшой фиксированный набор метаданных — получатель, время, размер, ваши публичные ключи, push-токен, — а защита отправителя убирает из конверта и его самого. Чего это не решает, корреляцию по времени и IP, мы описали в <a href="/privacy">Политике конфиденциальности</a>.
 
-## home.why.counter  ·  HTML allowed
-
-> <strong>The caveat: no external audit yet.</strong> Everything above is our own reading of our own code. It has not been checked by anyone outside the project, and until it has, treat the four properties as claims we are prepared to defend rather than as findings. There is also one server: if it is unreachable, nothing is delivered — there is no second route today.
-
-<strong>Оговорка: внешнего аудита не было.</strong> Всё, что выше, — это наше собственное прочтение нашего же кода. Никто вне проекта его не проверял, и пока это так, считайте четыре свойства заявлениями, которые мы готовы защищать, а не результатами проверки. И сервер один: если он недоступен, ничего не доставляется — второго маршрута сегодня нет.
-
 ## home.why.id.answer  ·  HTML allowed
 
 > <strong>An account is a keypair.</strong> No phone number, no email, no required username, and discovery is off by default. A subpoena to a carrier reaches nothing, because no carrier is in the loop.
 
 <strong>Аккаунт — пара ключей.</strong> Ни номера телефона, ни почты, ни обязательного имени; обнаружение по умолчанию выключено. Запрос оператору связи ничего не даёт: оператора в цепочке нет.
-
-## home.why.lead  ·  plain text
-
-> And an honest caveat.
-
-И одна оговорка.
 
 ## home.why.note.opaque  ·  HTML allowed
 
@@ -458,7 +458,7 @@ Konstruct не собирает аналитику, метрики исполь�
 
 > <strong>Post-quantum, already in the protocol.</strong> ML-KEM-768 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH). The first message of a conversation is classical-only by design; everything after it is not.
 
-<strong>Постквантовость уже в протоколе.</strong> ML-KEM-768 инкапсулируется в Kyber-префикс получателя при установке сессии (PQXDH). Первое сообщение разговора по замыслу классическое, всё последующее — нет.
+<strong>Постквантовость уже в протоколе.</strong> ML-KEM-768 инкапсулируется в Kyber-предключ получателя при установке сессии (PQXDH). Первое сообщение разговора по замыслу классическое, всё последующее — нет.
 
 ## home.why.sealed.answer  ·  HTML allowed
 
@@ -468,9 +468,9 @@ Konstruct не собирает аналитику, метрики исполь�
 
 ## home.why.title  ·  plain text
 
-> Four properties
+> Why this exists
 
-Четыре свойства
+Зачем это нужно
 
 ## home.why.transport.answer  ·  HTML allowed
 

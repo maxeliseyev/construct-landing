@@ -15,8 +15,8 @@
         <link rel="canonical" href="https://konstruct.cc/technical" />
         <link rel="icon" type="image/png" href="favicon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-        <link rel="preload" href="styles.css?v=b98ca0037b" as="style" />
-        <link rel="stylesheet" href="styles.css?v=b98ca0037b" />
+        <link rel="preload" href="styles.css?v=d68344d841" as="style" />
+        <link rel="stylesheet" href="styles.css?v=d68344d841" />
     </head>
 
     <body>
@@ -89,16 +89,47 @@
         <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="technical.title">How it works</h1>
-                <p><span data-i18n-html="technical.intro">The short version is on the front page. This is the long one: the transport, the crypto stack, and what the server can and cannot see.</span></p>
+                <p><span data-i18n-html="technical.intro">The front page is the short version. This is the long one: the transport, the cryptography, what the server can and cannot see, and where the protocol specification says more.</span></p>
             </div>
         </header>
 
         <main class="page-content">
+            <!-- ── The short version, for a reader who does not want the long one ── -->
+            <section aria-labelledby="summary-heading">
+                <div class="container">
+                    <h2 id="summary-heading"><span data-i18n="technical.summary.title">The short version</span></h2>
+                    <div class="why-grid">
+                    <div class="why-item">
+                        <p class="why-answer"><span data-i18n-html="home.why.id.answer"><strong>An account is a keypair.</strong> No phone number, no email, no required username, and discovery is off by default. A subpoena to a carrier reaches nothing, because no carrier is in the loop.</span></p>
+                    </div>
+                    <div class="why-item">
+                        <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional over QUIC with HTTP/2 fallback — one long-lived stream that survives a change of network without a new handshake.</span></p>
+                    </div>
+                    <div class="why-item">
+                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-768 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH). The first message of a conversation is classical-only by design; everything after it is not.</span></p>
+                    </div>
+                    <div class="why-item">
+                        <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<a class="fn-marker" href="#fn-sender" aria-label="What sealed sender means">*</a> is unconditional for ordinary traffic. To route a message the server has an opaque account id<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a>, a size and a time.</span></p>
+                    </div>
+                    </div>
+                    <ul class="why-notes">
+                        <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.</span></li>
+                        <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created.</span></li>
+                    </ul>
+
+                    <h3 id="scope-heading"><span data-i18n="technical.scope.title">What exists today</span></h3>
+                    <p><span data-i18n="home.t4c">A second channel, not a replacement for your main messenger. Today that means one-to-one chats and calls on iOS, one server, an early build. No groups, no channels, no sync between your devices — a second channel does not need them.</span></p>
+                </div>
+            </section>
+
             <section aria-labelledby="how-it-works-heading">
                 <div class="container">
                     <h2 id="how-it-works-heading">
                         <span data-i18n="home.how-it-works.technical-architecture">Technical Architecture</span></h2>
                     <p class="section-lead" data-i18n="home.how-it-works.lead">The short version: messages are encrypted on your device, the server moves them without being able to read them, and it does not learn who sent them. The rest of this section is how, for readers who want it.</p>
+                    <p>
+                        <span data-i18n-html="home.about.t9">The implementation is the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-768).</span>
+                        </p>
                     <p>
                         <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. Konstruct’s live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback.</span>
                         </p>
@@ -153,6 +184,11 @@
                             <span data-i18n-html="home.how-it-works.t9"><strong>Crypto Agility:</strong> the protocol carries a suite version, so devices running different algorithm sets keep talking while a migration rolls out — no flag day, no requirement that everyone update at once. Adding an algorithm still means shipping a new build; what versioning removes is the need for it to happen everywhere simultaneously.</span>
                             </li>
                     </ul>
+                    <ul class="next-links">
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/02-cryptographic-primitives.html" data-i18n="technical.specs.primitives">Cryptographic primitives</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/04-session-handshake.html" data-i18n="technical.specs.handshake">Session handshake (X3DH + PQXDH)</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/05-message-encryption.html" data-i18n="technical.specs.ratchet">Message encryption (Double Ratchet)</a></li>
+                    </ul>
                     <h3>
                         <span data-i18n="home.how-it-works.transport-layer">Transport Layer</span></h3>
                     <ul>
@@ -162,6 +198,45 @@
                         <li>
                             <span data-i18n-html="home.how-it-works.t14"><strong>Censorship resistance:</strong> when a direct TLS connection is blocked or throttled, the client routes through an obfuscation layer instead, automatically and with no user action. The implementation is open source (<code>construct-veil</code>, MPL-2.0) and the design is public. Operational detail — which transports are live, which entry points exist and where — is not published, and neither the app nor this site displays it.</span>
                             </li>
+                    </ul>
+                    <ul class="next-links">
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/06-transport.html" data-i18n="technical.specs.transport">Transport layer</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ── What the server sees ─────────────────────────────────────────
+                 These four paragraphs and the telemetry one were on the front
+                 page, where they were the fourth and fifth screens of prose. The
+                 question they answer — what does the operator actually hold? —
+                 is the one a reader who reached this page came to ask. -->
+            <section aria-labelledby="server-heading">
+                <div class="container">
+                    <h2 id="server-heading"><span data-i18n="technical.server.title">What the server sees</span></h2>
+                    <p>
+                        <span data-i18n-html="home.identity.lead">Every centralised platform starts from one assumption: “you” are a row in its database. A phone number, a profile, a contact graph that belongs to it and that it can hand over. Konstruct starts from less. The server holds an account identifier, your public keys and a push token, and about the message itself only its size and the time it arrived. Exactly what routing ciphertext requires.</span>
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.authorship">Always-on sealed sender removes the sender's identifier from the message's metadata. The recipient can reveal who wrote it; the server cannot.</span>
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.about.t10">The server holds public keys and ciphertext, never plaintext, and does not see who sent a message — only the recipient, the time and the size. Timing and IP stay visible on the wire. Today the network is a single trusted server.</span>
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.discovery">With no address book there are no cold messages: a conversation starts from a QR code or an invite link — single-use and alive for twelve hours. Search by username exists, is optional, and is off until you turn it on.</span>
+                    </p>
+                    <p>
+                        <span data-i18n-html="home.identity.limit">Cryptography cannot make you unobservable. Timing and IP correlation remain visible on the wire, and a sufficiently resourced adversary works at that layer, not this one. Even so, no component of our system is designed to accumulate your data.</span>
+                    </p>
+
+                    <h3 id="telemetry-heading">
+                        <span data-i18n="home.telemetry.no-telemetry-not-anonymised-absent">No Telemetry. Not Anonymised — Absent.</span></h3>
+                    <p>
+                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, push token — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
+                    </p>
+                    <ul class="next-links">
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/08-metadata-privacy.html" data-i18n="technical.specs.metadata">Metadata privacy and sealed sender</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html" data-i18n="technical.specs.threat">Threat model — who this does and does not protect against</a></li>
                     </ul>
                 </div>
             </section>
@@ -203,6 +278,47 @@
                 </div>
             </section>
 
+            <section aria-labelledby="principles-heading">
+                <div class="container">
+                    <h2 id="principles-heading"><span data-i18n="technical.principles.title">Design principles</span></h2>
+                    <p>
+                        <span data-i18n="home.about.t3">Two positions we do not trade away:</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t4"><strong>1. There is no safe backdoor.</strong> Any deliberate weakening of encryption creates a loophole, and whoever slips through it is not the one it was left for.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t5"><strong>2. Privacy by default.</strong> It has to hold without the user doing anything: a property of the protocol, not a setting.</span>
+                        </p>
+                    <p>
+                        <span data-i18n-html="home.about.t11"><strong>What we will not build.</strong> No backdoor, whatever the pretext. No engagement mechanics — no infinite scroll, no streaks, no notification bait. No data resale: there is nothing to sell and no advertising business to feed.</span>
+                        </p>
+                </div>
+            </section>
+
+            <!-- ── Where this is written down in full ───────────────────────────
+                 The specification is the document that outranks this page: it is
+                 versioned beside the code and carries only claims checkable
+                 against the reference implementation. A reader who wants more
+                 than a website should be handed it, not left to find it. -->
+            <section aria-labelledby="specs-heading">
+                <div class="container">
+                    <h2 id="specs-heading"><span data-i18n="technical.specs.title">Specification and source</span></h2>
+                    <p class="section-lead" data-i18n="technical.specs.lead">Everything on this page is worked through in full in the protocol specification — the whitepaper. It is versioned alongside the code and carries only what can be checked against the reference implementation.</p>
+                    <ul>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/" data-i18n="technical.specs.whitepaper">Protocol specification (whitepaper)</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html" data-i18n="technical.specs.threat">Threat model — who this does and does not protect against</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/02-cryptographic-primitives.html" data-i18n="technical.specs.primitives">Cryptographic primitives</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/04-session-handshake.html" data-i18n="technical.specs.handshake">Session handshake (X3DH + PQXDH)</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/05-message-encryption.html" data-i18n="technical.specs.ratchet">Message encryption (Double Ratchet)</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/06-transport.html" data-i18n="technical.specs.transport">Transport layer</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/08-metadata-privacy.html" data-i18n="technical.specs.metadata">Metadata privacy and sealed sender</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/07-implementation-status.html" data-i18n="technical.specs.status">Implementation status — what is built and what is not</a></li>
+                        <li><a href="https://github.com/konstruct-msg/" data-i18n="technical.specs.source">Source code on GitHub</a></li>
+                    </ul>
+                    <p class="why-counter"><span data-i18n-html="home.nb.audit"><strong>NB: there has been no external audit.</strong> Everything above is our own reading of our own code. Nobody outside the project has checked it, and while that is the case, treat these properties as claims we are prepared to defend rather than as the findings of a review.</span></p>
+                </div>
+            </section>
 
         </main>
 
@@ -212,6 +328,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=f547dd1b1b"></script>
+        <script src="/site.js?v=4f671465b0"></script>
     </body>
 </html>

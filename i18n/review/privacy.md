@@ -12,9 +12,9 @@ When you are done: `python3 scripts/ru-review.py import`
 
 ## privacy.privacy-policy.p2  ·  GENERATED — do not edit, stamp-privacy.py owns this line
 
-> Last Updated: August 21, 2026  ·  Effective Date: March 4, 2026
+> Last Updated: August 22, 2026  ·  Effective Date: March 4, 2026
 
-Последнее обновление: 21 августа 2026  ·  Вступила в силу: 4 марта 2026
+Последнее обновление: 22 августа 2026  ·  Вступила в силу: 4 марта 2026
 
 ## privacy.s1.h21  ·  plain text
 
@@ -182,7 +182,7 @@ Konstruct не требует номера телефона, адреса эле
 
 > The server tracks how many One-Time PreKeys remain and requests your device to replenish them when the supply runs low. Once an OTPK is used to establish a session, it is permanently deleted from the server.
 
-Сервер отслеживает, сколько одноразовых префиксов осталось, и просит устройство пополнить запас, когда их становится мало. После того как OTPK использован для установки сессии, он безвозвратно удаляется с сервера.
+Сервер отслеживает, сколько одноразовых предключей осталось, и просит устройство пополнить запас, когда их становится мало. После того как OTPK использован для установки сессии, он безвозвратно удаляется с сервера.
 
 ## privacy.s2_2.td10  ·  plain text
 
@@ -218,7 +218,7 @@ X25519 (среднесрочный)
 
 > One-Time PreKeys (OTPKs)
 
-Одноразовые префиксы (OTPK)
+Одноразовые предключи (OTPK)
 
 ## privacy.s2_2.td16  ·  plain text
 
@@ -890,7 +890,7 @@ Signed PreKey
 
 > One-Time PreKeys
 
-Одноразовые префиксы
+Одноразовые предключи
 
 ## privacy.s6_4.td9  ·  plain text
 
