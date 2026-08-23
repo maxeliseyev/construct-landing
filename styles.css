@@ -1060,6 +1060,17 @@ a.fn-marker:focus-visible {
     border: 0;
 }
 
+/* One line between the name and the argument: what this thing is, in the
+   plain word a reader is looking for. Set above body size but well under the
+   h1 — it is a subtitle to the name, not a second headline competing with it. */
+.hero-tagline {
+    font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+    line-height: 1.4;
+    color: var(--fg);
+    max-width: 44ch;
+    margin: 0 0 var(--space-lg, 1.5rem);
+}
+
 /* The stage line answers the question the line above it provokes — "so can I
    use this instead of what I have?" — before the reader scrolls to find out.
    Muted and one step in, so it reads as the qualifier to the claim rather than

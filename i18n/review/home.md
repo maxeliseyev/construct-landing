@@ -256,6 +256,12 @@ Konstruct использует <strong>gRPC с Protocol Buffers</strong> для 
 
 Идентичность — это конструкт.
 
+## home.lead.category  ·  plain text
+
+> An encrypted messenger that knows only what delivering a message requires.
+
+Криптостойкий мессенджер, который знает о вас ровно столько, сколько нужно для доставки сообщений.
+
 ## home.lead.identity  ·  HTML allowed
 
 > Your identity on the Konstruct network is a pair of cryptographic keys, computed when the account is created. No phone number, no email, nothing else that could tie the account to who you are in the real world. Every conversation is end-to-end encrypted with a combination of classical and post-quantum algorithms. In the clear a message carries the minimum: an opaque identifier<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a> for the recipient, a time and a size. Everything else — the sender<a class="fn-marker" href="#fn-sender" aria-label="What sender protection means">*</a> included — is encrypted and readable by the recipient and nobody else.

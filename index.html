@@ -78,9 +78,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=dff23d057e" as="style" />
-        <link rel="stylesheet" href="styles.css?v=dff23d057e" />
-        <link rel="stylesheet" href="effects.css?v=dff23d057e" />
+        <link rel="preload" href="styles.css?v=3e27655932" as="style" />
+        <link rel="stylesheet" href="styles.css?v=3e27655932" />
+        <link rel="stylesheet" href="effects.css?v=3e27655932" />
         
     </head>
 
@@ -181,6 +181,11 @@
                         >Konstruct</span
                     >
                 </h1>
+                <!-- The h1 is the product name and nothing else, so until now
+                     the page never said in plain words what Konstruct *is* —
+                     a reader had to infer "messenger" from the paragraph about
+                     keys. One line, before the argument starts. -->
+                <p class="hero-tagline" data-i18n="home.lead.category">An encrypted messenger that knows only what delivering a message requires.</p>
                 <p>
                     <span data-i18n-html="home.lead.identity"
                         >Your identity on the Konstruct network is a pair of cryptographic keys, computed when the account is created. No phone number, no email, nothing else that could tie the account to who you are in the real world. Every conversation is end-to-end encrypted with a combination of classical and post-quantum algorithms. In the clear a message carries the minimum: an opaque identifier<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a> for the recipient, a time and a size. Everything else — the sender<a class="fn-marker" href="#fn-sender" aria-label="What sender protection means">*</a> included — is encrypted and readable by the recipient and nobody else.</span
@@ -459,6 +464,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=4f671465b0" defer></script>
+        <script src="/site.js?v=586e815664" defer></script>
     </body>
 </html>
