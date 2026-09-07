@@ -25,6 +25,13 @@ python3 scripts/check-i18n.py || fail=1
 printf '\n[pre-push] claims still match the code\n'
 python3 scripts/check-claims.py || fail=1
 
+# This repo holds the source of truth for .well-known/construct-server, and on
+# 2026-09-07 it published every veil-front with its SPKI pin — one GET returned
+# the whole list of access points. A push cannot be taken back: the content stays
+# reachable by SHA even after the history is rewritten. So the check runs here.
+printf '\n[pre-push] veil-front coordinates\n'
+./.githooks/no-front-coordinates || fail=1
+
 if [ "$fail" -ne 0 ]; then
     cat <<'EOF'
 
