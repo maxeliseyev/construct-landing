@@ -120,29 +120,24 @@ print("check-claims: re-deriving site claims from the code\n")
 if copy_says(r"PQXDH"):
     repo_claim(
         "pqxdh-initiator", CORE, "src/orchestration/orchestrator.rs",
-        r"encapsulate_and_defer", True,
+        r"mlkem1024_encapsulate\(&choice\.kyber_public\)", True,
         "The site claims PQXDH but the orchestrator no longer encapsulates to the "
         "peer's Kyber prekey. Either the path moved or PQXDH is gone.",
     )
     repo_claim(
-        "pqxdh-responder", IOS, "ConstructMessenger/Services/Messaging/MessageRouter.swift",
-        r"applyIncomingContribution", True,
+        "pqxdh-responder", CORE, "src/orchestration/orchestrator.rs",
+        r"fn responder_kem", True,
         "No responder-side PQ contribution on iOS — a claimed PQXDH with no receiver.",
     )
     repo_claim(
-        "pqxdh-prekeys-published", IOS, "ConstructMessenger/Views/Onboarding/RegistrationFlowView.swift",
-        r"generateAndUploadKyberOtpks|commitKyberSPK", True,
+        "pqxdh-prekeys-published", IOS, "ConstructMessenger/Services/Crypto/KyberPrekeyService.swift",
+        r"publishIfNeeded|uploadPreKeys", True,
         "Registration no longer publishes Kyber prekeys, so peers cannot encapsulate to us.",
     )
 
-# The "message zero is classical" caveat is only worth printing while it is true.
-if copy_says(r"first message.{0,80}classical|classical.{0,80}first message|0通目|нулевое сообщение"):
-    repo_claim(
-        "pq-deferred-after-msg0", IOS, "ConstructMessenger/Security/PQCKeyManager.swift",
-        r"deferred until after msg0|msg0 uses classic-only", True,
-        "The site says message zero is classical-only; the deferral it describes is gone.",
-    )
-
+# PQXDH v2 carries the post-quantum contribution in the first message. The old
+# msg0/classical-only check was retired with PQCKeyManager; the three checks above
+# cover the current initiator, responder and prekey-publishing paths.
 if copy_says(r"ML-KEM-768"):
     repo_claim(
         "ml-kem-768", CORE, "src/crypto/suite_id.rs", r"ML-KEM-768", True,
