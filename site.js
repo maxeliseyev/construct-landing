@@ -120,6 +120,34 @@ var I18N_CACHE_VER = "33b5b57a62";
         return ns || null;
     }
 
+    // Висячие предлоги. Русская строка не должна обрываться на коротком
+    // служебном слове, поэтому пробел после него становится неразрывным. Правка
+    // живёт здесь, а не в i18n/ru.json: там строки остаются обычным текстом,
+    // который переживает ru-review.py export/import без шумных диффов, и
+    // редактору не приходится вставлять невидимый символ руками.
+    var WIDOW_WORDS = "а|без|бы|в|во|для|до|за|и|из|или|к|ко|ли|на|не|ни|но|о|" +
+        "об|обо|от|по|под|при|про|с|со|у|через";
+    var WIDOW_RE = new RegExp("(^|[\\s\\u00A0])(" + WIDOW_WORDS + ")[ \\t]+", "gi");
+
+    function fixWidows(text) {
+        if (currentLang !== "ru") return text;
+        return text.replace(WIDOW_RE, "$1$2\u00A0");
+    }
+
+    // То же для размеченных строк: правим только текст между тегами, иначе
+    // неразрывный пробел попал бы внутрь href или class. Содержимое <code> и
+    // <pre> не трогаем — там пробелы значащие.
+    function fixWidowsHtml(html) {
+        if (currentLang !== "ru") return html;
+        var verbatim = 0;
+        return html.replace(/<[^>]*>|[^<]+/g, function (chunk) {
+            if (chunk.charAt(0) !== "<") return verbatim ? chunk : fixWidows(chunk);
+            if (/^<\s*(code|pre)\b/i.test(chunk)) verbatim++;
+            else if (/^<\s*\/\s*(code|pre)\b/i.test(chunk)) verbatim = Math.max(0, verbatim - 1);
+            return chunk;
+        });
+    }
+
     function applyI18n(dict) {
         if (!dict) return;
 
@@ -128,6 +156,7 @@ var I18N_CACHE_VER = "33b5b57a62";
             if (!key) return;
             var val = dict[key];
             if (val == null) return;
+            val = fixWidows(val);
             el.textContent = val;
             // A .glitch-text draws its RGB-split layers from `content:
             // attr(data-text)`. Translate the label without moving the
@@ -143,7 +172,7 @@ var I18N_CACHE_VER = "33b5b57a62";
             if (!key) return;
             var val = dict[key];
             if (val == null) return;
-            el.innerHTML = val;
+            el.innerHTML = fixWidowsHtml(val);
             if (el.dataset) delete el.dataset.originalText;
         });
 
