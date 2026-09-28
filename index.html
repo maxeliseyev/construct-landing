@@ -16,7 +16,7 @@
         </title>
         <meta
             name="description"
-            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, post-quantum key agreement (ML-KEM-768, PQXDH), gRPC over QUIC. No phone number, no email, no required username."
+            content="Identity is a construct. Open-source encrypted messenger: Signal Protocol design, post-quantum key agreement (ML-KEM-1024, PQXDH), gRPC over QUIC. No phone number, no email, no required username."
         />
         <meta
             name="keywords"
@@ -165,7 +165,7 @@
                     <div class="hud-bar__right">
                         <span class="hud-indicator hud-indicator--warn">
                             <span data-i18n="home.alpha-build">ALPHA BUILD</span></span>
-                        <span>PQ::ML-KEM-768</span>
+                        <span>PQ::ML-KEM-1024</span>
                         <span class="hud-readout" id="hudUptime"
                             >T+00:00:00</span
                         >
@@ -203,7 +203,7 @@
                      repeating it in jargon added a second claim to skim past.
                      It stays in the page for crawlers and screen readers,
                      which is the only job it was still doing. -->
-                <p class="sr-only" data-i18n="home.t4b">Signal Protocol · post-quantum key agreement (ML-KEM-768) · gRPC stream over QUIC · sealed sender always on</p>
+                <p class="sr-only" data-i18n="home.t4b">Signal Protocol · post-quantum key agreement (ML-KEM-1024) · gRPC stream over QUIC · sealed sender always on</p>
 
             </div>
         </header>
@@ -443,11 +443,11 @@
                     "price": "0",
                     "priceCurrency": "USD"
                 },
-                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with post-quantum key agreement (ML-KEM-768, PQXDH) and a live gRPC bidirectional MessageStream over QUIC. Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
+                "description": "Open-source E2EE messenger built on the Signal Protocol design (X3DH + Double Ratchet) with post-quantum key agreement (ML-KEM-1024, PQXDH) and a live gRPC bidirectional MessageStream over QUIC. Alpha — iOS TestFlight only, single trusted server today; federation and P2P are planned.",
                 "featureList": [
                     "End-to-end encryption (X3DH + Double Ratchet)",
                     "Forward secrecy and post-compromise security",
-                    "Post-quantum key agreement (ML-KEM-768, PQXDH)",
+                    "Post-quantum key agreement (ML-KEM-1024, PQXDH)",
                     "ChaCha20-Poly1305 AEAD",
                     "gRPC bidirectional MessageStream over QUIC (HTTP/2 fallback)",
                     "WebRTC voice calls with E2EE signaling",
@@ -465,6 +465,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=602a16c45d" defer></script>
+        <script src="/site.js?v=bc9e445f1a" defer></script>
     </body>
 </html>

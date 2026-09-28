@@ -106,7 +106,7 @@
                         <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional over QUIC with HTTP/2 fallback — one long-lived stream that survives a change of network without a new handshake.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-768 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH). The first message of a conversation is classical-only by design; everything after it is not.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-1024 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the session's initial key. The first message of a conversation is protected too, and a session is not established at all without the post-quantum part.</span></p>
                     </div>
                     <div class="why-item">
                         <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<a class="fn-marker" href="#fn-sender" aria-label="What sealed sender means">*</a> is unconditional for ordinary traffic. To route a message the server has an opaque account id<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a>, a size and a time.</span></p>
@@ -128,7 +128,7 @@
                         <span data-i18n="home.how-it-works.technical-architecture">Technical Architecture</span></h2>
                     <p class="section-lead" data-i18n="home.how-it-works.lead">The short version: messages are encrypted on your device, the server moves them without being able to read them, and it does not learn who sent them. The rest of this section is how, for readers who want it.</p>
                     <p>
-                        <span data-i18n-html="home.about.t9">The implementation is the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-768).</span>
+                        <span data-i18n-html="home.about.t9">Konstruct is built on the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-1024).</span>
                         </p>
                     <p>
                         <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. Konstruct’s live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback.</span>
@@ -145,7 +145,7 @@
  post-compromise security (self-healing).</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-768</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey and mixes it into the ratchet root, so a recorded session is not recoverable by breaking X25519 alone. The very first message is classical-only by design; the post-quantum secret applies from the second message onward. On top of that, sessions that negotiate it run a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup.</span>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-1024</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the X25519 outputs, so a recorded session is not recoverable by breaking X25519 alone. Post-quantum protection covers the very first message, and there is no classical way to establish a session. On top of that, sessions that negotiate it run a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t6"><strong
@@ -261,7 +261,7 @@
  interaction.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-768</strong> (Kyber-768) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH), and sessions that negotiate it also re-key continuously inside the Double Ratchet. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): the crypto is implemented and cross-verified between client and server; client-side key rotation is still being wired up.</span>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-1024</strong> (Kyber-1024) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the initial key; no session is established without it. Sessions that negotiate it also re-key continuously inside the Double Ratchet (ML-KEM-768). Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): every post-quantum prekey carries both, and a session is not established to a prekey without them.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC bidirectional MessageStream over <strong>QUIC</strong> (HTTP/2 fallback), censorship-resistant routing when the direct path is blocked, direct P2P planned when both peers are online.</span>
@@ -323,6 +323,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=602a16c45d"></script>
+        <script src="/site.js?v=bc9e445f1a"></script>
     </body>
 </html>

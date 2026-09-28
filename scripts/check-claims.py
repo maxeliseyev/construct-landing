@@ -138,11 +138,27 @@ if copy_says(r"PQXDH"):
 # PQXDH v2 carries the post-quantum contribution in the first message. The old
 # msg0/classical-only check was retired with PQCKeyManager; the three checks above
 # cover the current initiator, responder and prekey-publishing paths.
+# Two parameter sets are deployed since PQXDH v2 (2026-09-25): ML-KEM-1024 for prekeys and the
+# handshake, ML-KEM-768 only inside the Suite 3 ratchet. The check below used to be the only one,
+# and it passed for three days while the site said "ML-KEM-768 at session setup" — suite_id.rs
+# names 768 for the ratchet, so the string was found and the claim was wrong. Pin each size to
+# the role the copy gives it.
+if copy_says(r"ML-KEM-1024"):
+    repo_claim(
+        "ml-kem-1024-handshake", CORE, "src/crypto/pq_x3dh.rs", r"MlKem1024", True,
+        "The site says the handshake uses ML-KEM-1024; the core no longer has an ML-KEM-1024 path.",
+    )
 if copy_says(r"ML-KEM-768"):
     repo_claim(
-        "ml-kem-768", CORE, "src/crypto/suite_id.rs", r"ML-KEM-768", True,
+        "ml-kem-768-ratchet", CORE, "src/crypto/suite_id.rs", r"ML-KEM-768", True,
         "ML-KEM-768 is claimed but not named in the core's suite definitions.",
     )
+check(
+    "ml-kem-768-not-at-handshake",
+    not re.search(r"ML-KEM-768[^.。]{0,160}(prekey|предключ|プリキー)", COPY, re.IGNORECASE),
+    "The copy ties ML-KEM-768 to the recipient's prekey / session setup. Since PQXDH v2 the "
+    "handshake is ML-KEM-1024; 768 is only the Suite 3 ratchet.",
+)
 
 if copy_says(r"ML-DSA-65"):
     repo_claim(
@@ -151,6 +167,18 @@ if copy_says(r"ML-DSA-65"):
     )
 
 # ── Retired names ────────────────────────────────────────────────────────────
+
+# Session healing and END_SESSION were removed from the core on 2026-09-27/28: an unreadable
+# message is answered with a decryption error that names the session state. The FAQ described
+# "automatic session healing" for months after nothing healed.
+if CORE.exists():
+    healing_gone = not (CORE / "src/orchestration/healing_queue.rs").exists()
+    check(
+        "no-session-healing-claim",
+        not (healing_gone and copy_says(r"session healing|«лечение»|セッション自己修復|session heal")),
+        "The copy describes session healing; the core has no healing since 2026-09-27 "
+        "(decisions/sessions-renew-by-sending.md).",
+    )
 
 check(
     "no-construct-engine",

@@ -164,7 +164,7 @@
         <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
-                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: August 22, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: September 28, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
         </header>
 
@@ -352,7 +352,7 @@
                 <ul>
                     <li data-i18n-html="privacy.s6_2.li2"><strong>In transit:</strong> Client–server messaging uses a gRPC bidirectional stream over QUIC when available, with automatic fallback to gRPC over HTTP/2 + TLS 1.3 (Envoy / edge on port 443). Control and auth RPCs use the same encrypted transport stack</li>
                     <li data-i18n-html="privacy.s6_2.li3"><strong>At rest:</strong> Database encryption enabled</li>
-                    <li data-i18n-html="privacy.s6_2.li4"><strong>End-to-end:</strong> Signal-Protocol-based — X3DH / PQXDH key agreement (X25519 combined with the post-quantum ML-KEM-768) and a Double Ratchet with ChaCha20-Poly1305 AEAD. Sender authentication uses Ed25519 signatures today; the hybrid Ed25519 + ML-DSA-65 (post-quantum) path is implemented and cross-verified between client and server, but is not yet active on the wire. Media attachments are encrypted with AES-256-GCM under a per-file key.</li>
+                    <li data-i18n-html="privacy.s6_2.li4"><strong>End-to-end:</strong> Signal-Protocol-based — X3DH / PQXDH key agreement (X25519 combined with the post-quantum ML-KEM-1024) and a Double Ratchet with ChaCha20-Poly1305 AEAD. A device's prekeys are signed twice — with Ed25519 and with a hybrid Ed25519 + ML-DSA-65 (post-quantum) signature — and no session is established without both; the hybrid key itself is still vouched for by an Ed25519 signature. Media attachments are encrypted with AES-256-GCM under a per-file key.</li>
                 </ul>
 
                 <h3 data-i18n="privacy.s6_3.h31">6.3 What Is Stored on Your Device</h3>
@@ -508,6 +508,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=602a16c45d" defer></script>
+            <script src="/site.js?v=bc9e445f1a" defer></script>
     </body>
 </html>

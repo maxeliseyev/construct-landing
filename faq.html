@@ -339,19 +339,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a
- cryptographic Proof of Work challenge from the
- server and solves it — this prevents automated
- bot registrations. At the same time, several
- cryptographic key sets are generated on-device:
- long-term identity keys, signed prekeys, and
- one-time prekeys (including post-quantum
- ML-KEM-768 keys). Only the public parts of these
- keys and the PoW result are sent to the server.
- Private keys never leave your device. Your
- identity
- <em>is</em> these keys — there's no password to
- steal or recover.</p>
+                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a cryptographic Proof of Work challenge from the server and solves it — this prevents automated bot registrations. At the same time, several cryptographic key sets are generated on-device: long-term identity keys, signed prekeys, and one-time prekeys (including post-quantum ML-KEM-1024 keys). Only the public parts of these keys and the PoW result are sent to the server. Private keys never leave your device. Your identity <em>is</em> these keys — there's no password to steal or recover.</p>
                             </div>
                     </details>
 
@@ -440,7 +428,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-768</strong> secret to the recipient's Kyber prekey and it is mixed into the ratchet, which is what limits "record now, decrypt with a quantum computer later". One honest detail: the contribution is applied after the first message, so message zero of a new conversation is protected classically and everything from the second message on is not. Messages then use Double Ratchet, which rotates keys with every message, so compromising one key exposes neither past nor future messages.</p>
+                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-1024</strong> secret to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the classical ones, which is what limits "record now, decrypt with a quantum computer later". Post-quantum protection covers the very first message, and the app will not establish a session without it. Messages then use Double Ratchet, which rotates keys with every message, so compromising one key exposes neither past nor future messages.</p>
                             </div>
                     </details>
 
@@ -771,7 +759,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.technical.p3">A session is an established encrypted channel between two devices. It's built on one-time keys that can't be reused, and keys rotate with every message. If the app was inactive for a long time, the device was reinstalled, or state desynchronization occurred — the session may stop decrypting incoming messages. In this case, automatic session healing kicks in: the app renegotiates keys and restores the channel in the background. Usually the user notices nothing — messages just start arriving again.</p>
+                            <p data-i18n="faq.technical.p3">A session is an established encrypted channel between two devices. It's built on one-time keys that can't be reused, and keys rotate with every message. If the app was inactive for a long time, the device was reinstalled, or the other person deleted the chat, an incoming message may be unreadable. The recipient's app then tells the sender's app which session state that message was written on; the sender's app opens a new state and sends the message again. Usually the user notices nothing — the message simply arrives.</p>
                             </div>
                     </details>
 
@@ -886,6 +874,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=602a16c45d" defer></script>
+        <script src="/site.js?v=bc9e445f1a" defer></script>
     </body>
 </html>
