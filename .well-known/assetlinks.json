@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.construct.messenger",
+      "sha256_cert_fingerprints": [
+        "90:38:24:4A:06:81:F0:F5:1D:C9:72:A8:CB:5B:D4:F4:36:24:67:38:55:7E:3F:E2:F9:52:F1:AE:1E:36:04:EC"
+      ]
+    }
+  }
+]
