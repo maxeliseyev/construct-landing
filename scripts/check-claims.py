@@ -65,8 +65,10 @@ def site_copy() -> str:
     # the same claims about invites — single use, twelve hours — that the FAQ
     # makes, and a claim is no less published for being on a page you reach only
     # by following a link.
+    # technical.html carries the post-quantum copy (features, how it works, why) and was not
+    # read until 2026-10-01, so a stale claim there passed every run.
     for page in ("index.html", "faq.html", "privacy.html", "crypto.html",
-                 "add.html", "contact.html"):
+                 "add.html", "contact.html", "technical.html"):
         t = read(SITE / page)
         if t:
             parts.append(t)
@@ -165,6 +167,41 @@ if copy_says(r"ML-DSA-65"):
         "ml-dsa-65", CORE, "src/crypto/suites/hybrid.rs", r"MlDsa65", True,
         "Hybrid ML-DSA-65 signatures are claimed; the core no longer implements them.",
     )
+
+# What is *not* post-quantum. Until 2026-10-01 the copy described the handshake accurately and
+# said nothing about the layers around it, so "every conversation is end-to-end encrypted with a
+# combination of classical and post-quantum algorithms" read as "everything is post-quantum". The
+# sealed-sender box is the first of those layers (protocol book, Threat Model — Post-quantum
+# coverage, `PQC-1`). While it is X25519-only, every locale must point at the coverage table.
+sealed = read(CORE / "src/crypto/sealed_sender/mod.rs") if CORE.exists() else None
+if sealed is None:
+    check("pq-coverage-caveat", None, "construct-core not checked out")
+else:
+    sealed_is_classical = "fn seal_to_x25519_public" in sealed and "MlKem" not in sealed
+    for lang in ("en", "ru", "ja"):
+        raw = read(SITE / f"i18n/{lang}.json") or ""
+        check(
+            f"pq-coverage-caveat-{lang}",
+            (not sealed_is_classical) or "#post-quantum-coverage" in raw,
+            f"i18n/{lang}.json claims post-quantum but does not link the coverage table, while the "
+            "core's sealed-sender box is still X25519 only. Say which layers are classical.",
+        )
+
+# The PQ ratchet is not negotiated: since PQXDH v2 every session runs it (suite 4). The copy said
+# "sessions that negotiate it also re-key" in all three languages.
+check(
+    "pq-ratchet-not-negotiated",
+    not copy_says(r"negotiate[^.]{0,40}re-key|sessions that negotiate it|договорившиеся об этом|которые об этом договорились|ネゴシエートできた"),
+    "The copy says the post-quantum ratchet is negotiated. Every session runs it.",
+)
+# Hybrid signatures are required on every Kyber prekey; "Ed25519 today, hybrid in progress" was
+# the state before PQXDH v2.
+check(
+    "hybrid-signatures-not-future",
+    not copy_says(r"Ed25519</strong> today|Ed25519</strong> сегодня|現在は Ed25519</strong>"),
+    "The copy says signatures are Ed25519 only today; hybrid signatures are required on every "
+    "post-quantum prekey.",
+)
 
 # ── Retired names ────────────────────────────────────────────────────────────
 

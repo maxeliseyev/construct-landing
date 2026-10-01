@@ -106,7 +106,7 @@
                         <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional over QUIC with HTTP/2 fallback — one long-lived stream that survives a change of network without a new handshake.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-1024 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the session's initial key. The first message of a conversation is protected too, and a session is not established at all without the post-quantum part.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-1024 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the session's initial key. The first message of a conversation is protected too, and a session is not established at all without the post-quantum part. This protects what messages and attachments say. Who sent a sealed message, calls and groups are not post-quantum yet — the <a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html#post-quantum-coverage">protocol specification</a> lists every layer.</span></p>
                     </div>
                     <div class="why-item">
                         <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<a class="fn-marker" href="#fn-sender" aria-label="What sealed sender means">*</a> is unconditional for ordinary traffic. To route a message the server has an opaque account id<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a>, a size and a time.</span></p>
@@ -145,18 +145,10 @@
  post-compromise security (self-healing).</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-1024</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the X25519 outputs, so a recorded session is not recoverable by breaking X25519 alone. Post-quantum protection covers the very first message, and there is no classical way to establish a session. On top of that, sessions that negotiate it run a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup.</span>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-1024</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the X25519 outputs, so a recorded session is not recoverable by breaking X25519 alone. Post-quantum protection covers the very first message, and there is no classical way to establish a session. On top of that, every session runs a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup, with its own post-quantum key for each message.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t6"><strong
- >Authentication signatures: Ed25519</strong
- >
- today. Hybrid
- <strong>ML-DSA-65</strong> (Dilithium-3, NIST
- FIPS&nbsp;204) signing and verification are
- implemented and cross-verified between client
- and server; client-side key rotation
- orchestration is still in progress.</span>
+                            <span data-i18n-html="home.how-it-works.t6"><strong>Authentication signatures: hybrid Ed25519 + ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204) on every post-quantum prekey — both must verify, and client and server run the same implementation. The hybrid key itself is vouched for by Ed25519 and pinned on first contact. Device sign-in, account recovery and the server's sender certificates are still Ed25519 only.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t7"><strong>AEAD:</strong> ChaCha20-Poly1305 for
@@ -261,7 +253,7 @@
  interaction.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-1024</strong> (Kyber-1024) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the initial key; no session is established without it. Sessions that negotiate it also re-key continuously inside the Double Ratchet (ML-KEM-768). Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): every post-quantum prekey carries both, and a session is not established to a prekey without them.</span>
+                            <span data-i18n-html="home.features.t4"><strong>Post-quantum key agreement</strong> — <strong>ML-KEM-1024</strong> (Kyber-1024) is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the initial key; no session is established without it. Every session then keeps re-keying inside the Double Ratchet with ML-KEM-768, and each message gets its own post-quantum key. Signatures are hybrid Ed25519 + <strong>ML-DSA-65</strong> (Dilithium-3): every post-quantum prekey carries both, and a session is not established to a prekey without them.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.features.t8"><strong>Modern live transport</strong> — gRPC bidirectional MessageStream over <strong>QUIC</strong> (HTTP/2 fallback), censorship-resistant routing when the direct path is blocked, direct P2P planned when both peers are online.</span>
@@ -323,6 +315,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=bc9e445f1a"></script>
+        <script src="/site.js?v=85954a939f"></script>
     </body>
 </html>

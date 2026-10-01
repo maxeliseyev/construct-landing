@@ -428,7 +428,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-1024</strong> secret to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the classical ones, which is what limits "record now, decrypt with a quantum computer later". Post-quantum protection covers the very first message, and the app will not establish a session without it. Messages then use Double Ratchet, which rotates keys with every message, so compromising one key exposes neither past nor future messages.</p>
+                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-1024</strong> secret to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the classical ones, which is what limits "record now, decrypt with a quantum computer later". Post-quantum protection covers the very first message, and the app will not establish a session without it. Messages then use Double Ratchet, which rotates keys with every message — and each message also gets its own post-quantum key — so compromising one key exposes neither past nor future messages. Not post-quantum yet: the sealed sender envelope (who sent a message), calls and groups; the <a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html#post-quantum-coverage">protocol specification</a> lists every layer.</p>
                             </div>
                     </details>
 
@@ -874,6 +874,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=bc9e445f1a" defer></script>
+        <script src="/site.js?v=85954a939f" defer></script>
     </body>
 </html>
