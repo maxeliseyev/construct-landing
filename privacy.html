@@ -164,7 +164,7 @@
         <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
-                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: September 28, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: October 4, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
         </header>
 
@@ -290,7 +290,7 @@
                 <p data-i18n-html="privacy.s2_10.p4">If you want to keep your network address off the path entirely, turn on <strong>censorship protection</strong> in Settings, or use a VPN or Tor — though the endpoint that terminates your connection still sees the apparent source address of that connection.</p>
 
                 <h2 data-i18n="privacy.s3.h21">3. Traffic Analysis Protection</h2>
-                <p data-i18n-html="privacy.s3.p2">Konstruct implements <strong>message padding</strong> (rounding ciphertext to fixed-size chunks) and <strong>randomised send-timing jitter</strong> to make it harder for a network observer to infer message size or exact timing from your connection. These mitigations are active by default and require no configuration.</p>
+                <p data-i18n-html="privacy.s3.p2">Konstruct implements <strong>padding</strong> and <strong>randomised send-timing jitter</strong> to make it harder for a network observer — or our server — to infer what you send from its size or exact timing. Messages are padded to fixed-size chunks. Attachments (photos, videos, voice notes, files, profile pictures) are padded to size classes, so the server stores a size range rather than the exact size of a file — a file grows by at most 12 %, usually about 3 % — and is never told what type of file it is. These mitigations are active by default and require no configuration.</p>
                 <p data-i18n-html="privacy.s3.p3">We deliberately do <strong>not</strong> send scheduled dummy/cover traffic. Constant cover traffic needs an always-on connection and timed sends, which drains battery and data; a mobile client cannot sustain it, and forcing it would trade real usability for marginal metadata hardening. Padding and send-jitter (above) are our mobile answer; constant cover traffic could only ever run on an always-online desktop client and remains a possible desktop-only option, never a mobile promise. We would rather ship no cover traffic than claim one that isn't running.</p>
                 <p data-i18n-html="privacy.s3.p4">Separately, <strong>censorship protection</strong> is a network-level obfuscation layer that helps your connection blend in with ordinary HTTPS traffic when direct TLS is throttled or blocked. It is a censorship-circumvention mechanism, not a metadata-hiding one — it does not by itself prevent a network observer who can already see your connection from inferring message timing or size.</p>
 
@@ -508,6 +508,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=85954a939f" defer></script>
+            <script src="/site.js?v=769188a367" defer></script>
     </body>
 </html>
