@@ -339,7 +339,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a cryptographic Proof of Work challenge from the server and solves it — this prevents automated bot registrations. At the same time, several cryptographic key sets are generated on-device: long-term identity keys, signed prekeys, and one-time prekeys (including post-quantum ML-KEM-1024 keys). Only the public parts of these keys and the PoW result are sent to the server. Private keys never leave your device. Your identity <em>is</em> these keys — there's no password to steal or recover.</p>
+                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a cryptographic Proof of Work challenge from the server and solves it — this prevents automated bot registrations. At the same time, several cryptographic key sets are generated on-device: long-term identity keys, signed prekeys, and one-time prekeys (including post-quantum ML-KEM-1024 keys). Only the public parts of these keys and the PoW result are sent to the server. Private keys never leave your device. There's no password: your account is defined by keys, and a 12-word recovery key brings it back on a new device.</p>
                             </div>
                     </details>
 
@@ -351,7 +351,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.registration.p5">Not yet. In conventional messengers, "sign out and back in" means entering a username and password. Here your identity is the cryptographic keys stored on your device — without them, you can't authenticate. Deleting the app is equivalent to losing your account.</p>
+                            <p data-i18n="faq.registration.p5">Yes, with your 12-word recovery key: on a new device or after reinstalling, choose Restore and enter the words. Your account and its address come back; old messages and sessions stay on the old device and do not move. Without those words, losing the device or deleting the app loses the account for good.</p>
                             </div>
                     </details>
 
@@ -363,7 +363,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.registration.p7">In Settings you can generate a seed phrase — a sequence of words that can reconstruct your private keys. It works the same way as a recovery phrase in crypto wallets. Write it down and keep it somewhere safe — this is the only way to transfer your account to a new device.</p>
+                            <p data-i18n="faq.registration.p7">Your recovery key is created automatically when you register — there is nothing to do. You save its copy (12 words) later, from Settings: the app reminds you, and insists before you sign out. Until the copy is made the words are kept on the device, encrypted, and open only after Face ID, a fingerprint or the phone's passcode; once copied, they are erased from the device. Write them down and keep them somewhere safe — Konstruct has no phone number or email for you, so this is the only way back into your account.</p>
                             </div>
                     </details>
                 </section>
@@ -382,7 +382,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.contacts.p3">The system is designed so that a stranger cannot simply start messaging you. To start a conversation, one of you shares a QR code or an invite link and the other scans or follows it. Those are single-use and expire in twelve hours — a link that has been accepted once cannot be accepted again. Separately, you may switch on discovery in settings and be findable by username; that is off by default, so unless you turn it on, an invite is the only way in.</p>
+                            <p data-i18n="faq.contacts.p3">The system is designed so that a stranger cannot simply start messaging you. To start a conversation, one of you shares a QR code or an invite link and the other scans or follows it. Those are single-use: a QR code lives five minutes and a link twelve hours — a link that has been accepted once cannot be accepted again. Separately, you may switch on discovery in settings and be findable by username; that is off by default, so unless you turn it on, an invite is the only way in.</p>
                             </div>
                     </details>
 
@@ -406,7 +406,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.contacts.p7">A code can be accepted only once, so a shared link lets in at most one person, and a link that has already been used does nothing at all. It also stops working twelve hours after it was created. If someone does get in, you will see a new conversation and can block them immediately.</p>
+                            <p data-i18n="faq.contacts.p7">A code can be accepted only once, so a shared link lets in at most one person, and a link that has already been used does nothing at all. It also stops working twelve hours after it was created — a QR code after five minutes. If someone does get in, you will see a new conversation and can block them immediately.</p>
                             </div>
                     </details>
                 </section>
@@ -428,7 +428,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-1024</strong> secret to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the classical ones, which is what limits "record now, decrypt with a quantum computer later". Post-quantum protection covers the very first message, and the app will not establish a session without it. Messages then use Double Ratchet, which rotates keys with every message — and each message also gets its own post-quantum key — so compromising one key exposes neither past nor future messages. Not post-quantum yet: the sealed sender envelope (who sent a message), calls and groups; the <a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html#post-quantum-coverage">protocol specification</a> lists every layer.</p>
+                            <p data-i18n-html="faq.encryption.p3">All messages are encrypted on the sender's device before transmission and can only be decrypted on the recipient's device. The server sees only an encrypted stream and routes it — it cannot read the content. Key establishment uses X3DH extended with post-quantum key agreement (<strong>PQXDH</strong>): the sender encapsulates an <strong>ML-KEM-1024</strong> secret to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the classical ones, which is what limits "record now, decrypt with a quantum computer later". Post-quantum protection covers the very first message, and the app will not establish a session without it. Messages then use Double Ratchet, which rotates keys with every message — and each message also gets its own post-quantum key — so compromising one key exposes neither past nor future messages. Who sent a message is protected post-quantum too, and calls use post-quantum DTLS when both apps offer it. Still classical: the server's signatures (sender certificates, key-transparency heads), device sign-in and account recovery, Privacy Pass tokens and transport TLS; groups do not exist yet; the <a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html#post-quantum-coverage">protocol specification</a> lists every layer.</p>
                             </div>
                     </details>
 
@@ -440,7 +440,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an opaque account id for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Delivered messages are not kept. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
+                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an opaque account id for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and, on iOS, a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Messages are held only as ciphertext and removed on a retention schedule (about 30 days), not at the moment of delivery. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
                             </div>
                     </details>
 
@@ -483,19 +483,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p12">No — none. No analytics, no usage metrics, no
- behavioural events, no crash phone-home, no
- advertising identifiers. Not "collected and
- anonymised" — <em>not collected</em>. The app
- has no third-party trackers (no Firebase,
- Crashlytics, Sentry, Amplitude, Segment); its
- only external dependencies are transport/media
- infrastructure and an on-device ML library.
- Production builds also write
- <strong>no diagnostic logs to disk</strong> and
- expose no debug or log-export screen. When we
- need logs to fix a bug, it is you who taps
- "share" in a beta build — never a silent upload.</p>
+                            <p data-i18n-html="faq.encryption.p12">No — none. No analytics, no usage metrics, no behavioural events, no crash phone-home, no advertising identifiers. Not "collected and anonymised" — <em>not collected</em>. The app has no third-party trackers (no Firebase, Crashlytics, Sentry, Amplitude, Segment); its only external dependencies are transport/media infrastructure and on iOS, an on-device speech-recognition library. Production builds also write <strong>no diagnostic logs to disk</strong> and expose no debug or log-export screen. When we need logs to fix a bug, it is you who taps "share" in a beta build — never a silent upload.</p>
                             </div>
                     </details>
                 </section>
@@ -618,7 +606,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.messages.p6">Notifications are delivered through Apple Push Notification Service (APNs). A stable internet connection is required. If the phone is in airplane mode, behind a VPN with aggressive filtering, or Apple decided the push was "low priority" — the notification may be delayed or not arrive at all. When the app opens again, messages sync automatically.</p>
+                            <p data-i18n="faq.messages.p6">On iOS, notifications come through Apple Push Notification Service (APNs): a stable connection is needed, and in airplane mode, behind a VPN with aggressive filtering, or when Apple decides the push is "low priority", a notification may be delayed or not arrive. On Android there is no push service at all: the app keeps its own connection, shown by a persistent notification; aggressive battery saving or a blocked network can delay messages. When the app opens again, messages sync automatically.</p>
                             </div>
                     </details>
                 </section>
@@ -771,7 +759,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.technical.p5">Sync between multiple devices (phone + desktop) is in development. The desktop app exists as a prototype. Since identity is tied to keys rather than a server account, multi-device support requires a separate key-binding mechanism — we're working on it.</p>
+                            <p data-i18n="faq.technical.p5">Linking a second device isn't available in public builds yet. The native desktop client is on hold; a terminal (TUI) client is in development. Since identity is tied to keys rather than a server account, multi-device support requires a separate key-binding mechanism — we're working on it.</p>
                             </div>
                     </details>
 
@@ -805,7 +793,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <ul data-i18n-html="faq.testers.list3"><li>Registration and adding a contact via QR code</li><li>Sending and receiving messages (both directions)</li><li>Delivery statuses — does a message reach "delivered", and do "queued" and "failed" retry when tapped?</li><li>Message editing — does the recipient see the changes?</li><li>Notifications with the app backgrounded</li><li>Behaviour with poor connectivity (airplane mode → restore)</li><li>Conversation recovery after app reinstall</li></ul>
+                            <ul data-i18n-html="faq.testers.list3"><li>Registration and adding a contact via QR code</li><li>Sending and receiving messages (both directions)</li><li>Delivery statuses — does a message reach "delivered", and do "queued" and "failed" retry when tapped?</li><li>Message editing — does the recipient see the changes?</li><li>Notifications with the app backgrounded</li><li>Behaviour with poor connectivity (airplane mode → restore)</li><li>Restoring the account from the recovery key after a reinstall</li><li>Saving the recovery key copy from Settings</li></ul>
                             </div>
                     </details>
 
@@ -874,6 +862,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=645efc30aa" defer></script>
+        <script src="/site.js?v=e2de833c62" defer></script>
     </body>
 </html>

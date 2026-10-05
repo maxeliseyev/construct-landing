@@ -103,7 +103,7 @@
                             <span data-i18n-html="home.roadmap.t2"><strong>Done (H1 2026):</strong> gRPC/Protobuf · live <strong>gRPC bidi MessageStream over QUIC</strong> (HTTP/2 fallback; intercontinental production validation) · X3DH + Double Ratchet · PQXDH · session recovery · WebRTC voice calls with E2EE signaling · iOS TestFlight beta · censorship-resistant transport · always-on Stealth (sealed sender) for eligible traffic.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> macOS Desktop client (iOS-direct crypto path, no public build yet) · Android client (one-to-one messaging works on the shared core; no public build yet) · BIP39 / SLIP-39 social recovery · MLS group chats (RFC 9420) · first external security audit.</span>
+                            <span data-i18n-html="home.roadmap.t3"><strong>In progress:</strong> Android client (signed APK builds on GitHub; one-to-one chats, media, video notes and calls on the shared core, alpha) · SLIP-39 social recovery (on iOS) · terminal (TUI) client. The macOS Desktop client is on hold.</span>
                             </li>
                     </ul>
 
@@ -111,7 +111,7 @@
                         <span data-i18n="home.roadmap.decentralization-roadmap">Decentralization Roadmap</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n-html="home.roadmap.t5"><strong>Decentralisation, in order:</strong> the standalone <code>construct-relay</code> binary (store-and-forward for server-to-server messages, origin signatures verified, two containers on a small VPS) · a DHT for peer discovery and offline storage · direct peer-to-peer delivery with relay fallback · public seed nodes, spam resistance and MLS groups over the decentralised transport. The relay binary exists; everything after it is 2027 and later.</span>
+                            <span data-i18n-html="home.roadmap.t5"><strong>Decentralisation, in order:</strong> the standalone <code>construct-relay</code> binary (store-and-forward for server-to-server messages, origin signatures verified, two containers on a small VPS) · a DHT for peer discovery and offline storage · direct peer-to-peer delivery with relay fallback · public seed nodes, spam resistance and MLS groups over the decentralised transport. The relay binary exists (its source is not public yet); everything after it is 2027 and later.</span>
                             </li>
                     </ul>
 
@@ -119,11 +119,11 @@
                         <span data-i18n="home.roadmap.other-planned-work">Other Planned Work</span></h3>
                     <ul>
                         <li>
-                            <span data-i18n="home.roadmap.t10">video calls · Privacy Pass token enforcement (anti-spam on the always-on sealed-sender path) · desktop applications for Windows, Linux · formal verification (Kani).</span>
+                            <span data-i18n="home.roadmap.t10">video calls · MLS group chats (RFC 9420; primitives exist in the core, no product yet) · first external security audit · Privacy Pass token enforcement (anti-spam on the always-on sealed-sender path) · desktop applications for Windows, Linux · formal verification (Kani).</span>
                             </li>
                     </ul>
                     <p>
-                        <span data-i18n-html="home.roadmap.t11"><strong>Honest current status:</strong> alpha. iOS via TestFlight only (<a href="https://testflight.apple.com/join/NH3WssFh">join the beta</a>); no public App Store release yet. macOS Desktop client is in active development, no build available yet. Single trusted server (no federation). Censorship-resistant transport ships and is on by default, but we do not publish where it currently does or does not get through. Not recommended for adversarial threat models until the first external audit completes.</span>
+                        <span data-i18n-html="home.roadmap.t11"><strong>Honest current status:</strong> alpha. iOS via TestFlight (<a href="https://testflight.apple.com/join/NH3WssFh">join the beta</a>), Android as a signed APK on <a href="https://github.com/konstruct-msg/construct-android/releases/latest">GitHub</a>; no App Store or Google Play release yet. Single trusted server (no federation). Censorship-resistant transport ships and is on by default, but we do not publish where it currently does or does not get through. Not recommended for adversarial threat models until an external audit has been done — there has not been one yet.</span>
                         </p>
                 </div>
             </section>
@@ -137,6 +137,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=645efc30aa"></script>
+        <script src="/site.js?v=e2de833c62"></script>
     </body>
 </html>

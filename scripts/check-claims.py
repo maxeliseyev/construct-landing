@@ -281,21 +281,75 @@ if len(_ttl_sources) == 2:
 else:
     check("invite-ttl-client-server-agree", None, "both app repos needed to compare")
 
+# A QR code is shown on a screen for a moment, so it lives far shorter than a
+# link: iOS `InviteConfig.qrTTLSeconds`, Android `InviteConfig.QR_TTL_SECONDS`.
+# Until 2026-10-05 this check knew only the link's lifetime and failed copy that
+# correctly said a QR lasts five minutes.
+QR_TTL_SECONDS = None
+if IOS.exists():
+    t = read(IOS / "ConstructMessenger/Utilities/Constants.swift")
+    m = t and re.search(r"qrTTLSeconds:\s*\w+\s*=\s*([\d_]+)", t)
+    QR_TTL_SECONDS = int(m.group(1).replace("_", "")) if m else None
+
 # What the copy says, against what the code does. Add a spelling here when the copy
 # changes — the point is that the sentence and the constant cannot drift apart
 # silently, not that any particular wording is blessed.
 _SPELLED_TTL = {
-    r"five minutes|пять минут|5分": 300,
-    r"twelve hours|двенадцать часов|12時間": 43_200,
+    r"five minutes|пять минут|5分": ("QR", lambda: QR_TTL_SECONDS, 300),
+    r"twelve hours|двенадцать часов|12時間": ("link", lambda: INVITE_TTL_SECONDS, 43_200),
 }
-for pattern, seconds in _SPELLED_TTL.items():
+for pattern, (what, actual, seconds) in _SPELLED_TTL.items():
     if copy_says(pattern):
         check(
-            f"invite-ttl-copy-{seconds}s", None if INVITE_TTL_SECONDS is None
-            else INVITE_TTL_SECONDS == seconds,
-            f"The site spells the invite lifetime as {seconds} s, the apps use "
-            f"{INVITE_TTL_SECONDS} s.",
+            f"invite-ttl-copy-{seconds}s", None if actual() is None
+            else actual() == seconds,
+            f"The site spells the {what} invite lifetime as {seconds} s, the apps use "
+            f"{actual()} s.",
         )
+
+# ── Message retention ────────────────────────────────────────────────────────
+#
+# The server never deletes a message because it was delivered: deletion is
+# retention only — `MAXLEN ~` on XADD plus an hourly age sweep
+# (construct-server decisions/minimal-server-delivery.md). Until 2026-10-05 the
+# home page and the privacy policy both said messages were removed on delivery,
+# and the policy said so in a table. The sweep's age is a literal in
+# messaging-service; `MESSAGE_TTL_DAYS` is read into config and used by nothing.
+
+RETENTION_DAYS = None
+if SERVER.exists():
+    t = read(SERVER / "messaging-service/src/main.rs")
+    m = t and re.search(r"trim_streams_by_age\(\s*(\d+)\s*\*\s*24\s*\*\s*3600", t)
+    RETENTION_DAYS = int(m.group(1)) if m else None
+
+check(
+    "messages-not-deleted-on-delivery",
+    not copy_says(
+        r"(deleted|removed) (immediately )?(upon|after|on) (confirmed )?deliver"
+        r"|until (they are|it is) delivered[^.]{0,40}(removed|deleted)"
+        r"|удаляются (сразу )?после (подтверждённой )?доставки|до доставки, после чего удаляются"
+        r"|配送されるまでの短い間"
+    ),
+    "The copy says messages are deleted when delivered. The server deletes by "
+    "retention only (size cap + age sweep), never on ACK.",
+)
+for days in (int(d) for d in re.findall(r"(\d+)\s*(?:days|дней|日)", "\n".join(
+        re.findall(r"[^\n]{0,80}(?:mailbox|почтов|メールボックス|retention|сроку хранения|保存期限)[^\n]{0,120}", site_copy())))):
+    if days in (7,):   # media lives 7 days; not the mailbox
+        continue
+    check(
+        f"mailbox-retention-{days}d", None if RETENTION_DAYS is None else RETENTION_DAYS == days,
+        f"The copy gives the mailbox retention as {days} days; messaging-service sweeps "
+        f"at {RETENTION_DAYS}.",
+    )
+
+# ── Sealed sender is not a setting ───────────────────────────────────────────
+check(
+    "sealed-sender-not-a-switch",
+    not copy_says(r"stealth.{0,4} switch|переключатель «стелс»|「ステルス」の切り替え"),
+    "The copy calls sealed sender a switch. It is always on in release builds "
+    "(iOS StealthPolicy, Android stealth/StealthPolicy); there is nothing to switch.",
+)
 
 # ── Telemetry ────────────────────────────────────────────────────────────────
 

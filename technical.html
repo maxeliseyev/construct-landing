@@ -103,17 +103,17 @@
                         <p class="why-answer"><span data-i18n-html="home.why.id.answer"><strong>An account is a keypair.</strong> No phone number, no email, no required username, and discovery is off by default. A subpoena to a carrier reaches nothing, because no carrier is in the loop.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional over QUIC with HTTP/2 fallback — one long-lived stream that survives a change of network without a new handshake.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional — over QUIC with HTTP/2 fallback on iOS, over HTTP/2 on Android — one long-lived stream that survives a change of network without a new handshake.</span></p>
                     </div>
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-1024 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the session's initial key. The first message of a conversation is protected too, and a session is not established at all without the post-quantum part. This protects what messages and attachments say. Who sent a sealed message, calls and groups are not post-quantum yet — the <a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html#post-quantum-coverage">protocol specification</a> lists every layer.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.pq.answer"><strong>Post-quantum, already in the protocol.</strong> ML-KEM-1024 is encapsulated to the recipient's Kyber prekey at session setup (PQXDH) and goes into the session's initial key. The first message of a conversation is protected too, and a session is not established at all without the post-quantum part. This protects what messages and attachments say. Who sent a message is protected post-quantum too, and calls are when both apps offer post-quantum DTLS. Still classical: the server's signatures (sender certificates, key-transparency heads), device sign-in and account recovery; groups do not exist yet — the <a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html#post-quantum-coverage">protocol specification</a> lists every layer.</span></p>
                     </div>
                     <div class="why-item">
                         <p class="why-answer"><span data-i18n-html="home.why.sealed.answer"><strong>The sender is not in the envelope.</strong> Sealed sender<a class="fn-marker" href="#fn-sender" aria-label="What sealed sender means">*</a> is unconditional for ordinary traffic. To route a message the server has an opaque account id<a class="fn-marker" href="#fn-opaque" aria-label="What an opaque identifier is">**</a>, a size and a time.</span></p>
                     </div>
                     </div>
                     <ul class="fn-notes fn-notes--aligned">
-                        <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is the &ldquo;stealth&rdquo; switch.</span></li>
+                        <li id="fn-sender"><span class="fn-marker">*</span> <span data-i18n-html="home.why.note.sender"><strong>Sealed sender</strong> means a message travels with no mark of who wrote it. Only the recipient can open that; the server cannot. In the app it is always on (shown as “stealth” under Security); there is nothing to switch.</span></li>
                         <li id="fn-opaque"><span class="fn-marker">**</span> <span data-i18n-html="home.why.note.opaque">An <strong>opaque identifier</strong> is a string that says nothing about you — characters assigned when the account was created.</span></li>
                     </ul>
 
@@ -131,7 +131,7 @@
                         <span data-i18n-html="home.about.t9">Konstruct is built on the Signal Protocol design (X3DH + Double Ratchet), written from scratch in Rust and extended with post-quantum key agreement (ML-KEM-1024).</span>
                         </p>
                     <p>
-                        <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. Konstruct’s live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback.</span>
+                        <span data-i18n-html="home.how-it-works.t2">Konstruct uses <strong>gRPC with Protocol Buffers</strong> for efficient binary framing, and keeps a <strong>persistent bidirectional MessageStream</strong> open for real-time delivery — not request/response polling. The backend is split into independent services (identity, messaging, signaling, media) for fault isolation. On iOS the live path is <strong>gRPC bidi over QUIC</strong>, with HTTP/2 as automatic fallback; Android uses HTTP/2.</span>
                         </p>
                     <h3>
                         <span data-i18n="home.how-it-works.cryptography-stack">Cryptography Stack</span></h3>
@@ -145,10 +145,10 @@
  post-compromise security (self-healing).</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-1024</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the X25519 outputs, so a recorded session is not recoverable by breaking X25519 alone. Post-quantum protection covers the very first message, and there is no classical way to establish a session. On top of that, every session runs a <strong>continuous ML-KEM-768 ratchet</strong> — re-keying as the conversation goes, not once at setup, with its own post-quantum key for each message.</span>
+                            <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-1024</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the X25519 outputs, so a recorded session is not recoverable by breaking X25519 alone. Post-quantum protection covers the very first message, and there is no classical way to establish a session. On top of that, every session runs a <strong>sparse ML-KEM-768 ratchet</strong> — fresh post-quantum material is mixed in as the conversation goes (every 16 turns or every 7 days), not once at setup, and each message gets its own post-quantum key derived from it.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t6"><strong>Authentication signatures: hybrid Ed25519 + ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204) on every post-quantum prekey — both must verify, and client and server run the same implementation. The hybrid key itself is vouched for by Ed25519 and pinned on first contact. Device sign-in, account recovery and the server's sender certificates are still Ed25519 only.</span>
+                            <span data-i18n-html="home.how-it-works.t6"><strong>Authentication signatures: hybrid Ed25519 + ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204) on every post-quantum prekey — both must verify: the client refuses a prekey without both. The hybrid key itself is vouched for by Ed25519 and pinned on first contact. Device sign-in, account recovery and the server's sender certificates are still Ed25519 only.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t7"><strong>AEAD:</strong> ChaCha20-Poly1305 for
@@ -173,7 +173,7 @@
  out.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t9"><strong>Crypto Agility:</strong> the protocol carries a suite version, so devices running different algorithm sets keep talking while a migration rolls out — no flag day, no requirement that everyone update at once. Adding an algorithm still means shipping a new build; what versioning removes is the need for it to happen everywhere simultaneously.</span>
+                            <span data-i18n-html="home.how-it-works.t9"><strong>Crypto agility:</strong> the protocol carries a suite version, so a new algorithm set can be introduced without changing the message format. The recent migrations (PQXDH v2, ratchet suite 4) were hard cutovers: sessions on the old suite are refused and reopen on the next send. While this is an alpha, we choose that over long compatibility windows.</span>
                             </li>
                     </ul>
                     <ul class="next-links">
@@ -219,7 +219,7 @@
                     <h3 id="telemetry-heading">
                         <span data-i18n="home.telemetry.no-telemetry-not-anonymised-absent">No Telemetry. Not Anonymised — Absent.</span></h3>
                     <p>
-                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, push token — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
+                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, a push token on iOS — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
                     </p>
                     <ul class="next-links">
                         <li><a href="https://konstruct-msg.github.io/construct-protocol/08-metadata-privacy.html" data-i18n="technical.specs.metadata">Metadata privacy and sealed sender</a></li>
@@ -315,6 +315,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=645efc30aa"></script>
+        <script src="/site.js?v=e2de833c62"></script>
     </body>
 </html>
