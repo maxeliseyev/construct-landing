@@ -313,14 +313,27 @@ for pattern, (what, actual, seconds) in _SPELLED_TTL.items():
 # retention only — `MAXLEN ~` on XADD plus an hourly age sweep
 # (construct-server decisions/minimal-server-delivery.md). Until 2026-10-05 the
 # home page and the privacy policy both said messages were removed on delivery,
-# and the policy said so in a table. The sweep's age is a literal in
-# messaging-service; `MESSAGE_TTL_DAYS` is read into config and used by nothing.
+# and the policy said so in a table.
+#
+# The sweep's age is `construct_queue::MAILBOX_MAX_AGE_DAYS`. Until 2026-10-11 this
+# read a literal out of messaging-service/src/main.rs; the literal became that constant
+# on 2026-10-05, the pattern stopped matching, and every retention claim on the site
+# was SKIPPED for six days while the server moved from 30 days to 7. A source the
+# checker cannot find is now a failure, not a skip.
 
+MEDIA_DAYS = 7  # media lives a week too; a "7 days" next to "retention" may be about it
 RETENTION_DAYS = None
 if SERVER.exists():
-    t = read(SERVER / "messaging-service/src/main.rs")
-    m = t and re.search(r"trim_streams_by_age\(\s*(\d+)\s*\*\s*24\s*\*\s*3600", t)
+    t = read(SERVER / "crates/construct-queue/src/lib.rs")
+    m = t and re.search(r"pub const MAILBOX_MAX_AGE_DAYS: u64 = (\d+);", t)
     RETENTION_DAYS = int(m.group(1)) if m else None
+    check(
+        "mailbox-retention-source",
+        RETENTION_DAYS is not None,
+        "construct-server is checked out, but MAILBOX_MAX_AGE_DAYS was not found in "
+        "crates/construct-queue/src/lib.rs. Find where the age sweep's value lives now "
+        "and read it from there.",
+    )
 
 check(
     "messages-not-deleted-on-delivery",
@@ -335,7 +348,7 @@ check(
 )
 for days in (int(d) for d in re.findall(r"(\d+)\s*(?:days|дней|日)", "\n".join(
         re.findall(r"[^\n]{0,80}(?:mailbox|почтов|メールボックス|retention|сроку хранения|保存期限)[^\n]{0,120}", site_copy())))):
-    if days in (7,):   # media lives 7 days; not the mailbox
+    if days == MEDIA_DAYS and days != RETENTION_DAYS:  # about media, not the mailbox
         continue
     check(
         f"mailbox-retention-{days}d", None if RETENTION_DAYS is None else RETENTION_DAYS == days,

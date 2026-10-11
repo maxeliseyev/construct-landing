@@ -164,7 +164,7 @@
         <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="privacy.privacy-policy.h11">Privacy Policy</h1>
-                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: October 5, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
+                <p class="page-meta" data-i18n="privacy.privacy-policy.p2">Last Updated: October 11, 2026 &nbsp;·&nbsp; Effective Date: March 4, 2026</p>
             </div>
         </header>
 
@@ -232,7 +232,7 @@
                  data-i18n="privacy.s2_2.p23">The server tracks how many One-Time PreKeys remain and requests your device to replenish them when the supply runs low. Once an OTPK is used to establish a session, it is permanently deleted from the server.</p>
 
                 <h3 data-i18n="privacy.s2_3.h31">2.3 Pending Message Queue</h3>
-                <p data-i18n="privacy.s2_3.p2">When you send a message, it is encrypted on your device before transmission. The server holds the encrypted message in the recipient's mailbox. It does not delete a message because a device says it was received: mailboxes are trimmed by retention only — each has a size cap, and anything older than about 30 days is deleted. A message that has already been delivered can therefore remain on our server — encrypted and unreadable to us — for up to about 30 days.</p>
+                <p data-i18n="privacy.s2_3.p2">When you send a message, it is encrypted on your device before transmission. The server holds the encrypted message in the recipient's mailbox. It does not delete a message because a device says it was received: mailboxes are trimmed by retention only — each has a size cap, and anything older than about 7 days is deleted. A message that has already been delivered can therefore remain on our server — encrypted and unreadable to us — for up to about 7 days.</p>
                 <p data-i18n="privacy.s2_3.p3">What is stored in the mailbox (until it expires):</p>
                 <ul>
                     <li data-i18n="privacy.s2_3.li4">Encrypted message payload (opaque binary blob — we cannot read this)</li>
@@ -243,7 +243,7 @@
                     <li data-i18n="privacy.s2_3.li9">Message sequence number (required for the Double Ratchet algorithm)</li>
                     <li data-i18n="privacy.s2_3.li10">Ephemeral public key (part of the Signal Protocol ratchet step — not a secret)</li>
                 </ul>
-                <p data-i18n="privacy.s2_3.p11">If your device is offline, messages wait in your mailbox until your next connection. A message not fetched within about 30 days is deleted unread.</p>
+                <p data-i18n="privacy.s2_3.p11">If your device is offline, messages wait in your mailbox until your next connection. A message not fetched within about 7 days is deleted unread.</p>
                 <p data-i18n-html="privacy.s2_3.p12"><strong>Stealth (sealed sender):</strong> always on for eligible user traffic (messages, receipts, call signaling, etc.; a few control paths are excluded by design). Your device omits the Sender User ID from the envelope and seals a signed sender certificate to the recipient's identity key — only the recipient can recover who sent the message; the server cannot. Privacy Pass anonymous tokens can accompany sealed sends for anti-spam; server-side token enforcement is still rolling out. Stealth does not hide message timing, size, or your IP address from the network layer.</p>
 
                 <h3 data-i18n="privacy.s2_4.h31">2.4 Contact Relationships</h3>
@@ -377,7 +377,7 @@
                     <tbody>
                         <tr>
                             <td data-i18n="privacy.s6_4.td4">Pending messages</td>
-                            <td data-i18n="privacy.s6_4.td5">Deleted by retention: mailbox size cap, and at most ~30 days — not upon delivery</td>
+                            <td data-i18n="privacy.s6_4.td5">Deleted by retention: mailbox size cap, and at most ~7 days — not upon delivery</td>
                         </tr>
                         <tr>
                             <td data-i18n="privacy.s6_4.td6">Media attachments (encrypted)</td>
@@ -447,7 +447,7 @@
                     <li data-i18n="privacy.s8_3.li3">The hash of your username, your User ID and your public key bundle are deleted from the server. A pseudonymous device ID and hash commitment remain in the append-only key-transparency log, which cannot be edited</li>
                     <li data-i18n="privacy.s8_3.li4">Blinded contact-link records are not currently removed</li>
                     <li data-i18n="privacy.s8_3.li5">Your APNs and PushKit VoIP tokens are removed</li>
-                    <li data-i18n="privacy.s8_3.li6">Messages in your mailbox expire on the normal retention schedule (up to ~30 days), and from backups as they rotate (up to ~4 weeks)</li>
+                    <li data-i18n="privacy.s8_3.li6">Messages in your mailbox expire on the normal retention schedule (up to ~7 days), and from backups as they rotate (up to ~4 weeks)</li>
                     <li data-i18n="privacy.s8_3.li7">Deletion is completed within 24 hours</li>
                 </ul>
                 <p data-i18n="privacy.s8_3.p8">Messages previously delivered to recipients are stored locally on their devices only and are outside our control after delivery.</p>
@@ -485,7 +485,7 @@
                         </tr>
                         <tr>
                             <td data-i18n="privacy.summary.td4">Fully anonymous use supported</td>
-                            <td data-i18n="privacy.summary.td5">Messages held only as ciphertext and deleted on a retention schedule (up to ~30 days)</td>
+                            <td data-i18n="privacy.summary.td5">Messages held only as ciphertext and deleted on a retention schedule (up to ~7 days)</td>
                         </tr>
                         <tr>
                             <td data-i18n="privacy.summary.td6">No tracking or analytics SDKs</td>
@@ -510,6 +510,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=8b1674cdb2" defer></script>
+            <script src="/site.js?v=b462f8fa6d" defer></script>
     </body>
 </html>

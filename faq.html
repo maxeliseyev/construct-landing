@@ -440,7 +440,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an opaque account id for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and, on iOS, a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Messages are held only as ciphertext and removed on a retention schedule (about 30 days), not at the moment of delivery. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
+                            <p data-i18n-html="faq.encryption.p5">Very little, and none of it is you. To route a message the server needs an opaque account id for the recipient, the size of the ciphertext and the time it arrived; it also holds your public keys and, on iOS, a push token. That is the list. It does not see the content, your name, your avatar, your contact list — or, on the sealed-sender path that is always on, who sent the message. Messages are held only as ciphertext and removed on a retention schedule (about 7 days), not at the moment of delivery. A username is optional, is <strong>not</strong> used for routing, and is stored only as a keyed hash for the sole purpose of letting people find you — and that lookup is off until you switch discovery on, so by default an account cannot be found by name at all.</p>
                             </div>
                     </details>
 
@@ -862,6 +862,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=8b1674cdb2" defer></script>
+        <script src="/site.js?v=b462f8fa6d" defer></script>
     </body>
 </html>
