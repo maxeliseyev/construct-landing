@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LANGS = ("en", "ru", "ja", "hy")
+LANGS = ("en", "ru", "ja", "hy", "fr")
 HTML_FILES = ("index.html", "faq.html", "privacy.html", "technical.html",
               "roadmap.html", "add.html", "contact.html")
 

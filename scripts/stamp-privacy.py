@@ -25,7 +25,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-LANGS = ("en", "ru", "ja", "hy")
+LANGS = ("en", "ru", "ja", "hy", "fr")
 DATE_KEY = "privacy.privacy-policy.p2"
 STAMP = ROOT / "scripts/.privacy-stamp"
 
@@ -33,6 +33,8 @@ RU_MONTHS = ("января", "февраля", "марта", "апреля", "м
              "июля", "августа", "сентября", "октября", "ноября", "декабря")
 HY_MONTHS = ("հունվարի", "փետրվարի", "մարտի", "ապրիլի", "մայիսի", "հունիսի",
              "հուլիսի", "օգոստոսի", "սեպտեմբերի", "հոկտեմբերի", "նոյեմբերի", "դեկտեմբերի")
+FR_MONTHS = ("janvier", "février", "mars", "avril", "mai", "juin",
+             "juillet", "août", "septembre", "octobre", "novembre", "décembre")
 
 
 def policy_hash() -> str:
@@ -55,6 +57,9 @@ def render(lang: str, day: dt.date) -> str:
     if lang == "hy":
         return (f"Վերջին թարմացում՝ {day.day} {HY_MONTHS[day.month - 1]} {day.year} թ."
                 f"  ·  Ուժի մեջ է մտել՝ 4 մարտի 2026 թ.")
+    if lang == "fr":
+        return (f"Dernière mise à jour\u00a0: {day.day} {FR_MONTHS[day.month - 1]} {day.year}"
+                f"  ·  Date d’entrée en vigueur\u00a0: 4 mars 2026")
     return (f"Last Updated: {day.strftime('%B')} {day.day}, {day.year}"
             f"  ·  Effective Date: March 4, 2026")
 
