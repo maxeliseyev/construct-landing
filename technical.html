@@ -6,6 +6,7 @@
     data-title-en="How it works — Konstruct"
     data-title-ru="Как это устроено — Konstruct"
     data-title-ja="技術構成 — Konstruct"
+    data-title-hy="Ինչպես է այն աշխատում — Konstruct"
 >
     <head>
         <meta charset="UTF-8" />
@@ -70,6 +71,28 @@
                                 <span class="lang-name">Русский</span>
                             </button>
                         </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="ja"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">JA</span>
+                                <span class="lang-name">日本語</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="option"
+                                data-lang-btn="hy"
+                                aria-selected="false"
+                            >
+                                <span class="lang-code">HY</span>
+                                <span class="lang-name">Հայերեն</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 </div>
@@ -89,7 +112,7 @@
         <header class="page-header" role="banner">
             <div class="container">
                 <h1 data-i18n="technical.title">How it works</h1>
-                <p><span data-i18n-html="technical.intro">The front page is the short version. This is the long one: the transport, the cryptography, what the server can and cannot see, and where the protocol specification says more.</span></p>
+                <p><span data-i18n-html="technical.intro">Transport, cryptography, what the server can and cannot see, and where the protocol is written up in more detail.</span></p>
             </div>
         </header>
 
@@ -100,7 +123,7 @@
                     <h2 id="summary-heading"><span data-i18n="technical.summary.title">The short version</span></h2>
                     <div class="why-grid">
                     <div class="why-item">
-                        <p class="why-answer"><span data-i18n-html="home.why.id.answer"><strong>An account is a keypair.</strong> No phone number, no email, no required username, and discovery is off by default. A subpoena to a carrier reaches nothing, because no carrier is in the loop.</span></p>
+                        <p class="why-answer"><span data-i18n-html="home.why.id.answer"><strong>An account is a keypair.</strong> No phone number, no email, no required username, and discovery is off by default. A request to a carrier gets nothing, because no carrier is in the loop.</span></p>
                     </div>
                     <div class="why-item">
                         <p class="why-answer"><span data-i18n-html="home.why.transport.answer">gRPC bidirectional — over QUIC with HTTP/2 fallback on iOS, over HTTP/2 on Android — one long-lived stream that survives a change of network without a new handshake.</span></p>
@@ -148,7 +171,7 @@
                             <span data-i18n-html="home.how-it-works.t5"><strong>Post-quantum key agreement (PQXDH):</strong> when a session is established the initiator encapsulates an <strong>ML-KEM-1024</strong> secret (NIST FIPS&nbsp;203) to the recipient's Kyber prekey, and that secret goes into the session's initial key alongside the X25519 outputs, so a recorded session is not recoverable by breaking X25519 alone. Post-quantum protection covers the very first message, and there is no classical way to establish a session. On top of that, every session runs a <strong>sparse ML-KEM-768 ratchet</strong> — fresh post-quantum material is mixed in as the conversation goes (every 16 turns or every 7 days), not once at setup, and each message gets its own post-quantum key derived from it.</span>
                             </li>
                         <li>
-                            <span data-i18n-html="home.how-it-works.t6"><strong>Authentication signatures: hybrid Ed25519 + ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204) on every post-quantum prekey — both must verify: the client refuses a prekey without both. The hybrid key itself is vouched for by Ed25519 and pinned on first contact. Device sign-in, account recovery and the server's sender certificates are still Ed25519 only.</span>
+                            <span data-i18n-html="home.how-it-works.t6"><strong>Signatures: hybrid Ed25519 + ML-DSA-65</strong> (Dilithium-3, NIST FIPS&nbsp;204) on every post-quantum prekey — both must verify: the client refuses a prekey without both. The hybrid key itself is vouched for by Ed25519 and pinned on first contact. Device sign-in, account recovery and the server's sender certificates are still Ed25519 only.</span>
                             </li>
                         <li>
                             <span data-i18n-html="home.how-it-works.t7"><strong>AEAD:</strong> ChaCha20-Poly1305 for
@@ -219,11 +242,11 @@
                     <h3 id="telemetry-heading">
                         <span data-i18n="home.telemetry.no-telemetry-not-anonymised-absent">No Telemetry. Not Anonymised — Absent.</span></h3>
                     <p>
-                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs to disk: when logs are needed to fix a bug, you send them yourself with a button in a beta build. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, a push token on iOS — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
+                        <span data-i18n-html="home.telemetry.t2">Konstruct collects no analytics, no usage metrics, no behavioural events, no crash reports and no advertising identifiers. There are no third-party SDKs — no Firebase, no Crashlytics, no Sentry — and no ATT prompt or SKAdNetwork. Release builds write no logs. One thing we do not control: while the beta runs on TestFlight, Apple reports its own standard testing metrics to us — install date, build version, session and crash counts. That is Apple's, not ours, and it ends with the App Store release. To route a message the server does hold a small fixed set of metadata — recipient, time, size, your public keys, a push token on iOS — and sealed sender takes the sender out of the envelope as well. What that does not solve, timing and IP correlation, is written down in the <a href="/privacy">Privacy Policy</a>.</span>
                     </p>
                     <ul class="next-links">
                         <li><a href="https://konstruct-msg.github.io/construct-protocol/08-metadata-privacy.html" data-i18n="technical.specs.metadata">Metadata privacy and sealed sender</a></li>
-                        <li><a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html" data-i18n="technical.specs.threat">Threat model — who this does and does not protect against</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html" data-i18n="technical.specs.threat">Threat model — what this does and does not protect against</a></li>
                     </ul>
                 </div>
             </section>
@@ -294,7 +317,7 @@
                     <p class="section-lead" data-i18n="technical.specs.lead">Everything on this page is worked through in full in the protocol specification — the whitepaper. It is versioned alongside the code and carries only what can be checked against the reference implementation.</p>
                     <ul>
                         <li><a href="https://konstruct-msg.github.io/construct-protocol/" data-i18n="technical.specs.whitepaper">Protocol specification (whitepaper)</a></li>
-                        <li><a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html" data-i18n="technical.specs.threat">Threat model — who this does and does not protect against</a></li>
+                        <li><a href="https://konstruct-msg.github.io/construct-protocol/01-threat-model.html" data-i18n="technical.specs.threat">Threat model — what this does and does not protect against</a></li>
                         <li><a href="https://konstruct-msg.github.io/construct-protocol/02-cryptographic-primitives.html" data-i18n="technical.specs.primitives">Cryptographic primitives</a></li>
                         <li><a href="https://konstruct-msg.github.io/construct-protocol/04-session-handshake.html" data-i18n="technical.specs.handshake">Session handshake (X3DH + PQXDH)</a></li>
                         <li><a href="https://konstruct-msg.github.io/construct-protocol/05-message-encryption.html" data-i18n="technical.specs.ratchet">Message encryption (Double Ratchet)</a></li>
@@ -311,10 +334,10 @@
 
         <footer>
             <div class="container">
-                <p><a href="/" data-i18n="nav.back-home">← Back to konstruct.cc</a></p>
+                <p><a href="/" data-i18n="nav.back-home">← Back to home</a></p>
             </div>
         </footer>
 
-        <script src="/site.js?v=0ec157ab52"></script>
+        <script src="/site.js?v=1c98d98080"></script>
     </body>
 </html>

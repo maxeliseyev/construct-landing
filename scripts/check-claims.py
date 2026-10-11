@@ -56,7 +56,7 @@ def site_copy() -> str:
     matches a pattern neither of them contains.
     """
     parts = []
-    for lang in ("en", "ru", "ja"):
+    for lang in ("en", "ru", "ja", "hy"):
         raw = read(SITE / f"i18n/{lang}.json")
         if raw:
             parts.append("\n".join(json.loads(raw).values()))
@@ -178,7 +178,7 @@ if sealed is None:
     check("pq-coverage-caveat", None, "construct-core not checked out")
 else:
     sealed_is_classical = "fn seal_to_x25519_public" in sealed and "MlKem" not in sealed
-    for lang in ("en", "ru", "ja"):
+    for lang in ("en", "ru", "ja", "hy"):
         raw = read(SITE / f"i18n/{lang}.json") or ""
         check(
             f"pq-coverage-caveat-{lang}",
@@ -583,14 +583,14 @@ repo_claim(
            "roadmap has to list it again.",
 )
 
-# Per locale and per key, not across the whole site: the policy is English in ja.json
-# and in privacy.html, so a sentence dropped from en.json alone is still "on the site".
+# Per locale and per key, not across the whole site: the policy is English in
+# privacy.html (the no-JS fallback), so a sentence dropped from en.json alone is still "on the site".
 def locale_value(lang: str, key: str) -> str:
     raw = read(SITE / f"i18n/{lang}.json")
     return json.loads(raw).get(key, "") if raw else ""
 
-VIDEO_PLANNED = r"video calls?|видеозвонк|ビデオ通話"
-for lang in ("en", "ru", "ja"):
+VIDEO_PLANNED = r"video calls?|видеозвонк|ビデオ通話|տեսազանգ"
+for lang in ("en", "ru", "ja", "hy"):
     check(
         f"video-calls-not-on-roadmap-{lang}",
         not re.search(VIDEO_PLANNED, locale_value(lang, "home.roadmap.t10"), re.I),
@@ -607,7 +607,9 @@ for lang in ("en", "ru", "ja"):
     check(
         f"video-calls-server-sees-type-{lang}",
         bool(re.search(r"whether a call starts as a voice or a video call"
-                       r"|начинается звонок как аудио- или как видеозвонок", policy)),
+                       r"|начинается звонок как аудио- или как видеозвонок"
+                       r"|通話が音声通話として始まるのかビデオ通話として始まるのか"
+                       r"|զանգը սկսվում է որպես ձայնային, թե որպես տեսազանգ", policy)),
         f"privacy.s2_7.p2 ({lang}) no longer says the server learns whether a call starts "
         "as voice or video. It does: `hasVideo` goes in InitiateCall so the callee's phone "
         "rings as video (client/specs/VIDEO_CALLS_DESIGN.md, three questions).",
@@ -634,7 +636,7 @@ for lang in ("en", "ru", "ja"):
 # contains it, so the answer is always yes and the assertion means nothing. The
 # marker has to be in the SAME string as the mention.
 SOCIAL = r"SLIP-?39|social recovery|социальн\w+ восстановлен"
-PLANNED = r"in progress|в работе|planned|roadmap|進行中|not shipped|не выпущено"
+PLANNED = r"in progress|в работе|planned|roadmap|進行中|not shipped|не выпущено|Աշխատանքի մեջ"
 
 stray = [ln for ln in COPY.splitlines()
          if re.search(SOCIAL, ln, re.I) and not re.search(PLANNED, ln, re.I)]
