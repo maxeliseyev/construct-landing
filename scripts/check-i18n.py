@@ -283,6 +283,28 @@ def main() -> int:
                 print(f'FAIL {name}: {asset}?v={sorted(found)[0]} but it hashes to '
                       f'"{expect}" — browsers will keep the cached file.')
 
+    # The language menu is static markup on each page, and SUPPORTED in site.js
+    # is what the runtime accepts. Seven languages were appended to both in the
+    # order they happened to be added, which reads as no order at all. The order
+    # is now chosen (see the comment on SUPPORTED) and every page must list
+    # exactly SUPPORTED, in that order — a new locale goes where it belongs, not
+    # at the end, and a page cannot quietly miss one.
+    sup = re.search(r"var SUPPORTED = \[([^\]]*)\];", site)
+    supported = re.findall(r'"(\w+)"', sup.group(1)) if sup else []
+    if sorted(supported) != sorted(LANGS):
+        ok = False
+        print(f"FAIL site.js: SUPPORTED {supported} does not cover LANGS {list(LANGS)}")
+    for name in HTML_FILES:
+        text = (ROOT / name).read_text(encoding="utf-8")
+        menu = re.search(r'<ul class="lang-menu".*?</ul>', text, re.S)
+        if not menu:
+            continue
+        listed = re.findall(r'data-lang-btn="(\w+)"', menu.group(0))
+        if listed != supported:
+            ok = False
+            print(f"FAIL {name}: language menu lists {listed}, site.js SUPPORTED is "
+                  f"{supported} — same languages, same order.")
+
     if ok:
         print(f"OK: {len(base)} keys × {len(LANGS)} langs; {len(used)} HTML refs")
         return 0
