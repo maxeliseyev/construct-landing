@@ -5,7 +5,10 @@
 //   data-i18n="key"       → textContent
 //   data-i18n-html="key"  → innerHTML (first-party trusted copy only)
 (function () {
-    var SUPPORTED = ["en", "ru", "ja", "hy", "fr", "uk", "tr"];
+    // Menu order: English, then by script — Latin, Cyrillic, Armenian, Japanese — and
+    // by native name within a script. The switcher in every page lists exactly
+    // this, in this order; check-i18n fails otherwise.
+    var SUPPORTED = ["en", "fr", "tr", "ru", "uk", "hy", "ja"];
     var LABELS = {
         en: "EN",
         ru: "RU",
