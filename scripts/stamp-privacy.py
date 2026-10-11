@@ -25,7 +25,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-LANGS = ("en", "ru", "ja", "hy", "fr", "uk")
+LANGS = ("en", "ru", "ja", "hy", "fr", "uk", "tr")
 DATE_KEY = "privacy.privacy-policy.p2"
 STAMP = ROOT / "scripts/.privacy-stamp"
 
@@ -33,6 +33,8 @@ RU_MONTHS = ("января", "февраля", "марта", "апреля", "м
              "июля", "августа", "сентября", "октября", "ноября", "декабря")
 HY_MONTHS = ("հունվարի", "փետրվարի", "մարտի", "ապրիլի", "մայիսի", "հունիսի",
              "հուլիսի", "օգոստոսի", "սեպտեմբերի", "հոկտեմբերի", "նոյեմբերի", "դեկտեմբերի")
+TR_MONTHS = ("Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+             "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık")
 UK_MONTHS = ("січня", "лютого", "березня", "квітня", "травня", "червня",
              "липня", "серпня", "вересня", "жовтня", "листопада", "грудня")
 FR_MONTHS = ("janvier", "février", "mars", "avril", "mai", "juin",
@@ -59,6 +61,9 @@ def render(lang: str, day: dt.date) -> str:
     if lang == "hy":
         return (f"Վերջին թարմացում՝ {day.day} {HY_MONTHS[day.month - 1]} {day.year} թ."
                 f"  ·  Ուժի մեջ է մտել՝ 4 մարտի 2026 թ.")
+    if lang == "tr":
+        return (f"Son güncelleme: {day.day} {TR_MONTHS[day.month - 1]} {day.year}"
+                f"  ·  Yürürlük tarihi: 4 Mart 2026")
     if lang == "uk":
         return (f"Останнє оновлення: {day.day} {UK_MONTHS[day.month - 1]} {day.year} р."
                 f"  ·  Набирає чинності: 4 березня 2026 р.")
