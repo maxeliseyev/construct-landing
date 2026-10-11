@@ -309,13 +309,13 @@
 
                 <h3 data-i18n="privacy.s2_10.h31">2.10 IP Addresses and Connection Metadata</h3>
                 <p data-i18n-html="privacy.s2_10.p2">Connecting to any online service exposes your IP address to its servers at the network layer — this is unavoidable, and Konstruct is no exception. However, we do <strong>not write your raw IP address to our databases</strong>. Rate limits on device registration and proof-of-work challenges use only a <strong>salted, one-way hash</strong> of the address. To rate-limit message sending and key-bundle fetches, the server briefly holds the address itself (for IPv6, its /64 network) in an in-memory counter that expires within about a minute. We keep no IP-to-account mapping.</p>
-                <p data-i18n-html="privacy.s2_10.p3">We do not use your address, or its hashed tag, to build behavioural profiles, link it to your message content, or share it for advertising. In the interest of honesty: a salted hash <em>reduces</em> exposure rather than perfectly anonymising it — because the IPv4 address space is small, a party holding the secret salt could still test candidate addresses. It removes the raw address from everything we store; it is not a guarantee that your network origin can never be determined by our infrastructure.</p>
+                <p data-i18n-html="privacy.s2_10.p3">We do not use your address, or its hashed tag, to build behavioural profiles, link it to your message content, or share it for advertising. But a salted hash <em>reduces</em> exposure rather than perfectly anonymising it — because the IPv4 address space is small, a party holding the secret salt could still test candidate addresses. It removes the raw address from everything we store; it is not a guarantee that your network origin can never be determined by our infrastructure.</p>
                 <p data-i18n-html="privacy.s2_10.p4">If you want to keep your network address off the path entirely, turn on <strong>censorship protection</strong> in Settings, or use a VPN or Tor — though the endpoint that terminates your connection still sees the apparent source address of that connection.</p>
 
                 <h2 data-i18n="privacy.s3.h21">3. Traffic Analysis Protection</h2>
                 <p data-i18n-html="privacy.s3.p2">Konstruct implements <strong>padding</strong> and, on iOS, <strong>randomised send-timing jitter</strong> to make it harder for a network observer — or our server — to infer what you send from its size or exact timing. Messages are padded to fixed-size chunks. Attachments (photos, videos, voice notes, files, profile pictures) are padded to size classes, so the server stores a size range rather than the exact size of a file — a file grows by at most 12 %, usually about 3 % (the smallest files are padded up to 4 KB) — and is never told what type of file it is. These mitigations are active by default and require no configuration.</p>
                 <p data-i18n-html="privacy.s3.p3">We deliberately do <strong>not</strong> send scheduled dummy/cover traffic. Constant cover traffic needs an always-on connection and timed sends, which drains battery and data; a mobile client cannot sustain it, and forcing it would trade real usability for marginal metadata hardening. Padding and send-jitter (above) are our mobile answer; constant cover traffic could only ever run on an always-online desktop client and remains a possible desktop-only option, never a mobile promise. We would rather ship no cover traffic than claim one that isn't running.</p>
-                <p data-i18n-html="privacy.s3.p4">Separately, <strong>censorship protection</strong> is a network-level obfuscation layer that helps your connection blend in with ordinary HTTPS traffic when direct TLS is throttled or blocked. It is a censorship-circumvention mechanism, not a metadata-hiding one — it does not by itself prevent a network observer who can already see your connection from inferring message timing or size.</p>
+                <p data-i18n-html="privacy.s3.p4">Separately, <strong>censorship protection</strong> is a network-level obfuscation layer that helps your connection blend in with ordinary HTTPS traffic when direct TLS is blocked. It is a censorship-circumvention mechanism, not a metadata-hiding one — it does not by itself prevent a network observer who can already see your connection from inferring message timing or size.</p>
 
                 <h2 data-i18n="privacy.s4.h21">4. Anti-Spam: Proof of Work</h2>
                 <p data-i18n-html="privacy.s4.p2">To prevent spam without a phone number or email, Konstruct requires your device to perform a small <strong>Proof of Work</strong> computation at registration, and when sending after a rate limit has been exceeded. This is a client-side computation that imposes a negligible cost on legitimate use but makes large-scale spam computationally expensive. No personal data is involved.</p>
@@ -438,7 +438,7 @@
                 </table>
 
                 <h2 data-i18n="privacy.s7.h21">7. Data Sharing and Third Parties</h2>
-                <p data-i18n-html="privacy.s7.p2"><strong >We do not sell or rent your data, and we do not share it for advertising, profiling or any purpose unrelated to running the service.</strong > Operating it does require the providers listed below; each receives the minimum that its job needs, and neither receives message content.</p>
+                <p data-i18n-html="privacy.s7.p2"><strong >We do not sell or rent your data, and we do not share it for advertising, profiling or any purpose unrelated to running the service.</strong > Operating it does require the providers listed below; each receives the minimum that its job needs, and none receives message content.</p>
 
                 <h3 data-i18n="privacy.s7_1.h31">7.1 Infrastructure Providers</h3>
                 <ul>
@@ -467,7 +467,7 @@
                 <h3 data-i18n="privacy.s8_3.h31">8.3 Account Deletion</h3>
                 <p data-i18n="privacy.s8_3.p2">You can delete your account from within the app settings. Upon deletion:</p>
                 <ul>
-                    <li data-i18n="privacy.s8_3.li3">The hash of your username, your User ID and your public key bundle are deleted from the server. A pseudonymous device ID and hash commitment remain in the append-only key-transparency log, which cannot be edited</li>
+                    <li data-i18n="privacy.s8_3.li3">The hash of your username, your User ID and your public key bundle are deleted from the server. The device ID and hash commitment remain in the key-transparency log, which is append-only and from which entries cannot be deleted</li>
                     <li data-i18n="privacy.s8_3.li4">Blinded contact-link records are not currently removed</li>
                     <li data-i18n="privacy.s8_3.li5">Your APNs and PushKit VoIP tokens are removed</li>
                     <li data-i18n="privacy.s8_3.li6">Messages in your mailbox expire on the normal retention schedule (up to ~7 days), and from backups as they rotate (up to ~4 weeks)</li>
@@ -533,6 +533,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=fcd5b8408b" defer></script>
+            <script src="/site.js?v=1c98d98080" defer></script>
     </body>
 </html>

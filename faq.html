@@ -362,7 +362,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a cryptographic Proof of Work challenge from the server and solves it — this prevents automated bot registrations. At the same time, several cryptographic key sets are generated on-device: long-term identity keys, signed prekeys, and one-time prekeys (including post-quantum ML-KEM-1024 keys). Only the public parts of these keys and the PoW result are sent to the server. Private keys never leave your device. There's no password: your account is defined by keys, and a 12-word recovery key brings it back on a new device.</p>
+                            <p data-i18n-html="faq.registration.p3">During registration, the app receives a cryptographic Proof of Work challenge from the server and solves it — this prevents automated bot registrations. At the same time, unique device identifiers and several cryptographic key sets are generated on-device: long-term identity keys, signed prekeys, and one-time prekeys (including post-quantum ML-KEM-1024 keys). Only the public parts of these keys and the PoW result are sent to the server. Private keys never leave your device. There's no password: your account is defined by keys, and a 12-word recovery key brings it back on a new device.</p>
                             </div>
                     </details>
 
@@ -488,14 +488,7 @@
                         </summary>
                         <div class="faq-answer">
                             <p data-i18n-html="faq.encryption.p9">No — the sender field is left out of the envelope, and this is <strong>always on</strong> for ordinary traffic (messages, delivery receipts, call setup, profile sharing). There is no switch to forget. Your device seals a signed sender certificate to the recipient's key: the recipient can open it and verify who wrote, the server cannot. A few internal paths — keep-alives, syncing your own devices, session housekeeping — still carry a sender by design.<br /><br />It is worth being precise about what is being hidden, because it is not an identity. The server never had one: an account here is a keypair and an opaque id, with no phone number, email or real name attached, so there is nothing to link to a person in the first place. What sealed sender removes is the last link between two of those ids — who wrote to whom. The network layer is a separate matter and is covered above: timing and IP remain visible, and that is where a well-resourced observer works.</p>
-                            <p data-i18n-html="faq.encryption.p10">Honest limits: Stealth hides the sender
- <em>identity</em> from the server, not message
- timing, size, or your IP address — those remain
- visible at the network/transport layer. Privacy
- Pass tokens can ride along for anti-spam;
- server-side enforcement is still rolling out, so
- treat token-based rate control as maturing, not
- finished.</p>
+                            <p data-i18n-html="faq.encryption.p10">Limits: Stealth hides the sender <em>identity</em> from the server, not message timing, size, or your IP address — those remain visible at the network/transport layer. Privacy Pass tokens can ride along for anti-spam; server-side enforcement is still rolling out, so treat token-based rate control as maturing, not finished.</p>
                             </div>
                     </details>
                     <details class="faq-item">
@@ -692,7 +685,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.resilience.p5">Yes — unconditionally. Sending messages, receiving messages, E2EE, and all security features will never go behind a paywall. Donation-only models have historically proved fragile for privacy projects, so Konstruct plans a mix: voluntary donations, optional premium features (larger file transfers, extended history, custom themes — never security features), and B2B hosted instances for organizations. The core will always be free.</p>
+                            <p data-i18n="faq.resilience.p5">Yes — unconditionally. Sending messages, receiving messages, E2EE, and all security features will never go behind a paywall. Donation-only models have historically proved fragile for privacy projects, so Konstruct plans a mix: voluntary donations, optional premium features (larger file transfers, extended history, themes — never security features), and B2B hosted instances for organizations. The core will always be free.</p>
                             </div>
                     </details>
 
@@ -748,7 +741,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.security.p5">If a suspiciously high number of messages arrives from a single sender in a short time (more than ~10 in 30 seconds), the client automatically shows a warning and mutes notifications from them. You can then allow them (if it was a glitch) or block them. Importantly: this is receiver-side protection and works regardless of what client the attacker uses.</p>
+                            <p data-i18n="faq.security.p5">If a suspiciously high number of messages arrives from a single sender in a short time (more than ~10 in 30 seconds), the client automatically shows a warning and mutes notifications from them. You can then either allow them or block them. Importantly: this is receiver-side protection and works regardless of what client the sender uses.</p>
                             </div>
                     </details>
                 </section>
@@ -885,6 +878,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=fcd5b8408b" defer></script>
+        <script src="/site.js?v=1c98d98080" defer></script>
     </body>
 </html>

@@ -28,7 +28,7 @@
 // again the very next day on the delivery-status keys, with a comment sitting
 // right here telling me to bump it. `scripts/check-i18n.py` now computes the
 // expected value and fails if this line disagrees, so it cannot be forgotten.
-var I18N_CACHE_VER = "d3e469ac33";
+var I18N_CACHE_VER = "88d08823b9";
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
