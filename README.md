@@ -22,6 +22,7 @@ i18n/ru.json
 i18n/ja.json
 i18n/hy.json
 i18n/fr.json
+i18n/uk.json
 ```
 
 HTML uses a single tree with `data-i18n` / `data-i18n-html` keys. `site.js`
@@ -126,7 +127,7 @@ Git integration: push to `main` → production deploy (if the project is already
 | `/privacy`, `/add` | rewrites | same pattern (`/crypto` is a 307 to `/faq`) |
 | `/c/:userId` | rewrite → `contact.html` | deep link |
 | `/site.js`, `/effects.js` | static | language switcher + HUD effects |
-| `/i18n/en.json`, `/i18n/ru.json`, `/i18n/ja.json`, `/i18n/hy.json`, `/i18n/fr.json` | static | **required** for non-EN locales |
+| `/i18n/en.json`, `/i18n/ru.json`, `/i18n/ja.json`, `/i18n/hy.json`, `/i18n/fr.json`, `/i18n/uk.json` | static | **required** for non-EN locales |
 | `/fonts/*`, `/styles.css`, `/effects.css` | static | self-hosted assets |
 
 If `/i18n/ja.json` returns 404, Japanese (and any non-fallback language) will not apply — English HTML fallback still shows.

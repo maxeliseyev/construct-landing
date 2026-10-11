@@ -28,7 +28,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # `?v=20260812-lang` while the stylesheet moved on underneath them.
 PAGES = ("index.html", "faq.html", "privacy.html", "technical.html",
          "roadmap.html", "add.html", "contact.html")
-LANGS = ("en", "ru", "ja", "hy", "fr")
+LANGS = ("en", "ru", "ja", "hy", "fr", "uk")
 
 check_only = "--check" in sys.argv
 changed: list[str] = []
