@@ -561,49 +561,56 @@ if copy_says(r"user\s*id"):
         "it. Derivation belongs to the Device ID (privacy.s2_1.li3b), not the User ID.",
     )
 
-# ── Calls are audio-only ─────────────────────────────────────────────────────
+# ── Calls carry video ────────────────────────────────────────────────────────
 #
-# The privacy policy had a section headed "Voice and Video Calls" and described
-# encrypting "call media (audio/video)". Video was never started: CallsFeature
-# says isVideoEnabled = false, every call site passes hasVideo: false, and there
-# is not one VideoTrack in Services/Calls. The signalling wiring exists, which is
-# how the claim got written — wiring is not a feature.
+# Until 2026-10-11 this section held the opposite: video had never been started,
+# so the copy was forbidden to claim it. Video calls shipped on iOS on 2026-10-08
+# (CallsFeature.videoDefault = true; Android has them too), and the policy went on
+# saying "Video calling is not implemented" — this check, still asserting the old
+# flag, was what failed and blocked every push of the site until the copy caught up.
+#
+# Now: the flag in the app says video is on, and the copy must not say it is
+# missing or still to come. If video is ever switched off again, the first check
+# fails and points at the copy.
 
 repo_claim(
-    "video-calls-still-off",
+    "video-calls-shipped",
     IOS, "ConstructMessenger/Services/Calls/CallsFeature.swift",
-    r"isVideoEnabled: Bool \{ false \}",
+    r"static let videoDefault = true",
     present=True,
-    detail="isVideoEnabled is no longer hard-false. If video calling shipped, the "
-           "privacy policy (privacy.s2_7.*) and the roadmap have to stop saying it "
-           "is not implemented.",
+    detail="Video calling is no longer on by default in the iOS app. If it was switched "
+           "off, the privacy policy (privacy.s2_7.*) has to stop describing it and the "
+           "roadmap has to list it again.",
 )
 
-# A blacklist of the phrasings that actually shipped on this site, not a general
-# "is video mentioned" test. The first attempt at this check was vacuous: it
-# accepted the copy if the word "planned" appeared ANYWHERE, and the roadmap
-# always contains it, so the assertion was true by construction. Mutation caught
-# it — restoring the old "Voice and Video Calls" heading did not turn it red.
-#
-# NOT COVERED, deliberately: a novel phrasing ("we support camera calls") passes
-# this. The load-bearing guard is video-calls-still-off above, which reads the
-# flag in the app; this one only stops the exact sentences from coming back.
-VIDEO_SHIPPED = (
-    r"voice(?: |/|, | and )*video calls? (?:are|is)\b|"
-    r"call media \(audio/video\)|voice/video call|audio/video\b|"
-    r"voice and video calls|"
-    r"аудио-? и видеозвонк|видеозвонки защищ|аудио/видеозвонк|"
-    r"音声・ビデオ通話|音声/ビデオ通話"
-)
+# Per locale and per key, not across the whole site: the policy is English in ja.json
+# and in privacy.html, so a sentence dropped from en.json alone is still "on the site".
+def locale_value(lang: str, key: str) -> str:
+    raw = read(SITE / f"i18n/{lang}.json")
+    return json.loads(raw).get(key, "") if raw else ""
 
-if copy_says(r"video call|видеозвон|ビデオ通話"):
+VIDEO_PLANNED = r"video calls?|видеозвонк|ビデオ通話"
+for lang in ("en", "ru", "ja"):
     check(
-        "video-calls-not-claimed-shipped",
-        not copy_says(VIDEO_SHIPPED),
-        "The copy states video calls as a working feature. CallsFeature."
-        "isVideoEnabled is false, every call site passes hasVideo: false, and there "
-        "is no VideoTrack anywhere in Services/Calls. The signalling is wired, which "
-        "is how this got written the first time — wiring is not a feature.",
+        f"video-calls-not-on-roadmap-{lang}",
+        not re.search(VIDEO_PLANNED, locale_value(lang, "home.roadmap.t10"), re.I),
+        f"home.roadmap.t10 ({lang}) lists video calls as still to come. They ship on "
+        "iOS and Android (CallsFeature.videoDefault).",
+    )
+    policy = locale_value(lang, "privacy.s2_7.p2")
+    check(
+        f"video-calls-not-called-missing-{lang}",
+        not re.search(r"video calling is not implemented|Видеозвонков нет", policy, re.I),
+        f"privacy.s2_7.p2 ({lang}) says video calls do not exist. They ship on iOS and "
+        "Android (CallsFeature.videoDefault).",
+    )
+    check(
+        f"video-calls-server-sees-type-{lang}",
+        bool(re.search(r"whether a call starts as a voice or a video call"
+                       r"|начинается звонок как аудио- или как видеозвонок", policy)),
+        f"privacy.s2_7.p2 ({lang}) no longer says the server learns whether a call starts "
+        "as voice or video. It does: `hasVideo` goes in InitiateCall so the callee's phone "
+        "rings as video (client/specs/VIDEO_CALLS_DESIGN.md, three questions).",
     )
 
 # ── Social recovery ──────────────────────────────────────────────────────────
@@ -712,15 +719,6 @@ docs_must_not(
     "A README calls our own code audited. No external security audit has been "
     "done — the site says so on the roadmap. Use 'shared' when the point is one "
     "implementation across platforms.",
-)
-
-# Guarded by video-calls-still-off above, which pins isVideoEnabled == false.
-docs_must_not(
-    "readme-does-not-ship-video-calls",
-    r"voice ?/ ?video calls?|voice and video calls|\[x\].*video",
-    "A README lists video calling as done. CallsFeature.isVideoEnabled is false "
-    "and the privacy policy says video is not implemented.",
-    unless=r"video is not implemented|no video|video: planned",
 )
 
 # construct-core/README.md is the authority: "not yet activated on the wire".
