@@ -530,7 +530,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.profile.p3">Your Display Name and avatar live on your device; they are not part of your public profile and nobody can look them up. When you start a new conversation the other person sees only a generated pseudonym, deterministic — always the same for a given ID. To show them your real name and photo, open their profile and tap "Share Profile": both travel over the encrypted channel. One exception: if you send a contact request, your username and Display Name are attached to it so the recipient can tell who is asking. The server stores that snapshot encrypted at rest, under a key the server itself holds — it is not end-to-end encrypted, and your avatar is never included.</p>
+                            <p data-i18n="faq.profile.p3">Your Display Name and avatar live on your device; they are not part of your public profile and nobody can look them up. When you start a new conversation the other person sees only a generated pseudonym, deterministic — always the same for a given ID. To show them your real name and photo, open their profile and turn on "Share my profile": both travel over the encrypted channel. One exception: if you send a contact request, your username and Display Name are attached to it so the recipient can tell who is asking. The server stores that snapshot encrypted at rest, under a key the server itself holds — it is not end-to-end encrypted, and your avatar is never included.</p>
                             </div>
                     </details>
 
@@ -605,7 +605,7 @@
                                     <li class="status-row">
                                         <span class="status-icon status-icon--bad"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="currentColor"/><path d="M10 5.8v4.9" fill="none" stroke="var(--bg,#090909)" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="14" r="1.05" fill="var(--bg,#090909)"/></svg></span>
                                         <span class="status-text">
-                                            <strong data-i18n="faq.messages.status.failed.name">Failed</strong>
+                                            <strong data-i18n="faq.messages.status.failed.name">Failed to send</strong>
                                             <span data-i18n="faq.messages.status.failed.what">it was rejected for a reason retrying will not fix, so nothing happens automatically; tap to try again</span>
                                         </span>
                                     </li>
@@ -741,7 +741,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n="faq.security.p3">For this, the app has Lockdown Mode. When enabled, notifications only come from people who were in your contacts at activation time. Messages from new senders are still saved — they just won't disturb you. Useful if you're a public figure and want to temporarily close off from new contacts.</p>
+                            <p data-i18n="faq.security.p3">For this, the app has Lockdown mode. When enabled, notifications only come from people who were in your contacts at activation time. Messages from new senders are still saved — they just won't disturb you. Useful if you're a public figure and want to temporarily close off from new contacts.</p>
                             </div>
                     </details>
 
@@ -821,7 +821,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <ul data-i18n-html="faq.testers.list3"><li>Registration and adding a contact via QR code</li><li>Sending and receiving messages (both directions)</li><li>Delivery statuses — does a message reach "delivered", and do "queued" and "failed" retry when tapped?</li><li>Message editing — does the recipient see the changes?</li><li>Notifications with the app backgrounded</li><li>Behaviour with poor connectivity (airplane mode → restore)</li><li>Restoring the account from the recovery key after a reinstall</li><li>Saving the recovery key copy from Settings</li></ul>
+                            <ul data-i18n-html="faq.testers.list3"><li>Registration and adding a contact via QR code</li><li>Sending and receiving messages (both directions)</li><li>Delivery statuses — does a message reach "delivered", and do "queued" and "failed to send" retry when tapped?</li><li>Message editing — does the recipient see the changes?</li><li>Notifications with the app backgrounded</li><li>Behaviour with poor connectivity (airplane mode → restore)</li><li>Restoring the account from the recovery key after a reinstall</li><li>Saving the recovery key copy from Settings</li></ul>
                             </div>
                     </details>
 
@@ -833,7 +833,7 @@
                             >
                         </summary>
                         <div class="faq-answer">
-                            <p data-i18n-html="faq.testers.p5">In diagnostic (internal) builds the path is Settings → <strong>Diagnostics &amp; Logs</strong> → <strong>Share logs</strong>. Public builds keep <strong>no logs</strong> and do not compile that screen at all — if your build has no such row, describe the scenario and we will get a diagnostic build to you. The more precise the description (what you did, what you expected, what happened), the faster we can investigate. For a session issue, include logs from both devices.</p>
+                            <p data-i18n-html="faq.testers.p5">In diagnostic (internal) builds the path is Settings → <strong>Diagnostics &amp; logs</strong> → <strong>Share logs</strong>. Public builds keep <strong>no logs</strong> and do not compile that screen at all — if your build has no such row, describe the scenario and we will get a diagnostic build to you. The more precise the description (what you did, what you expected, what happened), the faster we can investigate. For a session issue, include logs from both devices.</p>
                             </div>
                     </details>
 
@@ -890,6 +890,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=479e42a7a3" defer></script>
+        <script src="/site.js?v=01e112d8f1" defer></script>
     </body>
 </html>

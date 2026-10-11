@@ -75,7 +75,7 @@ if (!invite) {
     if (openAppBtn) (openAppBtn.parentElement || openAppBtn).hidden = true;
     say(
         "add.err.empty",
-        "No invite data in this URL. Ask your contact to share a fresh link from Settings ▸ Copy Contact Link, or scan their QR code.",
+        "No invite data in this URL. Ask your contact to share a fresh link from Settings ▸ Invite ▸ Copy link, or scan their QR code.",
         showError
     );
 } else {
@@ -102,7 +102,7 @@ if (!invite) {
                 'App not found. Konstruct is in beta — <a href="' +
                     TESTFLIGHT_URL +
                     '">join the TestFlight beta</a>, then open this link again. ' +
-                    "You can also paste the link inside the app (Scan ▸ Paste invite link).",
+                    "You can also paste the link inside the app (Scan QR Code ▸ Paste invite link).",
                 showError
             );
         }, 2000);

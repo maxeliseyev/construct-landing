@@ -16,6 +16,7 @@ whether the website still describes it accurately.
 """
 from __future__ import annotations
 
+import html
 import json
 import pathlib
 import re
@@ -795,6 +796,58 @@ if (SERVER / "shared/migrations/037_contact_links.sql").exists():
 
 for line in skipped:
     print(line)
+# ── App controls the site names ──────────────────────────────────────────────
+#
+# The site tells people where to tap: "Settings ▸ Invite ▸ Copy link". Until
+# 2026-10-12 nothing compared those words with the app, and they had drifted in
+# every language at once — "Copy Contact Link" for a button called "Copy link",
+# "tap Share Profile" for what is a switch called "Share my profile", "Lockdown"
+# for what the Russian app calls «Режим защиты». A translation can be perfect and
+# still send the reader looking for a label that does not exist.
+#
+# Each row: a site key and the app's Localizable.strings keys it must quote, in
+# that locale's own app strings. Ukrainian has no app locale, so the reader sees
+# the English UI and the uk copy carries the English label.
+APP_LPROJ = {"en": "en", "ru": "ru", "ja": "ja", "fr": "fr", "hy": "hy-AM", "uk": "en"}
+APP_LABELS = {
+    "add.err.empty": ("settings", "invite", "invite_copy_link"),
+    "add.err.noapp": ("scan_qr_code", "paste_invite_link"),
+    "faq.profile.p3": ("share_my_profile",),
+    "faq.security.p3": ("lockdown_mode",),
+    "faq.messages.status.failed.name": ("msg_status_failed",),
+    "faq.testers.p5": ("diagnostics_logs", "diagnostics_share_logs"),
+}
+
+
+def app_strings(lproj: str) -> dict | None:
+    raw = read(IOS / f"ConstructMessenger/{lproj}.lproj/Localizable.strings")
+    if raw is None:
+        return None
+    return dict(re.findall(r'^"((?:[^"\\]|\\.)*)"\s*=\s*"((?:[^"\\]|\\.)*)";', raw, re.M))
+
+
+def _norm(text: str) -> str:
+    text = html.unescape(re.sub(r"<[^>]+>", "", text)).replace("\u00a0", " ")
+    return text.replace("\u2019", "'").casefold()
+
+
+for lang, lproj in APP_LPROJ.items():
+    site_raw = read(SITE / f"i18n/{lang}.json")
+    if site_raw is None:
+        continue
+    site = json.loads(site_raw)
+    app = app_strings(lproj)
+    for key, app_keys in APP_LABELS.items():
+        name = f"app-label-{lang}-{key}"
+        if app is None:
+            check(name, None, f"construct-messenger {lproj}.lproj not readable")
+            continue
+        missing = [app.get(k, k) for k in app_keys
+                   if _norm(app.get(k, "\0")) not in _norm(site.get(key, ""))]
+        check(name, not missing,
+              f"{key} ({lang}) does not quote the app's label(s) {missing} "
+              f"({lproj}.lproj). Name the control the way the app does.")
+
 if skipped:
     print()
 
