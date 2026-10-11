@@ -5,22 +5,24 @@
 //   data-i18n="key"       → textContent
 //   data-i18n-html="key"  → innerHTML (first-party trusted copy only)
 (function () {
-    var SUPPORTED = ["en", "ru", "ja", "hy"];
+    var SUPPORTED = ["en", "ru", "ja", "hy", "fr"];
     var LABELS = {
         en: "EN",
         ru: "RU",
         ja: "JA",
         hy: "HY",
+        fr: "FR",
     };
     var NAMES = {
         en: "English",
         ru: "Русский",
         ja: "日本語",
         hy: "Հայերեն",
+        fr: "Français",
     };
 
     // Bump when JSON shape or cache semantics change.
-    // Content hash of i18n/{en,ru,ja,hy}.json — NOT hand-maintained. The sessionStorage
+    // Content hash of i18n/{en,ru,ja,hy,fr}.json — NOT hand-maintained. The sessionStorage
 // copy is keyed by this alone, so a stale dictionary otherwise survives a deploy:
 // a cached dict without the new keys leaves the switcher reading RU while every
 // string falls back to the English in the markup, because applyI18n skips a
@@ -28,7 +30,7 @@
 // again the very next day on the delivery-status keys, with a comment sitting
 // right here telling me to bump it. `scripts/check-i18n.py` now computes the
 // expected value and fails if this line disagrees, so it cannot be forgotten.
-var I18N_CACHE_VER = "88d08823b9";
+var I18N_CACHE_VER = "faf1d946e0";
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
