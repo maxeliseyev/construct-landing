@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LANGS = ("en", "ru", "ja")
+LANGS = ("en", "ru", "ja", "hy")
 HTML_FILES = ("index.html", "faq.html", "privacy.html", "technical.html",
               "roadmap.html", "add.html", "contact.html")
 
@@ -193,7 +193,7 @@ def main() -> int:
     # So it is derived, not remembered: the value must be the content hash.
     import hashlib
     h = hashlib.sha256()
-    for lang in ("en", "ru", "ja"):
+    for lang in LANGS:
         h.update((ROOT / f"i18n/{lang}.json").read_bytes())
     want = h.hexdigest()[:10]
     site = (ROOT / "site.js").read_text(encoding="utf-8")
