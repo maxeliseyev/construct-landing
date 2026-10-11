@@ -197,7 +197,7 @@
   "nav.roadmap": "Feuille de route",
   "nav.technical": "Technique",
   "privacy.privacy-policy.h11": "Politique de confidentialité",
-  "privacy.privacy-policy.p2": "Dernière mise à jour : 11 octobre 2026  ·  Date d’entrée en vigueur : 4 mars 2026",
+  "privacy.privacy-policy.p2": "Dernière mise à jour : 12 octobre 2026  ·  Date d’entrée en vigueur : 4 mars 2026",
   "privacy.s1.h21": "1. Introduction",
   "privacy.s1.p2": "Konstruct est une messagerie à chiffrement de bout en bout, construite sur Signal Protocol et centrée sur la confidentialité. La présente politique explique précisément quelles données nous collectons, pourquoi, et lesquelles nous ne collectons pas. Konstruct a été conçu dès l’origine pour que nous détenions le moins de données possible sur vous.",
   "privacy.s1.p3": "<strong>Principe fondamental :</strong> nous ne collectons que le strict minimum de données nécessaire au routage des messages chiffrés. Le contenu de vos messages est protégé par un chiffrement de bout en bout — nos serveurs ne peuvent pas le lire, et nous n’essayons pas de le faire.",
