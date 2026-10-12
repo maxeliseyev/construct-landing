@@ -42,11 +42,16 @@ FR_MONTHS = ("janvier", "février", "mars", "avril", "mai", "juin",
 
 
 def policy_hash() -> str:
-    """Hash every privacy.* string in every locale, except the date line."""
+    """Hash every privacy.* string in every locale, except the date line.
+
+    privacy.meta.* is left out too: the tab title and the search-result
+    description describe the page, they are not something the policy tells users.
+    """
     h = hashlib.sha256()
     for lang in LANGS:
         d = json.loads((ROOT / f"i18n/{lang}.json").read_text(encoding="utf-8"))
-        for key in sorted(k for k in d if k.startswith("privacy.") and k != DATE_KEY):
+        for key in sorted(k for k in d if k.startswith("privacy.") and k != DATE_KEY
+                         and not k.startswith("privacy.meta.")):
             h.update(key.encode() + b"\x00" + d[key].encode() + b"\x00")
     return h.hexdigest()[:12]
 
