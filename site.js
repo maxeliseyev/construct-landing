@@ -1,9 +1,17 @@
 // Shared site behaviour — externalised so the CSP can use a strict
-// script-src 'self' (no 'unsafe-inline'). Loaded by index.html and faq.html.
+// script-src 'self' (no 'unsafe-inline'). Loaded by every page.
 //
 // i18n: flat dotted keys in /i18n/{lang}.json
 //   data-i18n="key"       → textContent
 //   data-i18n-html="key"  → innerHTML (first-party trusted copy only)
+//
+// Two kinds of page:
+//   - content pages (/, /faq, /technical, /roadmap, /privacy) are built per
+//     language by scripts/build-locales.py — /ru/faq arrives in Russian, marked
+//     <html data-prerendered>. The URL is the language; nothing is fetched or
+//     applied here, and the switcher is a list of links.
+//   - /add and /c/… are not prefixed (the app's Universal Links point at them),
+//     so they still detect the language and translate at runtime.
 (function () {
     // Menu order: English, then by script — Latin, Cyrillic, Armenian, Japanese — and
     // by native name within a script. The switcher in every page lists exactly
@@ -37,7 +45,8 @@
 // again the very next day on the delivery-status keys, with a comment sitting
 // right here telling me to bump it. `scripts/check-i18n.py` now computes the
 // expected value and fails if this line disagrees, so it cannot be forgotten.
-var I18N_CACHE_VER = "9c48e7c3fe";
+var I18N_CACHE_VER = "125a76b727";
+    var PRERENDERED = document.documentElement.hasAttribute("data-prerendered");
     var dictCache = Object.create(null);
     var currentLang = "en";
     var currentDict = null;
@@ -54,6 +63,14 @@ var I18N_CACHE_VER = "9c48e7c3fe";
         if (!code) return null;
         var base = String(code).toLowerCase().split(/[-_]/)[0];
         return isSupported(base) ? base : null;
+    }
+
+    // The saved choice is an explicit one — set only when someone picks a
+    // language in the switcher. lang-redirect.js reads it on English pages.
+    function rememberLang(lang) {
+        try {
+            localStorage.setItem("construct-lang", lang);
+        } catch (e) {}
     }
 
     function detectLang() {
@@ -184,16 +201,8 @@ var I18N_CACHE_VER = "9c48e7c3fe";
             if (el.dataset) delete el.dataset.originalText;
         });
 
-        // Title: prefer page-scoped meta key, then legacy data-title-* attrs.
         var ns = pageNamespace();
-        var titleKey = ns ? ns + ".meta.title" : null;
-        var t = titleKey && dict[titleKey] != null ? dict[titleKey] : null;
-        if (!t) {
-            var html = document.documentElement;
-            t =
-                html.getAttribute("data-title-" + currentLang) ||
-                html.getAttribute("data-title-en");
-        }
+        var t = ns ? dict[ns + ".meta.title"] : null;
         if (t) document.title = t;
 
         currentDict = dict;
@@ -203,7 +212,8 @@ var I18N_CACHE_VER = "9c48e7c3fe";
         document.querySelectorAll("[data-lang-btn]").forEach(function (btn) {
             var active = btn.dataset.langBtn === lang;
             btn.classList.toggle("active", active);
-            btn.setAttribute("aria-selected", active ? "true" : "false");
+            if (active) btn.setAttribute("aria-current", "true");
+            else btn.removeAttribute("aria-current");
         });
         document.querySelectorAll("[data-lang-current]").forEach(function (node) {
             node.textContent = LABELS[lang] || lang.toUpperCase();
@@ -214,14 +224,20 @@ var I18N_CACHE_VER = "9c48e7c3fe";
         var el = document.documentElement;
         el.setAttribute("data-lang", lang);
         el.setAttribute("lang", lang);
-        try {
-            localStorage.setItem("construct-lang", lang);
-        } catch (e) {}
         updateSwitcherChrome(lang);
     }
 
     function setLang(lang) {
         if (!isSupported(lang)) lang = "en";
+        if (PRERENDERED) {
+            // Another language is another page.
+            var link = document.querySelector('.lang-menu [data-lang-btn="' + lang + '"]');
+            if (lang !== currentLang && link) {
+                rememberLang(lang);
+                location.assign(link.href);
+            }
+            return Promise.resolve(null);
+        }
         currentLang = lang;
         setDocumentLang(lang);
 
@@ -281,11 +297,19 @@ var I18N_CACHE_VER = "9c48e7c3fe";
             }
         });
 
-        menu.querySelectorAll("[data-lang-btn]").forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
+        // The entries are links to the same page in each language; following
+        // one is the whole switch. The click only records the choice, so that
+        // lang-redirect.js respects it on the next English page — choosing
+        // English included.
+        menu.querySelectorAll("[data-lang-btn]").forEach(function (link) {
+            link.addEventListener("click", function (e) {
                 e.stopPropagation();
-                setLang(btn.dataset.langBtn);
+                rememberLang(link.dataset.langBtn);
                 closeMenus();
+                if (!PRERENDERED) {
+                    e.preventDefault();
+                    setLang(link.dataset.langBtn);
+                }
             });
         });
     }
@@ -380,13 +404,18 @@ var I18N_CACHE_VER = "9c48e7c3fe";
         else if (mq.addListener) mq.addListener(onChange);
     }
 
-    // Sync chrome ASAP; dictionary apply is async.
-    currentLang = detectLang();
-    setDocumentLang(currentLang);
-
-    setLang(currentLang).then(function () {
+    if (PRERENDERED) {
+        currentLang = normalizeLang(document.documentElement.getAttribute("lang")) || "en";
         readyResolve(currentLang);
-    });
+    } else {
+        // Sync chrome ASAP; dictionary apply is async.
+        currentLang = detectLang();
+        setDocumentLang(currentLang);
+
+        setLang(currentLang).then(function () {
+            readyResolve(currentLang);
+        });
+    }
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", wire);

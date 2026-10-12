@@ -3,17 +3,11 @@
     lang="en"
     data-lang="en"
     data-i18n-page="home"
-    data-title-en="Konstruct - Messenger with Post-Quantum Encryption"
-    data-title-ru="Konstruct — Мессенджер с постквантовым шифрованием"
-    data-title-ja="Konstruct — ポスト量子暗号対応のプライバシー重視メッセンジャー"
-    data-title-hy="Konstruct — Հետքվանտային գաղտնագրմամբ մեսենջեր"
-    data-title-fr="Konstruct - Messagerie à chiffrement post-quantique"
-    data-title-uk="Konstruct — Месенджер із постквантовим шифруванням"
-    data-title-tr="Konstruct — Kuantum sonrası şifrelemeli mesajlaşma"
 >
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/lang-redirect.js?v=b6f46b9bb2"></script>
         <title>Konstruct - Messenger with Post-Quantum Encryption</title>
         <meta
             name="description"
@@ -23,48 +17,6 @@
             name="keywords"
             content="post-quantum messenger, E2EE, Rust messenger, gRPC messenger, QUIC messenger, bidirectional stream, privacy-focused communication, crypto agility, federated messaging, P2P messenger"
         />
-
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://konstruct.cc/" />
-        <meta
-            property="og:title"
-            content="Konstruct - Privacy-First Secure Messenger"
-        />
-        <meta
-            property="og:description"
-            content="Identity is a construct. Post-quantum E2EE messenger — no phone number, no infinite scroll, your data is yours."
-        />
-        <meta property="og:image" content="https://konstruct.cc/og-image.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta
-            property="og:image:alt"
-            content="Konstruct Messenger — Open-Source E2EE Messenger, No Phone Number"
-        />
-
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://konstruct.cc/" />
-        <meta
-            property="twitter:title"
-            content="Konstruct Messenger — Open-Source E2EE Messenger, No Phone Number"
-        />
-        <meta
-            property="twitter:description"
-            content="Minimalist end-to-end encrypted messenger. No phone number, no email, no required username. Federation and P2P are on the roadmap."
-        />
-        <meta
-            property="twitter:image"
-            content="https://konstruct.cc/og-image.png"
-        />
-        <meta
-            property="twitter:image:alt"
-            content="Konstruct Messenger - Open-Source E2EE Messenger, No Phone Number"
-        />
-
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://konstruct.cc/" />
 
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="favicon.png" />
@@ -79,9 +31,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
 
         <!-- Preload critical CSS -->
-        <link rel="preload" href="styles.css?v=3e27655932" as="style" />
-        <link rel="stylesheet" href="styles.css?v=3e27655932" />
-        <link rel="stylesheet" href="effects.css?v=3e27655932" />
+        <link rel="preload" href="styles.css?v=b7379ddc52" as="style" />
+        <link rel="stylesheet" href="styles.css?v=b7379ddc52" />
+        <link rel="stylesheet" href="effects.css?v=b7379ddc52" />
         
     </head>
 
@@ -103,7 +55,6 @@
                         type="button"
                         class="lang-trigger"
                         data-lang-trigger
-                        aria-haspopup="listbox"
                         aria-expanded="false"
                         aria-label="Language"
                     >
@@ -115,83 +66,85 @@
                             >▾</span
                         >
                     </button>
-                    <ul class="lang-menu" role="listbox" hidden>
+                    <ul class="lang-menu" hidden>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/"
+                                hreflang="en"
+                                lang="en"
                                 data-lang-btn="en"
-                                aria-selected="true"
+                                class="active"
+                                aria-current="true"
                             >
                                 <span class="lang-code">EN</span>
                                 <span class="lang-name">English</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/fr"
+                                hreflang="fr"
+                                lang="fr"
                                 data-lang-btn="fr"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">FR</span>
                                 <span class="lang-name">Français</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/tr"
+                                hreflang="tr"
+                                lang="tr"
                                 data-lang-btn="tr"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">TR</span>
                                 <span class="lang-name">Türkçe</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/ru"
+                                hreflang="ru"
+                                lang="ru"
                                 data-lang-btn="ru"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">RU</span>
                                 <span class="lang-name">Русский</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/uk"
+                                hreflang="uk"
+                                lang="uk"
                                 data-lang-btn="uk"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">UA</span>
                                 <span class="lang-name">Українська</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/hy"
+                                hreflang="hy"
+                                lang="hy"
                                 data-lang-btn="hy"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">HY</span>
                                 <span class="lang-name">Հայերեն</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/ja"
+                                hreflang="ja"
+                                lang="ja"
                                 data-lang-btn="ja"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">JA</span>
                                 <span class="lang-name">日本語</span>
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -520,6 +473,6 @@
         </script>
 
         <script src="effects.js" defer></script>
-        <script src="/site.js?v=4f6623f853" defer></script>
+        <script src="/site.js?v=c3fa52e77b" defer></script>
     </body>
 </html>

@@ -3,24 +3,17 @@
     lang="en"
     data-lang="en"
     data-i18n-page="technical"
-    data-title-en="How it works — Konstruct"
-    data-title-ru="Как это устроено — Konstruct"
-    data-title-ja="技術構成 — Konstruct"
-    data-title-hy="Ինչպես է այն աշխատում — Konstruct"
-    data-title-fr="Comment ça marche — Konstruct"
-    data-title-uk="Як це влаштовано — Konstruct"
-    data-title-tr="Nasıl çalışır — Konstruct"
 >
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/lang-redirect.js?v=b6f46b9bb2"></script>
         <title>How it works — Konstruct</title>
         <meta name="description" content="Konstruct technical architecture: gRPC over QUIC, the crypto stack, and what the server can and cannot see." />
-        <link rel="canonical" href="https://konstruct.cc/technical" />
         <link rel="icon" type="image/png" href="favicon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-        <link rel="preload" href="styles.css?v=3e27655932" as="style" />
-        <link rel="stylesheet" href="styles.css?v=3e27655932" />
+        <link rel="preload" href="styles.css?v=b7379ddc52" as="style" />
+        <link rel="stylesheet" href="styles.css?v=b7379ddc52" />
     </head>
 
     <body>
@@ -39,7 +32,6 @@
                         type="button"
                         class="lang-trigger"
                         data-lang-trigger
-                        aria-haspopup="listbox"
                         aria-expanded="false"
                         aria-label="Language"
                     >
@@ -51,83 +43,85 @@
                             >▾</span
                         >
                     </button>
-                    <ul class="lang-menu" role="listbox" hidden>
+                    <ul class="lang-menu" hidden>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/technical"
+                                hreflang="en"
+                                lang="en"
                                 data-lang-btn="en"
-                                aria-selected="true"
+                                class="active"
+                                aria-current="true"
                             >
                                 <span class="lang-code">EN</span>
                                 <span class="lang-name">English</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/fr/technical"
+                                hreflang="fr"
+                                lang="fr"
                                 data-lang-btn="fr"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">FR</span>
                                 <span class="lang-name">Français</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/tr/technical"
+                                hreflang="tr"
+                                lang="tr"
                                 data-lang-btn="tr"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">TR</span>
                                 <span class="lang-name">Türkçe</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/ru/technical"
+                                hreflang="ru"
+                                lang="ru"
                                 data-lang-btn="ru"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">RU</span>
                                 <span class="lang-name">Русский</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/uk/technical"
+                                hreflang="uk"
+                                lang="uk"
                                 data-lang-btn="uk"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">UA</span>
                                 <span class="lang-name">Українська</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/hy/technical"
+                                hreflang="hy"
+                                lang="hy"
                                 data-lang-btn="hy"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">HY</span>
                                 <span class="lang-name">Հայերեն</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/ja/technical"
+                                hreflang="ja"
+                                lang="ja"
                                 data-lang-btn="ja"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">JA</span>
                                 <span class="lang-name">日本語</span>
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -374,6 +368,6 @@
             </div>
         </footer>
 
-        <script src="/site.js?v=4f6623f853"></script>
+        <script src="/site.js?v=c3fa52e77b"></script>
     </body>
 </html>

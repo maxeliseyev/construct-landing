@@ -333,14 +333,14 @@ body.landing .crt-noise {
     0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
-.landing .lang-menu button:hover,
-.landing .lang-menu button.active {
+.landing .lang-menu a:hover,
+.landing .lang-menu a.active {
   background: rgba(111, 216, 209, 0.08);
   color: var(--neon-cyan);
 }
 
-.landing .lang-menu button:hover .lang-code,
-.landing .lang-menu button.active .lang-code {
+.landing .lang-menu a:hover .lang-code,
+.landing .lang-menu a.active .lang-code {
   color: var(--neon-cyan);
 }
 

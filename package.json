@@ -2,12 +2,13 @@
   "name": "construct-landing",
   "version": "0.0.0",
   "private": true,
-  "description": "Static landing site for Konstruct (konstruct.cc). No bundler, no dependencies — this file exists only so the usual commands work.",
+  "description": "Static landing site for Konstruct (konstruct.cc). No bundler, no dependencies — the build is one stdlib Python script; this file exists only so the usual commands work.",
   "scripts": {
     "dev": "node scripts/dev-server.js",
     "start": "node scripts/dev-server.js",
-    "check": "python3 scripts/check-i18n.py && python3 scripts/check-claims.py",
-    "sync-versions": "python3 scripts/sync-versions.py"
+    "check": "python3 scripts/check-i18n.py && python3 scripts/check-claims.py && python3 scripts/build-locales.py --check",
+    "sync-versions": "python3 scripts/sync-versions.py",
+    "build": "python3 scripts/build-locales.py"
   },
   "license": "MPL-2.0"
 }
