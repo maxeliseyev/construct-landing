@@ -3,31 +3,24 @@
     lang="en"
     data-lang="en"
     data-i18n-page="privacy"
-    data-title-en="Privacy Policy — Konstruct Messenger"
-    data-title-ru="Политика приватности — Konstruct Мессенджер"
-    data-title-ja="プライバシーポリシー — Konstruct メッセンジャー"
-    data-title-hy="Գաղտնիության քաղաքականություն — Konstruct մեսենջեր"
-    data-title-fr="Politique de confidentialité — Messagerie Konstruct"
-    data-title-uk="Політика конфіденційності — Konstruct Месенджер"
-    data-title-tr="Gizlilik Politikası — Konstruct"
 >
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/lang-redirect.js?v=b6f46b9bb2"></script>
         <title>Privacy Policy — Konstruct</title>
         <meta
             name="description"
             content="Konstruct Privacy Policy. We collect the absolute minimum data necessary to route encrypted messages."
         />
-        <link rel="canonical" href="https://konstruct.cc/privacy" />
         <link rel="icon" type="image/png" href="favicon.png" />
         <link
             rel="apple-touch-icon"
             sizes="180x180"
             href="apple-touch-icon.png"
         />
-        <link rel="preload" href="styles.css?v=3e27655932" as="style" />
-        <link rel="stylesheet" href="styles.css?v=3e27655932" />
+        <link rel="preload" href="styles.css?v=b7379ddc52" as="style" />
+        <link rel="stylesheet" href="styles.css?v=b7379ddc52" />
         <style>
             /* The header and the content rhythm are shared with faq / technical /
                roadmap and live in styles.css (.page-header, .page-content). What
@@ -114,7 +107,6 @@
                         type="button"
                         class="lang-trigger"
                         data-lang-trigger
-                        aria-haspopup="listbox"
                         aria-expanded="false"
                         aria-label="Language"
                     >
@@ -126,83 +118,85 @@
                             >▾</span
                         >
                     </button>
-                    <ul class="lang-menu" role="listbox" hidden>
+                    <ul class="lang-menu" hidden>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/privacy"
+                                hreflang="en"
+                                lang="en"
                                 data-lang-btn="en"
-                                aria-selected="true"
+                                class="active"
+                                aria-current="true"
                             >
                                 <span class="lang-code">EN</span>
                                 <span class="lang-name">English</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/fr/privacy"
+                                hreflang="fr"
+                                lang="fr"
                                 data-lang-btn="fr"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">FR</span>
                                 <span class="lang-name">Français</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/tr/privacy"
+                                hreflang="tr"
+                                lang="tr"
                                 data-lang-btn="tr"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">TR</span>
                                 <span class="lang-name">Türkçe</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/ru/privacy"
+                                hreflang="ru"
+                                lang="ru"
                                 data-lang-btn="ru"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">RU</span>
                                 <span class="lang-name">Русский</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/uk/privacy"
+                                hreflang="uk"
+                                lang="uk"
                                 data-lang-btn="uk"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">UA</span>
                                 <span class="lang-name">Українська</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/hy/privacy"
+                                hreflang="hy"
+                                lang="hy"
                                 data-lang-btn="hy"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">HY</span>
                                 <span class="lang-name">Հայերեն</span>
-                            </button>
+                            </a>
                         </li>
                         <li>
-                            <button
-                                type="button"
-                                role="option"
+                            <a
+                                href="/ja/privacy"
+                                hreflang="ja"
+                                lang="ja"
                                 data-lang-btn="ja"
-                                aria-selected="false"
                             >
                                 <span class="lang-code">JA</span>
                                 <span class="lang-name">日本語</span>
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -569,6 +563,6 @@
                 <p style="margin-top: 1rem; font-size: 0.8125rem" data-i18n="privacy.summary.p13">© 2026 Konstruct. Identity is a construct.</p>
             </div>
         </footer>
-            <script src="/site.js?v=4f6623f853" defer></script>
+            <script src="/site.js?v=c3fa52e77b" defer></script>
     </body>
 </html>

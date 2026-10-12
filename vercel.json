@@ -1,9 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
+  "buildCommand": "python3 scripts/build-locales.py",
+  "outputDirectory": "dist",
   "cleanUrls": false,
   "trailingSlash": false,
   "rewrites": [
+    {
+      "source": "/:lang(fr|tr|ru|uk|hy|ja)",
+      "destination": "/:lang/index.html"
+    },
+    {
+      "source": "/:lang(fr|tr|ru|uk|hy|ja)/:page(faq|technical|roadmap|privacy)",
+      "destination": "/:lang/:page.html"
+    },
     {
       "source": "/roadmap",
       "destination": "/roadmap.html"
@@ -118,31 +128,55 @@
     {
       "source": "/",
       "headers": [
-        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+        {
+          "key": "Speculation-Rules",
+          "value": "\"/speculation-rules.json\""
+        }
       ]
     },
     {
       "source": "/faq",
       "headers": [
-        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+        {
+          "key": "Speculation-Rules",
+          "value": "\"/speculation-rules.json\""
+        }
       ]
     },
     {
       "source": "/roadmap",
       "headers": [
-        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+        {
+          "key": "Speculation-Rules",
+          "value": "\"/speculation-rules.json\""
+        }
       ]
     },
     {
       "source": "/technical",
       "headers": [
-        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+        {
+          "key": "Speculation-Rules",
+          "value": "\"/speculation-rules.json\""
+        }
       ]
     },
     {
       "source": "/privacy",
       "headers": [
-        { "key": "Speculation-Rules", "value": "\"/speculation-rules.json\"" }
+        {
+          "key": "Speculation-Rules",
+          "value": "\"/speculation-rules.json\""
+        }
+      ]
+    },
+    {
+      "source": "/:lang(fr|tr|ru|uk|hy|ja)/:page(faq|technical|roadmap|privacy)?",
+      "headers": [
+        {
+          "key": "Speculation-Rules",
+          "value": "\"/speculation-rules.json\""
+        }
       ]
     },
     {
@@ -160,6 +194,15 @@
     },
     {
       "source": "/site.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/lang-redirect.js",
       "headers": [
         {
           "key": "Cache-Control",

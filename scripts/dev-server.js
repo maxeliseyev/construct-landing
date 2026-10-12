@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Local preview server for the static site. No dependencies, no build step.
+ * Local preview server for the site. No dependencies.
  *
  *     npm run dev            # http://localhost:8000
  *     npm run dev -- 3000    # another port
@@ -13,20 +13,26 @@
  * open it to answer — which page a link lands on, whether /crypto still
  * redirects, whether a withdrawn file is reachable.
  *
- * So this reads vercel.json and .vercelignore rather than restating them:
- * redirects, rewrites (including `:param` segments) and the deployment
- * exclusions all come from the files that production is configured with. What
- * it deliberately does not do is guess — `cleanUrls` is false in vercel.json,
- * so /privacy resolves only because a rewrite says so, and a path with no
- * rewrite 404s here just as it would live.
+ * So this reads vercel.json rather than restating it: redirects, rewrites
+ * (including `:param` and `:param(a|b)` segments) and headers all come from the
+ * file production is configured with. What it deliberately does not do is
+ * guess — `cleanUrls` is false in vercel.json, so /privacy resolves only
+ * because a rewrite says so, and a path with no rewrite 404s here just as it
+ * would live.
+ *
+ * It serves dist/, the output of scripts/build-locales.py — the same build
+ * Vercel runs — and rebuilds it before answering whenever a source file is
+ * newer than the last build, so an edit shows on the next reload.
  */
 "use strict";
 
 const fs = require("fs");
 const http = require("http");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
-const ROOT = path.resolve(__dirname, "..");
+const REPO = path.resolve(__dirname, "..");
+const ROOT = path.join(REPO, "dist");
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -42,42 +48,71 @@ const MIME = {
   ".woff": "font/woff",
   ".ttf": "font/ttf",
   ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
   ".md": "text/plain; charset=utf-8",
   ".asc": "text/plain; charset=utf-8",
   ".webmanifest": "application/manifest+json",
 };
 
-const config = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
+const config = JSON.parse(fs.readFileSync(path.join(REPO, "vercel.json"), "utf8"));
 
-/* Files listed in .vercelignore are in git but not on the site — crypto.* was
-   withdrawn, not deleted. Serving them locally would show a page that no
-   visitor can reach. */
-const ignored = new Set(
-  fs
-    .readFileSync(path.join(ROOT, ".vercelignore"), "utf8")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith("#"))
-);
+/* Newest modification time among the inputs to the build. dist/ and .git are
+   outputs and bookkeeping, not inputs. */
+function newestSource(dir = REPO) {
+  let newest = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (["dist", ".git", "node_modules", "target"].includes(entry.name)) continue;
+    const full = path.join(dir, entry.name);
+    const time = entry.isDirectory() ? newestSource(full) : fs.statSync(full).mtimeMs;
+    if (time > newest) newest = time;
+  }
+  return newest;
+}
+
+let builtAt = 0;
+let buildError = null;
+
+/* What .vercelignore withholds and what the build drops never reach dist/, so
+   a withdrawn page 404s here the way it does live without a second list. */
+function ensureBuilt() {
+  const newest = newestSource();
+  if (builtAt && newest <= builtAt) return;
+  const started = Date.now();
+  const res = spawnSync("python3", [path.join(REPO, "scripts/build-locales.py")], {
+    cwd: REPO,
+    encoding: "utf8",
+  });
+  builtAt = started;
+  buildError = res.status === 0 ? null : (res.stdout || "") + (res.stderr || "");
+  console.log(res.status === 0 ? "rebuilt dist/" : "BUILD FAILED\n" + buildError);
+}
 
 /**
- * Compile a vercel `source` into a matcher over the pathname. Two forms occur:
- * `:param` segments in rewrites ("/c/:userId") and `(.*)` wildcards in header
- * rules ("/fonts/(.*)"). Splitting on the wildcard keeps it out of the escape
- * pass entirely, so there is no sentinel to collide with anything.
+ * Compile a vercel `source` into a matcher over the pathname. The forms that
+ * occur: `:param` segments ("/c/:userId"), constrained ones with an optional
+ * marker ("/:lang(ru|uk)/:page(faq|roadmap)?" — the trailing `?` makes the
+ * whole `/segment` optional, as in path-to-regexp) and `(.*)` wildcards in
+ * header rules ("/fonts/(.*)"). Literal text between them is escaped.
  */
 function compile(source) {
   const names = [];
   const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const pattern = source
-    .split("(.*)")
-    .map((part) =>
-      escape(part).replace(/:([A-Za-z0-9_]+)/g, (_, name) => {
-        names.push(name);
-        return "([^/]+)";
-      })
-    )
-    .join("(.*)");
+  const token = /(\/?):([A-Za-z0-9_]+)(?:\(([^)]*)\))?(\?)?|\(\.\*\)/g;
+  let pattern = "";
+  let last = 0;
+  for (const m of source.matchAll(token)) {
+    pattern += escape(source.slice(last, m.index));
+    last = m.index + m[0].length;
+    if (m[0] === "(.*)") {
+      pattern += "(.*)";
+      continue;
+    }
+    const [, slash, name, constraint, optional] = m;
+    names.push(name);
+    const group = `(${constraint || "[^/]+"})`;
+    pattern += optional ? `(?:${escape(slash)}${group})?` : escape(slash) + group;
+  }
+  pattern += escape(source.slice(last));
   return { re: new RegExp(`^${pattern}$`), names };
 }
 
@@ -137,7 +172,7 @@ function headersFor(pathname) {
 /** Substitute captured `:param` values into a destination. */
 function expand(destination, names, match) {
   return names.reduce(
-    (out, name, i) => out.split(`:${name}`).join(encodeURIComponent(match[i + 1])),
+    (out, name, i) => out.split(`:${name}`).join(encodeURIComponent(match[i + 1] || "")),
     destination
   );
 }
@@ -156,6 +191,13 @@ function send(res, status, body, headers = {}) {
 }
 
 const server = http.createServer((req, res) => {
+  ensureBuilt();
+  if (buildError) {
+    log(req, 500, "build failed");
+    return send(res, 500, "scripts/build-locales.py failed:\n\n" + buildError, {
+      "Content-Type": "text/plain; charset=utf-8",
+    });
+  }
   const url = new URL(req.url, "http://localhost");
   let pathname = decodeURIComponent(url.pathname);
   const configured = headersFor(pathname);
@@ -185,11 +227,6 @@ const server = http.createServer((req, res) => {
     return send(res, 403, "403 Forbidden");
   }
 
-  if (ignored.has(path.relative(ROOT, file))) {
-    log(req, 404, pathname + " (in .vercelignore — not deployed)");
-    return send(res, 404, "404 Not Found — this file is in .vercelignore");
-  }
-
   fs.readFile(file, (err, body) => {
     if (err) {
       log(req, 404, pathname);
@@ -213,5 +250,5 @@ function log(req, status, detail) {
 const port = Number(process.argv[2] || process.env.PORT || 8000);
 server.listen(port, () => {
   console.log(`konstruct-landing → http://localhost:${port}`);
-  console.log("Open it over http, not file:// — site.js fetches /i18n/{lang}.json.\n");
+  console.log("Serving dist/ — rebuilt from the sources whenever they change.\n");
 });

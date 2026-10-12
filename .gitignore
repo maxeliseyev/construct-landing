@@ -9,3 +9,6 @@ JetBrainsMono-2.304/
 *-SECRET.asc
 *secret*.asc
 private*.asc
+
+# scripts/build-locales.py output (Vercel builds it on deploy)
+dist

@@ -77,9 +77,10 @@ def main() -> int:
         text = path.read_text(encoding="utf-8")
         used |= {k for k in base if f'"{k}"' in text or f"'{k}'" in text}
 
-    unused = base - used - {k for k in base if k.endswith(".meta.title")}
-    # meta.title is applied via page namespace, not data-i18n attr
-    unused = {k for k in unused if not k.endswith(".meta.title")}
+    # meta.title / meta.description are applied via the page namespace — by
+    # scripts/build-locales.py into <head> — not through a data-i18n attribute.
+    unused = {k for k in base - used
+              if not k.endswith((".meta.title", ".meta.description"))}
     if unused:
         print(f"WARN unused keys in en.json: {len(unused)} e.g. {sorted(unused)[:8]}")
 
@@ -236,7 +237,8 @@ def main() -> int:
     for lang in LANGS:
         d = load_dict(lang)
         for key in sorted(k for k in d
-                          if k.startswith("privacy.") and k != "privacy.privacy-policy.p2"):
+                          if k.startswith("privacy.") and k != "privacy.privacy-policy.p2"
+                          and not k.startswith("privacy.meta.")):
             h.update(key.encode() + b"\x00" + d[key].encode() + b"\x00")
     want_stamp = h.hexdigest()[:12]
     if len(raw) != 2:
@@ -267,7 +269,8 @@ def main() -> int:
     # invite. What is a finding is referencing the asset *without* the hash, so
     # the two cases are told apart rather than lumped together.
     for asset, pattern in (("styles.css", r"styles\.css\?v=([0-9a-z-]+)"),
-                           ("site.js", r'src="/site\.js\?v=([0-9a-z]+)"')):
+                           ("site.js", r'src="/site\.js\?v=([0-9a-z]+)"'),
+                           ("lang-redirect.js", r'src="/lang-redirect\.js\?v=([0-9a-z]+)"')):
         expect = _h10(asset)
         for name in HTML_FILES:
             text = (ROOT / name).read_text(encoding="utf-8")

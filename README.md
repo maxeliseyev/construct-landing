@@ -9,12 +9,20 @@ privacy-first, end-to-end-encrypted messenger project.
 | Path | File | What |
 |------|------|------|
 | `/` | `index.html` | Landing: mission, architecture, no-telemetry, support |
-| `/faq` | `faq.html` | Frequently asked questions (EN/RU/JA) |
+| `/faq` | `faq.html` | Frequently asked questions |
+| `/technical` | `technical.html` | How it works |
+| `/roadmap` | `roadmap.html` | Done / in progress / planned |
 | `/privacy` | `privacy.html` | Privacy policy |
+| `/add` | `add.html` | Invite-link landing (iOS Universal Link path) |
 | ~~`/crypto`~~ | `crypto.html` | **Withdrawn** — in `.vercelignore`, `/crypto` redirects to `/faq` |
 | `/c/:userId` | `contact.html` | Contact deep-link landing |
 
-There is **no build step**. Copy for `index` / `faq` lives in JSON locale files:
+Every content page exists once per language, at its own URL: English unprefixed
+(`/faq`), the others under their code (`/ru/faq`, `/tr/`, `/uk/privacy`, …). `/add`
+and `/c/:userId` are not prefixed — the app's links point at them — and translate at
+runtime instead.
+
+Copy lives in JSON locale files; Russian is the reference text:
 
 ```
 i18n/en.json
@@ -26,23 +34,36 @@ i18n/uk.json
 i18n/tr.json
 ```
 
-HTML uses a single tree with `data-i18n` / `data-i18n-html` keys. `site.js`
-auto-detects the language (`navigator.languages` + `localStorage`), fetches
-`/i18n/{lang}.json` (sessionStorage-cached), and applies strings. English text
-remains in the HTML as a no-JS / failed-fetch fallback. Language chrome is the
-HUD dropdown `LANG::XX ▾`.
+Each page is one HTML file with `data-i18n` / `data-i18n-html` keys and English text.
+`scripts/build-locales.py` (stdlib Python, run by Vercel on deploy) renders `dist/`:
+every page × language with the text filled in, `<html lang>`, title and description
+(`<page>.meta.title` / `.meta.description`), link-preview tags, canonical and
+`hreflang`, links kept inside the language, and the `LANG::XX ▾` switcher as plain
+links. Plus `sitemap.xml`, `robots.txt` and `speculation-rules.json`. It verifies its
+own output against the dictionaries and fails the deploy if anything is off.
+
+Languages not yet read by a native speaker (`REVIEWED` in the build script — today
+everything except `en` and `ru`) are built and reachable but `noindex`, and left out
+of the sitemap and `hreflang`.
+
+A first visit to an English page goes to the reader's language: `lang-redirect.js`
+(synchronous, top of `<head>`) uses the language last chosen in the switcher, else
+the browser's list. It never redirects from a prefixed page. No geolocation.
 
 ```bash
+npm run build                    # -> dist/
 python3 scripts/sync-versions.py # after editing copy or styles — recompute cache markers
+npm run check                    # everything below
 python3 scripts/check-i18n.py    # key parity, markup-in-textContent, cache markers
 python3 scripts/check-claims.py  # every factual claim, re-derived from the sibling repos
+python3 scripts/build-locales.py --check  # build into a temp dir and verify every page
 # optional re-extract from class-based HTML (legacy):
 # python3 scripts/migrate-i18n.py
 ```
 
 ### Enable the pre-push hook
 
-Both checks run on `git push`. `core.hooksPath` is local config, so a fresh clone
+All three run on `git push`. `core.hooksPath` is local config, so a fresh clone
 needs this once:
 
 ```bash
@@ -60,53 +81,42 @@ switcher being broken.
 
 ## Local preview
 
-It is a static site — no bundler, no dependencies to install.
+No bundler, no dependencies to install — `python3` and `node`.
 
 ```bash
 npm run dev                      # then open http://localhost:8000
 npm run dev -- 3000              # another port
 ```
 
-`scripts/dev-server.js` is ~120 lines of plain Node with no packages behind it.
-It reads `vercel.json` and `.vercelignore`, so the preview answers on the same
-addresses as production: `/faq` resolves through the rewrite (`cleanUrls` is
-`false`, so it resolves *only* through the rewrite), `/crypto` still redirects,
-and files withdrawn from the deployment stay 404 locally too.
+`scripts/dev-server.js` is plain Node with no packages behind it. It serves `dist/`
+and re-runs the build before answering whenever a source file is newer, so an edit
+shows on reload. It reads `vercel.json`, so the preview answers on the same
+addresses as production: `/faq` and `/ru/faq` resolve through the rewrites
+(`cleanUrls` is `false`, so *only* through them), `/crypto` still redirects, and
+files withdrawn from the deployment stay 404 locally too.
 
-A plain file server also works, but it serves the pages at `/faq.html` rather
-than `/faq`, so every nav link 404s:
-
-```bash
-python3 -m http.server 8000
-# or, for the real headers as well (needs CLI login):
-npx vercel dev
-```
-
-**Important for i18n:** open via `http://localhost:…`, not `file://`.  
-`site.js` loads `/i18n/{lang}.json` with `fetch`; that only works over HTTP(S) same-origin.
+To test the first-visit redirect, use a browser profile whose language is not
+English, or clear `construct-lang` from localStorage after using the switcher.
 
 ## Deploy on Vercel
 
-This repo is a **static** project: no build step, no dependencies, no build output directory.
+`vercel.json` sets `buildCommand: python3 scripts/build-locales.py` and
+`outputDirectory: dist`; those override the dashboard. The build image has Python
+3.12 (checked 2026-10-12), so the script stays stdlib-only and 3.12-compatible.
+Only `dist/` is served — `scripts/`, `.githooks/` and the like are not published.
 
-The `package.json` at the root is a local convenience only — it holds the `dev`
-preview script and nothing else, has no dependencies and deliberately has no
-`build` script. It is listed in `.vercelignore` so it never reaches the builder:
-an uploaded `package.json` is what turns a static project into one with an
-install/build step, and this project has neither.
+The `package.json` at the root is a local convenience only — `dev`, `build`,
+`check` — with no dependencies. It is listed in `.vercelignore` so it never reaches
+the builder: an uploaded `package.json` is what makes Vercel run an install step,
+and this project has nothing to install.
 
 ### Dashboard settings (Project → Settings → General / Build & Development)
 
 | Setting | Value |
 |---------|--------|
 | **Framework Preset** | Other |
-| **Build Command** | *(empty / disabled)* |
-| **Output Directory** | *(empty / `.` / leave default for static root)* |
-| **Install Command** | *(empty / disabled)* |
+| **Build / Output / Install** | leave default — `vercel.json` decides |
 | **Root Directory** | `.` (repo root) |
-| **Node.js Version** | any (unused; no build) |
-
-Do **not** set Output Directory to `dist` or `public` — HTML/JS/CSS/`i18n/` live at the repository root.
 
 ### First-time link (CLI)
 
@@ -123,8 +133,10 @@ Git integration: push to `main` → production deploy (if the project is already
 
 | URL | Source | Notes |
 |-----|--------|--------|
-| `/` | `index.html` | Landing |
+| `/` | `dist/index.html` | Landing |
 | `/faq` | rewrite → `faq.html` | see `vercel.json` |
+| `/ru`, `/ru/faq`, … | rewrites → `dist/<lang>/…` | one per language and page |
+| `/sitemap.xml`, `/robots.txt` | generated | reviewed languages only |
 | `/privacy`, `/add` | rewrites | same pattern (`/crypto` is a 307 to `/faq`) |
 | `/c/:userId` | rewrite → `contact.html` | deep link |
 | `/site.js`, `/effects.js` | static | language switcher + HUD effects |
@@ -180,10 +192,10 @@ curl -sI https://konstruct.cc/ | grep -i content-security
 
 In the browser (production):
 
-1. Open DevTools → Network → reload. Expect `i18n/en.json` (or `ru`/`ja` from auto-detect).
-2. Switch `LANG::` to JA / RU — body text and `document.title` update without full reload.
-3. Hard-refresh; no CSP errors on `fetch` of `/i18n/*.json`.
-4. Disable JS briefly: English fallback text in HTML remains visible.
+1. `view-source:https://konstruct.cc/ru/faq` — Russian in the HTML itself, `lang="ru"`.
+2. Switch `LANG::` to JA — the URL becomes `/ja/…`; switch back to EN — it stays English on reload.
+3. With a non-English browser and no saved choice, `/` lands on `/<lang>`.
+4. `/add` in a Russian browser shows Russian (runtime translation still works there).
 
 ### Domains
 
