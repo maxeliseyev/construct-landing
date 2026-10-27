@@ -1,27 +1,43 @@
 /* Konstruct Landing - CT Terminal Design (mirrors ConstructTheme.swift) */
 
+/* Theme: dark by default, light when the OS asks for it or the reader picks it.
+   The switch is `data-theme` on <html>, set by theme.js before first paint:
+   absent = automatic (follow prefers-color-scheme), "light" / "dark" = forced.
+   The same three modes as the app's Appearance setting. Without JavaScript the
+   media query alone still follows the OS, so nobody gets the wrong theme. */
 :root {
-  /* CT terminal palette — ported 1:1 from Color.CT in the app */
-  --bg: #090909;
+  color-scheme: dark;
+
+  /* CT terminal palette — ported 1:1 from Color.CT in the app (dark side) */
+  --bg: #090909;                /* Color.CT.bg */
   --bg-elevated: #111111;       /* Color.CT.outMsgBg */
   --bg-msg: #202020;            /* Color.CT.bgMsg */
   --fg: #e8e8e8;                /* Color.CT.text */
-  --fg-secondary: #c4c4c4;
-  --fg-muted: #818181;          /* Color.CT.textDim */
-  --accent: #0062ff;            /* Color.CT.accent */
-  --accent-hover: #3d82ff;
-  --accent-dim: #1e68df;        /* Color.CT.accentDim */
+  --fg-secondary: #c4c4c4;      /* web-only: between text and textDim */
+  --fg-muted: #8a8a8a;          /* Color.CT.textDim */
+  /* Accent is text as well as fill, so it has to clear 4.5:1 in each theme —
+     which is why it is a different blue in each. The app's reasoning and
+     measurements are on Color.CT.accent in ConstructTheme.swift. */
+  --accent: #008cff;            /* Color.CT.accent */
+  --accent-dim: #0077db;        /* Color.CT.accentDim — fill and hover only, never text */
   --border: #1e1e1e;            /* Color.CT.noise */
   --border-subtle: #161616;
-  --success: #00c853;
+  --success: #30d158;           /* Color.CT.online */
   --warning: #ffa726;
   --danger: #dc3c3c;            /* Color.CT.danger */
 
-  /* Web-only: the hover shade of --accent. The app has no hover state, so this
-     one has no counterpart in Color.CT. --accent-dim is not it — #1e68df reads
-     *lighter* than #0062ff to the eye (more green, less blue), so using it for
-     hover made the button look washed out instead of pushed in. */
-  --accent-press: #0050d6;
+  /* Web-only: the app has no hover state, so these have no Color.CT counterpart.
+     --accent-hover is a link hovered — text, so lighter than --accent on dark and
+     darker on light, never --accent-dim. --accent-press is a filled button
+     hovered, which is exactly what accentDim is for. */
+  --accent-hover: #47a8ff;
+  --accent-press: var(--accent-dim);
+
+  /* Surfaces drawn over content: the sticky bar and the dropdown's shadow. */
+  --nav-bg: rgba(9, 9, 9, 0.92);
+  --shadow-pop: rgba(0, 0, 0, 0.45);
+  /* The front page's ASCII backdrop: glyph colour, alpha included. */
+  --noise-ink: rgba(232, 232, 232, 0.05);
 
   /* Typography — JetBrains Mono everywhere, terminal aesthetic */
   --font-sans: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
@@ -35,6 +51,52 @@
   --space-xl: 3rem;
   --space-2xl: 4rem;
   --space-3xl: 6rem;
+}
+
+/* Light side of Color.CT. Written twice because CSS cannot share one block
+   between a media query and an attribute selector: once for "automatic" on a
+   light OS, once for "light" chosen in the switch. Keep the two identical —
+   check-i18n.py fails when they are not. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #f2f2f2;
+    --bg-elevated: #e9e9e9;
+    --bg-msg: #e2e2e2;
+    --fg: #111111;
+    --fg-secondary: #222222;
+    --fg-muted: #333333;
+    --accent: #0057e0;
+    --accent-dim: #0047b3;
+    --accent-hover: #0047b3;
+    --border: #c8c8c8;
+    --border-subtle: #d9d9d9;
+    --success: #248a3d;
+    --warning: #b26a00;
+    --nav-bg: rgba(242, 242, 242, 0.92);
+    --shadow-pop: rgba(0, 0, 0, 0.12);
+    --noise-ink: rgba(17, 17, 17, 0.045);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2f2f2;
+  --bg-elevated: #e9e9e9;
+  --bg-msg: #e2e2e2;
+  --fg: #111111;
+  --fg-secondary: #222222;
+  --fg-muted: #333333;
+  --accent: #0057e0;
+  --accent-dim: #0047b3;
+  --accent-hover: #0047b3;
+  --border: #c8c8c8;
+  --border-subtle: #d9d9d9;
+  --success: #248a3d;
+  --warning: #b26a00;
+  --nav-bg: rgba(242, 242, 242, 0.92);
+  --shadow-pop: rgba(0, 0, 0, 0.12);
+  --noise-ink: rgba(17, 17, 17, 0.045);
 }
 
 * {
@@ -124,9 +186,15 @@ body.landing::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.05;
-  background-repeat: repeat;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22308%22%20height%3D%22308%22%20viewBox%3D%220%200%20308%20308%22%3E%3Crect%20width%3D%22308%22%20height%3D%22308%22%20fill%3D%22none%22/%3E%3Cg%20font-family%3D%22JetBrains%20Mono%2C%20monospace%22%20font-size%3D%2212%22%20fill%3D%22%23E8E8E8%22%3E%3Ctext%20x%3D%224%22%20y%3D%2216%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2216%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2216%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2216%22%3E%29%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2216%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2216%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2216%22%3E%28%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2216%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2216%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2216%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2216%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2216%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2216%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2216%22%3E%29%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%2238%22%3E.%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2238%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2238%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2238%22%3E%23%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2238%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2238%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2238%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2238%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2238%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2238%22%3E%23%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2238%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2238%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2238%22%3E.%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2238%22%3E%40%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%2260%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2260%22%3E%23%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2260%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2260%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2260%22%3E.%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2260%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2260%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2260%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2260%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2260%22%3E%23%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2260%22%3E.%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2260%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2260%22%3E%7C%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2260%22%3E%40%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%2282%22%3E%25%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2282%22%3E-%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2282%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2282%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2282%22%3E.%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2282%22%3E%40%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2282%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2282%22%3E%29%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2282%22%3E%28%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2282%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2282%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2282%22%3E%23%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2282%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2282%22%3E~%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22104%22%3E%25%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22104%22%3E-%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22104%22%3E/%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22104%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22104%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22104%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22104%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22104%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22104%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22104%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22104%22%3E%28%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22104%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22104%22%3E.%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22104%22%3E%5C%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22126%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22126%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22126%22%3E%7C%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22126%22%3E-%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22126%22%3E/%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22126%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22126%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22126%22%3E-%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22126%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22126%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22126%22%3E%7C%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22126%22%3E~%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22126%22%3E/%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22126%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22148%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22148%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22148%22%3E%7C%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22148%22%3E~%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22148%22%3E.%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22148%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22148%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22148%22%3E%29%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22148%22%3E%28%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22148%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22148%22%3E%25%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22148%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22148%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22148%22%3E~%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22170%22%3E%28%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22170%22%3E%29%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22170%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22170%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22170%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22170%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22170%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22170%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22170%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22170%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22170%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22170%22%3E%40%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22170%22%3E/%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22170%22%3E%3A%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22192%22%3E%2B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22192%22%3E%40%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22192%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22192%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22192%22%3E%28%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22192%22%3E~%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22192%22%3E%25%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22192%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22192%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22192%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22192%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22192%22%3E%29%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22192%22%3E.%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22192%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22214%22%3E%2B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22214%22%3E%23%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22214%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22214%22%3E~%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22214%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22214%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22214%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22214%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22214%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22214%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22214%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22214%22%3E%40%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22214%22%3E%28%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22214%22%3E%23%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22236%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22236%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22236%22%3E%5E%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22236%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22236%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22236%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22236%22%3E%25%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22236%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22236%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22236%22%3E~%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22236%22%3E%25%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22236%22%3E-%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22236%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22236%22%3E%5C%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22258%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22258%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22258%22%3E/%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22258%22%3E%29%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22258%22%3E%7C%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22258%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22258%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22258%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22258%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22258%22%3E-%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22258%22%3E.%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22258%22%3E~%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22258%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22258%22%3E-%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22280%22%3E%25%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22280%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22280%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22280%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22280%22%3E%28%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22280%22%3E~%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22280%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22280%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22280%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22280%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22280%22%3E.%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22280%22%3E~%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22280%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22280%22%3E%23%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22302%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22302%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22302%22%3E%5E%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22302%22%3E~%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22302%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22302%22%3E%23%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22302%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22302%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22302%22%3E.%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22302%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22302%22%3E%28%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22302%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22302%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22302%22%3E%40%3C/text%3E%3C/g%3E%3C/svg%3E");
+  /* The SVG is the shape of the glyphs only — a mask — and the colour comes
+     from --noise-ink, so the same tile is light ink on dark and dark ink on
+     light. Its own fill is irrelevant; only its alpha is read. */
+  background-color: var(--noise-ink);
+  --noise-glyphs: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22308%22%20height%3D%22308%22%20viewBox%3D%220%200%20308%20308%22%3E%3Crect%20width%3D%22308%22%20height%3D%22308%22%20fill%3D%22none%22/%3E%3Cg%20font-family%3D%22JetBrains%20Mono%2C%20monospace%22%20font-size%3D%2212%22%20fill%3D%22%23E8E8E8%22%3E%3Ctext%20x%3D%224%22%20y%3D%2216%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2216%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2216%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2216%22%3E%29%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2216%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2216%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2216%22%3E%28%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2216%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2216%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2216%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2216%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2216%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2216%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2216%22%3E%29%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%2238%22%3E.%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2238%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2238%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2238%22%3E%23%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2238%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2238%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2238%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2238%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2238%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2238%22%3E%23%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2238%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2238%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2238%22%3E.%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2238%22%3E%40%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%2260%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2260%22%3E%23%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2260%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2260%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2260%22%3E.%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2260%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2260%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2260%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2260%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2260%22%3E%23%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2260%22%3E.%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2260%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2260%22%3E%7C%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2260%22%3E%40%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%2282%22%3E%25%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%2282%22%3E-%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%2282%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%2282%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%2282%22%3E.%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%2282%22%3E%40%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%2282%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%2282%22%3E%29%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%2282%22%3E%28%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%2282%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%2282%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%2282%22%3E%23%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%2282%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%2282%22%3E~%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22104%22%3E%25%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22104%22%3E-%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22104%22%3E/%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22104%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22104%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22104%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22104%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22104%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22104%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22104%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22104%22%3E%28%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22104%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22104%22%3E.%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22104%22%3E%5C%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22126%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22126%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22126%22%3E%7C%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22126%22%3E-%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22126%22%3E/%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22126%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22126%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22126%22%3E-%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22126%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22126%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22126%22%3E%7C%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22126%22%3E~%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22126%22%3E/%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22126%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22148%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22148%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22148%22%3E%7C%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22148%22%3E~%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22148%22%3E.%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22148%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22148%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22148%22%3E%29%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22148%22%3E%28%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22148%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22148%22%3E%25%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22148%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22148%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22148%22%3E~%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22170%22%3E%28%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22170%22%3E%29%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22170%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22170%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22170%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22170%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22170%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22170%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22170%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22170%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22170%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22170%22%3E%40%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22170%22%3E/%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22170%22%3E%3A%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22192%22%3E%2B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22192%22%3E%40%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22192%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22192%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22192%22%3E%28%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22192%22%3E~%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22192%22%3E%25%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22192%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22192%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22192%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22192%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22192%22%3E%29%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22192%22%3E.%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22192%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22214%22%3E%2B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22214%22%3E%23%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22214%22%3E%28%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22214%22%3E~%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22214%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22214%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22214%22%3E.%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22214%22%3E%2A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22214%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22214%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22214%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22214%22%3E%40%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22214%22%3E%28%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22214%22%3E%23%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22236%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22236%22%3E%2A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22236%22%3E%5E%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22236%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22236%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22236%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22236%22%3E%25%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22236%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22236%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22236%22%3E~%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22236%22%3E%25%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22236%22%3E-%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22236%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22236%22%3E%5C%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22258%22%3E%3D%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22258%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22258%22%3E/%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22258%22%3E%29%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22258%22%3E%7C%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22258%22%3E%29%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22258%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22258%22%3E%5C%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22258%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22258%22%3E-%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22258%22%3E.%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22258%22%3E~%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22258%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22258%22%3E-%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22280%22%3E%25%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22280%22%3E%5C%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22280%22%3E%25%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22280%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22280%22%3E%28%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22280%22%3E~%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22280%22%3E%5E%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22280%22%3E%26lt%3B%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22280%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22280%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22280%22%3E.%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22280%22%3E~%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22280%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22280%22%3E%23%3C/text%3E%3Ctext%20x%3D%224%22%20y%3D%22302%22%3E%26gt%3B%3C/text%3E%3Ctext%20x%3D%2226%22%20y%3D%22302%22%3E%3A%3C/text%3E%3Ctext%20x%3D%2248%22%20y%3D%22302%22%3E%5E%3C/text%3E%3Ctext%20x%3D%2270%22%20y%3D%22302%22%3E~%3C/text%3E%3Ctext%20x%3D%2292%22%20y%3D%22302%22%3E%2B%3C/text%3E%3Ctext%20x%3D%22114%22%20y%3D%22302%22%3E%23%3C/text%3E%3Ctext%20x%3D%22136%22%20y%3D%22302%22%3E%3D%3C/text%3E%3Ctext%20x%3D%22158%22%20y%3D%22302%22%3E%23%3C/text%3E%3Ctext%20x%3D%22180%22%20y%3D%22302%22%3E.%3C/text%3E%3Ctext%20x%3D%22202%22%20y%3D%22302%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22224%22%20y%3D%22302%22%3E%28%3C/text%3E%3Ctext%20x%3D%22246%22%20y%3D%22302%22%3E%3A%3C/text%3E%3Ctext%20x%3D%22268%22%20y%3D%22302%22%3E%25%3C/text%3E%3Ctext%20x%3D%22290%22%20y%3D%22302%22%3E%40%3C/text%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image: var(--noise-glyphs);
+  mask-image: var(--noise-glyphs);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
 }
 
 a {
@@ -190,7 +258,7 @@ header h1 {
 
 .landing header h1::before {
   content: "> ";
-  color: var(--accent-dim);
+  color: var(--accent);
 }
 
 header p {
@@ -223,7 +291,7 @@ header p {
 
 .badge:hover {
   border-color: var(--accent);
-  background: rgba(0, 98, 255, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--accent);
 }
 
@@ -256,7 +324,7 @@ h2 {
 
 .landing h2::before {
   content: "> ";
-  color: var(--accent-dim);
+  color: var(--accent);
 }
 
 h3 {
@@ -289,8 +357,8 @@ li strong {
 }
 
 code {
-  background: rgba(0, 98, 255, 0.1);
-  border: 1px solid rgba(0, 98, 255, 0.25);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   font-family: var(--font-mono);
@@ -341,7 +409,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: rgba(0, 98, 255, 0.06);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
 tbody th {
@@ -472,7 +540,10 @@ section[aria-labelledby="features-heading"] ul li::before {
   /* Reserve trigger height only; dropdown paints outside the flow */
   vertical-align: top;
 }
-.lang-trigger {
+/* The theme switch wears the language control's clothes: they sit side by side
+   in the bar and are the same kind of thing, a setting about the page. */
+.lang-trigger,
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -491,6 +562,7 @@ section[aria-labelledby="features-heading"] ul li::before {
   white-space: nowrap;
 }
 .lang-trigger:hover,
+.theme-toggle:hover,
 .lang-switcher.is-open .lang-trigger {
   border-color: var(--accent);
   color: var(--accent);
@@ -523,7 +595,7 @@ section[aria-labelledby="features-heading"] ul li::before {
   background: var(--bg-elevated, #111);
   border: 1px solid var(--border);
   border-radius: 6px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 28px var(--shadow-pop);
   /* Never participate in parent flex/grid sizing */
   flex: none;
 }
@@ -567,13 +639,13 @@ section[aria-labelledby="features-heading"] ul li::before {
   font-weight: 400;
 }
 .lang-menu a:hover {
-  background: rgba(0, 98, 255, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--accent);
 }
 .lang-menu a.active {
   color: var(--accent);
-  background: rgba(0, 98, 255, 0.12);
-  border-color: rgba(0, 98, 255, 0.35);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
 }
 .lang-menu a.active .lang-code {
   color: var(--accent);
@@ -588,7 +660,7 @@ section[aria-labelledby="features-heading"] ul li::before {
   top: 0;
   z-index: 100;
   height: 56px;
-  background: rgba(9, 9, 9, 0.92);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
   display: flex;
@@ -624,7 +696,8 @@ section[aria-labelledby="features-heading"] ul li::before {
 /* The language control keeps its width; the links give way first. Reversed, the
    dropdown is what gets squeezed, and a language switcher that cannot be read is
    worse than a link that has to be scrolled to. */
-.page-nav .lang-switcher { flex: 0 0 auto; }
+.page-nav .lang-switcher,
+.page-nav .theme-toggle { flex: 0 0 auto; }
 
 /* The wrapper exists for the mobile overlay: on a phone the language control has
    to travel with the sections, and CSS cannot move an element inside a sibling.
@@ -793,8 +866,9 @@ section[aria-labelledby="features-heading"] ul li::before {
     color: var(--fg);
     text-align: right;
   }
-  /* Sits under the sections, still in the thumb corner. */
-  .nav-panel .lang-switcher { margin-top: var(--space-lg); }
+  /* Sit under the sections, still in the thumb corner. The theme switch comes
+     first, so it carries the gap. */
+  .nav-panel .theme-toggle { margin-top: var(--space-lg); }
   /* The bar stays above the panel so the × and the logo remain reachable. */
   .page-nav { z-index: 100; }
   body.nav-open { overflow: hidden; }

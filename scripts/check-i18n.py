@@ -185,6 +185,26 @@ def main() -> int:
                   "position:fixed — the overlay will size to the 56px bar, not the viewport. "
                   "Set `backdrop-filter: none` on .page-nav inside the mobile query.")
 
+    # The light theme is written twice in each sheet — once under
+    # prefers-color-scheme for "automatic", once under [data-theme="light"] for a
+    # reader who chose it — because CSS has no way to share one block between a
+    # media query and a selector. Two copies drift; this keeps them one.
+    for sheet in ("styles.css", "effects.css"):
+        text = (ROOT / sheet).read_text(encoding="utf-8")
+        auto = re.search(r'@media \(prefers-color-scheme: light\) \{\s*'
+                         r':root:not\(\[data-theme="dark"\]\) \{([^}]*)\}', text)
+        chosen = re.search(r':root\[data-theme="light"\] \{([^}]*)\}', text)
+        if not (auto and chosen):
+            ok = False
+            print(f"FAIL {sheet}: light theme block missing — need both the "
+                  f'prefers-color-scheme one and :root[data-theme="light"].')
+            continue
+        norm = lambda block: sorted(l.strip() for l in block.splitlines() if l.strip())
+        if norm(auto.group(1)) != norm(chosen.group(1)):
+            ok = False
+            print(f"FAIL {sheet}: the two light-theme blocks differ — automatic-on-a-"
+                  f"light-OS and light-chosen would render different pages.")
+
 
     # The sessionStorage locale cache is keyed only by I18N_CACHE_VER in site.js.
     # If the dictionaries change and that constant does not, browsers keep serving
@@ -269,6 +289,8 @@ def main() -> int:
     # invite. What is a finding is referencing the asset *without* the hash, so
     # the two cases are told apart rather than lumped together.
     for asset, pattern in (("styles.css", r"styles\.css\?v=([0-9a-z-]+)"),
+                           ("effects.css", r"effects\.css\?v=([0-9a-z-]+)"),
+                           ("theme.js", r'src="/theme\.js\?v=([0-9a-z]+)"'),
                            ("site.js", r'src="/site\.js\?v=([0-9a-z]+)"'),
                            ("lang-redirect.js", r'src="/lang-redirect\.js\?v=([0-9a-z]+)"')):
         expect = _h10(asset)
