@@ -4,8 +4,43 @@
   --neon-cyan: #6fd8d1;      /* muted teal, not electric */
   --neon-cold: #4a6f8a;      /* cold steel-blue — replaces hot magenta in glitch/hover */
   --neon-green: #2ee65f;
+  /* What the glows are made of. Separate from --neon-cyan because on paper a
+     glow is a smudge, not light: the light theme keeps the teal as an ink and
+     turns the bloom off by making this transparent. */
+  --neon-glow: #6fd8d1;
   --crt-scanline: rgba(0, 0, 0, 0.18);
+  --crt-vignette: rgba(0, 0, 0, 0.45);
   --crt-glow: rgba(111, 216, 209, 0.06);
+  --bezel-shade: rgba(0, 0, 0, 0.35);
+  --title-glow: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+/* Light: the same switch as in styles.css, and written twice for the same
+   reason. A CRT on a light page is a faint print of one — scanlines and the
+   vignette are kept, at a strength that does not grey the copy out. The teal
+   darkens to stay readable as text (4.9:1 on --bg-elevated). */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --neon-cyan: #006f73;
+    --neon-green: #248a3d;
+    --neon-glow: transparent;
+    --crt-scanline: rgba(0, 0, 0, 0.05);
+    --crt-vignette: rgba(0, 0, 0, 0.1);
+    --crt-glow: transparent;
+    --bezel-shade: rgba(0, 0, 0, 0.06);
+    --title-glow: transparent;
+  }
+}
+
+:root[data-theme="light"] {
+  --neon-cyan: #006f73;
+  --neon-green: #248a3d;
+  --neon-glow: transparent;
+  --crt-scanline: rgba(0, 0, 0, 0.05);
+  --crt-vignette: rgba(0, 0, 0, 0.1);
+  --crt-glow: transparent;
+  --bezel-shade: rgba(0, 0, 0, 0.06);
+  --title-glow: transparent;
 }
 
 /* ── CRT overlay: scanlines + vignette + noise ── */
@@ -19,7 +54,7 @@ body.landing::after {
     radial-gradient(
       ellipse at center,
       transparent 55%,
-      rgba(0, 0, 0, 0.45) 100%
+      var(--crt-vignette) 100%
     ),
     repeating-linear-gradient(
       0deg,
@@ -63,7 +98,7 @@ body.landing .crt-noise {
   text-transform: uppercase;
   color: var(--fg-muted);
   border: 1px solid var(--border);
-  background: rgba(17, 17, 17, 0.85);
+  background: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
   clip-path: polygon(
     0 0,
     calc(100% - 10px) 0,
@@ -167,7 +202,7 @@ body.landing .crt-noise {
 .landing header h1 .glitch-text {
   text-shadow:
     0 0 20px var(--crt-glow),
-    0 0 40px rgba(0, 98, 255, 0.15);
+    0 0 40px var(--title-glow);
 }
 
 .glitch-text::before,
@@ -252,7 +287,7 @@ body.landing .crt-noise {
 
 /* ── Section headings: subtle terminal flicker ── */
 .landing h2 {
-  text-shadow: 0 0 12px rgba(111, 216, 209, 0.06);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--neon-glow) 6%, transparent);
 }
 
 .landing h2.in-view {
@@ -261,7 +296,7 @@ body.landing .crt-noise {
 
 @keyframes heading-flicker {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.82; text-shadow: 0 0 16px rgba(74, 111, 138, 0.12); }
+  50% { opacity: 0.82; text-shadow: 0 0 16px color-mix(in srgb, var(--neon-cold) 12%, transparent); }
 }
 
 /* ── HUD badges (chamfered corners + neon edge) ── */
@@ -277,7 +312,7 @@ body.landing .crt-noise {
   );
   position: relative;
   border-color: var(--border);
-  box-shadow: inset 0 0 0 1px rgba(111, 216, 209, 0);
+  box-shadow: inset 0 0 0 1px transparent;
   transition:
     border-color 0.2s ease,
     color 0.2s ease,
@@ -300,42 +335,44 @@ body.landing .crt-noise {
 .landing .badge:hover {
   border-color: var(--neon-cyan);
   color: var(--neon-cyan);
-  background: rgba(111, 216, 209, 0.06);
+  background: color-mix(in srgb, var(--neon-cyan) 6%, transparent);
   box-shadow:
-    0 0 12px rgba(111, 216, 209, 0.15),
-    inset 0 0 20px rgba(111, 216, 209, 0.04);
+    0 0 12px color-mix(in srgb, var(--neon-glow) 15%, transparent),
+    inset 0 0 20px color-mix(in srgb, var(--neon-glow) 4%, transparent);
 }
 
 .landing .badge:hover::before {
   border-color: var(--neon-cold);
 }
 
-/* ── Lang switcher HUD treatment ── */
-.landing .lang-trigger {
+/* ── Lang switcher HUD treatment (and the theme switch beside it) ── */
+.landing .lang-trigger,
+.landing .theme-toggle {
   border-radius: 0;
   clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
 }
 
 .landing .lang-trigger:hover,
+.landing .theme-toggle:hover,
 .landing .lang-switcher.is-open .lang-trigger {
   border-color: var(--neon-cyan);
   color: var(--neon-cyan);
-  box-shadow: 0 0 10px rgba(111, 216, 209, 0.2);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--neon-glow) 20%, transparent);
 }
 
 .landing .lang-menu {
   border-radius: 0;
   clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-  background: rgba(9, 9, 9, 0.96);
-  border-color: rgba(111, 216, 209, 0.25);
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  border-color: color-mix(in srgb, var(--neon-cyan) 25%, transparent);
   box-shadow:
-    0 0 18px rgba(111, 216, 209, 0.08),
-    0 12px 32px rgba(0, 0, 0, 0.55);
+    0 0 18px color-mix(in srgb, var(--neon-glow) 8%, transparent),
+    0 12px 32px var(--shadow-pop);
 }
 
 .landing .lang-menu a:hover,
 .landing .lang-menu a.active {
-  background: rgba(111, 216, 209, 0.08);
+  background: color-mix(in srgb, var(--neon-cyan) 8%, transparent);
   color: var(--neon-cyan);
 }
 
@@ -347,21 +384,21 @@ body.landing .crt-noise {
 /* ── Table: scanline sweep on Konstruct row ── */
 .landing tbody tr:last-child {
   position: relative;
-  background: rgba(0, 98, 255, 0.04);
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
 }
 
 .landing tbody tr:last-child th strong {
   color: var(--neon-cyan);
-  text-shadow: 0 0 8px rgba(111, 216, 209, 0.35);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--neon-glow) 35%, transparent);
 }
 
 .landing tbody tr:hover {
-  background: rgba(111, 216, 209, 0.05);
+  background: color-mix(in srgb, var(--neon-cyan) 5%, transparent);
 }
 
 /* ── Links: neon underline bloom ── */
 .landing main a:not(.badge):hover {
-  text-shadow: 0 0 8px rgba(111, 216, 209, 0.35);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--neon-glow) 35%, transparent);
 }
 
 /* ── Mission panel: CRT bezel ── */
@@ -375,8 +412,8 @@ body.landing .crt-noise {
     0 calc(100% - 16px)
   );
   box-shadow:
-    inset 0 0 60px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(111, 216, 209, 0.08);
+    inset 0 0 60px var(--bezel-shade),
+    0 0 0 1px color-mix(in srgb, var(--neon-glow) 8%, transparent);
 }
 
 /* ── Corrupted text (JS-driven) ── */
@@ -386,7 +423,7 @@ body.landing .crt-noise {
 
 .corrupt-target.is-scrambling {
   color: var(--neon-cold);
-  text-shadow: 0 0 6px rgba(74, 111, 138, 0.4);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--neon-cold) 40%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -7,6 +7,8 @@ what they already have:
   I18N_CACHE_VER in site.js   the sessionStorage locale dictionary
   styles.css?v= on each page  the stylesheet
   site.js?v= on each page     the script that carries the first marker
+  effects.css?v= on index     the front page's CRT sheet
+  theme.js?v= on each page    the theme switch in <head>
   lang-redirect.js?v=         the first-visit language redirect in <head>
 
 They are derived, not typed — `check-i18n.py` fails when any of them disagrees
@@ -60,6 +62,10 @@ if current.group(1) != locale_ver:
 
 # 2. Assets → ?v= on every page. site.js is hashed *after* the step above.
 css_ver = h10((ROOT / "styles.css").read_bytes())
+# Its own hash: this used to be css_ver, so an edit to effects.css alone left
+# the marker where it was and browsers on the cached sheet.
+effects_ver = h10((ROOT / "effects.css").read_bytes())
+theme_ver = h10((ROOT / "theme.js").read_bytes())
 js_ver = h10((ROOT / "site.js").read_bytes())
 redirect_ver = h10((ROOT / "lang-redirect.js").read_bytes())
 
@@ -67,8 +73,9 @@ for name in PAGES:
     page = ROOT / name
     before = page.read_text(encoding="utf-8")
     after = re.sub(r'styles\.css\?v=[0-9a-z-]+', f"styles.css?v={css_ver}", before)
-    after = re.sub(r'effects\.css\?v=[0-9a-z-]+', f"effects.css?v={css_ver}", after)
+    after = re.sub(r'effects\.css\?v=[0-9a-z-]+', f"effects.css?v={effects_ver}", after)
     after = re.sub(r'src="/site\.js(?:\?v=[0-9a-z]+)?"', f'src="/site.js?v={js_ver}"', after)
+    after = re.sub(r'src="/theme\.js(?:\?v=[0-9a-z]+)?"', f'src="/theme.js?v={theme_ver}"', after)
     after = re.sub(r'src="/lang-redirect\.js(?:\?v=[0-9a-z]+)?"',
                    f'src="/lang-redirect.js?v={redirect_ver}"', after)
     if after != before:
